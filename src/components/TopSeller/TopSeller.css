@@ -1,0 +1,52 @@
+.top-seller-container {
+  padding: 0 136px;
+  color: var(--textColorOne);
+}
+
+.top-seller-container .top-seller-nav {
+  margin: 55px 0;
+}
+
+.top-seller-container .top-seller-nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-seller-container .top-seller-nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.top-seller-container .top-seller-nav ul li {
+  padding: 15px 55px;
+  border: 1px solid var(--textColorOne);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.top-seller-container .top-seller-nav ul li.active {
+  background-color: var(--bgColorFour);
+  border-color: var(--bgColorFour);
+}
+
+.top-seller-container .top-seller-nav ul li:hover {
+  background-color: var(--bgColorFour);
+  border-color: var(--bgColorFour);
+}
+
+.top-seller-container .top-seller-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 28px;
+  grid-row-gap: 46px;
+  margin-bottom: 58px;
+}

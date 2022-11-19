@@ -1,0 +1,24 @@
+.recently-listed {
+  margin: 190px 0;
+  font-family: var(--montserratFont);
+}
+
+/* .recently-listed .btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recently-listed .btn-container button {
+  width: 224px;
+  height: 66px;
+  opacity: 0.9;
+  border: 1px solid var(--textColorOne);
+  color: var(--textColorOne);
+  border-radius: 999px;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  cursor: pointer;
+} */

@@ -1,0 +1,34 @@
+.header-nav-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 23px 130px;
+  color: var(--textColorOne);
+  font-family: var(--montserratFont);
+}
+
+.header-nav-container .header-nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 39px;
+}
+
+.header-nav-container .header-nav li {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.header-nav-container .header-nav li button {
+  height: 32px;
+  width: 114px;
+  border-radius: 5px;
+  background-color: var(--textColorTwo);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--textColorOne);
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}

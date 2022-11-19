@@ -1,0 +1,108 @@
+.navigation-container {
+  height: 85px;
+  background-color: var(--bgColor);
+  border-bottom: 1px solid var(--borderColor);
+  color: var(--textColorOne);
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  padding: 0 50px;
+  font-family: var(--oswaldFont);
+}
+
+.navigation-container .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navigation-container .container-left {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.navigation-container .container-left .logo-container img {
+  width: 38px;
+  height: 48px;
+}
+
+.navigation-container .container-left nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 25px;
+  height: 82px;
+}
+
+.navigation-container .container-left nav li {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
+.navigation-container .container-left nav li:hover {
+  color: var(--textColorTwo);
+  border-bottom: 3px solid var(--textColorTwo);
+}
+
+.container-right {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+}
+
+.container-right .search-box-container {
+  width: 266px;
+  height: 32px;
+  background-color: var(--borderColor);
+  border-radius: 10px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--textColorThree);
+}
+
+.container-right .search-box-container img {
+  width: 16px;
+  height: 16px;
+}
+
+.container-right .search-box-container input {
+  width: 100%;
+  background-color: transparent;
+  border-radius: 10px;
+  outline: 0;
+  border: 0;
+  color: var(--textColorOne);
+}
+
+.container-right .search-box-container input::placeholder {
+  font-family: var(--oswaldFont);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--textColorThree);
+}
+
+.container-right .login-btn {
+  height: 32px;
+  width: 114px;
+  border-radius: 999px;
+  color: var(--textColorOne);
+  background-color: var(--textColorTwo);
+  border: 0;
+  outline: 0;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}

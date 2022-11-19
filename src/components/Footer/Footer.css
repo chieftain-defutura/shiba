@@ -1,0 +1,114 @@
+.footer-container {
+  background-color: var(--bgColorTwo);
+  color: var(--textColorOne);
+  font-family: var(--poppinsFont);
+}
+
+.footer-container .footer-top {
+  padding: 49px 116px;
+}
+
+.footer-container .footer-grid-cont {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.footer-container .footer-top-left .footer-logo-cont img {
+  width: 41px;
+  margin-bottom: 22px;
+}
+
+.footer-container .footer-top-left p {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 41px;
+  text-transform: capitalize;
+}
+
+.footer-container .footer-top-left .social-links-container {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-top: 84px;
+}
+
+.footer-container .footer-top-left .social-links-container img {
+  cursor: pointer;
+  width: 34px;
+  height: 27px;
+}
+
+.footer-container .footer-top-center,
+.footer-top-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-container .footer-top-center h3,
+.footer-top-right h3 {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 48px;
+  margin-bottom: 34px;
+}
+
+.footer-container .footer-top-center p,
+.footer-top-right p {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: var(--textColorFive);
+  margin-bottom: 17px;
+  cursor: pointer;
+}
+
+.footer-container .footer-bottom {
+  height: 80px;
+  background-color: var(--bgColor);
+  padding: 0px 116px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-container .footer-nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.footer-container .footer-nav ul li {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--textColorSix);
+  text-transform: uppercase;
+  font-family: var(--montserratFont);
+  cursor: pointer;
+}
+
+.footer-bottom .footer-bottom-social-link {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-bottom .footer-bottom-social-link img {
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+}
+
+.footer-bottom p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  color: var(--textColorSix);
+}
+
+.footer-bottom p span {
+  margin-left: 8px;
+}

@@ -1,0 +1,71 @@
+.card-container {
+  width: 314.89px;
+  height: 458.61px;
+
+  background: linear-gradient(
+    155.14deg,
+    rgba(0, 0, 0, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  filter: drop-shadow(0px 4px 49px rgba(0, 7, 72, 0.12));
+  /* backdrop-filter: blur(7.5px); */
+  border-radius: 20px;
+  padding: 18px;
+  font-family: var(--poppinsFont);
+  border: 2px solid var(--borderColor);
+}
+
+.card-container .card-top {
+  width: 100%;
+  height: 65%;
+  border-radius: 15px;
+}
+
+.card-container .card-top img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.card-container .card-center {
+  margin-top: 12px;
+}
+
+.card-container .card-center h5 {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+}
+
+.card-container .card-center p {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.card-container .card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.card-container .card-bottom h5 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.card-container .card-bottom p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.card-container .card-bottom .right {
+  text-align: end;
+}
+
+.card-container .card-bottom .right p {
+  color: var(--textColorFour);
+}

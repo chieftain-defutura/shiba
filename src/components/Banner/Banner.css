@@ -1,0 +1,62 @@
+.banner {
+  /* height: calc(100vh - 86px); */
+  background-color: var(--bgColorTwo);
+  color: var(--textColorOne);
+  padding: 62px 160px;
+  font-family: var(--poppinsFont);
+  position: relative;
+}
+
+.banner .container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.banner .container-left h1 {
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 90px;
+  text-transform: capitalize;
+}
+
+.banner .container-left h1 span {
+  color: var(--textColorTwo);
+}
+
+.banner .container-left p {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  text-transform: capitalize;
+}
+
+.banner .slider-btn {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  outline: 0;
+  border-radius: 50%;
+  background: rgba(217, 217, 217, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.banner .slider-btn img {
+  width: 14px;
+}
+
+.banner .prev-btn {
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  transform: translate(-50%);
+}
+
+.banner .next-btn {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translate(-50%);
+}
