@@ -1,0 +1,141 @@
+.website-container {
+  color: var(--textColorOne);
+  padding: 51px 144px;
+  display: flex;
+  gap: 145px;
+  font-family: var(--oswaldFont);
+}
+
+.website-container-left {
+  flex: 1;
+}
+
+.website-container-left .heading {
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 52px;
+  color: var(--textColorTwo);
+  margin-bottom: 13px;
+  text-align: center;
+}
+
+.website-container-left .checkbox-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.website-container-left .check-box-container label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  cursor: pointer;
+}
+
+.website-container-left .check-box-container input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: var(--textColorOne);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.website-container-left .check-box-container input[type="checkbox"]:after {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 14px;
+  content: "\f00c";
+  color: var(--black);
+  display: none;
+}
+
+.website-container-left
+  .check-box-container
+  input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+.website-container-right {
+  flex: 5;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+}
+
+.website-container-right .website-card-container {
+  width: 154px;
+  height: 247px;
+}
+
+.website-container-right .card {
+  background-color: var(--bgColorSeven);
+  height: 208px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.website-container-right .card .card-top img {
+  border-radius: 8px 8px 0px 0px;
+}
+
+.website-container-right .card .card-center {
+  padding: 7px 10px 20px 10px;
+  border-bottom: 1px solid #343741;
+}
+
+.website-container-right .card .card-center .title {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--textColorTwo);
+}
+
+.website-container-right .card .card-center .sub-title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--textColorThree);
+}
+
+.website-container-right .card .card-bottom {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.website-container-right .card .card-bottom p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--textColorTwo);
+  margin: 0;
+}
+
+.website-container-right .card .card-bottom button {
+  border: 1px solid var(--textColorTwo);
+  filter: drop-shadow(0px 0px 24px rgba(253, 230, 63, 0.4));
+  border-radius: 999px;
+  font-weight: 400;
+  font-size: 8px;
+  color: var(--textColorTwo);
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px 4px 12px;
+}
+
+.website-container-right .website-card-container .domain-name {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  margin-top: 12px;
+}
