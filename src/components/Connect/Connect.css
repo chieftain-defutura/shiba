@@ -1,0 +1,12 @@
+.connector {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 2rem;
+  margin: 0 auto;
+}
+button {
+  padding: 1rem;
+  width: 360px;
+}

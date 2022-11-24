@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { client } from "./utils/Connector/Connector";
+import { WagmiConfig } from "wagmi";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <WagmiConfig client={client}>
+        <App />
+      </WagmiConfig>
     </BrowserRouter>
   </React.StrictMode>
 );
