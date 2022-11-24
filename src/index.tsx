@@ -6,13 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { client } from "./utils/Connector/Connector";
 import { WagmiConfig } from "wagmi";
+import Provider from "./store/provider";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <WagmiConfig client={client}>
-        <App />
+        <Provider>
+          <App />
+        </Provider>
       </WagmiConfig>
     </BrowserRouter>
   </React.StrictMode>

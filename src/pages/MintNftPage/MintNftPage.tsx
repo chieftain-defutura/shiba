@@ -21,6 +21,8 @@ import {
   erc20ABI,
   useAccount,
   useProvider,
+  useWaitForTransaction,
+  useTransaction,
 } from "wagmi";
 import {
   DOMAIN_ADDRESS,
@@ -31,6 +33,14 @@ import {
 } from "../../utils/contractAddress";
 import domainABI from "../../utils/abi/domainABI.json";
 import shopABI from "../../utils/abi/shopABI.json";
+import { useTransactionModal } from "../../context/TransactionContext";
+
+interface IContractData {
+  title: string;
+  contractAddress: string;
+  tokenAddress?: string;
+  allowance?: number;
+}
 
 const ContractData = [
   {
@@ -65,15 +75,17 @@ const ContractData = [
   },
 ];
 
-const MintNftPage = () => {
+const MintNftPage: React.FC = () => {
+  const { setTransaction } = useTransactionModal();
   const { address } = useAccount();
   const provider = useProvider({ chainId: 5 });
   const [isDropDownClick, setIsDropDownClick] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedNftType, setSelectedNftType] = useState();
+  const [selectedNftType, setSelectedNftType] = useState<any>();
   const [selected, setSelected] = useState("");
   const [isInValid, setIsInvalid] = useState(false);
-  const [NftContractData, setIsNftContractData] = useState(ContractData);
+  const [NftContractData, setIsNftContractData] =
+    useState<IContractData[]>(ContractData);
   const [inputData, setInputData] = useState("");
   const [mintData, setMintData] = useState([]);
   const [selectDomain, setSelectDomain] = useState("");
@@ -104,20 +116,21 @@ const MintNftPage = () => {
       {
         ...pawAllownaceData,
         functionName: "allowance",
-        args: [address, DOMAIN_ADDRESS],
+        args: [address as any, DOMAIN_ADDRESS],
       },
       {
         ...shibAllownaceData,
         functionName: "allowance",
-        args: [address, DOMAIN_ADDRESS],
+        args: [address as any, DOMAIN_ADDRESS],
       },
       {
         ...leashAllownaceData,
         functionName: "allowance",
-        args: [address, DOMAIN_ADDRESS],
+        args: [address as any, DOMAIN_ADDRESS],
       },
     ],
   });
+  const domainData: string[] = (data?.[0] as string[]) ?? [];
 
   const handleGetUserNft = useCallback(async () => {
     if (!address) return;
@@ -131,9 +144,8 @@ const MintNftPage = () => {
       }
     );
     // console.log(getData);
-    setMintData(data.result.map((r) => r.token_id));
+    setMintData(data.result.map((r: any) => r.token_id));
   }, [address]);
-  console.log(mintData);
   useEffect(() => {
     handleGetUserNft();
   }, [handleGetUserNft]);
@@ -145,7 +157,14 @@ const MintNftPage = () => {
     args: [inputData.concat(selected)],
   });
 
-  const { write, error } = useContractWrite(config);
+  const {
+    write,
+    data: mint,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useContractWrite(config);
+  console.log(isError);
 
   const { config: shopMints } = usePrepareContractWrite({
     address: SHOP_NFT_CONTRACT_ADDRESS,
@@ -154,8 +173,21 @@ const MintNftPage = () => {
     args: [selectDomain, true],
   });
 
-  const { write: shopMint, error: shopMintError } = useContractWrite(shopMints);
-  console.log(shopMintError);
+  const {
+    write: shopMint,
+    error: shopError,
+    isLoading: shopLoading,
+    isSuccess: shopSuccess,
+  } = useContractWrite(shopMints);
+  console.log(shopError);
+  useEffect(() => {
+    if (isLoading || shopLoading)
+      setTransaction({ loading: true, status: "pending" });
+    if (isError || shopError)
+      setTransaction({ loading: true, status: "error" });
+    if (isSuccess || shopSuccess)
+      setTransaction({ loading: true, status: "success" });
+  }, [isLoading, shopLoading, isError, isSuccess, shopError, shopSuccess]);
 
   const { config: tokenApprove } = usePrepareContractWrite({
     address: selectedNftType?.tokenAddress,
@@ -165,6 +197,7 @@ const MintNftPage = () => {
   });
 
   const { write: tokenApproval } = useContractWrite(tokenApprove);
+
   useEffect(() => {
     if (!data) return;
     const NewNftContractData = [...NftContractData];
@@ -192,9 +225,9 @@ const MintNftPage = () => {
       setIsInvalid(false);
       return true;
     }
+    setIsInvalid(false);
 
     if (selectedNftType?.allowance === 0) return false;
-
     return true;
   }, [selectedNftType]);
 
@@ -203,6 +236,7 @@ const MintNftPage = () => {
 
     if (selectedNftType.title === UNATTACHED_DOMAIN_NAME) {
       if (!inputData) return "error please enter domain name";
+
       return undefined;
     }
 
@@ -217,12 +251,12 @@ const MintNftPage = () => {
 
     if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
       console.log("domain");
-      return write();
+      return write?.();
     }
 
     if (selectedNftType?.title === PHYSICAL_GOODS_SHOP) {
       console.log("shopMint");
-      return shopMint();
+      return shopMint?.();
     }
   };
 
@@ -419,7 +453,7 @@ const MintNftPage = () => {
                       className="custom-select-box"
                       onChange={(e) => setSelected(e.target.value)}
                     >
-                      {data?.[0]?.map((f, index) => {
+                      {domainData.map((f, index) => {
                         return (
                           <option key={index} value={f}>
                             {f}
@@ -458,7 +492,6 @@ const MintNftPage = () => {
               </div>
             </div>
 
-            {error}
             <div className="box-right">
               {errorMessage ? <div>Error</div> : ""}
 
@@ -475,7 +508,7 @@ const MintNftPage = () => {
                   onClick={() => {
                     mintButton();
                   }}
-                  disabled={isInValid || errorMessage}
+                  disabled={isInValid || !!errorMessage || isLoading}
                 >
                   Create
                 </button>

@@ -1,0 +1,69 @@
+.sidebar-container .box {
+  width: 249px;
+  border: 1px solid var(--borderColorTwo);
+  border-radius: 10px;
+  padding: 31px 38px;
+  position: relative;
+  margin-bottom: 34px;
+}
+
+.sidebar-container .box .heading {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  position: absolute;
+  top: -2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bgColor);
+  padding: 5px 8px;
+  width: 58%;
+  margin: 0;
+}
+
+.sidebar-container .box .content-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 13px;
+  height: 100%;
+}
+
+.sidebar-container .box .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-container .box .content .name,
+.number {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.sidebar-container .select-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.sidebar-container .select-container select {
+  width: 90%;
+  background-color: transparent;
+  border: 0;
+  color: var(--textColorOne);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  font-family: var(--oswaldFont);
+  outline: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.sidebar-container .select-container select * {
+  color: #333;
+}
