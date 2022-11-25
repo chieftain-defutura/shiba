@@ -139,9 +139,26 @@ const MintNftPage: React.FC = () => {
       args: [d],
     })),
   });
-  const alteredDomainNamesData = (domainNamesData as string[]) ?? [];
+  const alteredDomainNamesData = useMemo(() => {
+    if (!domainNamesData) return;
+    let existingDomainData: { tokenId: number; name: string }[] = [];
+    const data = (domainNamesData as string[]) ?? [];
+    console.log(data, mintData);
 
-  const domainData: string[] = (data?.[0] as string[]) ?? [];
+    mintData.forEach((id: any, i) => {
+      data.forEach((d, j) => {
+        if (i === j) {
+          existingDomainData.push({ tokenId: id, name: d });
+        }
+      });
+    });
+
+    return existingDomainData;
+  }, [domainNamesData, mintData]);
+
+  const domainData: string[] = useMemo(() => {
+    return (data?.[0] as string[]) ?? [];
+  }, [data]);
 
   const { config } = usePrepareContractWrite({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
@@ -169,23 +186,32 @@ const MintNftPage: React.FC = () => {
   const tokenContract = useContractWrite(tokenApprove);
 
   useEffect(() => {
+    if (domainContract.isError || shopContract.isError) {
+      setTransaction({ loading: true, status: "error" });
+    }
+  }, [domainContract.isError, shopContract.isError, setTransaction]);
+
+  useEffect(() => {
     if (domainData.length) setSelected(domainData[0]);
   }, [domainData]);
 
   const handleGetUserNft = useCallback(async () => {
-    if (!address || !provider) return;
-    const { data } = await axios.get(
-      `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_NFT_CONTRACT_ADDRESS}`,
-      {
-        headers: {
-          "X-API-KEY":
-            "CayH0royiMVkNnueNQNqZuDdMzTXcGLLsSfCfcLgavOYctREcddcQfKNxgKQzOOj",
-        },
-      }
-    );
+    try {
+      if (!address) return;
+      const { data } = await axios.get(
+        `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_NFT_CONTRACT_ADDRESS}`,
+        {
+          headers: {
+            "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
+          },
+        }
+      );
 
-    setMintData(data.result.map((r: any) => r.token_id));
-  }, [address, provider]);
+      setMintData(data.result.map((r: any) => r.token_id));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [address]);
 
   useEffect(() => {
     handleGetUserNft();
@@ -194,8 +220,8 @@ const MintNftPage: React.FC = () => {
   useEffect(() => {
     if (!data) return;
     const NewNftContractData = [...NftContractData];
-    NewNftContractData[0].allowance = Number(data[1].toString());
-    NewNftContractData[1].allowance = Number(data[2].toString());
+    NewNftContractData[0].allowance = Number(data[1]?.toString());
+    NewNftContractData[1].allowance = Number(data[2]?.toString());
     // NewNftContractData[2].allowance = Number(data[3].toString());
     setIsNftContractData(NewNftContractData);
   }, [data]);
@@ -255,16 +281,24 @@ const MintNftPage: React.FC = () => {
       console.log(selectedNftType);
       if (!selectedNftType) return;
 
-      if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
+      if (
+        selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
+        domainContract.writeAsync
+      ) {
         setTransaction({ loading: true, status: "pending" });
         const data = await domainContract.writeAsync?.();
+        if (!data) return;
         await data?.wait();
         setTransaction({ loading: true, status: "success" });
       }
 
-      if (selectedNftType?.title === PHYSICAL_GOODS_SHOP) {
+      if (
+        selectedNftType?.title === PHYSICAL_GOODS_SHOP &&
+        shopContract.writeAsync
+      ) {
         setTransaction({ loading: true, status: "pending" });
         const data = await shopContract.writeAsync?.();
+        if (!data) return;
         await data?.wait();
         setTransaction({ loading: true, status: "success" });
       }
@@ -486,8 +520,8 @@ const MintNftPage: React.FC = () => {
                       {alteredDomainNamesData?.map((f, index) => {
                         return (
                           <>
-                            <option key={index} value={f}>
-                              {f}
+                            <option key={index} value={f.tokenId}>
+                              {f.name}
                             </option>
                           </>
                         );
@@ -513,6 +547,7 @@ const MintNftPage: React.FC = () => {
                 <button onClick={() => handleApproveToken()}>Approve</button>
               ) : (
                 <button
+                  className="btn-mint"
                   onClick={() => {
                     mintButton();
                   }}
