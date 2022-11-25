@@ -21,9 +21,10 @@ import {
   erc20ABI,
   useAccount,
   useProvider,
+  useNetwork,
 } from "wagmi";
 import {
-  DOMAIN_ADDRESS,
+  DOMAIN_NFT_CONTRACT_ADDRESS,
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
@@ -43,13 +44,13 @@ interface IContractData {
 const ContractData = [
   {
     title: UNATTACHED_DOMAIN_NAME,
-    contractAddress: DOMAIN_ADDRESS,
+    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
     // tokenAddress: PAW_TOKEN_ADDRESS,
     // allowance: 0,
   },
   {
     title: DIGITAL_GOOD_SHOP,
-    contractAddress: DOMAIN_ADDRESS,
+    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
     tokenAddress: SHIB_TOKEN_ADDRESS,
     allowance: 0,
   },
@@ -61,20 +62,20 @@ const ContractData = [
   },
   {
     title: WEBSITE,
-    contractAddress: DOMAIN_ADDRESS,
+    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
   },
   {
     title: CHARITY,
-    contractAddress: DOMAIN_ADDRESS,
+    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
   },
   {
     title: NFT_ART,
-    contractAddress: DOMAIN_ADDRESS,
+    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
   },
 ];
 
 const GetTld = {
-  address: DOMAIN_ADDRESS,
+  address: DOMAIN_NFT_CONTRACT_ADDRESS,
   abi: domainABI,
 };
 const pawAllownaceData = {
@@ -99,10 +100,13 @@ const MintNftPage: React.FC = () => {
   const [selectedNftType, setSelectedNftType] = useState<any>();
   const [selected, setSelected] = useState("");
   const [isInValid, setIsInvalid] = useState(false);
-  const [NftContractData, setIsNftContractData] = useState<IContractData[]>(ContractData);
+  const [NftContractData, setIsNftContractData] =
+    useState<IContractData[]>(ContractData);
   const [inputData, setInputData] = useState("");
   const [mintData, setMintData] = useState([]);
   const [selectDomain, setSelectDomain] = useState("");
+
+  const { chain } = useNetwork();
 
   const { data } = useContractReads({
     contracts: [
@@ -113,17 +117,17 @@ const MintNftPage: React.FC = () => {
       {
         ...pawAllownaceData,
         functionName: "allowance",
-        args: [address as any, DOMAIN_ADDRESS],
+        args: [address as any, DOMAIN_NFT_CONTRACT_ADDRESS],
       },
       {
         ...shibAllownaceData,
         functionName: "allowance",
-        args: [address as any, DOMAIN_ADDRESS],
+        args: [address as any, DOMAIN_NFT_CONTRACT_ADDRESS],
       },
       {
         ...leashAllownaceData,
         functionName: "allowance",
-        args: [address as any, DOMAIN_ADDRESS],
+        args: [address as any, DOMAIN_NFT_CONTRACT_ADDRESS],
       },
     ],
   });
@@ -140,7 +144,7 @@ const MintNftPage: React.FC = () => {
   const domainData: string[] = (data?.[0] as string[]) ?? [];
 
   const { config } = usePrepareContractWrite({
-    address: DOMAIN_ADDRESS,
+    address: DOMAIN_NFT_CONTRACT_ADDRESS,
     abi: domainABI,
     functionName: "mintNFT",
     args: [inputData.concat(selected)],
@@ -159,7 +163,7 @@ const MintNftPage: React.FC = () => {
     address: selectedNftType?.tokenAddress,
     abi: erc20ABI,
     functionName: "approve",
-    args: [DOMAIN_ADDRESS, ethers.constants.MaxUint256],
+    args: [DOMAIN_NFT_CONTRACT_ADDRESS, ethers.constants.MaxUint256],
   });
 
   const tokenContract = useContractWrite(tokenApprove);
@@ -171,10 +175,11 @@ const MintNftPage: React.FC = () => {
   const handleGetUserNft = useCallback(async () => {
     if (!address || !provider) return;
     const { data } = await axios.get(
-      `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_ADDRESS}`,
+      `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_NFT_CONTRACT_ADDRESS}`,
       {
         headers: {
-          "X-API-KEY": "CayH0royiMVkNnueNQNqZuDdMzTXcGLLsSfCfcLgavOYctREcddcQfKNxgKQzOOj",
+          "X-API-KEY":
+            "CayH0royiMVkNnueNQNqZuDdMzTXcGLLsSfCfcLgavOYctREcddcQfKNxgKQzOOj",
         },
       }
     );
@@ -198,7 +203,9 @@ const MintNftPage: React.FC = () => {
   useMemo(() => {
     if (!selectedOption) return;
 
-    const contractdata = NftContractData.find((f) => f.title === selectedOption);
+    const contractdata = NftContractData.find(
+      (f) => f.title === selectedOption
+    );
     setSelectedNftType(contractdata);
   }, [selectedOption]);
 
@@ -378,7 +385,13 @@ const MintNftPage: React.FC = () => {
                 {selectedOption}
                 <MdKeyboardArrowDown className="arrow-icon" />
               </div>
-              <div className={isDropDownClick ? "drop-down-content active" : "drop-down-content"}>
+              <div
+                className={
+                  isDropDownClick
+                    ? "drop-down-content active"
+                    : "drop-down-content"
+                }
+              >
                 <p
                   onClick={() => {
                     setSelectedOption(DIGITAL_GOOD_SHOP);
