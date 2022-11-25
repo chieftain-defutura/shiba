@@ -20,7 +20,6 @@ import {
   useContractWrite,
   erc20ABI,
   useAccount,
-  useWaitForTransaction,
   useProvider,
 } from "wagmi";
 import {
@@ -45,8 +44,8 @@ const ContractData = [
   {
     title: UNATTACHED_DOMAIN_NAME,
     contractAddress: DOMAIN_ADDRESS,
-    tokenAddress: PAW_TOKEN_ADDRESS,
-    allowance: 0,
+    // tokenAddress: PAW_TOKEN_ADDRESS,
+    // allowance: 0,
   },
   {
     title: DIGITAL_GOOD_SHOP,
@@ -129,6 +128,15 @@ const MintNftPage: React.FC = () => {
     ],
   });
 
+  const { data: domainNamesData } = useContractReads({
+    contracts: mintData.map((d) => ({
+      ...GetTld,
+      functionName: "getDomainName",
+      args: [d],
+    })),
+  });
+  const alteredDomainNamesData = (domainNamesData as string[]) ?? [];
+
   const domainData: string[] = (data?.[0] as string[]) ?? [];
 
   const { config } = usePrepareContractWrite({
@@ -163,7 +171,7 @@ const MintNftPage: React.FC = () => {
   const handleGetUserNft = useCallback(async () => {
     if (!address || !provider) return;
     const { data } = await axios.get(
-      `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=0x630abcde15820f6b4fab7b791fbfc2b7f890aaa1`,
+      `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_ADDRESS}`,
       {
         headers: {
           "X-API-KEY": "CayH0royiMVkNnueNQNqZuDdMzTXcGLLsSfCfcLgavOYctREcddcQfKNxgKQzOOj",
@@ -171,14 +179,6 @@ const MintNftPage: React.FC = () => {
       }
     );
 
-    // await Promise.all(
-    //   data.result.map(async (r: any) => {
-    //     const contract = new ethers.Contract(DOMAIN_ADDRESS, domainABI);
-    //     console.log(contract);
-    //     const res = await contract.domainnames(r.token_id);
-    //     console.log(res);
-    //   })
-    // );
     setMintData(data.result.map((r: any) => r.token_id));
   }, [address, provider]);
 
@@ -470,7 +470,7 @@ const MintNftPage: React.FC = () => {
                     >
                       <option value="">please select</option>
 
-                      {mintData.map((f, index) => {
+                      {alteredDomainNamesData?.map((f, index) => {
                         return (
                           <>
                             <option key={index} value={f}>
@@ -494,7 +494,7 @@ const MintNftPage: React.FC = () => {
             </div>
 
             <div className="box-right">
-              {errorMessage ? <div>Error</div> : ""}
+              {errorMessage ? <div>{errorMessage}</div> : ""}
 
               {!canShowCreateButton ? (
                 <button onClick={() => handleApproveToken()}>Approve</button>
