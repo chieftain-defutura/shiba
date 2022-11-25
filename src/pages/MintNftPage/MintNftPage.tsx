@@ -160,12 +160,13 @@ const MintNftPage: React.FC = () => {
     return (data?.[0] as string[]) ?? [];
   }, [data]);
 
-  const { config } = usePrepareContractWrite({
+  const { config, isError } = usePrepareContractWrite({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
     abi: domainABI,
     functionName: "mintNFT",
     args: [inputData.concat(selected)],
   });
+  // console.log(error);
   const domainContract = useContractWrite(config);
 
   const { config: shopMints } = usePrepareContractWrite({
@@ -542,7 +543,6 @@ const MintNftPage: React.FC = () => {
 
             <div className="box-right">
               {errorMessage ? <div>{errorMessage}</div> : ""}
-
               {!canShowCreateButton ? (
                 <button onClick={() => handleApproveToken()}>Approve</button>
               ) : (
@@ -555,7 +555,9 @@ const MintNftPage: React.FC = () => {
                     isInValid ||
                     !!errorMessage ||
                     domainContract.isLoading ||
-                    shopContract.isLoading
+                    shopContract.isLoading ||
+                    (selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
+                      isError)
                   }
                 >
                   Create
