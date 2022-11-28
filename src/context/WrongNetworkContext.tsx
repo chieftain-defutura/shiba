@@ -24,7 +24,7 @@ const WrongNetworkContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [wrongNetwork, setWrongNetwork] = useState<boolean>(false);
   const { chain } = useNetwork();
-  console.log(chain);
+
   useMemo(() => {
     if (chain?.unsupported === true) setWrongNetwork(true);
     if (chain?.unsupported === false) setWrongNetwork(false);
