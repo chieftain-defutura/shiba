@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import cardImg from "../../assets/img/card-3.png";
 import { Link } from "react-router-dom";
 import Navigation from "../../components/Navigation/Navigation";
 import HeaderNav from "../../components/HeaderNav/HeaderNav";
 import SideBar from "../../components/SideBar/SideBar";
-const MyDigitalShop = () => {
+import axios from "axios";
+import { useAccount } from "wagmi";
+import { DOMAIN_NFT_CONTRACT_ADDRESS } from "../../utils/contractAddress";
+const MyDigitalShop: React.FC = () => {
+  const [userNftData, setUserNftData] = useState([]);
+  console.log(userNftData);
+
+  const { address } = useAccount();
+  const handleGetUserNft = useCallback(async () => {
+    try {
+      if (!address) return;
+      const { data } = await axios.get(
+        `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_NFT_CONTRACT_ADDRESS}`,
+        {
+          headers: {
+            "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
+          },
+        }
+      );
+
+      setUserNftData(data.result.map((r: any) => r.token_id));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [address]);
+
+  useEffect(() => {
+    handleGetUserNft();
+  }, [handleGetUserNft]);
+
   return (
     <div>
       <Navigation />
@@ -14,7 +43,7 @@ const MyDigitalShop = () => {
           <SideBar />
         </div>
         <div className="website-container-right">
-          {Array.from({ length: 7 }).map((_, idx) => (
+          {userNftData.map((f, idx) => (
             <div className="website-card-container" key={idx}>
               <div className="card">
                 <div className="card-top">
@@ -26,7 +55,7 @@ const MyDigitalShop = () => {
                 </div>
                 <div className="card-bottom">
                   <p>Shop Details</p>
-                  <Link to="/my-digital-shop/:id">
+                  <Link to={`/my-digital-shop/${f}`}>
                     <button style={{ width: "50px" }}>Get In</button>
                   </Link>
                 </div>
