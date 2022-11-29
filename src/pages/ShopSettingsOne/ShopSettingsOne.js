@@ -100,6 +100,7 @@ const ShopSettingsOne = () => {
                     className="prev-arrow-icon"
                     onClick={handleSlidePrev}
                   />
+
                   <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}

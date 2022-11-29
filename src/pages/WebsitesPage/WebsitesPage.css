@@ -1,8 +1,8 @@
 .website-container {
   color: var(--textColorOne);
-  padding: 51px 144px;
+  padding: 51px 100px;
   display: flex;
-  gap: 145px;
+  /* gap: 145px; */
   font-family: var(--oswaldFont);
 }
 
@@ -62,7 +62,6 @@
 }
 
 .website-container-right {
-  flex: 5;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 20px;
