@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
+import { Field, Form, Formik } from "formik";
+import axios from "axios";
+import {
+  IoIosArrowBack,
+  IoIosArrowForward,
+  IoIosArrowDown,
+} from "react-icons/io";
+import { BsArrowLeftCircle } from "react-icons/bs";
 import Navigation from "../../components/Navigation/Navigation";
 import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import "./ShopSettingsOne.css";
 import HeaderNav from "../../components/HeaderNav/HeaderNav";
 import SideBar from "../../components/SideBar/SideBar";
 import cardImgOne from "../../assets/img/card-4.png";
@@ -14,22 +21,16 @@ import cardImgSeven from "../../assets/img/card-10.png";
 import cardImgEighth from "../../assets/img/card-11.png";
 import cardImgNine from "../../assets/img/card-12.png";
 import cardImgTen from "../../assets/img/card-13.png";
-import { BsArrowLeftCircle } from "react-icons/bs";
-import {
-  IoIosArrowBack,
-  IoIosArrowForward,
-  IoIosArrowDown,
-} from "react-icons/io";
 import cardImg from "../../assets/img/card-3.png";
-import { Field, Form, Formik } from "formik";
+import "./ShopSettingsOne.css";
 
 const ShopSettingsOne = () => {
-  const [clickCard, setClickCard] = useState(null);
-  const [clickAddItem, setClickAddItem] = useState(null);
-  const [clickRemoveItem, setClickRemoveItem] = useState(null);
-  const [onMarketPlace, setOnMarketPlace] = useState(null);
-  const [onAction, setOnAction] = useState(null);
-  const [dropDown, setDropDown] = useState(null);
+  const [clickCard, setClickCard] = useState<any>(null);
+  const [clickAddItem, setClickAddItem] = useState<any>(null);
+  const [clickRemoveItem, setClickRemoveItem] = useState<any>(null);
+  const [onMarketPlace, setOnMarketPlace] = useState<any>(null);
+  const [onAction, setOnAction] = useState<any>(null);
+  const [dropDown, setDropDown] = useState<any>(null);
   const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
   const [slide, setSlide] = useState(1);
 
@@ -42,6 +43,51 @@ const ShopSettingsOne = () => {
   const handleSlideNext = () => {
     setSlide(slide + 1);
   };
+
+  // const sendFileToIPFS = async (e: FormEvent) => {
+  //   e.preventDefault();
+  //   if (!account) return;
+  //   if (fileImg) {
+  //     try {
+  //       const formData = new FormData();
+  //       formData.append("file", fileImg);
+
+  //       const resFile = await axios({
+  //         method: "post",
+  //         url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+  //         data: formData,
+  //         headers: {
+  //           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
+  //           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       });
+
+  //       const ImgHash = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
+  //       console.log(ImgHash);
+
+  //       const newData = { ...formName, image: ImgHash };
+  //       const resData = await axios({
+  //         method: "post",
+  //         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+  //         data: newData,
+  //         headers: {
+  //           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
+  //           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       const JsonHash = resData.data.IpfsHash;
+  //       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
+  //       console.log(dataHash);
+  //       await setMint(account, library?.provider, JsonHash);
+  //       handleGetData();
+  //     } catch (error) {
+  //       console.log("Error sending File to IPFS:");
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   return (
     <div>

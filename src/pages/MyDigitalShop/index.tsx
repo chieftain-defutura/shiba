@@ -6,7 +6,10 @@ import HeaderNav from "../../components/HeaderNav/HeaderNav";
 import SideBar from "../../components/SideBar/SideBar";
 import axios from "axios";
 import { useAccount } from "wagmi";
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from "../../utils/contractAddress";
+import {
+  DIGITAL_GOODS_ADDRESS,
+  DOMAIN_NFT_CONTRACT_ADDRESS,
+} from "../../utils/contractAddress";
 const MyDigitalShop: React.FC = () => {
   const [userNftData, setUserNftData] = useState([]);
   console.log(userNftData);
@@ -16,7 +19,7 @@ const MyDigitalShop: React.FC = () => {
     try {
       if (!address) return;
       const { data } = await axios.get(
-        `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_NFT_CONTRACT_ADDRESS}`,
+        `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DIGITAL_GOODS_ADDRESS}`,
         {
           headers: {
             "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
