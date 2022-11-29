@@ -29,9 +29,11 @@ import {
   SHIB_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   SHOP_NFT_CONTRACT_ADDRESS,
+  DIGITAL_GOODS_ADDRESS,
 } from "../../utils/contractAddress";
 import domainABI from "../../utils/abi/domainABI.json";
 import shopABI from "../../utils/abi/shopABI.json";
+import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import { useTransactionModal } from "../../context/TransactionContext";
 
 interface IContractData {
@@ -50,9 +52,9 @@ const ContractData = [
   },
   {
     title: DIGITAL_GOOD_SHOP,
-    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
-    tokenAddress: SHIB_TOKEN_ADDRESS,
-    allowance: 0,
+    contractAddress: DIGITAL_GOODS_ADDRESS,
+    // tokenAddress: SHIB_TOKEN_ADDRESS,
+    // allowance: 0,
   },
   {
     title: PHYSICAL_GOODS_SHOP,
@@ -177,6 +179,14 @@ const MintNftPage: React.FC = () => {
   });
   const shopContract = useContractWrite(shopMints);
 
+  const { config: digitalMints } = usePrepareContractWrite({
+    address: DIGITAL_GOODS_ADDRESS,
+    abi: digitalShopABI,
+    functionName: "mintNFT",
+    args: [selectDomain, true],
+  });
+  const digitalShopContract = useContractWrite(digitalMints);
+
   const { config: tokenApprove } = usePrepareContractWrite({
     address: selectedNftType?.tokenAddress,
     abi: erc20ABI,
@@ -187,10 +197,19 @@ const MintNftPage: React.FC = () => {
   const tokenContract = useContractWrite(tokenApprove);
 
   useEffect(() => {
-    if (domainContract.isError || shopContract.isError) {
+    if (
+      domainContract.isError ||
+      shopContract.isError ||
+      digitalShopContract.isError
+    ) {
       setTransaction({ loading: true, status: "error" });
     }
-  }, [domainContract.isError, shopContract.isError, setTransaction]);
+  }, [
+    domainContract.isError,
+    shopContract.isError,
+    digitalShopContract.isError,
+    setTransaction,
+  ]);
 
   useEffect(() => {
     if (domainData.length) setSelected(domainData[0]);
@@ -299,6 +318,17 @@ const MintNftPage: React.FC = () => {
       ) {
         setTransaction({ loading: true, status: "pending" });
         const data = await shopContract.writeAsync?.();
+        if (!data) return;
+        await data?.wait();
+        setTransaction({ loading: true, status: "success" });
+      }
+
+      if (
+        selectedNftType?.title === DIGITAL_GOOD_SHOP &&
+        digitalShopContract.writeAsync
+      ) {
+        setTransaction({ loading: true, status: "pending" });
+        const data = await digitalShopContract.writeAsync?.();
         if (!data) return;
         await data?.wait();
         setTransaction({ loading: true, status: "success" });
