@@ -21,6 +21,7 @@ import {
   IoIosArrowDown,
 } from "react-icons/io";
 import cardImg from "../../assets/img/card-3.png";
+import { Field, Form, Formik } from "formik";
 
 const ShopSettingsOne = () => {
   const [clickCard, setClickCard] = useState(null);
@@ -101,10 +102,10 @@ const ShopSettingsOne = () => {
                     onClick={handleSlidePrev}
                   />
 
-                  <IoIosArrowForward
+                  {/* <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
-                  />
+                  /> */}
                 </div>
               )}
               <h2 className="title">
@@ -146,42 +147,116 @@ const ShopSettingsOne = () => {
                   </div>
                 </div>
               )}
-              {clickAddItem === "Add New Item in Shop" && slide === 1 && (
-                <div className="photo-sub-menu-container sub-menu-container">
-                  <p className="title">Photos</p>
-                  <div className="content">
-                    <div className="content-left">
-                      <p>Logo:</p>
-                      <p>Main Photo:</p>
-                      <p>Photo:</p>
-                      <p>Photo:</p>
-                      <p>Photo:</p>
-                    </div>
-                    <div className="content-right">
-                      <input placeholder="Metadata Link 350*350" />
-                      <input placeholder="Metadata Link 600*400" />
-                      <input placeholder="Metadata Link" />
-                      <input placeholder="Metadata Link" />
-                      <input placeholder="Metadata Link" />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {clickAddItem === "Add New Item in Shop" && slide === 2 && (
-                <div className="item-info-sub-menu-container sub-menu-container">
-                  <p className="title">Item Info</p>
-                  <div className="content">
-                    <div className="content-left">
+              <Formik
+                initialValues={{
+                  previous: "",
+                  fullProduct: "",
+                  ItemName: "",
+                  categorys: "",
+                  details: "",
+                  description: "",
+                  price: "",
+                  currency: "",
+                }}
+                onSubmit={(values) => {
+                  console.log(values);
+                }}
+              >
+                {() => (
+                  <Form>
+                    {clickAddItem === "Add New Item in Shop" && slide === 1 && (
+                      <div className="photo-sub-menu-container sub-menu-container">
+                        <p className="title">Photos</p>
+                        <div className="content">
+                          <div className="content-left">
+                            <p>previous:</p>
+                            <p>Full Product:</p>
+                            <p>Item Name:</p>
+                            <p>Category:</p>
+                            <p>Details:</p>
+                            <p>Description:</p>
+                            <p>Price:</p>
+                            <p>Currency:</p>
+                          </div>
+                          <div className="content-right">
+                            <Field
+                              name="previous"
+                              placeholder="Metadata Link"
+                            />
+                            <Field
+                              name="fullProduct"
+                              placeholder="Metadata Link"
+                            />
+                            <Field name="ItemName" placeholder="Item" />
+                            <Field as="select" name="categorys">
+                              <option value="" label="select a category">
+                                Select a Category
+                              </option>
+                              <option value="movies" label="movies">
+                                Movies
+                              </option>
+                              <option value="courses" label="courses">
+                                Courses
+                              </option>
+                              <option value="books" label="books">
+                                Books
+                              </option>
+                              <option value="music" label="music">
+                                Music
+                              </option>
+                            </Field>
+                            <Field name="details" placeholder="Details" />
+                            <Field
+                              as="textarea"
+                              rows={5}
+                              name="description"
+                            ></Field>
+                            <Field name="price" placeholder="0.00" />
+                            <Field as="select" name="currency">
+                              <option value="" label="Select a Category">
+                                Select a Category
+                              </option>
+                              <option value="shi" label="shi">
+                                SHI
+                              </option>
+                              <option value="leash" label="leash">
+                                LEASH
+                              </option>
+                              <option value="shib" label="shib">
+                                SHIB
+                              </option>
+                              <option value="bone" label="bone">
+                                BONE
+                              </option>
+                              <option value="paw" label="pan">
+                                PAW
+                              </option>
+                            </Field>
+                            <div className="btn-cont">
+                              <button>Submit Listing and Put on Sale</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Form>
+                )}
+              </Formik>
+              {/* {clickAddItem === "Add New Item in Shop" && slide === 2 && (
+                <div className="item-info-sub-menu-container sub-menu-container"> */}
+              {/* <p className="title">Item Info</p> */}
+              {/* <div className="content"> */}
+              {/* <div className="content-left">
                       <p>Item Name:</p>
                       <p>Category:</p>
                       <p>Size:</p>
                       <p>Colour:</p>
                       <p>Fabric Type:</p>
                       <p>Item Condition:</p>
-                    </div>
-                    <div className="content-right">
-                      <input placeholder="Item Name" />
-                      {/* <div className="dropdown-cont">
+                    </div> */}
+              {/* <div className="content-right"> */}
+              {/* <input placeholder="Item Name" /> */}
+              {/* <div className="dropdown-cont">
                         <div
                           className="header"
                           onClick={() => handleDropDown(1)}
@@ -216,12 +291,12 @@ const ShopSettingsOne = () => {
                           </div>
                         )}
                       </div> */}
-                      <select>
+              {/* <select>
                         <option>Select a Category from List</option>
                       </select>
                       <input placeholder="Available Size List(Ex. 30, 32, 35, 44)" />
-                      <input placeholder="Fabric Type Details" />
-                      {/* <div className="dropdown-cont">
+                      <input placeholder="Fabric Type Details" /> */}
+              {/* <div className="dropdown-cont">
                         <div
                           className="header"
                           onClick={() => handleDropDown(2)}
@@ -254,15 +329,15 @@ const ShopSettingsOne = () => {
                           </div>
                         )}
                       </div> */}
-                      <select>
+              {/* <select>
                         <option>New</option>
                       </select>
-                      <input placeholder="Used" />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {clickAddItem === "Add New Item in Shop" && slide === 3 && (
+                      <input placeholder="Used" /> */}
+              {/* </div> */}
+              {/* </div> */}
+              {/* </div> */}
+              {/* )} */}
+              {/* {clickAddItem === "Add New Item in Shop" && slide === 3 && (
                 <div className="description-sub-menu-container sub-menu-container">
                   <p className="title">Description</p>
                   <div className="content">
@@ -293,8 +368,8 @@ const ShopSettingsOne = () => {
                     </div>
                   </div>
                 </div>
-              )}
-              {clickAddItem === "Add New Item in Shop" && slide === 4 && (
+              )} */}
+              {/* {clickAddItem === "Add New Item in Shop" && slide === 4 && (
                 <div className="quantity-price-shipment-sub-menu-container sub-menu-container">
                   <p className="title">Quantity, Price and Shipment</p>
                   <div className="content">
@@ -323,7 +398,7 @@ const ShopSettingsOne = () => {
                     <button>Submit Listing and Put on Sale</button>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           ) : (
             clickRemoveItem && (
@@ -400,66 +475,127 @@ const ShopSettingsOne = () => {
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
-
-              {slide === 1 && (
-                <div className="appearance-settings-sub-menu-container sub-menu-container">
-                  <div className="content">
-                    <div className="content-left">
-                      <p>Logo:</p>
-                      <p>Main Photo / Video:</p>
-                      <p>Photo / Video1:</p>
-                      <p>Photo / Video2:</p>
-                      <p>Photo / Video3:</p>
-                    </div>
-                    <div className="content-right">
-                      <input placeholder="Metadata Link 350*350" />
-                      <input placeholder="Metadata Link 600*400" />
-                      <input placeholder="Metadata Link" />
-                      <input placeholder="Metadata Link" />
-                      <input placeholder="Metadata Link" />
-                    </div>
-                  </div>
-                  <div className="btn-cont">
-                    <button>Submit Changes</button>
-                  </div>
-                </div>
-              )}
-              {slide === 2 && (
-                <div className="brief-description-sub-menu-container sub-menu-container">
-                  <div className="content">
-                    <div className="content-left">
-                      <p>Brief Description:</p>
-                      <p>Contracts:</p>
-                    </div>
-                    <div className="content-right">
-                      <textarea rows={13}></textarea>
-                      <input placeholder="" />
-                    </div>
-                  </div>
-                  <div className="btn-cont">
-                    <button>Submit Changes</button>
-                  </div>
-                </div>
-              )}
-              {slide === 3 && (
-                <div className="social-links-sub-menu-container sub-menu-container">
-                  <div className="content">
-                    <div className="content-left">
-                      <p>Website:</p>
-                      <p>Twitter:</p>
-                      <p>Instagram:</p>
-                    </div>
-                    <div className="content-right">
-                      <input placeholder="Link" />
-                      <input placeholder="Link" />
-                      <input placeholder="Link" />
-                    </div>
-                  </div>
-                  <div className="btn-cont">
-                    <button>Submit Changes</button>
-                  </div>
-                </div>
-              )}
+              <Formik
+                initialValues={{
+                  logo: "",
+                  mainPhoto: "",
+                  videoOne: "",
+                  videoTwo: "",
+                  videoThree: "",
+                  description: "",
+                  contacts: "",
+                  website: "",
+                  twitter: "",
+                  instagram: "",
+                }}
+                onSubmit={(values) => {
+                  console.log(values);
+                }}
+              >
+                {() => (
+                  <Form>
+                    {slide === 1 && (
+                      <div className="appearance-settings-sub-menu-container sub-menu-container">
+                        <div className="content">
+                          <div className="content-left">
+                            <p>Logo:</p>
+                            <p>Main Photo / Video:</p>
+                            <p>Photo / Video1:</p>
+                            <p>Photo / Video2:</p>
+                            <p>Photo / Video3:</p>
+                          </div>
+                          <div className="content-right">
+                            <Field
+                              name="logo"
+                              type="url"
+                              placeholder="Metadata Link 350*350"
+                            />
+                            <Field
+                              name="mainPhoto"
+                              type="text"
+                              placeholder="Metadata Link 600*400"
+                            />
+                            <Field
+                              name="videoOne"
+                              type="text"
+                              placeholder="Metadata Link"
+                            />
+                            <Field
+                              type="text"
+                              name="videoTwo"
+                              placeholder="Metadata Link"
+                            />
+                            <Field
+                              type="text"
+                              name="videoThree"
+                              placeholder="Metadata Link"
+                            />
+                          </div>
+                        </div>
+                        <div className="btn-cont">
+                          <button onClick={handleSlideNext}>Next</button>
+                        </div>
+                      </div>
+                    )}
+                    {slide === 2 && (
+                      <div className="brief-description-sub-menu-container sub-menu-container">
+                        <div className="content">
+                          <div className="content-left">
+                            <p>Brief Description:</p>
+                            <p>Contracts:</p>
+                          </div>
+                          <div className="content-right">
+                            <Field
+                              as="textarea"
+                              rows={13}
+                              name="description"
+                            ></Field>
+                            <Field
+                              name="contacts"
+                              type="number"
+                              placeholder="contact"
+                            />
+                          </div>
+                        </div>
+                        <div className="btn-cont">
+                          <button onClick={handleSlideNext}>Next</button>
+                        </div>
+                      </div>
+                    )}
+                    {slide === 3 && (
+                      <div className="social-links-sub-menu-container sub-menu-container">
+                        <div className="content">
+                          <div className="content-left">
+                            <p>Website:</p>
+                            <p>Twitter:</p>
+                            <p>Instagram:</p>
+                          </div>
+                          <div className="content-right">
+                            <Field
+                              name="website"
+                              type="text"
+                              placeholder="Link"
+                            />
+                            <Field
+                              name="twitter"
+                              type="text"
+                              placeholder="Link"
+                            />
+                            <Field
+                              name="instagram"
+                              type="text"
+                              placeholder="Link"
+                            />
+                          </div>
+                        </div>
+                        <div className="btn-cont">
+                          <button>Submit</button>
+                        </div>
+                      </div>
+                    )}
+                  </Form>
+                )}
+              </Formik>
             </div>
           )}
 
