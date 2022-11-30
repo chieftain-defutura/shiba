@@ -11,11 +11,13 @@ import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import { PAW_TOKEN_ADDRESS } from "../../utils/contractAddress";
 import axios from "axios";
 import { ethers } from "ethers";
+import { useTransactionModal } from "../../context/TransactionContext";
 
 const AddItem = () => {
   const { id } = useParams();
   const { data } = useSigner();
   const { address } = useAccount();
+  const { setTransaction } = useTransactionModal();
   const [newItem, setNewItem] = useState({
     preview: "",
     fullProduct: "",
@@ -37,6 +39,7 @@ const AddItem = () => {
   const handleAddItem = async () => {
     if (!address || !data) return;
     try {
+      setTransaction({ loading: true, status: "pending" });
       const resData = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
@@ -70,9 +73,11 @@ const AddItem = () => {
       );
       await tx.wait();
       console.log("added");
+      setTransaction({ loading: true, status: "success" });
     } catch (error) {
       console.log("Error sending File to IPFS:");
       console.log(error);
+      setTransaction({ loading: true, status: "error" });
     }
   };
 

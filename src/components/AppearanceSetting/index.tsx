@@ -6,12 +6,14 @@ import { ethers } from "ethers";
 import axios from "axios";
 import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
+import { useTransactionModal } from "../../context/TransactionContext";
 
 const AppearanceSetting = () => {
   const { id } = useParams();
   const { data } = useSigner();
   const { address } = useAccount();
   const [slide, setSlide] = useState(1);
+  const { setTransaction } = useTransactionModal();
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -26,13 +28,14 @@ const AppearanceSetting = () => {
   const handleAppearanceSetting = async (values: any) => {
     if (!address || !data) return;
     try {
+      setTransaction({ loading: true, status: "pending" });
       const resData = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
         data: values,
         headers: {
-          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+          pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+          pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
           "Content-Type": "application/json",
         },
       });
@@ -47,9 +50,11 @@ const AppearanceSetting = () => {
       const tx = await contract.setBaseURI(id, dataHash);
       await tx.wait();
       console.log("updated");
+      setTransaction({ loading: true, status: "success" });
     } catch (error) {
       console.log("Error sending File to IPFS:");
       console.log(error);
+      setTransaction({ loading: true, status: "error" });
     }
   };
 

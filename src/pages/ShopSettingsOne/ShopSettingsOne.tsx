@@ -4,9 +4,6 @@ import {
   IoIosArrowForward,
   IoIosArrowDown,
 } from "react-icons/io";
-import { usePrepareContractWrite, useContractWrite } from "wagmi";
-import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import Navigation from "../../components/Navigation/Navigation";
 import FooterBottom from "../../components/FooterBottom/FooterBottom";
@@ -39,7 +36,6 @@ const ShopSettingsOne = () => {
   const [dropDown, setDropDown] = useState<any>(null);
   const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
   const [slide, setSlide] = useState(1);
-  const [hashData, setHashData] = useState("");
 
   const handleSlidePrev = () => {
     if (slide > 1) {
