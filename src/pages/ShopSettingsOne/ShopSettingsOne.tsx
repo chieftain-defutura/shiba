@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
+import { IoIosArrowBack, IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import {
-  IoIosArrowBack,
-  IoIosArrowForward,
-  IoIosArrowDown,
-} from "react-icons/io";
-import { useAccount, usePrepareContractWrite, useContractWrite } from "wagmi";
+  useAccount,
+  usePrepareContractWrite,
+  useContractWrite,
+  useProvider,
+  useSigner,
+} from "wagmi";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
 import { BsArrowLeftCircle } from "react-icons/bs";
@@ -26,9 +28,13 @@ import cardImgNine from "../../assets/img/card-12.png";
 import cardImgTen from "../../assets/img/card-13.png";
 import cardImg from "../../assets/img/card-3.png";
 import "./ShopSettingsOne.css";
+import Residual from "./components/Residual";
+import { useParams } from "react-router-dom";
+import { ethers } from "ethers";
 
 const ShopSettingsOne = () => {
-  // const {data}=usepharams()
+  const { id } = useParams();
+  const { data } = useSigner();
   const { address } = useAccount();
   const [clickCard, setClickCard] = useState<any>(null);
   const [clickAddItem, setClickAddItem] = useState<any>(null);
@@ -38,7 +44,6 @@ const ShopSettingsOne = () => {
   const [dropDown, setDropDown] = useState<any>(null);
   const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
   const [slide, setSlide] = useState(1);
-  const [hashData, setHashData] = useState("");
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -51,7 +56,7 @@ const ShopSettingsOne = () => {
   };
 
   const handleAppearanceSetting = async (values: any) => {
-    if (!address) return;
+    if (!address || !data) return;
     try {
       const resData = await axios({
         method: "post",
@@ -65,8 +70,11 @@ const ShopSettingsOne = () => {
       });
       const JsonHash = resData.data.IpfsHash;
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
-      setHashData(dataHash);
       console.log(dataHash);
+      const contract = new ethers.Contract(DIGITAL_GOODS_ADDRESS, digitalShopABI, data);
+      const tx = await contract.setBaseURI(id, dataHash);
+      await tx.wait();
+      console.log("updated");
     } catch (error) {
       console.log("Error sending File to IPFS:");
       console.log(error);
@@ -92,17 +100,11 @@ const ShopSettingsOne = () => {
           <h2 className="heading">shoesboutique.shib</h2>
           {!clickCard && (
             <div className="cards-container">
-              <div
-                className="card"
-                onClick={() => setClickCard("stock management")}
-              >
+              <div className="card" onClick={() => setClickCard("stock management")}>
                 <img src={cardImgOne} alt="card" className="card-img-1" />
                 <p>Stock Management</p>
               </div>
-              <div
-                className="card"
-                onClick={() => setClickCard("appearance settings")}
-              >
+              <div className="card" onClick={() => setClickCard("appearance settings")}>
                 <img src={cardImgTwo} alt="card" className="card-img-2" />
                 <p>Appearance Settings</p>
               </div>
@@ -128,16 +130,10 @@ const ShopSettingsOne = () => {
           {clickCard === "stock management" && !clickRemoveItem ? (
             <div className="stock-management-container">
               {!clickAddItem ? (
-                <BsArrowLeftCircle
-                  className="arrow-icon"
-                  onClick={() => setClickCard(null)}
-                />
+                <BsArrowLeftCircle className="arrow-icon" onClick={() => setClickCard(null)} />
               ) : (
                 <div className="arrow-icon-container">
-                  <IoIosArrowBack
-                    className="prev-arrow-icon"
-                    onClick={handleSlidePrev}
-                  />
+                  <IoIosArrowBack className="prev-arrow-icon" onClick={handleSlidePrev} />
 
                   {/* <IoIosArrowForward
                     className="next-arrow-icon"
@@ -155,16 +151,11 @@ const ShopSettingsOne = () => {
                     <div className="card-content">
                       <p className="title">Add new item in shop</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                        1500s, when an unknown printer took a galley of type and scrambled it to
+                        make a type specimen book.
                       </p>
-                      <button
-                        onClick={() => setClickAddItem("Add New Item in Shop")}
-                      >
-                        Demo
-                      </button>
+                      <button onClick={() => setClickAddItem("Add New Item in Shop")}>Demo</button>
                     </div>
                   </div>
                   <div className="stock-management-card">
@@ -172,14 +163,11 @@ const ShopSettingsOne = () => {
                     <div className="card-content">
                       <p className="title">Remove Item From Shop</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                        1500s, when an unknown printer took a galley of type and scrambled it to
+                        make a type specimen book.
                       </p>
-                      <button onClick={() => setClickRemoveItem(true)}>
-                        Demo
-                      </button>
+                      <button onClick={() => setClickRemoveItem(true)}>Demo</button>
                     </div>
                   </div>
                 </div>
@@ -216,14 +204,8 @@ const ShopSettingsOne = () => {
                             <p>Currency:</p>
                           </div>
                           <div className="content-right">
-                            <Field
-                              name="previous"
-                              placeholder="Metadata Link"
-                            />
-                            <Field
-                              name="fullProduct"
-                              placeholder="Metadata Link"
-                            />
+                            <Field name="previous" placeholder="Metadata Link" />
+                            <Field name="fullProduct" placeholder="Metadata Link" />
                             <Field name="ItemName" placeholder="Item" />
                             <Field as="select" name="categorys">
                               <option value="" label="select a category">
@@ -243,11 +225,7 @@ const ShopSettingsOne = () => {
                               </option>
                             </Field>
                             <Field name="details" placeholder="Details" />
-                            <Field
-                              as="textarea"
-                              rows={5}
-                              name="description"
-                            ></Field>
+                            <Field as="textarea" rows={5} name="description"></Field>
                             <Field name="price" placeholder="0.00" />
                             <Field as="select" name="currency">
                               <option value="" label="Select a Category">
@@ -495,19 +473,10 @@ const ShopSettingsOne = () => {
           )}
 
           {clickCard === "appearance settings" && (
-            <div
-              className="appearance-settings-container"
-              id="appearance-settings-container"
-            >
+            <div className="appearance-settings-container" id="appearance-settings-container">
               <div className="arrow-icon-container">
-                <IoIosArrowBack
-                  className="prev-arrow-icon"
-                  onClick={handleSlidePrev}
-                />
-                <IoIosArrowForward
-                  className="next-arrow-icon"
-                  onClick={handleSlideNext}
-                />
+                <IoIosArrowBack className="prev-arrow-icon" onClick={handleSlidePrev} />
+                <IoIosArrowForward className="next-arrow-icon" onClick={handleSlideNext} />
               </div>
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
@@ -540,31 +509,15 @@ const ShopSettingsOne = () => {
                             <p>Photo / Video3:</p>
                           </div>
                           <div className="content-right">
-                            <Field
-                              name="logo"
-                              type="url"
-                              placeholder="Metadata Link 350*350"
-                            />
+                            <Field name="logo" type="url" placeholder="Metadata Link 350*350" />
                             <Field
                               name="mainPhoto"
-                              type="text"
+                              type="url"
                               placeholder="Metadata Link 600*400"
                             />
-                            <Field
-                              name="videoOne"
-                              type="text"
-                              placeholder="Metadata Link"
-                            />
-                            <Field
-                              type="text"
-                              name="videoTwo"
-                              placeholder="Metadata Link"
-                            />
-                            <Field
-                              type="text"
-                              name="videoThree"
-                              placeholder="Metadata Link"
-                            />
+                            <Field name="videoOne" type="url" placeholder="Metadata Link" />
+                            <Field type="url" name="videoTwo" placeholder="Metadata Link" />
+                            <Field type="url" name="videoThree" placeholder="Metadata Link" />
                           </div>
                         </div>
                         <div className="btn-cont">
@@ -580,16 +533,8 @@ const ShopSettingsOne = () => {
                             <p>Contracts:</p>
                           </div>
                           <div className="content-right">
-                            <Field
-                              as="textarea"
-                              rows={13}
-                              name="description"
-                            ></Field>
-                            <Field
-                              name="contacts"
-                              type="number"
-                              placeholder="contact"
-                            />
+                            <Field as="textarea" rows={13} name="description"></Field>
+                            <Field name="contacts" type="number" placeholder="contact" />
                           </div>
                         </div>
                         <div className="btn-cont">
@@ -606,21 +551,9 @@ const ShopSettingsOne = () => {
                             <p>Instagram:</p>
                           </div>
                           <div className="content-right">
-                            <Field
-                              name="website"
-                              type="text"
-                              placeholder="Link"
-                            />
-                            <Field
-                              name="twitter"
-                              type="text"
-                              placeholder="Link"
-                            />
-                            <Field
-                              name="instagram"
-                              type="text"
-                              placeholder="Link"
-                            />
+                            <Field name="website" type="url" placeholder="Link" />
+                            <Field name="twitter" type="url" placeholder="Link" />
+                            <Field name="instagram" type="url" placeholder="Link" />
                           </div>
                         </div>
                         <div className="btn-cont">
@@ -634,54 +567,12 @@ const ShopSettingsOne = () => {
             </div>
           )}
 
-          {clickCard === "residual" && (
-            <div className="residual-container">
-              {!clickAddItem && (
-                <BsArrowLeftCircle
-                  className="arrow-icon"
-                  onClick={() => setClickCard(null)}
-                />
-              )}
-              <h2 className="title">
-                {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-              </h2>
-
-              <div className="residual-container-sub-menu-container sub-menu-container">
-                <div className="content">
-                  <div className="content-left">
-                    <p>Set Residual %</p>
-                    <p>Residual Getters List and their Shares</p>
-                    <p>Add Residual Getter</p>
-                    <p>Remove Residual Getter</p>
-                  </div>
-                  <div className="content-right">
-                    <input placeholder="Max 10" />
-                    <select>
-                      <option>Ex. 0x0000...001 50 Shares</option>
-                    </select>
-                    <div className="add-getter-cont">
-                      <input className="address" placeholder="Address" />
-                      <input className="share" placeholder="Share" />
-                    </div>
-                    <select>
-                      <option>Select Address to Remove</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="btn-cont">
-                  <button>Submit Changes</button>
-                </div>
-              </div>
-            </div>
-          )}
+          {clickCard === "residual" && <Residual setClickCard={setClickCard} />}
 
           {clickCard === "transfer" && (
             <div className="residual-container">
               {!clickAddItem && (
-                <BsArrowLeftCircle
-                  className="arrow-icon"
-                  onClick={() => setClickCard(null)}
-                />
+                <BsArrowLeftCircle className="arrow-icon" onClick={() => setClickCard(null)} />
               )}
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
@@ -701,10 +592,7 @@ const ShopSettingsOne = () => {
           {clickCard === "put on sale" && (
             <div className="sell-container">
               {!clickAddItem && (
-                <BsArrowLeftCircle
-                  className="arrow-icon"
-                  onClick={() => setClickCard(null)}
-                />
+                <BsArrowLeftCircle className="arrow-icon" onClick={() => setClickCard(null)} />
               )}
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
@@ -719,14 +607,11 @@ const ShopSettingsOne = () => {
                     <div className="card-right">
                       <p className="card-title">On MarketPlace</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                        1500s, when an unknown printer took a galley of type and scrambled it to
+                        make a type specimen book.
                       </p>
-                      <button onClick={() => setOnMarketPlace(true)}>
-                        Demo
-                      </button>
+                      <button onClick={() => setOnMarketPlace(true)}>Demo</button>
                     </div>
                   </div>
                   <div className="card">
@@ -736,10 +621,9 @@ const ShopSettingsOne = () => {
                     <div className="card-right">
                       <p className="card-title">On Auction</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                        1500s, when an unknown printer took a galley of type and scrambled it to
+                        make a type specimen book.
                       </p>
                       <button onClick={() => setOnAction(true)}>Demo</button>
                     </div>
@@ -763,32 +647,17 @@ const ShopSettingsOne = () => {
                             <input />
                             <button>Put On Sale</button>
                           </div>
-                          <div
-                            className={!dropDown ? " right" : "right active"}
-                          >
-                            <div
-                              className="header"
-                              onClick={() => setDropDown(!dropDown)}
-                            >
+                          <div className={!dropDown ? " right" : "right active"}>
+                            <div className="header" onClick={() => setDropDown(!dropDown)}>
                               <p>{selectedDropDown}</p>
                               <IoIosArrowDown />
                             </div>
                             <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
-                                SHI
-                              </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
-                                LEASH
-                              </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
-                                SHIB
-                              </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
-                                BONE
-                              </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
-                                PAW
-                              </p>
+                              <p onClick={() => setSelectedDropDown("SHI")}>SHI</p>
+                              <p onClick={() => setSelectedDropDown("LEASH")}>LEASH</p>
+                              <p onClick={() => setSelectedDropDown("SHIB")}>SHIB</p>
+                              <p onClick={() => setSelectedDropDown("BONE")}>BONE</p>
+                              <p onClick={() => setSelectedDropDown("PAW")}>PAW</p>
                             </div>
                           </div>
                         </div>
@@ -814,32 +683,17 @@ const ShopSettingsOne = () => {
                             <input />
                             <button>Put On Sale</button>
                           </div>
-                          <div
-                            className={!dropDown ? " right" : "right active"}
-                          >
-                            <div
-                              className="header"
-                              onClick={() => setDropDown(!dropDown)}
-                            >
+                          <div className={!dropDown ? " right" : "right active"}>
+                            <div className="header" onClick={() => setDropDown(!dropDown)}>
                               <p>{selectedDropDown}</p>
                               <IoIosArrowDown />
                             </div>
                             <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
-                                SHI
-                              </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
-                                LEASH
-                              </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
-                                SHIB
-                              </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
-                                BONE
-                              </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
-                                PAW
-                              </p>
+                              <p onClick={() => setSelectedDropDown("SHI")}>SHI</p>
+                              <p onClick={() => setSelectedDropDown("LEASH")}>LEASH</p>
+                              <p onClick={() => setSelectedDropDown("SHIB")}>SHIB</p>
+                              <p onClick={() => setSelectedDropDown("BONE")}>BONE</p>
+                              <p onClick={() => setSelectedDropDown("PAW")}>PAW</p>
                             </div>
                           </div>
                         </div>
