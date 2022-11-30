@@ -35,6 +35,7 @@ import domainABI from "../../utils/abi/domainABI.json";
 import shopABI from "../../utils/abi/shopABI.json";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import { useTransactionModal } from "../../context/TransactionContext";
+import SideBar from "../../components/SideBar/SideBar";
 
 interface IContractData {
   title: string;
@@ -102,8 +103,7 @@ const MintNftPage: React.FC = () => {
   const [selectedNftType, setSelectedNftType] = useState<any>();
   const [selected, setSelected] = useState("");
   const [isInValid, setIsInvalid] = useState(false);
-  const [NftContractData, setIsNftContractData] =
-    useState<IContractData[]>(ContractData);
+  const [NftContractData, setIsNftContractData] = useState<IContractData[]>(ContractData);
   const [inputData, setInputData] = useState("");
   const [mintData, setMintData] = useState([]);
   const [selectDomain, setSelectDomain] = useState("");
@@ -197,19 +197,10 @@ const MintNftPage: React.FC = () => {
   const tokenContract = useContractWrite(tokenApprove);
 
   useEffect(() => {
-    if (
-      domainContract.isError ||
-      shopContract.isError ||
-      digitalShopContract.isError
-    ) {
+    if (domainContract.isError || shopContract.isError || digitalShopContract.isError) {
       setTransaction({ loading: true, status: "error" });
     }
-  }, [
-    domainContract.isError,
-    shopContract.isError,
-    digitalShopContract.isError,
-    setTransaction,
-  ]);
+  }, [domainContract.isError, shopContract.isError, digitalShopContract.isError, setTransaction]);
 
   useEffect(() => {
     if (domainData.length) setSelected(domainData[0]);
@@ -249,9 +240,7 @@ const MintNftPage: React.FC = () => {
   useMemo(() => {
     if (!selectedOption) return;
 
-    const contractdata = NftContractData.find(
-      (f) => f.title === selectedOption
-    );
+    const contractdata = NftContractData.find((f) => f.title === selectedOption);
     setSelectedNftType(contractdata);
   }, [selectedOption]);
 
@@ -301,10 +290,7 @@ const MintNftPage: React.FC = () => {
       console.log(selectedNftType);
       if (!selectedNftType) return;
 
-      if (
-        selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
-        domainContract.writeAsync
-      ) {
+      if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME && domainContract.writeAsync) {
         setTransaction({ loading: true, status: "pending" });
         const data = await domainContract.writeAsync?.();
         if (!data) return;
@@ -312,10 +298,7 @@ const MintNftPage: React.FC = () => {
         setTransaction({ loading: true, status: "success" });
       }
 
-      if (
-        selectedNftType?.title === PHYSICAL_GOODS_SHOP &&
-        shopContract.writeAsync
-      ) {
+      if (selectedNftType?.title === PHYSICAL_GOODS_SHOP && shopContract.writeAsync) {
         setTransaction({ loading: true, status: "pending" });
         const data = await shopContract.writeAsync?.();
         if (!data) return;
@@ -323,10 +306,7 @@ const MintNftPage: React.FC = () => {
         setTransaction({ loading: true, status: "success" });
       }
 
-      if (
-        selectedNftType?.title === DIGITAL_GOOD_SHOP &&
-        digitalShopContract.writeAsync
-      ) {
+      if (selectedNftType?.title === DIGITAL_GOOD_SHOP && digitalShopContract.writeAsync) {
         setTransaction({ loading: true, status: "pending" });
         const data = await digitalShopContract.writeAsync?.();
         if (!data) return;
@@ -344,87 +324,8 @@ const MintNftPage: React.FC = () => {
       <Navigation />
       <HeaderNav />
       <div className="mint-nft-container">
-        <div className="mint-nft-container-left">
-          <div className="box">
-            <h2 className="heading">My Items</h2>
-            <div className="content-cont">
-              <div className="content">
-                <p className="name">My Movies</p>
-                <p className="number">2</p>
-              </div>
-              <div className="content">
-                <p className="name">My Music</p>
-                <p className="number">5</p>
-              </div>
-              <div className="content">
-                <p className="name">My Books</p>
-                <p className="number">4</p>
-              </div>
-              <div className="content">
-                <p className="name">My Courses</p>
-                <p className="number">1</p>
-              </div>
-            </div>
-          </div>
-          <div className="box">
-            <h2 className="heading">My Websites</h2>
-            <div className="content-cont">
-              <div className="content">
-                <p className="name">My Websites</p>
-                <p className="number">2</p>
-              </div>
-            </div>
-          </div>
-          <div className="box">
-            <h2 className="heading">My Domains</h2>
-            <div className="content-cont">
-              <div className="content">
-                <p className="name">My Domains</p>
-                <p className="number">5</p>
-              </div>
-            </div>
-          </div>
-          <div className="box">
-            <h2 className="heading">My Shops</h2>
-            <div className="content-cont">
-              <div className="content">
-                <p className="name">My Digital Shop</p>
-                <p className="number">1</p>
-              </div>
-              <div className="content">
-                <p className="name">My Goods Shop</p>
-                <p className="number"></p>
-              </div>
-            </div>
-          </div>
-          <div className="box">
-            <h2 className="heading">My Charities</h2>
-            <div className="content-cont">
-              <div className="content">
-                <p className="name">My Charities</p>
-                <p className="number">1</p>
-              </div>
-            </div>
-          </div>
-          <div className="box">
-            <h2 className="heading">Delivery</h2>
-            <div className="content-cont">
-              <div className="content">
-                <p className="name">Have to Send</p>
-                <p className="number">4</p>
-              </div>
-              <div className="content">
-                <p className="name">Awaiting Delivery</p>
-                <p className="number">2</p>
-              </div>
-            </div>
-          </div>
-          <div className="select-container">
-            <select>
-              <option>SORT BY DATE</option>
-              <option>Websites</option>
-            </select>
-          </div>
+        <div className="mint-nft-container-right">
+          <SideBar />
         </div>
         <div className="mint-nft-container-right">
           <h2 className="heading">Mint NFT</h2>
@@ -450,13 +351,7 @@ const MintNftPage: React.FC = () => {
                 {selectedOption}
                 <MdKeyboardArrowDown className="arrow-icon" />
               </div>
-              <div
-                className={
-                  isDropDownClick
-                    ? "drop-down-content active"
-                    : "drop-down-content"
-                }
-              >
+              <div className={isDropDownClick ? "drop-down-content active" : "drop-down-content"}>
                 <p
                   onClick={() => {
                     setSelectedOption(DIGITAL_GOOD_SHOP);
@@ -586,8 +481,7 @@ const MintNftPage: React.FC = () => {
                     !!errorMessage ||
                     domainContract.isLoading ||
                     shopContract.isLoading ||
-                    (selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
-                      isError)
+                    (selectedNftType?.title === UNATTACHED_DOMAIN_NAME && isError)
                   }
                 >
                   Create

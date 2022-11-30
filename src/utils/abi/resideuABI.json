@@ -1,0 +1,195 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "shareOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sharePercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "AddBenificiary",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "shareHolderIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sharePercentIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemoveBenificiary",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_shareOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_sharePercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "addBenificiary",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenid",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBenificiary",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "totalPercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "filledShare",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxsharelimit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shareHolderIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sharePercentIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeBenificiary",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_totalShare",
+        "type": "uint256"
+      }
+    ],
+    "name": "setPercent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
