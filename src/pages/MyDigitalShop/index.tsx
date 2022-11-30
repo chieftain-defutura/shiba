@@ -7,6 +7,7 @@ import SideBar from "../../components/SideBar/SideBar";
 import axios from "axios";
 import { useAccount } from "wagmi";
 import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
+
 const MyDigitalShop: React.FC = () => {
   const [userNftData, setUserNftData] = useState([]);
   console.log(userNftData);

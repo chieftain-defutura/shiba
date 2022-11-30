@@ -1,8 +1,31 @@
 import React from "react";
 import "./SideBar.css";
 import { Link } from "react-router-dom";
-
-const SideBar = () => {
+import { useAccount, useContractReads } from "wagmi";
+import {
+  SHOP_NFT_CONTRACT_ADDRESS,
+  DIGITAL_GOODS_ADDRESS,
+} from "../../utils/contractAddress";
+import shopAbi from "../../utils/abi/shopABI.json";
+const SideBar: React.FC = () => {
+  const { address } = useAccount();
+  const { data: balanceData } = useContractReads({
+    contracts: [
+      {
+        address: SHOP_NFT_CONTRACT_ADDRESS,
+        abi: shopAbi,
+        functionName: "balanceOf",
+        args: [address],
+      },
+      {
+        address: DIGITAL_GOODS_ADDRESS,
+        abi: shopAbi,
+        functionName: "balanceOf",
+        args: [address],
+      },
+    ],
+  });
+  console.log(balanceData);
   return (
     <div>
       <div className="sidebar-container">
@@ -69,7 +92,6 @@ const SideBar = () => {
             <div className="content">
               <Link to="/my-goods-shop">
                 <p className="name">My Goods Shop</p>
-                <p className="number"></p>
               </Link>
             </div>
           </div>
