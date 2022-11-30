@@ -31,6 +31,7 @@ import "./ShopSettingsOne.css";
 import Residual from "./components/Residual";
 import { useParams } from "react-router-dom";
 import { ethers } from "ethers";
+import { useTransactionModal } from "../../context/TransactionContext";
 
 const ShopSettingsOne = () => {
   const { id } = useParams();
@@ -44,6 +45,7 @@ const ShopSettingsOne = () => {
   const [dropDown, setDropDown] = useState<any>(null);
   const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
   const [slide, setSlide] = useState(1);
+  const { setTransaction } = useTransactionModal();
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -58,13 +60,14 @@ const ShopSettingsOne = () => {
   const handleAppearanceSetting = async (values: any) => {
     if (!address || !data) return;
     try {
+      setTransaction({ loading: true, status: "pending" });
       const resData = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
         data: values,
         headers: {
-          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+          pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+          pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
           "Content-Type": "application/json",
         },
       });
@@ -75,9 +78,11 @@ const ShopSettingsOne = () => {
       const tx = await contract.setBaseURI(id, dataHash);
       await tx.wait();
       console.log("updated");
+      setTransaction({ loading: true, status: "success" });
     } catch (error) {
       console.log("Error sending File to IPFS:");
       console.log(error);
+      setTransaction({ loading: true, status: "error" });
     }
   };
 
