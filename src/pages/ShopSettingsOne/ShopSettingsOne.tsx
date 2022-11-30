@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import {
@@ -6,6 +6,9 @@ import {
   IoIosArrowForward,
   IoIosArrowDown,
 } from "react-icons/io";
+import { useAccount, usePrepareContractWrite, useContractWrite } from "wagmi";
+import digitalShopABI from "../../utils/abi/digitalShopABI.json";
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import Navigation from "../../components/Navigation/Navigation";
 import FooterBottom from "../../components/FooterBottom/FooterBottom";
@@ -25,6 +28,8 @@ import cardImg from "../../assets/img/card-3.png";
 import "./ShopSettingsOne.css";
 
 const ShopSettingsOne = () => {
+  // const {data}=usepharams()
+  const { address } = useAccount();
   const [clickCard, setClickCard] = useState<any>(null);
   const [clickAddItem, setClickAddItem] = useState<any>(null);
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null);
@@ -33,6 +38,7 @@ const ShopSettingsOne = () => {
   const [dropDown, setDropDown] = useState<any>(null);
   const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
   const [slide, setSlide] = useState(1);
+  const [hashData, setHashData] = useState("");
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -44,51 +50,36 @@ const ShopSettingsOne = () => {
     setSlide(slide + 1);
   };
 
-  // const sendFileToIPFS = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   if (!account) return;
-  //   if (fileImg) {
-  //     try {
-  //       const formData = new FormData();
-  //       formData.append("file", fileImg);
+  const handleAppearanceSetting = async (values: any) => {
+    if (!address) return;
+    try {
+      const resData = await axios({
+        method: "post",
+        url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+        data: values,
+        headers: {
+          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
+          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const JsonHash = resData.data.IpfsHash;
+      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
+      setHashData(dataHash);
+      console.log(dataHash);
+    } catch (error) {
+      console.log("Error sending File to IPFS:");
+      console.log(error);
+    }
+  };
 
-  //       const resFile = await axios({
-  //         method: "post",
-  //         url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
-  //         data: formData,
-  //         headers: {
-  //           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-  //           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       });
-
-  //       const ImgHash = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
-  //       console.log(ImgHash);
-
-  //       const newData = { ...formName, image: ImgHash };
-  //       const resData = await axios({
-  //         method: "post",
-  //         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-  //         data: newData,
-  //         headers: {
-  //           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-  //           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       const JsonHash = resData.data.IpfsHash;
-  //       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
-  //       console.log(dataHash);
-  //       await setMint(account, library?.provider, JsonHash);
-  //       handleGetData();
-  //     } catch (error) {
-  //       console.log("Error sending File to IPFS:");
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
+  const { config: shopMints } = usePrepareContractWrite({
+    address: DIGITAL_GOODS_ADDRESS,
+    abi: digitalShopABI,
+    functionName: "setBaseURI",
+    // args: [pharams, hashData],
+  });
+  const shopContract = useContractWrite(shopMints);
   return (
     <div>
       <Navigation />
@@ -534,9 +525,7 @@ const ShopSettingsOne = () => {
                   twitter: "",
                   instagram: "",
                 }}
-                onSubmit={(values) => {
-                  console.log(values);
-                }}
+                onSubmit={handleAppearanceSetting}
               >
                 {() => (
                   <Form>
