@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import {
@@ -6,9 +6,18 @@ import {
   IoIosArrowForward,
   IoIosArrowDown,
 } from "react-icons/io";
-import { useAccount, usePrepareContractWrite, useContractWrite } from "wagmi";
+import { useParams } from "react-router-dom";
+import {
+  useAccount,
+  usePrepareContractWrite,
+  useContractWrite,
+  useContractRead,
+} from "wagmi";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
+import {
+  DIGITAL_GOODS_ADDRESS,
+  PAW_TOKEN_ADDRESS,
+} from "../../utils/contractAddress";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import Navigation from "../../components/Navigation/Navigation";
 import FooterBottom from "../../components/FooterBottom/FooterBottom";
@@ -26,9 +35,10 @@ import cardImgNine from "../../assets/img/card-12.png";
 import cardImgTen from "../../assets/img/card-13.png";
 import cardImg from "../../assets/img/card-3.png";
 import "./ShopSettingsOne.css";
+import RemoveItem from "../../components/RemoveItem";
 
 const ShopSettingsOne = () => {
-  // const {data}=usepharams()
+  const { id } = useParams();
   const { address } = useAccount();
   const [clickCard, setClickCard] = useState<any>(null);
   const [clickAddItem, setClickAddItem] = useState<any>(null);
@@ -39,6 +49,31 @@ const ShopSettingsOne = () => {
   const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
   const [slide, setSlide] = useState(1);
   const [hashData, setHashData] = useState("");
+  const [newItem, setNewItem] = useState({
+    preview: "",
+    fullProduct: "",
+    ItemName: "",
+    categorys: "",
+    details: "",
+    price: "",
+    currency: "",
+  });
+  const [readNewItem, setReadNewItem] = useState<any>();
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setNewItem((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const { data }: { data: any } = useContractRead({
+    address: DIGITAL_GOODS_ADDRESS,
+    abi: digitalShopABI,
+    functionName: "getItemDetails",
+    args: ["0"],
+  });
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -77,9 +112,24 @@ const ShopSettingsOne = () => {
     address: DIGITAL_GOODS_ADDRESS,
     abi: digitalShopABI,
     functionName: "setBaseURI",
-    // args: [pharams, hashData],
+    args: [id, hashData],
   });
   const shopContract = useContractWrite(shopMints);
+
+  const { config: addItem } = usePrepareContractWrite({
+    address: DIGITAL_GOODS_ADDRESS,
+    abi: digitalShopABI,
+    functionName: "addItem",
+    args: [
+      id,
+      newItem.preview,
+      newItem.fullProduct,
+      newItem.price,
+      PAW_TOKEN_ADDRESS,
+      newItem.ItemName,
+    ],
+  });
+  const { write } = useContractWrite(addItem);
   return (
     <div>
       <Navigation />
@@ -184,101 +234,97 @@ const ShopSettingsOne = () => {
                   </div>
                 </div>
               )}
-              <Formik
-                initialValues={{
-                  previous: "",
-                  fullProduct: "",
-                  ItemName: "",
-                  categorys: "",
-                  details: "",
-                  description: "",
-                  price: "",
-                  currency: "",
-                }}
-                onSubmit={(values) => {
-                  console.log(values);
-                }}
-              >
-                {() => (
-                  <Form>
-                    {clickAddItem === "Add New Item in Shop" && slide === 1 && (
-                      <div className="photo-sub-menu-container sub-menu-container">
-                        <p className="title">Photos</p>
-                        <div className="content">
-                          <div className="content-left">
-                            <p>previous:</p>
-                            <p>Full Product:</p>
-                            <p>Item Name:</p>
-                            <p>Category:</p>
-                            <p>Details:</p>
-                            <p>Description:</p>
-                            <p>Price:</p>
-                            <p>Currency:</p>
-                          </div>
-                          <div className="content-right">
-                            <Field
-                              name="previous"
-                              placeholder="Metadata Link"
-                            />
-                            <Field
-                              name="fullProduct"
-                              placeholder="Metadata Link"
-                            />
-                            <Field name="ItemName" placeholder="Item" />
-                            <Field as="select" name="categorys">
-                              <option value="" label="select a category">
-                                Select a Category
-                              </option>
-                              <option value="movies" label="movies">
-                                Movies
-                              </option>
-                              <option value="courses" label="courses">
-                                Courses
-                              </option>
-                              <option value="books" label="books">
-                                Books
-                              </option>
-                              <option value="music" label="music">
-                                Music
-                              </option>
-                            </Field>
-                            <Field name="details" placeholder="Details" />
-                            <Field
-                              as="textarea"
-                              rows={5}
-                              name="description"
-                            ></Field>
-                            <Field name="price" placeholder="0.00" />
-                            <Field as="select" name="currency">
-                              <option value="" label="Select a Category">
-                                Select a Category
-                              </option>
-                              <option value="shi" label="shi">
-                                SHI
-                              </option>
-                              <option value="leash" label="leash">
-                                LEASH
-                              </option>
-                              <option value="shib" label="shib">
-                                SHIB
-                              </option>
-                              <option value="bone" label="bone">
-                                BONE
-                              </option>
-                              <option value="paw" label="pan">
-                                PAW
-                              </option>
-                            </Field>
-                            <div className="btn-cont">
-                              <button>Submit Listing and Put on Sale</button>
-                            </div>
+              <div>
+                <div>
+                  {clickAddItem === "Add New Item in Shop" && slide === 1 && (
+                    <div className="photo-sub-menu-container sub-menu-container">
+                      <p className="title">Photos</p>
+                      <div className="content">
+                        <div className="content-left">
+                          <p>preview:</p>
+                          <p>Full Product:</p>
+                          <p>Item Name:</p>
+                          <p>Category:</p>
+                          <p>Details:</p>
+                          <p>Description:</p>
+                          <p>Price:</p>
+                          <p>Currency:</p>
+                        </div>
+                        <div className="content-right">
+                          <input
+                            name="preview"
+                            placeholder="Metadata Link"
+                            onChange={handleChange}
+                          />
+                          <input
+                            name="fullProduct"
+                            placeholder="Metadata Link"
+                            onChange={handleChange}
+                          />
+                          <input
+                            name="ItemName"
+                            placeholder="Item"
+                            onChange={handleChange}
+                          />
+                          <select name="categorys" onChange={handleChange}>
+                            <option value="" label="select a category">
+                              Select a Category
+                            </option>
+                            <option value="movies" label="movies">
+                              Movies
+                            </option>
+                            <option value="courses" label="courses">
+                              Courses
+                            </option>
+                            <option value="books" label="books">
+                              Books
+                            </option>
+                            <option value="music" label="music">
+                              Music
+                            </option>
+                          </select>
+                          <input
+                            name="details"
+                            placeholder="Details"
+                            onChange={handleChange}
+                          />
+                          <textarea rows={5} name="description"></textarea>
+                          <input
+                            name="price"
+                            placeholder="0.00"
+                            onChange={handleChange}
+                          />
+                          <select name="currency" onChange={handleChange}>
+                            <option value="" label="Select a Category">
+                              Select a Category
+                            </option>
+                            <option value="shi" label="shi">
+                              SHI
+                            </option>
+                            <option value="leash" label="leash">
+                              LEASH
+                            </option>
+                            <option value="shib" label="shib">
+                              SHIB
+                            </option>
+                            <option value="bone" label="bone">
+                              BONE
+                            </option>
+                            <option value="paw" label="pan">
+                              PAW
+                            </option>
+                          </select>
+                          <div className="btn-cont">
+                            <button onClick={() => write?.()}>
+                              Submit Listing and Put on Sale
+                            </button>
                           </div>
                         </div>
                       </div>
-                    )}
-                  </Form>
-                )}
-              </Formik>
+                    </div>
+                  )}
+                </div>
+              </div>
               {/* {clickAddItem === "Add New Item in Shop" && slide === 2 && (
                 <div className="item-info-sub-menu-container sub-menu-container"> */}
               {/* <p className="title">Item Info</p> */}
@@ -438,60 +484,7 @@ const ShopSettingsOne = () => {
               )} */}
             </div>
           ) : (
-            clickRemoveItem && (
-              <div className="stock-management-remove-item-container">
-                <div className="remove-item-cards-container">
-                  <div>
-                    <div className="remove-item-card">
-                      <div className="card-top">
-                        <img src={cardImg} alt="card" />
-                      </div>
-                      <div className="card-center">
-                        <h3 className="title">The Holy Grail</h3>
-                        <h4 className="sub-title">Pixart Motion</h4>
-                      </div>
-                      <div className="card-bottom">
-                        <p>Fixed price</p>
-                        <button>0.001 ETH</button>
-                      </div>
-                      <div className="card-overlay">
-                        <button>Details</button>
-                        <button>Remove Shop</button>
-                      </div>
-                    </div>
-                    <div className="remove-card-bottom">
-                      <p>Name: shoes winter</p>
-                      <p>Quantity: 100</p>
-                      <p>Total Sell: 44</p>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="remove-item-card">
-                      <div className="card-top">
-                        <img src={cardImg} alt="card" />
-                      </div>
-                      <div className="card-center">
-                        <h3 className="title">The Holy Grail</h3>
-                        <h4 className="sub-title">Pixart Motion</h4>
-                      </div>
-                      <div className="card-bottom">
-                        <p>Fixed price</p>
-                        <button>0.001 ETH</button>
-                      </div>
-                      <div className="card-overlay">
-                        <button>Details</button>
-                        <button>Remove Shop</button>
-                      </div>
-                    </div>
-                    <div className="remove-card-bottom">
-                      <p>Name: shoes summer</p>
-                      <p>Quantity: 100</p>
-                      <p>Total Sell: 10</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
+            clickRemoveItem && <RemoveItem />
           )}
 
           {clickCard === "appearance settings" && (

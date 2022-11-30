@@ -25,7 +25,6 @@ const SideBar: React.FC = () => {
       },
     ],
   });
-  console.log(balanceData);
   return (
     <div>
       <div className="sidebar-container">
