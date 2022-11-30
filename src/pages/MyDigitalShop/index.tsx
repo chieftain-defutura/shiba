@@ -6,32 +6,35 @@ import HeaderNav from "../../components/HeaderNav/HeaderNav";
 import SideBar from "../../components/SideBar/SideBar";
 import axios from "axios";
 import { useAccount } from "wagmi";
-import {
-  DIGITAL_GOODS_ADDRESS,
-  DOMAIN_NFT_CONTRACT_ADDRESS,
-} from "../../utils/contractAddress";
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
+
 const MyDigitalShop: React.FC = () => {
   const [userNftData, setUserNftData] = useState([]);
   console.log(userNftData);
-
+  const [loading, setLoading] = useState(false);
   const { address } = useAccount();
+
   const handleGetUserNft = useCallback(async () => {
     try {
       if (!address) return;
+      setLoading(true);
+
       const { data } = await axios.get(
         `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DIGITAL_GOODS_ADDRESS}`,
+
         {
           headers: {
             "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
           },
         }
       );
-
+      setLoading(false);
       setUserNftData(data.result.map((r: any) => r.token_id));
     } catch (error) {
       console.log(error);
     }
   }, [address]);
+  console.log(address);
 
   useEffect(() => {
     handleGetUserNft();
@@ -46,6 +49,8 @@ const MyDigitalShop: React.FC = () => {
           <SideBar />
         </div>
         <div className="website-container-right">
+          {loading ? "loading..." : ""}
+          {!userNftData.length && "noResult"}
           {userNftData.map((f, idx) => (
             <div className="website-card-container" key={idx}>
               <div className="card">
