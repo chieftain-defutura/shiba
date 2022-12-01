@@ -32,7 +32,6 @@ function App() {
         <Route path="websites" element={<WebsitesPage />} />
         <Route path="marketplace" element={<MarketPlacePage />} />
         <Route path="action" element={<ActionPage />} />
-
         <Route path="sell" element={<SellPage />} />
         <Route path="/my-movies" element={<MyMovies />} />
         <Route path="/my-movies/:id" element={<ShopSettingsOne />} />
