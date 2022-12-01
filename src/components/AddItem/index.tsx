@@ -27,6 +27,7 @@ const AddItem = () => {
     price: "",
     currency: "",
   });
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setNewItem((prevState) => ({
@@ -97,11 +98,13 @@ const AddItem = () => {
         <div className="content-right">
           <input
             name="preview"
+            type="url"
             placeholder="Metadata Link"
             onChange={handleChange}
           />
           <input
             name="fullProduct"
+            type="url"
             placeholder="Metadata Link"
             onChange={handleChange}
           />
