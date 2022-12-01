@@ -5,6 +5,8 @@ import LayoutModal from "../Model";
 import logo from "../../assets/img/logo.png";
 import searchIcon from "../../assets/img/search-icon.png";
 import "./Navigation.css";
+import { Link } from "react-router-dom";
+// import Link from "next/link";
 
 const Navigation = () => {
   const { address } = useAccount();
@@ -14,18 +16,36 @@ const Navigation = () => {
       <div className="container">
         <div className="container-left">
           <div className="logo-container">
-            <img src={logo} alt="logo" />
+            <Link to="/">
+              <img src={logo} alt="logo" />
+            </Link>
           </div>
           <nav>
             <ul>
-              <li>Home</li>
-              <li>Shops</li>
-              <li>Websites</li>
-              <li>Domain Names</li>
-              <li>Full On Blockchain NFT</li>
-              <li>Charities</li>
-              <li>MarketPlace</li>
-              <li>Auction</li>
+              <li>
+                <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="">Shops</Link>
+              </li>
+              <li>
+                <Link to="">Websites</Link>
+              </li>
+              <li>
+                <Link to="">Domain Names</Link>
+              </li>
+              <li>
+                <Link to="">Full On Blockchain NFT</Link>
+              </li>
+              <li>
+                <Link to="">Charities</Link>
+              </li>
+              <li>
+                <Link to="">MarketPlace</Link>
+              </li>
+              <li>
+                <Link to="">Auction</Link>
+              </li>
             </ul>
           </nav>
         </div>

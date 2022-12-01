@@ -27,6 +27,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="home" element={<HomePage />} />
         <Route path="mint-nft" element={<MintNftPage />} />
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />

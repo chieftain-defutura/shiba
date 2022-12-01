@@ -36,7 +36,9 @@
   height: 82px;
 }
 
-.navigation-container .container-left nav li {
+.navigation-container .container-left nav li a {
+  color: #fff;
+  text-decoration: none;
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
@@ -48,7 +50,7 @@
   border-bottom: 3px solid transparent;
 }
 
-.navigation-container .container-left nav li:hover {
+.navigation-container .container-left nav li a:hover {
   color: var(--textColorTwo);
   border-bottom: 3px solid var(--textColorTwo);
 }
