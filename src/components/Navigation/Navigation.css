@@ -49,6 +49,9 @@
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
 }
+.navigation-container .container-left nav li {
+  height: 100%;
+}
 
 .navigation-container .container-left nav li a:hover {
   color: var(--textColorTwo);
