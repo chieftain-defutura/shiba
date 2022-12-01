@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import WrongNetworkModal from "../modal/WrongNetworkModal";
-import useUpdateEffect from "../hooks/useUpdateEffect";
 import { useNetwork } from "wagmi";
 
 interface IWrongNetworkContext {

@@ -20,8 +20,6 @@ import {
   useContractWrite,
   erc20ABI,
   useAccount,
-  useProvider,
-  useNetwork,
 } from "wagmi";
 import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
@@ -97,18 +95,19 @@ const leashAllownaceData = {
 const MintNftPage: React.FC = () => {
   const { setTransaction } = useTransactionModal();
   const { address } = useAccount();
-  const provider = useProvider({ chainId: 5 });
+  // const provider = useProvider({ chainId: 5 });
   const [isDropDownClick, setIsDropDownClick] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedNftType, setSelectedNftType] = useState<any>();
   const [selected, setSelected] = useState("");
   const [isInValid, setIsInvalid] = useState(false);
-  const [NftContractData, setIsNftContractData] = useState<IContractData[]>(ContractData);
+  const [NftContractData, setIsNftContractData] =
+    useState<IContractData[]>(ContractData);
   const [inputData, setInputData] = useState("");
   const [mintData, setMintData] = useState([]);
   const [selectDomain, setSelectDomain] = useState("");
 
-  const { chain } = useNetwork();
+  // const { chain } = useNetwork();
 
   const { data } = useContractReads({
     contracts: [
@@ -197,10 +196,19 @@ const MintNftPage: React.FC = () => {
   const tokenContract = useContractWrite(tokenApprove);
 
   useEffect(() => {
-    if (domainContract.isError || shopContract.isError || digitalShopContract.isError) {
+    if (
+      domainContract.isError ||
+      shopContract.isError ||
+      digitalShopContract.isError
+    ) {
       setTransaction({ loading: true, status: "error" });
     }
-  }, [domainContract.isError, shopContract.isError, digitalShopContract.isError, setTransaction]);
+  }, [
+    domainContract.isError,
+    shopContract.isError,
+    digitalShopContract.isError,
+    setTransaction,
+  ]);
 
   useEffect(() => {
     if (domainData.length) setSelected(domainData[0]);
@@ -235,13 +243,17 @@ const MintNftPage: React.FC = () => {
     NewNftContractData[1].allowance = Number(data[2]?.toString());
     // NewNftContractData[2].allowance = Number(data[3].toString());
     setIsNftContractData(NewNftContractData);
+    // eslint-disable-next-line   react-hooks/exhaustive-deps
   }, [data]);
 
   useMemo(() => {
     if (!selectedOption) return;
 
-    const contractdata = NftContractData.find((f) => f.title === selectedOption);
+    const contractdata = NftContractData.find(
+      (f) => f.title === selectedOption
+    );
     setSelectedNftType(contractdata);
+    // eslint-disable-next-line   react-hooks/exhaustive-deps
   }, [selectedOption]);
 
   const canShowCreateButton = useMemo(() => {
@@ -290,7 +302,10 @@ const MintNftPage: React.FC = () => {
       console.log(selectedNftType);
       if (!selectedNftType) return;
 
-      if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME && domainContract.writeAsync) {
+      if (
+        selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
+        domainContract.writeAsync
+      ) {
         setTransaction({ loading: true, status: "pending" });
         const data = await domainContract.writeAsync?.();
         if (!data) return;
@@ -298,7 +313,10 @@ const MintNftPage: React.FC = () => {
         setTransaction({ loading: true, status: "success" });
       }
 
-      if (selectedNftType?.title === PHYSICAL_GOODS_SHOP && shopContract.writeAsync) {
+      if (
+        selectedNftType?.title === PHYSICAL_GOODS_SHOP &&
+        shopContract.writeAsync
+      ) {
         setTransaction({ loading: true, status: "pending" });
         const data = await shopContract.writeAsync?.();
         if (!data) return;
@@ -306,7 +324,10 @@ const MintNftPage: React.FC = () => {
         setTransaction({ loading: true, status: "success" });
       }
 
-      if (selectedNftType?.title === DIGITAL_GOOD_SHOP && digitalShopContract.writeAsync) {
+      if (
+        selectedNftType?.title === DIGITAL_GOOD_SHOP &&
+        digitalShopContract.writeAsync
+      ) {
         setTransaction({ loading: true, status: "pending" });
         const data = await digitalShopContract.writeAsync?.();
         if (!data) return;
@@ -351,7 +372,13 @@ const MintNftPage: React.FC = () => {
                 {selectedOption}
                 <MdKeyboardArrowDown className="arrow-icon" />
               </div>
-              <div className={isDropDownClick ? "drop-down-content active" : "drop-down-content"}>
+              <div
+                className={
+                  isDropDownClick
+                    ? "drop-down-content active"
+                    : "drop-down-content"
+                }
+              >
                 <p
                   onClick={() => {
                     setSelectedOption(DIGITAL_GOOD_SHOP);
@@ -481,7 +508,8 @@ const MintNftPage: React.FC = () => {
                     !!errorMessage ||
                     domainContract.isLoading ||
                     shopContract.isLoading ||
-                    (selectedNftType?.title === UNATTACHED_DOMAIN_NAME && isError)
+                    (selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
+                      isError)
                   }
                 >
                   Create

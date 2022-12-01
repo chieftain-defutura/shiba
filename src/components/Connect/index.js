@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { useConnect } from "wagmi";
-import LayoutModal from "../Model";
 import "./Connect.css";
 export function Connector() {
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
-  const [close, setClose] = useState(true);
 
   return (
     <div className="connector">

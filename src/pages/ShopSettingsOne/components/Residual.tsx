@@ -2,11 +2,13 @@ import React, { useMemo, useState } from "react";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import {
   useContractRead,
-  useContractReads,
   useContractWrite,
   usePrepareContractWrite,
 } from "wagmi";
-import { DIGITAL_GOODS_ADDRESS, RESIDUAL_ADDRESS } from "../../../utils/contractAddress";
+import {
+  DIGITAL_GOODS_ADDRESS,
+  RESIDUAL_ADDRESS,
+} from "../../../utils/contractAddress";
 import residualABI from "../../../utils/abi/resideuABI.json";
 import { useParams } from "react-router-dom";
 
@@ -66,7 +68,10 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     newData[2].forEach((address: string, i: number) => {
       newData[3].forEach((sharePercent: any, j: number) => {
         if (i === j) {
-          shareHoldersList.push({ address, sharePercent: sharePercent.toString() });
+          shareHoldersList.push({
+            address,
+            sharePercent: sharePercent.toString(),
+          });
         }
       });
     });
@@ -99,7 +104,10 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
 
   return (
     <div className="residual-container">
-      <BsArrowLeftCircle className="arrow-icon" onClick={() => setClickCard(null)} />
+      <BsArrowLeftCircle
+        className="arrow-icon"
+        onClick={() => setClickCard(null)}
+      />
       <h2 className="title">Residual</h2>
 
       <div className="residual-container-sub-menu-container sub-menu-container">
@@ -135,7 +143,9 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
             <select>
               {formattedData?.shareHolders.map((list, index) => (
                 <option key={index.toString()}>
-                  {`${list.address.slice(0, 6)}...${list.address.slice(list.address.length - 6)}`}
+                  {`${list.address.slice(0, 6)}...${list.address.slice(
+                    list.address.length - 6
+                  )}`}
                   &nbsp;
                   {list.sharePercent} Shares
                 </option>
@@ -178,7 +188,9 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
               <option value="">Select Address to Remove</option>
               {formattedData?.shareHolders.map((list, index) => (
                 <option key={index.toString()} value={index}>
-                  {`${list.address.slice(0, 10)}...${list.address.slice(list.address.length - 10)}`}
+                  {`${list.address.slice(0, 10)}...${list.address.slice(
+                    list.address.length - 10
+                  )}`}
                 </option>
               ))}
             </select>

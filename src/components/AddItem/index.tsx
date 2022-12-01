@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { usePrepareContractWrite, useContractWrite, useAccount, useSigner } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import { useParams } from "react-router-dom";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
+import {
+  DIGITAL_GOODS_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+} from "../../utils/contractAddress";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import { PAW_TOKEN_ADDRESS } from "../../utils/contractAddress";
 import axios from "axios";
@@ -54,7 +58,11 @@ const AddItem = () => {
       const JsonHash = resData.data.IpfsHash;
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
       console.log(dataHash);
-      const contract = new ethers.Contract(DIGITAL_GOODS_ADDRESS, digitalShopABI, data);
+      const contract = new ethers.Contract(
+        DIGITAL_GOODS_ADDRESS,
+        digitalShopABI,
+        data
+      );
       const tx = await contract.addItem(
         id,
         newItem.preview,
@@ -88,7 +96,12 @@ const AddItem = () => {
           <p>Currency:</p>
         </div>
         <div className="content-right">
-          <input name="preview" type="url" placeholder="Metadata Link" onChange={handleChange} />
+          <input
+            name="preview"
+            type="url"
+            placeholder="Metadata Link"
+            onChange={handleChange}
+          />
           <input
             name="fullProduct"
             type="url"
@@ -114,30 +127,36 @@ const AddItem = () => {
             </option>
           </select>
           <input name="details" placeholder="Details" onChange={handleChange} />
-          <textarea rows={5} name="description" onChange={handleChange}></textarea>
+          <textarea
+            rows={5}
+            name="description"
+            onChange={handleChange}
+          ></textarea>
           <input name="price" placeholder="0.00" onChange={handleChange} />
           <select name="currency" onChange={handleChange}>
             <option value="" label="Select a Category">
               Select a Category
             </option>
-            <option value="shi" label="shi">
+            {/* <option value="shi" label="shi">
               SHI
-            </option>
-            <option value="leash" label="leash">
+            </option> */}
+            <option value={LEASH_TOKEN_ADDRESS} label="leash">
               LEASH
             </option>
-            <option value="shib" label="shib">
+            <option value={SHIB_TOKEN_ADDRESS} label="shib">
               SHIB
             </option>
-            <option value="bone" label="bone">
+            {/* <option value="bone" label="bone">
               BONE
-            </option>
-            <option value={PAW_TOKEN_ADDRESS} label="pan">
+            </option> */}
+            <option value={PAW_TOKEN_ADDRESS} label="paw">
               PAW
             </option>
           </select>
           <div className="btn-cont">
-            <button onClick={handleAddItem}>Submit Listing and Put on Sale</button>
+            <button onClick={handleAddItem}>
+              Submit Listing and Put on Sale
+            </button>
           </div>
         </div>
       </div>

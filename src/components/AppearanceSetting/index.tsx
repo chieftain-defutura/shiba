@@ -40,12 +40,6 @@ const AppearanceSetting = () => {
     handleGetMetadata();
   }, [handleGetMetadata]);
 
-  const handleSlidePrev = () => {
-    if (slide > 1) {
-      setSlide(slide - 1);
-    }
-  };
-
   const handleSlideNext = () => {
     setSlide(slide + 1);
   };

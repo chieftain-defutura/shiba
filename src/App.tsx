@@ -27,12 +27,12 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="home" element={<HomePage />} />
         <Route path="mint-nft" element={<MintNftPage />} />
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />
         <Route path="marketplace" element={<MarketPlacePage />} />
         <Route path="action" element={<ActionPage />} />
-
         <Route path="sell" element={<SellPage />} />
         <Route path="/my-movies" element={<MyMovies />} />
         <Route path="/my-movies/:id" element={<ShopSettingsOne />} />
