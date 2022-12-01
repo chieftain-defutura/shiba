@@ -1,16 +1,43 @@
 import React from "react";
-import { useContractRead } from "wagmi";
+import { ethers } from "ethers";
+import { useParams } from "react-router-dom";
+import { useContractRead, useAccount } from "wagmi";
 import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import cardImg from "../../assets/img/card-3.png";
+import { useTransactionModal } from "../../context/TransactionContext";
 
 const RemoveItem = () => {
+  const { id } = useParams();
+  const { address } = useAccount();
+  const { setTransaction } = useTransactionModal();
+
   const { data }: { data: any } = useContractRead({
     address: DIGITAL_GOODS_ADDRESS,
     abi: digitalShopABI,
     functionName: "getItemDetails",
     args: ["0"],
   });
+
+  const handleRemoveItem = async () => {
+    if (!address || !data) return;
+    try {
+      setTransaction({ loading: true, status: "pending" });
+      const contract = new ethers.Contract(
+        DIGITAL_GOODS_ADDRESS,
+        digitalShopABI,
+        data
+      );
+      const tx = await contract.removeItem("0");
+      await tx.wait();
+      console.log("added");
+      setTransaction({ loading: true, status: "success" });
+    } catch (error) {
+      console.log("Error sending File to IPFS:");
+      console.log(error);
+      setTransaction({ loading: true, status: "error" });
+    }
+  };
 
   return (
     <div className="stock-management-remove-item-container">
@@ -30,7 +57,7 @@ const RemoveItem = () => {
             </div>
             <div className="card-overlay">
               <button>Details</button>
-              <button>Remove Shop</button>
+              <button onClick={handleRemoveItem}>Remove Shop</button>
             </div>
           </div>
           <div className="remove-card-bottom">
@@ -54,7 +81,7 @@ const RemoveItem = () => {
             </div>
             <div className="card-overlay">
               <button>Details</button>
-              <button>Remove Shop</button>
+              <button onClick={handleRemoveItem}>Remove Shop</button>
             </div>
           </div>
           <div className="remove-card-bottom">
