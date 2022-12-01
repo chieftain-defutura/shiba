@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSigner, useAccount } from "wagmi";
 import { Formik, Field, Form } from "formik";
@@ -15,11 +15,30 @@ const AppearanceSetting = () => {
   const [slide, setSlide] = useState(1);
   const { setTransaction } = useTransactionModal();
 
-  // const handleSlidePrev = () => {
-  //   if (slide > 1) {
-  //     setSlide(slide - 1);
-  //   }
-  // };
+  const handleGetMetadata = useCallback(async () => {
+    if (!id) return;
+
+    try {
+      const { data } = await axios.get(
+        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTMetadata`,
+        {
+          params: {
+            refreshCache: false,
+            tokenType: "ERC721",
+            tokenId: id,
+            contractAddress: "0xB566026263216f462337526A0640f244fE0A9Dee",
+          },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    handleGetMetadata();
+  }, [handleGetMetadata]);
 
   const handleSlideNext = () => {
     setSlide(slide + 1);
@@ -42,11 +61,7 @@ const AppearanceSetting = () => {
       const JsonHash = resData.data.IpfsHash;
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
       console.log(dataHash);
-      const contract = new ethers.Contract(
-        DIGITAL_GOODS_ADDRESS,
-        digitalShopABI,
-        data
-      );
+      const contract = new ethers.Contract(DIGITAL_GOODS_ADDRESS, digitalShopABI, data);
       const tx = await contract.setBaseURI(id, dataHash);
       await tx.wait();
       console.log("updated");
@@ -87,31 +102,11 @@ const AppearanceSetting = () => {
                   <p>Photo / Video3:</p>
                 </div>
                 <div className="content-right">
-                  <Field
-                    name="logo"
-                    type="url"
-                    placeholder="Metadata Link 350*350"
-                  />
-                  <Field
-                    name="mainPhoto"
-                    type="url"
-                    placeholder="Metadata Link 600*400"
-                  />
-                  <Field
-                    name="videoOne"
-                    type="url"
-                    placeholder="Metadata Link"
-                  />
-                  <Field
-                    type="url"
-                    name="videoTwo"
-                    placeholder="Metadata Link"
-                  />
-                  <Field
-                    type="url"
-                    name="videoThree"
-                    placeholder="Metadata Link"
-                  />
+                  <Field name="logo" type="url" placeholder="Metadata Link 350*350" />
+                  <Field name="mainPhoto" type="url" placeholder="Metadata Link 600*400" />
+                  <Field name="videoOne" type="url" placeholder="Metadata Link" />
+                  <Field type="url" name="videoTwo" placeholder="Metadata Link" />
+                  <Field type="url" name="videoThree" placeholder="Metadata Link" />
                 </div>
               </div>
               <div className="btn-cont">
