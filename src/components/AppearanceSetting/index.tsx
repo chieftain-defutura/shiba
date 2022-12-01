@@ -15,11 +15,11 @@ const AppearanceSetting = () => {
   const [slide, setSlide] = useState(1);
   const { setTransaction } = useTransactionModal();
 
-  const handleSlidePrev = () => {
-    if (slide > 1) {
-      setSlide(slide - 1);
-    }
-  };
+  // const handleSlidePrev = () => {
+  //   if (slide > 1) {
+  //     setSlide(slide - 1);
+  //   }
+  // };
 
   const handleSlideNext = () => {
     setSlide(slide + 1);

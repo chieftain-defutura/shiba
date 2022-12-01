@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useAccount, useSigner } from "wagmi";
 import { useParams } from "react-router-dom";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
+import {
+  DIGITAL_GOODS_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+} from "../../utils/contractAddress";
 import digitalShopABI from "../../utils/abi/digitalShopABI.json";
 import { PAW_TOKEN_ADDRESS } from "../../utils/contractAddress";
 import axios from "axios";
@@ -133,19 +137,19 @@ const AddItem = () => {
             <option value="" label="Select a Category">
               Select a Category
             </option>
-            <option value="shi" label="shi">
+            {/* <option value="shi" label="shi">
               SHI
-            </option>
-            <option value="leash" label="leash">
+            </option> */}
+            <option value={LEASH_TOKEN_ADDRESS} label="leash">
               LEASH
             </option>
-            <option value="shib" label="shib">
+            <option value={SHIB_TOKEN_ADDRESS} label="shib">
               SHIB
             </option>
-            <option value="bone" label="bone">
+            {/* <option value="bone" label="bone">
               BONE
-            </option>
-            <option value={PAW_TOKEN_ADDRESS} label="pan">
+            </option> */}
+            <option value={PAW_TOKEN_ADDRESS} label="paw">
               PAW
             </option>
           </select>
