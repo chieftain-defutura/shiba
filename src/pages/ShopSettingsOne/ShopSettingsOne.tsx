@@ -21,13 +21,13 @@ import cardImgNine from "../../assets/img/card-12.png";
 import cardImgTen from "../../assets/img/card-13.png";
 import "./ShopSettingsOne.css";
 import Residual from "./components/Residual";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import RemoveItem from "../../components/RemoveItem";
 import AddItem from "../../components/AddItem";
 import AppearanceSetting from "../../components/AppearanceSetting";
 
 const ShopSettingsOne = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [clickCard, setClickCard] = useState<any>(null);
   const [clickAddItem, setClickAddItem] = useState<any>(null);
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null);
@@ -106,12 +106,13 @@ const ShopSettingsOne = () => {
                     onClick={handleSlidePrev}
                   />
 
-                  {/* <IoIosArrowForward
+                  <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
-                  /> */}
+                  />
                 </div>
               )}
+
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
