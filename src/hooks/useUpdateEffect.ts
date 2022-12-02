@@ -1,16 +1,16 @@
-import { DependencyList, EffectCallback, useEffect } from "react";
+import { DependencyList, EffectCallback, useEffect } from "react"
 
-import useIsFirstRender from "./useIsFirstRender";
+import useIsFirstRender from "./useIsFirstRender"
 
 function useUpdateEffect(effect: EffectCallback, deps?: DependencyList) {
-  const isFirst = useIsFirstRender();
+  const isFirst = useIsFirstRender()
 
   useEffect(() => {
     if (!isFirst) {
-      return effect();
+      return effect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, deps)
 }
 
-export default useUpdateEffect;
+export default useUpdateEffect

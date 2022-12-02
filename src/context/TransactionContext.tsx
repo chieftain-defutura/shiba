@@ -4,27 +4,28 @@ import React, {
   useContext,
   useMemo,
   useState,
-} from "react";
-import TransactionModal from "../modal/TransactionModal";
-import useUpdateEffect from "../hooks/useUpdateEffect";
+} from "react"
+import TransactionModal from "../modal/TransactionModal"
+import useUpdateEffect from "../hooks/useUpdateEffect"
 
 interface ITransaction {
-  loading: boolean;
-  status: "pending" | "success" | "error";
-  message?: string;
+  loading: boolean
+  status: "pending" | "success" | "error"
+  message?: string
 }
 
 interface ITransactionContext extends ITransaction {
-  setTransaction: React.Dispatch<React.SetStateAction<ITransaction>>;
+  setTransaction: React.Dispatch<React.SetStateAction<ITransaction>>
 }
 
 export const TransactionContext = createContext<ITransactionContext>({
   loading: false,
   status: "pending",
   message: undefined,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setTransaction: () => {},
-});
-export const useTransactionModal = () => useContext(TransactionContext);
+})
+export const useTransactionModal = () => useContext(TransactionContext)
 const TransactionContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -32,15 +33,15 @@ const TransactionContextProvider: React.FC<{ children: ReactNode }> = ({
     loading: false,
     status: "pending",
     message: undefined,
-  });
+  })
 
   useMemo(() => {
     if (transaction.status === "error" || transaction.status === "success") {
       setTimeout(() => {
-        setTransaction({ ...transaction, status: "pending", loading: false });
-      }, 3000);
+        setTransaction({ ...transaction, status: "pending", loading: false })
+      }, 3000)
     }
-  }, [transaction, setTransaction]);
+  }, [transaction, setTransaction])
 
   useUpdateEffect(() => {
     if (!transaction.loading) {
@@ -48,9 +49,9 @@ const TransactionContextProvider: React.FC<{ children: ReactNode }> = ({
         loading: false,
         status: "pending",
         message: undefined,
-      });
+      })
     }
-  }, [transaction.loading]);
+  }, [transaction.loading])
 
   return (
     <TransactionContext.Provider value={{ ...transaction, setTransaction }}>
@@ -61,7 +62,7 @@ const TransactionContextProvider: React.FC<{ children: ReactNode }> = ({
         status={transaction.status}
       />
     </TransactionContext.Provider>
-  );
-};
+  )
+}
 
-export default TransactionContextProvider;
+export default TransactionContextProvider

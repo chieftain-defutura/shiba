@@ -1,16 +1,16 @@
-import React from "react";
-import "./SideBar.css";
-import { Link } from "react-router-dom";
-import { useAccount, useContractReads } from "wagmi";
+import React from "react"
+import "./SideBar.css"
+import { Link } from "react-router-dom"
+import { useAccount, useContractReads } from "wagmi"
 import {
   SHOP_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
-} from "../../utils/contractAddress";
-import shopAbi from "../../utils/abi/shopABI.json";
+} from "../../utils/contractAddress"
+import shopAbi from "../../utils/abi/shopABI.json"
 
 const SideBar: React.FC = () => {
-  const { address } = useAccount();
+  const { address } = useAccount()
   const { data: balanceData } = useContractReads({
     contracts: [
       {
@@ -32,7 +32,7 @@ const SideBar: React.FC = () => {
         args: [address],
       },
     ],
-  });
+  })
   return (
     <div>
       <div className="sidebar-container">
@@ -146,7 +146,7 @@ const SideBar: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SideBar;
+export default SideBar

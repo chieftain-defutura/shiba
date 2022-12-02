@@ -1,6 +1,6 @@
-import React from "react";
-import Card from "../Card/Card";
-import "./TopSeller.css";
+import React from "react"
+import Card from "../Card/Card"
+import "./TopSeller.css"
 
 const TopSeller = () => {
   return (
@@ -26,7 +26,7 @@ const TopSeller = () => {
         <button>see more</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TopSeller;
+export default TopSeller

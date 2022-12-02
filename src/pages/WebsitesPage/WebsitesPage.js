@@ -1,8 +1,8 @@
-import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
-import "./WebsitesPage.css";
+import React from "react"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
+import "./WebsitesPage.css"
 
 const WebsitesPage = () => {
   return (
@@ -14,31 +14,31 @@ const WebsitesPage = () => {
 
           <div className="check-box-container">
             <div className="checkbox-content">
-              <label for="News">News</label>
+              <label htmlFor="News">News</label>
               <input id="News" type="checkbox" />
             </div>
             <div className="checkbox-content">
-              <label for="Portofolio">Portofolio</label>
+              <label htmlFor="Portofolio">Portofolio</label>
               <input id="Portofolio" type="checkbox" />
             </div>
             <div className="checkbox-content">
-              <label for="Brochure">Brochure</label>
+              <label htmlFor="Brochure">Brochure</label>
               <input id="Brochure" type="checkbox" />
             </div>
             <div className="checkbox-content">
-              <label for="NonProfit">NonProfit</label>
+              <label htmlFor="NonProfit">NonProfit</label>
               <input id="NonProfit" type="checkbox" />
             </div>
             <div className="checkbox-content">
-              <label for="Business">Business</label>
+              <label htmlFor="Business">Business</label>
               <input id="Business" type="checkbox" />
             </div>
             <div className="checkbox-content">
-              <label for="Community Forum">Community Forum</label>
+              <label htmlFor="Community Forum">Community Forum</label>
               <input id="Community Forum" type="checkbox" />
             </div>
             <div className="checkbox-content">
-              <label for="Wiki">Wiki</label>
+              <label htmlFor="Wiki">Wiki</label>
               <input id="Wiki" type="checkbox" />
             </div>
           </div>
@@ -66,7 +66,7 @@ const WebsitesPage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default WebsitesPage;
+export default WebsitesPage

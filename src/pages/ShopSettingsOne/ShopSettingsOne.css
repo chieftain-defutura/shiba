@@ -240,12 +240,19 @@ select {
   text-align: center;
 }
 
-.stock-management-container .item-info-sub-menu-container .content-right .dropdown-cont {
+.stock-management-container
+  .item-info-sub-menu-container
+  .content-right
+  .dropdown-cont {
   position: relative;
   cursor: pointer;
 }
 
-.stock-management-container .item-info-sub-menu-container .content-right .dropdown-cont p {
+.stock-management-container
+  .item-info-sub-menu-container
+  .content-right
+  .dropdown-cont
+  p {
   text-align: center;
   font-weight: 400;
   font-size: 14px;
@@ -307,13 +314,18 @@ select {
   position: relative;
 }
 
-.stock-management-container .quantity-price-shipment-sub-menu-container .btn-cont {
+.stock-management-container
+  .quantity-price-shipment-sub-menu-container
+  .btn-cont {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.stock-management-container .quantity-price-shipment-sub-menu-container .btn-cont button {
+.stock-management-container
+  .quantity-price-shipment-sub-menu-container
+  .btn-cont
+  button {
   height: 38px;
   display: flex;
   align-items: center;
@@ -343,7 +355,9 @@ select {
   grid-gap: 28px;
 }
 
-.stock-management-remove-item-container .remove-item-cards-container .remove-item-card {
+.stock-management-remove-item-container
+  .remove-item-cards-container
+  .remove-item-card {
   width: 154px;
   height: 205px;
   background: var(--bgColorSeven);
@@ -669,19 +683,28 @@ select {
   border-radius: 3px;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container {
   display: flex;
   gap: 20px;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .left {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .left {
   width: 50%;
   display: flex;
   flex-direction: column;
   gap: 72px;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .left input {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .left
+  input {
   width: 100%;
   outline: 0;
   border: 0;
@@ -690,7 +713,11 @@ select {
   padding: 3px 10px;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .left button {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .left
+  button {
   width: 100%;
   padding: 4px 50px;
   height: 38px;
@@ -706,7 +733,10 @@ select {
   cursor: pointer;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .right {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .right {
   width: 50%;
   height: 70px;
   background-color: var(--bgColorTwo);
@@ -714,11 +744,18 @@ select {
   transition: 0.2s ease-in-out;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .right.active {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .right.active {
   height: auto;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .right .header {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .right
+  .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -727,7 +764,12 @@ select {
   cursor: pointer;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .right .header p,
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .right
+  .header
+  p,
 .body p {
   font-weight: 700;
   font-size: 14px;
@@ -735,7 +777,11 @@ select {
   cursor: pointer;
 }
 
-.on-marketplace-container .on-marketplace-sub-container .price-select-container .right .body {
+.on-marketplace-container
+  .on-marketplace-sub-container
+  .price-select-container
+  .right
+  .body {
   text-align: center;
   padding: 11px 0;
 

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
-import { IoIosArrowDown } from "react-icons/io";
-import "./ActionPage.css";
+import React, { useState } from "react"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
+import { IoIosArrowDown } from "react-icons/io"
+import "./ActionPage.css"
 
 const ActionPage = () => {
-  const [clickDropDown, setClickDropDown] = useState(null);
+  const [clickDropDown, setClickDropDown] = useState(null)
 
   const handleDropDown = (idx) => {
     if (clickDropDown === idx) {
-      return setClickDropDown(null);
+      return setClickDropDown(null)
     }
-    setClickDropDown(idx);
-  };
+    setClickDropDown(idx)
+  }
 
   return (
     <div>
@@ -44,9 +44,9 @@ const ActionPage = () => {
                     }
                   >
                     <div className="check-box-container">
-                      {item.labels.map((label) => (
-                        <div className="checkbox-content">
-                          <label for="Human Rights">{label.label}</label>
+                      {item.labels.map((label, index) => (
+                        <div className="checkbox-content" key={index}>
+                          <label htmlFor="Human Rights">{label.label}</label>
                           <input id="Human Rights" type="checkbox" />
                         </div>
                       ))}
@@ -64,11 +64,11 @@ const ActionPage = () => {
                 <IoIosArrowDown className="arrow-icon" />
               </div>
               <div className="check-box-container">
-                <label for="min">MIN</label>
+                <label htmlFor="min">MIN</label>
                 <input id="min" type="checkbox" />
               </div>
               <div className="check-box-container">
-                <label for="max">Max</label>
+                <label htmlFor="max">Max</label>
                 <input id="max" type="checkbox" />
               </div>
             </div>
@@ -85,17 +85,17 @@ const ActionPage = () => {
             <p className="title">Sort By</p>
             <div className="sort-content">
               <div className="radio-btn-cont">
-                <label for="high-to-low">High To Low</label>
+                <label htmlFor="high-to-low">High To Low</label>
                 <input id="high-to-low" name="high-to-low" type="radio" />
                 <span></span>
               </div>
               <div className="radio-btn-cont">
-                <label for="Recently-listed">Recently listed</label>
+                <label htmlFor="Recently-listed">Recently listed</label>
                 <input id="Recently-listed" type="radio" />
                 <span></span>
               </div>
               <div className="radio-btn-cont">
-                <label for="Ending-soon">Ending soon</label>
+                <label htmlFor="Ending-soon">Ending soon</label>
                 <input id="Ending-soon" type="radio" />
                 <span></span>
               </div>
@@ -126,10 +126,10 @@ const ActionPage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default ActionPage;
+export default ActionPage
 
 const accordionData = [
   {
@@ -196,4 +196,4 @@ const accordionData = [
     title: "Full On Blockchain NFT",
     labels: [{ label: "ART" }, { label: "File" }, { label: "Other" }],
   },
-];
+]

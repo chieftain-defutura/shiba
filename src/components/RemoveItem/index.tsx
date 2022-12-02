@@ -17,7 +17,7 @@ const RemoveItem = () => {
     abi: digitalShopABI,
     functionName: "getItemDetails",
     args: ["0"],
-  });
+  })
 
   const handleRemoveItem = async () => {
     if (!address || !data) return;
@@ -92,7 +92,7 @@ const RemoveItem = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RemoveItem;
+export default RemoveItem

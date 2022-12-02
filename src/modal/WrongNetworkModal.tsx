@@ -1,20 +1,20 @@
-import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React from "react"
+import { AnimatePresence, motion } from "framer-motion"
 
-import "./Modal.scss";
-import Backdrop from "./BackDrop";
-import { modalVaraints } from "../constants/variants";
-import { useSwitchNetwork } from "wagmi";
+import "./Modal.scss"
+import Backdrop from "./BackDrop"
+import { modalVaraints } from "../constants/variants"
+import { useSwitchNetwork } from "wagmi"
 
 interface IWrongNetworkModal {
-  modal: boolean;
-  handleClose?: () => void;
+  modal: boolean
+  handleClose?: () => void
 }
 const WrongNetworkModal: React.FC<IWrongNetworkModal> = ({
   modal,
   handleClose,
 }) => {
-  const { switchNetwork } = useSwitchNetwork();
+  const { switchNetwork } = useSwitchNetwork()
   return (
     <Backdrop handleClose={handleClose} isOpen={modal}>
       <AnimatePresence exitBeforeEnter>
@@ -35,7 +35,7 @@ const WrongNetworkModal: React.FC<IWrongNetworkModal> = ({
         )}
       </AnimatePresence>
     </Backdrop>
-  );
-};
+  )
+}
 
-export default WrongNetworkModal;
+export default WrongNetworkModal

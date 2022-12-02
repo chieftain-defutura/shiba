@@ -1,8 +1,9 @@
-import { useConnect } from "wagmi";
-import "./Connect.css";
+import React from "react"
+import { useConnect } from "wagmi"
+import "./Connect.css"
 export function Connector() {
   const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect();
+    useConnect()
 
   return (
     <div className="connector">
@@ -21,5 +22,5 @@ export function Connector() {
       ))}
       {error && <div>{error.message}</div>}
     </div>
-  );
+  )
 }

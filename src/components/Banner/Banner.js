@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import Slider from "react-slick";
-import banner from "../../assets/img/banner.png";
-import leftArrowIcon from "../../assets/img/left-arrow-icon.png";
-import rightArrowIcon from "../../assets/img/right-arrow-icon.png";
-import "./Banner.css";
+import React, { useRef } from "react"
+import Slider from "react-slick"
+import banner from "../../assets/img/banner.png"
+import leftArrowIcon from "../../assets/img/left-arrow-icon.png"
+import rightArrowIcon from "../../assets/img/right-arrow-icon.png"
+import "./Banner.css"
 
 const settings = {
   dots: false,
@@ -12,10 +12,10 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-};
+}
 
 const Banner = () => {
-  const refSlider = useRef(null);
+  const refSlider = useRef(null)
 
   return (
     <div className="banner">
@@ -66,7 +66,7 @@ const Banner = () => {
         <img src={rightArrowIcon} alt="arrow-icon" />
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Banner;
+export default Banner

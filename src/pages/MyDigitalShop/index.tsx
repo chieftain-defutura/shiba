@@ -1,23 +1,23 @@
-import React, { useCallback, useState, useEffect } from "react";
-import cardImg from "../../assets/img/card-3.png";
-import { Link } from "react-router-dom";
-import Navigation from "../../components/Navigation/Navigation";
-import HeaderNav from "../../components/HeaderNav/HeaderNav";
-import SideBar from "../../components/SideBar/SideBar";
-import axios from "axios";
-import { useAccount } from "wagmi";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
+import React, { useCallback, useState, useEffect } from "react"
+import cardImg from "../../assets/img/card-3.png"
+import { Link } from "react-router-dom"
+import Navigation from "../../components/Navigation/Navigation"
+import HeaderNav from "../../components/HeaderNav/HeaderNav"
+import SideBar from "../../components/SideBar/SideBar"
+import axios from "axios"
+import { useAccount } from "wagmi"
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
 
 const MyDigitalShop: React.FC = () => {
-  const [userNftData, setUserNftData] = useState([]);
-  console.log(userNftData);
-  const [loading, setLoading] = useState(false);
-  const { address } = useAccount();
+  const [userNftData, setUserNftData] = useState([])
+  console.log(userNftData)
+  const [loading, setLoading] = useState(false)
+  const { address } = useAccount()
 
   const handleGetUserNft = useCallback(async () => {
     try {
-      if (!address) return;
-      setLoading(true);
+      if (!address) return
+      setLoading(true)
 
       const { data } = await axios.get(
         `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DIGITAL_GOODS_ADDRESS}`,
@@ -26,19 +26,19 @@ const MyDigitalShop: React.FC = () => {
           headers: {
             "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
           },
-        }
-      );
-      setLoading(false);
-      setUserNftData(data.result.map((r: any) => r.token_id));
+        },
+      )
+      setLoading(false)
+      setUserNftData(data.result.map((r: any) => r.token_id))
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  }, [address]);
-  console.log(address);
+  }, [address])
+  console.log(address)
 
   useEffect(() => {
-    handleGetUserNft();
-  }, [handleGetUserNft]);
+    handleGetUserNft()
+  }, [handleGetUserNft])
 
   return (
     <div>
@@ -73,7 +73,7 @@ const MyDigitalShop: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MyDigitalShop;
+export default MyDigitalShop

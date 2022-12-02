@@ -1,8 +1,8 @@
-import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
-import "./DomainNamesPage.css";
+import React from "react"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
+import "./DomainNamesPage.css"
 
 const DomainNamesPage = () => {
   return (
@@ -14,7 +14,7 @@ const DomainNamesPage = () => {
 
           <div className="check-box-container">
             <div className="checkbox-content">
-              <label for="shib">.shib</label>
+              <label htmlFor="shib">.shib</label>
               <input id="shib" type="checkbox" />
             </div>
           </div>
@@ -42,7 +42,7 @@ const DomainNamesPage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default DomainNamesPage;
+export default DomainNamesPage

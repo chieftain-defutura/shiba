@@ -24,7 +24,7 @@ import AwitingDelivery from "./pages/AwaitingDelivery";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ShopPage from "./pages/Shops";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Routes>
@@ -61,7 +61,7 @@ function App() {
         <Route path="/awaiting-delivery/:id" element={<ShopSettingsOne />} />
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

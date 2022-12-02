@@ -24,7 +24,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
 
   console.log(inputData);
   const handleGetMetadata = useCallback(async () => {
-    if (!id) return;
+    if (!id) return
 
     try {
       const { data } = await axios.get(
@@ -41,13 +41,13 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
       console.log(data);
       setInputData(data.metadata);
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  }, [id]);
+  }, [id])
 
   useEffect(() => {
-    handleGetMetadata();
-  }, [handleGetMetadata]);
+    handleGetMetadata()
+  }, [handleGetMetadata])
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -56,13 +56,13 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
   };
 
   const handleSlideNext = () => {
-    setSlide(slide + 1);
-  };
+    setSlide(slide + 1)
+  }
 
   const handleAppearanceSetting = async (values: any) => {
-    if (!address || !data) return;
+    if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" });
+      setTransaction({ loading: true, status: "pending" })
       const resData = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
@@ -72,25 +72,25 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
           pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
           "Content-Type": "application/json",
         },
-      });
-      const JsonHash = resData.data.IpfsHash;
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
-      console.log(dataHash);
+      })
+      const JsonHash = resData.data.IpfsHash
+      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
+      console.log(dataHash)
       const contract = new ethers.Contract(
         DIGITAL_GOODS_ADDRESS,
         digitalShopABI,
-        data
-      );
-      const tx = await contract.setBaseURI(id, dataHash);
-      await tx.wait();
-      console.log("updated");
-      setTransaction({ loading: true, status: "success" });
+        data,
+      )
+      const tx = await contract.setBaseURI(id, dataHash)
+      await tx.wait()
+      console.log("updated")
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log("Error sending File to IPFS:");
-      console.log(error);
-      setTransaction({ loading: true, status: "error" });
+      console.log("Error sending File to IPFS:")
+      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   return (
     <>
@@ -221,4 +221,4 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
   );
 };
 
-export default AppearanceSetting;
+export default AppearanceSetting
