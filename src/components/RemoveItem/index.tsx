@@ -28,7 +28,7 @@ const RemoveItem = () => {
         digitalShopABI,
         data
       );
-      const tx = await contract.removeItem("0");
+      const tx = await contract.removeItem(id);
       await tx.wait();
       console.log("added");
       setTransaction({ loading: true, status: "success" });

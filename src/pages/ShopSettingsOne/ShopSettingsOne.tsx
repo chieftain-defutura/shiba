@@ -326,20 +326,10 @@ const ShopSettingsOne = () => {
               className="appearance-settings-container"
               id="appearance-settings-container"
             >
-              <div className="arrow-icon-container">
-                <IoIosArrowBack
-                  className="prev-arrow-icon"
-                  onClick={handleSlidePrev}
-                />
-                <IoIosArrowForward
-                  className="next-arrow-icon"
-                  onClick={handleSlideNext}
-                />
-              </div>
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
-              <AppearanceSetting />
+              <AppearanceSetting setClickCard={setClickCard} />
             </div>
           )}
 
