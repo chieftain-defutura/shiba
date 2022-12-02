@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSigner, useAccount } from "wagmi";
-import { Formik, Field, Form } from "formik";
-import { ethers } from "ethers";
-import axios from "axios";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
-import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import { useTransactionModal } from "../../context/TransactionContext";
+import React, { useCallback, useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useSigner, useAccount } from "wagmi"
+import { Formik, Field, Form } from "formik"
+import { ethers } from "ethers"
+import axios from "axios"
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
+import digitalShopABI from "../../utils/abi/digitalShopABI.json"
+import { useTransactionModal } from "../../context/TransactionContext"
 
 const AppearanceSetting = () => {
-  const { id } = useParams();
-  const { data } = useSigner();
-  const { address } = useAccount();
-  const [slide, setSlide] = useState(1);
-  const { setTransaction } = useTransactionModal();
+  const { id } = useParams()
+  const { data } = useSigner()
+  const { address } = useAccount()
+  const [slide, setSlide] = useState(1)
+  const { setTransaction } = useTransactionModal()
 
   const handleGetMetadata = useCallback(async () => {
-    if (!id) return;
+    if (!id) return
 
     try {
       const { data } = await axios.get(
@@ -29,25 +29,25 @@ const AppearanceSetting = () => {
             contractAddress: "0xB566026263216f462337526A0640f244fE0A9Dee",
           },
         },
-      );
-      console.log(data);
+      )
+      console.log(data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  }, [id]);
+  }, [id])
 
   useEffect(() => {
-    handleGetMetadata();
-  }, [handleGetMetadata]);
+    handleGetMetadata()
+  }, [handleGetMetadata])
 
   const handleSlideNext = () => {
-    setSlide(slide + 1);
-  };
+    setSlide(slide + 1)
+  }
 
   const handleAppearanceSetting = async (values: any) => {
-    if (!address || !data) return;
+    if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" });
+      setTransaction({ loading: true, status: "pending" })
       const resData = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
@@ -57,25 +57,25 @@ const AppearanceSetting = () => {
           pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
           "Content-Type": "application/json",
         },
-      });
-      const JsonHash = resData.data.IpfsHash;
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
-      console.log(dataHash);
+      })
+      const JsonHash = resData.data.IpfsHash
+      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
+      console.log(dataHash)
       const contract = new ethers.Contract(
         DIGITAL_GOODS_ADDRESS,
         digitalShopABI,
         data,
-      );
-      const tx = await contract.setBaseURI(id, dataHash);
-      await tx.wait();
-      console.log("updated");
-      setTransaction({ loading: true, status: "success" });
+      )
+      const tx = await contract.setBaseURI(id, dataHash)
+      await tx.wait()
+      console.log("updated")
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log("Error sending File to IPFS:");
-      console.log(error);
-      setTransaction({ loading: true, status: "error" });
+      console.log("Error sending File to IPFS:")
+      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   return (
     <Formik
@@ -177,7 +177,7 @@ const AppearanceSetting = () => {
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default AppearanceSetting;
+export default AppearanceSetting

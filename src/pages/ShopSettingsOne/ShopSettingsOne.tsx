@@ -1,51 +1,52 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   IoIosArrowBack,
   IoIosArrowForward,
   IoIosArrowDown,
-} from "react-icons/io";
-import { BsArrowLeftCircle } from "react-icons/bs";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import HeaderNav from "../../components/HeaderNav/HeaderNav";
-import SideBar from "../../components/SideBar/SideBar";
-import cardImgOne from "../../assets/img/card-4.png";
-import cardImgTwo from "../../assets/img/card-5.png";
-import cardImgThree from "../../assets/img/card-6.png";
-import cardImgFour from "../../assets/img/card-7.png";
-import cardImgFive from "../../assets/img/card-8.png";
-import cardImgSix from "../../assets/img/card-9.png";
-import cardImgSeven from "../../assets/img/card-10.png";
-import cardImgEighth from "../../assets/img/card-11.png";
-import cardImgNine from "../../assets/img/card-12.png";
-import cardImgTen from "../../assets/img/card-13.png";
-import "./ShopSettingsOne.css";
-import Residual from "./components/Residual";
+} from "react-icons/io"
+import { BsArrowLeftCircle } from "react-icons/bs"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import HeaderNav from "../../components/HeaderNav/HeaderNav"
+import SideBar from "../../components/SideBar/SideBar"
+import cardImgOne from "../../assets/img/card-4.png"
+import cardImgTwo from "../../assets/img/card-5.png"
+import cardImgThree from "../../assets/img/card-6.png"
+import cardImgFour from "../../assets/img/card-7.png"
+import cardImgFive from "../../assets/img/card-8.png"
+import cardImgSix from "../../assets/img/card-9.png"
+import cardImgSeven from "../../assets/img/card-10.png"
+import cardImgEighth from "../../assets/img/card-11.png"
+import cardImgNine from "../../assets/img/card-12.png"
+import cardImgTen from "../../assets/img/card-13.png"
+import "./ShopSettingsOne.css"
+import Residual from "./components/Residual"
 // import { useParams } from "react-router-dom";
-import RemoveItem from "../../components/RemoveItem";
-import AddItem from "../../components/AddItem";
-import AppearanceSetting from "../../components/AppearanceSetting";
+import RemoveItem from "../../components/RemoveItem"
+import AddItem from "../../components/AddItem"
+import AppearanceSetting from "../../components/AppearanceSetting"
+import Transfer from "../../components/Transfer"
 
 const ShopSettingsOne: React.FC = () => {
   // const { id } = useParams();
-  const [clickCard, setClickCard] = useState<any>(null);
-  const [clickAddItem, setClickAddItem] = useState<any>(null);
-  const [clickRemoveItem, setClickRemoveItem] = useState<any>(null);
-  const [onMarketPlace, setOnMarketPlace] = useState<any>(null);
-  const [onAction, setOnAction] = useState<any>(null);
-  const [dropDown, setDropDown] = useState<any>(null);
-  const [selectedDropDown, setSelectedDropDown] = useState("Select Currency");
-  const [slide, setSlide] = useState(1);
+  const [clickCard, setClickCard] = useState<any>(null)
+  const [clickAddItem, setClickAddItem] = useState<any>(null)
+  const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
+  const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
+  const [onAction, setOnAction] = useState<any>(null)
+  const [dropDown, setDropDown] = useState<any>(null)
+  const [selectedDropDown, setSelectedDropDown] = useState("Select Currency")
+  const [slide, setSlide] = useState(1)
 
   const handleSlidePrev = () => {
     if (slide > 1) {
-      setSlide(slide - 1);
+      setSlide(slide - 1)
     }
-  };
+  }
 
   const handleSlideNext = () => {
-    setSlide(slide + 1);
-  };
+    setSlide(slide + 1)
+  }
 
   return (
     <div>
@@ -357,14 +358,7 @@ const ShopSettingsOne: React.FC = () => {
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
 
-              <div className="transfer-sub-menu-container sub-menu-container">
-                <div className="content">
-                  <input />
-                </div>
-                <div className="btn-cont">
-                  <button>Submit Changes</button>
-                </div>
-              </div>
+              <Transfer />
             </div>
           )}
 
@@ -524,7 +518,7 @@ const ShopSettingsOne: React.FC = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default ShopSettingsOne;
+export default ShopSettingsOne

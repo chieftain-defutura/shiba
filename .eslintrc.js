@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
   extends: [
     "eslint:recommended",
@@ -37,6 +38,7 @@ module.exports = {
         avoidEscape: true,
       },
     ],
+    semi: ["error", "never"],
     "react/jsx-uses-react": ["off"],
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-props-no-spreading": ["off"],
@@ -46,4 +48,4 @@ module.exports = {
     "no-unused-vars": "error",
     "react/prop-types": ["off"],
   },
-};
+}

@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Navigation from "../../components/Navigation/Navigation";
-import HeaderNav from "../../components/HeaderNav/HeaderNav";
-import SideBar from "../../components/SideBar/SideBar";
-import cardImg from "../../assets/img/card-3.png";
+import React from "react"
+import { Link } from "react-router-dom"
+import Navigation from "../../components/Navigation/Navigation"
+import HeaderNav from "../../components/HeaderNav/HeaderNav"
+import SideBar from "../../components/SideBar/SideBar"
+import cardImg from "../../assets/img/card-3.png"
 
 const MyWebsites = () => {
   return (
@@ -37,7 +37,7 @@ const MyWebsites = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MyWebsites;
+export default MyWebsites

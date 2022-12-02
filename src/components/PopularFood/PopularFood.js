@@ -1,6 +1,6 @@
-import React from "react";
-import SliderCard from "../SliderCard/SliderCard";
-import "./PopularFood.css";
+import React from "react"
+import SliderCard from "../SliderCard/SliderCard"
+import "./PopularFood.css"
 
 const PopularFood = () => {
   return (
@@ -11,7 +11,7 @@ const PopularFood = () => {
         <button>see more</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PopularFood;
+export default PopularFood

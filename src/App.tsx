@@ -1,28 +1,28 @@
-import React from "react";
-import "./App.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import HomePage from "./pages/HomePage";
-import { Routes, Route } from "react-router-dom";
-import MintNftPage from "./pages/MintNftPage/MintNftPage";
-import DomainNamesPage from "./pages/DomainNamesPage/DomainNamesPage";
-import WebsitesPage from "./pages/WebsitesPage/WebsitesPage";
-import MarketPlacePage from "./pages/MarketPlacePage/MarketPlacePage";
-import ActionPage from "./pages/ActionPage/ActionPage";
-import ShopSettingsOne from "./pages/ShopSettingsOne/ShopSettingsOne";
-import SellPage from "./pages/SellPage/SellPage";
-import MyMovies from "./pages/MyMovies";
-import MyMusic from "./pages/MyMusic";
-import MyBooks from "./pages/MyBooks";
-import MyCourse from "./pages/MyCourses";
-import MyWebsites from "./pages/MyWebsites";
-import MyDomain from "./pages/MyDomains";
-import MyDigitalShop from "./pages/MyDigitalShop";
-import MyGoodsShop from "./pages/MyGoodsShop";
-import MyCharities from "./pages/MyCharities";
-import HaveToSend from "./pages/HaveToSend";
-import AwitingDelivery from "./pages/AwaitingDelivery";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import React from "react"
+import "./App.css"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import HomePage from "./pages/HomePage"
+import { Routes, Route } from "react-router-dom"
+import MintNftPage from "./pages/MintNftPage/MintNftPage"
+import DomainNamesPage from "./pages/DomainNamesPage/DomainNamesPage"
+import WebsitesPage from "./pages/WebsitesPage/WebsitesPage"
+import MarketPlacePage from "./pages/MarketPlacePage/MarketPlacePage"
+import ActionPage from "./pages/ActionPage/ActionPage"
+import ShopSettingsOne from "./pages/ShopSettingsOne/ShopSettingsOne"
+import SellPage from "./pages/SellPage/SellPage"
+import MyMovies from "./pages/MyMovies"
+import MyMusic from "./pages/MyMusic"
+import MyBooks from "./pages/MyBooks"
+import MyCourse from "./pages/MyCourses"
+import MyWebsites from "./pages/MyWebsites"
+import MyDomain from "./pages/MyDomains"
+import MyDigitalShop from "./pages/MyDigitalShop"
+import MyGoodsShop from "./pages/MyGoodsShop"
+import MyCharities from "./pages/MyCharities"
+import HaveToSend from "./pages/HaveToSend"
+import AwitingDelivery from "./pages/AwaitingDelivery"
+import Dashboard from "./pages/Dashboard/Dashboard"
 
 const App: React.FC = () => {
   return (
@@ -60,7 +60,7 @@ const App: React.FC = () => {
         <Route path="/awaiting-delivery/:id" element={<ShopSettingsOne />} />
       </Routes>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

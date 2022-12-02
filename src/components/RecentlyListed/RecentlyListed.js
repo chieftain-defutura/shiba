@@ -1,6 +1,6 @@
-import React from "react";
-import SliderCard from "../SliderCard/SliderCard";
-import "./RecentlyListed.css";
+import React from "react"
+import SliderCard from "../SliderCard/SliderCard"
+import "./RecentlyListed.css"
 
 const RecentlyListed = () => {
   return (
@@ -11,7 +11,7 @@ const RecentlyListed = () => {
         <button>see more</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RecentlyListed;
+export default RecentlyListed

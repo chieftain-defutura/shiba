@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useAccount } from "wagmi";
-import { Connector } from "../Connect";
-import LayoutModal from "../Model";
-import logo from "../../assets/img/logo.png";
-import searchIcon from "../../assets/img/search-icon.png";
-import "./Navigation.css";
-import { Link } from "react-router-dom";
+import React, { useState } from "react"
+import { useAccount } from "wagmi"
+import { Connector } from "../Connect"
+import LayoutModal from "../Model"
+import logo from "../../assets/img/logo.png"
+import searchIcon from "../../assets/img/search-icon.png"
+import "./Navigation.css"
+import { Link } from "react-router-dom"
 // import Link from "next/link";
 
 const Navigation = () => {
-  const { address } = useAccount();
-  const [open, setOpen] = useState(false);
+  const { address } = useAccount()
+  const [open, setOpen] = useState(false)
   return (
     <div className="navigation-container">
       <div className="container">
@@ -74,7 +74,7 @@ const Navigation = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation

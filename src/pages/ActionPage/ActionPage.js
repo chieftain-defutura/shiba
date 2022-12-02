@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
-import { IoIosArrowDown } from "react-icons/io";
-import "./ActionPage.css";
+import React, { useState } from "react"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
+import { IoIosArrowDown } from "react-icons/io"
+import "./ActionPage.css"
 
 const ActionPage = () => {
-  const [clickDropDown, setClickDropDown] = useState(null);
+  const [clickDropDown, setClickDropDown] = useState(null)
 
   const handleDropDown = (idx) => {
     if (clickDropDown === idx) {
-      return setClickDropDown(null);
+      return setClickDropDown(null)
     }
-    setClickDropDown(idx);
-  };
+    setClickDropDown(idx)
+  }
 
   return (
     <div>
@@ -126,10 +126,10 @@ const ActionPage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default ActionPage;
+export default ActionPage
 
 const accordionData = [
   {
@@ -196,4 +196,4 @@ const accordionData = [
     title: "Full On Blockchain NFT",
     labels: [{ label: "ART" }, { label: "File" }, { label: "Other" }],
   },
-];
+]

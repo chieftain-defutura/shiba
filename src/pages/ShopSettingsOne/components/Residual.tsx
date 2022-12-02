@@ -1,69 +1,69 @@
-import React, { useMemo, useState } from "react";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import React, { useMemo, useState } from "react"
+import { BsArrowLeftCircle } from "react-icons/bs"
 import {
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
-} from "wagmi";
+} from "wagmi"
 import {
   DIGITAL_GOODS_ADDRESS,
   RESIDUAL_ADDRESS,
-} from "../../../utils/contractAddress";
-import residualABI from "../../../utils/abi/resideuABI.json";
-import { useParams } from "react-router-dom";
+} from "../../../utils/contractAddress"
+import residualABI from "../../../utils/abi/resideuABI.json"
+import { useParams } from "react-router-dom"
 
 interface IResidualProps {
-  setClickCard: any;
+  setClickCard: any
 }
 
 const initialValues = {
   totalPercent: "0",
   filledShare: "0",
   shareHolders: [],
-};
+}
 
 const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
-  const { id } = useParams();
-  const [totalShare, setTotalShare] = useState("");
-  const [shareAddress, setShareAddress] = useState("");
-  const [sharePercent, setSharePercent] = useState("");
-  const [removeUserIndex, setRemoveUserIndex] = useState("");
+  const { id } = useParams()
+  const [totalShare, setTotalShare] = useState("")
+  const [shareAddress, setShareAddress] = useState("")
+  const [sharePercent, setSharePercent] = useState("")
+  const [removeUserIndex, setRemoveUserIndex] = useState("")
 
   const { data } = useContractRead({
     address: RESIDUAL_ADDRESS,
     abi: residualABI,
     functionName: "getBenificiary",
     args: [DIGITAL_GOODS_ADDRESS, id],
-  });
+  })
   const { config } = usePrepareContractWrite({
     address: RESIDUAL_ADDRESS,
     abi: residualABI,
     functionName: "setPercent",
     args: [DIGITAL_GOODS_ADDRESS, id, totalShare],
-  });
+  })
   const { config: addConfig } = usePrepareContractWrite({
     address: RESIDUAL_ADDRESS,
     abi: residualABI,
     functionName: "addBenificiary",
     args: [DIGITAL_GOODS_ADDRESS, id, shareAddress, sharePercent],
-  });
+  })
   const { config: removeConfig } = usePrepareContractWrite({
     address: RESIDUAL_ADDRESS,
     abi: residualABI,
     functionName: "removeBenificiary",
     args: [DIGITAL_GOODS_ADDRESS, id, removeUserIndex, removeUserIndex],
-  });
+  })
 
-  const { writeAsync: setPercentAsync } = useContractWrite(config);
-  const { writeAsync: addUserAsync } = useContractWrite(addConfig);
-  const { writeAsync: removeUserAsync } = useContractWrite(removeConfig);
+  const { writeAsync: setPercentAsync } = useContractWrite(config)
+  const { writeAsync: addUserAsync } = useContractWrite(addConfig)
+  const { writeAsync: removeUserAsync } = useContractWrite(removeConfig)
 
   const formattedData = useMemo(() => {
-    if (!data) return initialValues;
+    if (!data) return initialValues
 
-    const newData = data as any;
+    const newData = data as any
 
-    const shareHoldersList: { address: string; sharePercent: any }[] = [];
+    const shareHoldersList: { address: string; sharePercent: any }[] = []
 
     newData[2].forEach((address: string, i: number) => {
       newData[3].forEach((sharePercent: any, j: number) => {
@@ -71,42 +71,42 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
           shareHoldersList.push({
             address,
             sharePercent: sharePercent.toString(),
-          });
+          })
         }
-      });
-    });
+      })
+    })
 
     return {
       totalPercent: newData[0].toString(),
       filledShare: newData[1].toString(),
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
-    };
-  }, [data]);
-  console.log(formattedData);
+    }
+  }, [data])
+  console.log(formattedData)
 
   const handleSetPercent = async () => {
     try {
-      await setPercentAsync?.();
+      await setPercentAsync?.()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const handleAddUser = async () => {
     try {
-      await addUserAsync?.();
+      await addUserAsync?.()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const handleRemoveUser = async () => {
     try {
-      await removeUserAsync?.();
+      await removeUserAsync?.()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   return (
     <div className="residual-container">
@@ -211,7 +211,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Residual;
+export default Residual

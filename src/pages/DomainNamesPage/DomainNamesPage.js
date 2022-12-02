@@ -1,8 +1,8 @@
-import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
-import "./DomainNamesPage.css";
+import React from "react"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
+import "./DomainNamesPage.css"
 
 const DomainNamesPage = () => {
   return (
@@ -42,7 +42,7 @@ const DomainNamesPage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default DomainNamesPage;
+export default DomainNamesPage

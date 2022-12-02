@@ -1,8 +1,8 @@
-import React from "react";
-import { useContractRead } from "wagmi";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
-import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import cardImg from "../../assets/img/card-3.png";
+import React from "react"
+import { useContractRead } from "wagmi"
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
+import digitalShopABI from "../../utils/abi/digitalShopABI.json"
+import cardImg from "../../assets/img/card-3.png"
 
 const RemoveItem = () => {
   const { data }: { data: any } = useContractRead({
@@ -10,7 +10,7 @@ const RemoveItem = () => {
     abi: digitalShopABI,
     functionName: "getItemDetails",
     args: ["0"],
-  });
+  })
 
   return (
     <div className="stock-management-remove-item-container">
@@ -65,7 +65,7 @@ const RemoveItem = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RemoveItem;
+export default RemoveItem

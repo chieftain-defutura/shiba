@@ -1,11 +1,11 @@
-import React from "react";
-import Footer from "../../components/Footer/Footer";
-import HeaderNav from "../../components/HeaderNav/HeaderNav";
-import Navigation from "../../components/Navigation/Navigation";
-import SideBar from "../../components/SideBar/SideBar";
-import "./Dashboard.css";
-import { DemoDashboard } from "./Dashboards";
-import { Link } from "react-router-dom";
+import React from "react"
+import Footer from "../../components/Footer/Footer"
+import HeaderNav from "../../components/HeaderNav/HeaderNav"
+import Navigation from "../../components/Navigation/Navigation"
+import SideBar from "../../components/SideBar/SideBar"
+import "./Dashboard.css"
+import { DemoDashboard } from "./Dashboards"
+import { Link } from "react-router-dom"
 
 const Dashboard: React.FC = () => {
   return (
@@ -32,13 +32,13 @@ const Dashboard: React.FC = () => {
                   </Link>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

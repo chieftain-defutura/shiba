@@ -1,7 +1,8 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "semi": true,
+  "semi": false,
+  "semicolon": true,
   "singleQuote": false,
   "trailingComma": "all",
   "printWidth": 80

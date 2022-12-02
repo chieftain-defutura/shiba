@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
-import { IoIosArrowDown } from "react-icons/io";
-import "./MarketPlacePage.css";
+import React, { useState } from "react"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
+import { IoIosArrowDown } from "react-icons/io"
+import "./MarketPlacePage.css"
 
 const MarketPlacePage = () => {
-  const [isAccordionActive, setIsAccordionActive] = useState(1);
-  const [clickDropDown, setClickDropDown] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState("Select Currency");
+  const [isAccordionActive, setIsAccordionActive] = useState(1)
+  const [clickDropDown, setClickDropDown] = useState(null)
+  const [selectedCurrency, setSelectedCurrency] = useState("Select Currency")
 
   const handleDropDown = (idx) => {
     if (clickDropDown === idx) {
-      return setClickDropDown(null);
+      return setClickDropDown(null)
     }
-    setClickDropDown(idx);
-  };
+    setClickDropDown(idx)
+  }
 
   const handleAccordionActive = (idx) => {
     if (isAccordionActive === idx) {
-      return setIsAccordionActive(null);
+      return setIsAccordionActive(null)
     }
-    setIsAccordionActive(idx);
-  };
+    setIsAccordionActive(idx)
+  }
 
   return (
     <div>
@@ -259,10 +259,10 @@ const MarketPlacePage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default MarketPlacePage;
+export default MarketPlacePage
 
 const accordionData = [
   {
@@ -337,4 +337,4 @@ const accordionData = [
       { label: "Sport" },
     ],
   },
-];
+]

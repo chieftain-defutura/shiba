@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { useAccount, useSigner } from "wagmi";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react"
+import { useAccount, useSigner } from "wagmi"
+import { useParams } from "react-router-dom"
 import {
   DIGITAL_GOODS_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
-} from "../../utils/contractAddress";
-import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import { PAW_TOKEN_ADDRESS } from "../../utils/contractAddress";
-import axios from "axios";
-import { ethers } from "ethers";
-import { useTransactionModal } from "../../context/TransactionContext";
+} from "../../utils/contractAddress"
+import digitalShopABI from "../../utils/abi/digitalShopABI.json"
+import { PAW_TOKEN_ADDRESS } from "../../utils/contractAddress"
+import axios from "axios"
+import { ethers } from "ethers"
+import { useTransactionModal } from "../../context/TransactionContext"
 
 const AddItem = () => {
-  const { id } = useParams();
-  const { data } = useSigner();
-  const { address } = useAccount();
-  const { setTransaction } = useTransactionModal();
+  const { id } = useParams()
+  const { data } = useSigner()
+  const { address } = useAccount()
+  const { setTransaction } = useTransactionModal()
   const [newItem, setNewItem] = useState({
     preview: "",
     fullProduct: "",
@@ -26,20 +26,20 @@ const AddItem = () => {
     description: "",
     price: "",
     currency: "",
-  });
+  })
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setNewItem((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleAddItem = async () => {
-    if (!address || !data) return;
+    if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" });
+      setTransaction({ loading: true, status: "pending" })
       const resData = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
@@ -54,15 +54,15 @@ const AddItem = () => {
           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
           "Content-Type": "application/json",
         },
-      });
-      const JsonHash = resData.data.IpfsHash;
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`;
-      console.log(dataHash);
+      })
+      const JsonHash = resData.data.IpfsHash
+      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
+      console.log(dataHash)
       const contract = new ethers.Contract(
         DIGITAL_GOODS_ADDRESS,
         digitalShopABI,
         data,
-      );
+      )
       const tx = await contract.addItem(
         id,
         newItem.preview,
@@ -70,16 +70,16 @@ const AddItem = () => {
         newItem.price,
         PAW_TOKEN_ADDRESS,
         dataHash,
-      );
-      await tx.wait();
-      console.log("added");
-      setTransaction({ loading: true, status: "success" });
+      )
+      await tx.wait()
+      console.log("added")
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log("Error sending File to IPFS:");
-      console.log(error);
-      setTransaction({ loading: true, status: "error" });
+      console.log("Error sending File to IPFS:")
+      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   return (
     <div className="photo-sub-menu-container sub-menu-container">
@@ -161,7 +161,7 @@ const AddItem = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddItem;
+export default AddItem
