@@ -26,7 +26,7 @@ const MyDigitalShop: React.FC = () => {
           headers: {
             "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
           },
-        }
+        },
       );
       setLoading(false);
       setUserNftData(data.result.map((r: any) => r.token_id));

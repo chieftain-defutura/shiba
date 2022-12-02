@@ -14,7 +14,7 @@ const DomainNamesPage = () => {
 
           <div className="check-box-container">
             <div className="checkbox-content">
-              <label for="shib">.shib</label>
+              <label htmlFor="shib">.shib</label>
               <input id="shib" type="checkbox" />
             </div>
           </div>

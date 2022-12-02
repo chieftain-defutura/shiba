@@ -142,7 +142,7 @@ const MintNftPage: React.FC = () => {
   });
   const alteredDomainNamesData = useMemo(() => {
     if (!domainNamesData) return;
-    let existingDomainData: { tokenId: number; name: string }[] = [];
+    const existingDomainData: { tokenId: number; name: string }[] = [];
     const data = (domainNamesData as string[]) ?? [];
     console.log(data, mintData);
 
@@ -223,7 +223,7 @@ const MintNftPage: React.FC = () => {
           headers: {
             "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
           },
-        }
+        },
       );
 
       setMintData(data.result.map((r: any) => r.token_id));
@@ -250,7 +250,7 @@ const MintNftPage: React.FC = () => {
     if (!selectedOption) return;
 
     const contractdata = NftContractData.find(
-      (f) => f.title === selectedOption
+      (f) => f.title === selectedOption,
     );
     setSelectedNftType(contractdata);
     // eslint-disable-next-line   react-hooks/exhaustive-deps
@@ -261,6 +261,8 @@ const MintNftPage: React.FC = () => {
       setIsInvalid(true);
       return true;
     }
+
+    // eslint-disable-next-line no-prototype-builtins
     if (!selectedNftType.hasOwnProperty("tokenAddress")) {
       setIsInvalid(false);
       return true;

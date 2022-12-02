@@ -1,7 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Modal.css";
 
-const LayoutModal = ({ children, onClose }) => {
+interface IModal {
+  children: React.ReactNode;
+  onClose?: () => void;
+}
+
+const LayoutModal: React.FC<IModal> = ({ children, onClose }) => {
   useEffect(() => {
     document.body.style.overflowY = "hidden";
 

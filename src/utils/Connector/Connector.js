@@ -6,7 +6,9 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [publicProvider()]);
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+]);
 
 export const client = createClient({
   autoConnect: true,

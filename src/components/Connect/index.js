@@ -1,3 +1,4 @@
+import React from "react";
 import { useConnect } from "wagmi";
 import "./Connect.css";
 export function Connector() {

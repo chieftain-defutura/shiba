@@ -22,6 +22,7 @@ export const TransactionContext = createContext<ITransactionContext>({
   loading: false,
   status: "pending",
   message: undefined,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setTransaction: () => {},
 });
 export const useTransactionModal = () => useContext(TransactionContext);

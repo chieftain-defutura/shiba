@@ -61,7 +61,7 @@ const AddItem = () => {
       const contract = new ethers.Contract(
         DIGITAL_GOODS_ADDRESS,
         digitalShopABI,
-        data
+        data,
       );
       const tx = await contract.addItem(
         id,
@@ -69,7 +69,7 @@ const AddItem = () => {
         newItem.fullProduct,
         newItem.price,
         PAW_TOKEN_ADDRESS,
-        dataHash
+        dataHash,
       );
       await tx.wait();
       console.log("added");

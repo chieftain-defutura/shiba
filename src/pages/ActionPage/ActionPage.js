@@ -44,9 +44,9 @@ const ActionPage = () => {
                     }
                   >
                     <div className="check-box-container">
-                      {item.labels.map((label) => (
-                        <div className="checkbox-content">
-                          <label for="Human Rights">{label.label}</label>
+                      {item.labels.map((label, index) => (
+                        <div className="checkbox-content" key={index}>
+                          <label htmlFor="Human Rights">{label.label}</label>
                           <input id="Human Rights" type="checkbox" />
                         </div>
                       ))}
@@ -64,11 +64,11 @@ const ActionPage = () => {
                 <IoIosArrowDown className="arrow-icon" />
               </div>
               <div className="check-box-container">
-                <label for="min">MIN</label>
+                <label htmlFor="min">MIN</label>
                 <input id="min" type="checkbox" />
               </div>
               <div className="check-box-container">
-                <label for="max">Max</label>
+                <label htmlFor="max">Max</label>
                 <input id="max" type="checkbox" />
               </div>
             </div>
@@ -85,17 +85,17 @@ const ActionPage = () => {
             <p className="title">Sort By</p>
             <div className="sort-content">
               <div className="radio-btn-cont">
-                <label for="high-to-low">High To Low</label>
+                <label htmlFor="high-to-low">High To Low</label>
                 <input id="high-to-low" name="high-to-low" type="radio" />
                 <span></span>
               </div>
               <div className="radio-btn-cont">
-                <label for="Recently-listed">Recently listed</label>
+                <label htmlFor="Recently-listed">Recently listed</label>
                 <input id="Recently-listed" type="radio" />
                 <span></span>
               </div>
               <div className="radio-btn-cont">
-                <label for="Ending-soon">Ending soon</label>
+                <label htmlFor="Ending-soon">Ending soon</label>
                 <input id="Ending-soon" type="radio" />
                 <span></span>
               </div>

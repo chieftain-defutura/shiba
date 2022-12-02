@@ -63,7 +63,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
 
     const newData = data as any;
 
-    let shareHoldersList: { address: string; sharePercent: any }[] = [];
+    const shareHoldersList: { address: string; sharePercent: any }[] = [];
 
     newData[2].forEach((address: string, i: number) => {
       newData[3].forEach((sharePercent: any, j: number) => {
@@ -87,19 +87,25 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
   const handleSetPercent = async () => {
     try {
       await setPercentAsync?.();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleAddUser = async () => {
     try {
       await addUserAsync?.();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRemoveUser = async () => {
     try {
       await removeUserAsync?.();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -144,7 +150,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
               {formattedData?.shareHolders.map((list, index) => (
                 <option key={index.toString()}>
                   {`${list.address.slice(0, 6)}...${list.address.slice(
-                    list.address.length - 6
+                    list.address.length - 6,
                   )}`}
                   &nbsp;
                   {list.sharePercent} Shares
@@ -189,7 +195,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
               {formattedData?.shareHolders.map((list, index) => (
                 <option key={index.toString()} value={index}>
                   {`${list.address.slice(0, 10)}...${list.address.slice(
-                    list.address.length - 10
+                    list.address.length - 10,
                   )}`}
                 </option>
               ))}

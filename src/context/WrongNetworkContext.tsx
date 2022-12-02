@@ -15,6 +15,7 @@ interface IWrongNetworkContext {
 
 export const WrongNetworkContext = createContext<IWrongNetworkContext>({
   wrongNetwork: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setWrongNetwork: () => {},
 });
 export const useWrongNetworkModal = () => useContext(WrongNetworkContext);

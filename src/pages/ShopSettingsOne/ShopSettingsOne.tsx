@@ -26,7 +26,7 @@ import RemoveItem from "../../components/RemoveItem";
 import AddItem from "../../components/AddItem";
 import AppearanceSetting from "../../components/AppearanceSetting";
 
-const ShopSettingsOne = () => {
+const ShopSettingsOne: React.FC = () => {
   // const { id } = useParams();
   const [clickCard, setClickCard] = useState<any>(null);
   const [clickAddItem, setClickAddItem] = useState<any>(null);
@@ -123,7 +123,7 @@ const ShopSettingsOne = () => {
                     <div className="card-content">
                       <p className="title">Add new item in shop</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
+                        Lorem Ipsum has been the industry standard dummy text
                         ever since the 1500s, when an unknown printer took a
                         galley of type and scrambled it to make a type specimen
                         book.
@@ -140,7 +140,7 @@ const ShopSettingsOne = () => {
                     <div className="card-content">
                       <p className="title">Remove Item From Shop</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
+                        Lorem Ipsum has been the industry standard dummy text
                         ever since the 1500s, when an unknown printer took a
                         galley of type and scrambled it to make a type specimen
                         book.
@@ -389,7 +389,7 @@ const ShopSettingsOne = () => {
                     <div className="card-right">
                       <p className="card-title">On MarketPlace</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
+                        Lorem Ipsum has been the industry standard dummy text
                         ever since the 1500s, when an unknown printer took a
                         galley of type and scrambled it to make a type specimen
                         book.
@@ -406,7 +406,7 @@ const ShopSettingsOne = () => {
                     <div className="card-right">
                       <p className="card-title">On Auction</p>
                       <p className="desc">
-                        Lorem Ipsum has been the industry's standard dummy text
+                        Lorem Ipsum has been the industry standard dummy text
                         ever since the 1500s, when an unknown printer took a
                         galley of type and scrambled it to make a type specimen
                         book.
