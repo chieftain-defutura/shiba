@@ -21,13 +21,14 @@ import MyGoodsShop from "./pages/MyGoodsShop";
 import MyCharities from "./pages/MyCharities";
 import HaveToSend from "./pages/HaveToSend";
 import AwitingDelivery from "./pages/AwaitingDelivery";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="home" element={<HomePage />} />
+        <Route path="home" element={<Dashboard />} />
         <Route path="mint-nft" element={<MintNftPage />} />
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />
