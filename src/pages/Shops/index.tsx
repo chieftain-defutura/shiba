@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
-import Navigation from "../../components/Navigation/Navigation";
-import FooterBottom from "../../components/FooterBottom/FooterBottom";
-import cardImg from "../../assets/img/card-3.png";
+import React, { useState } from "react"
+import { IoIosArrowDown } from "react-icons/io"
+import Navigation from "../../components/Navigation/Navigation"
+import FooterBottom from "../../components/FooterBottom/FooterBottom"
+import cardImg from "../../assets/img/card-3.png"
 // import "./WebsitesPage.css";
 
 const ShopPage = () => {
-  const [openDigital, setOpenDigital] = useState(false);
-  const [openPhysical, setOpenPhysical] = useState(false);
-  const [openClothing, setOpenClothing] = useState(false);
-  const [openAccessories, setOpenAccessories] = useState(false);
-  const [openFood, setOpenFood] = useState(false);
+  const [openDigital, setOpenDigital] = useState(false)
+  const [openPhysical, setOpenPhysical] = useState(false)
+  const [openClothing, setOpenClothing] = useState(false)
+  const [openAccessories, setOpenAccessories] = useState(false)
+  const [openFood, setOpenFood] = useState(false)
 
   return (
     <div>
@@ -234,7 +234,7 @@ const ShopPage = () => {
       </div>
       <FooterBottom />
     </div>
-  );
-};
+  )
+}
 
-export default ShopPage;
+export default ShopPage

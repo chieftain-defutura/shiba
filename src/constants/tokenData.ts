@@ -4,7 +4,7 @@ import {
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-} from "../utils/contractAddress";
+} from "../utils/contractAddress"
 
 export const TokenData = [
   {
@@ -27,4 +27,4 @@ export const TokenData = [
     tokenName: "PAW",
     tokenAddress: PAW_TOKEN_ADDRESS,
   },
-];
+]

@@ -1,16 +1,16 @@
-import React from "react";
-import { ethers } from "ethers";
-import { useParams } from "react-router-dom";
-import { useContractRead, useAccount } from "wagmi";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
-import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import cardImg from "../../assets/img/card-3.png";
-import { useTransactionModal } from "../../context/TransactionContext";
+import React from "react"
+import { ethers } from "ethers"
+import { useParams } from "react-router-dom"
+import { useContractRead, useAccount } from "wagmi"
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
+import digitalShopABI from "../../utils/abi/digitalShopABI.json"
+import cardImg from "../../assets/img/card-3.png"
+import { useTransactionModal } from "../../context/TransactionContext"
 
 const RemoveItem = () => {
-  const { id } = useParams();
-  const { address } = useAccount();
-  const { setTransaction } = useTransactionModal();
+  const { id } = useParams()
+  const { address } = useAccount()
+  const { setTransaction } = useTransactionModal()
 
   const { data }: { data: any } = useContractRead({
     address: DIGITAL_GOODS_ADDRESS,
@@ -20,24 +20,24 @@ const RemoveItem = () => {
   })
 
   const handleRemoveItem = async () => {
-    if (!address || !data) return;
+    if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" });
+      setTransaction({ loading: true, status: "pending" })
       const contract = new ethers.Contract(
         DIGITAL_GOODS_ADDRESS,
         digitalShopABI,
-        data
-      );
-      const tx = await contract.removeItem(id);
-      await tx.wait();
-      console.log("added");
-      setTransaction({ loading: true, status: "success" });
+        data,
+      )
+      const tx = await contract.removeItem(id)
+      await tx.wait()
+      console.log("added")
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log("Error sending File to IPFS:");
-      console.log(error);
-      setTransaction({ loading: true, status: "error" });
+      console.log("Error sending File to IPFS:")
+      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   return (
     <div className="stock-management-remove-item-container">

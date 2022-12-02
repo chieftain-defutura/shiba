@@ -8,10 +8,10 @@ import {
 import {
   DIGITAL_GOODS_ADDRESS,
   RESIDUAL_ADDRESS,
-} from "../../../utils/contractAddress";
-import residualABI from "../../../utils/abi/resideuABI.json";
-import { useParams } from "react-router-dom";
-import { useTransactionModal } from "../../../context/TransactionContext";
+} from "../../../utils/contractAddress"
+import residualABI from "../../../utils/abi/resideuABI.json"
+import { useParams } from "react-router-dom"
+import { useTransactionModal } from "../../../context/TransactionContext"
 
 interface IResidualProps {
   setClickCard: any
@@ -24,12 +24,12 @@ const initialValues = {
 }
 
 const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
-  const { id } = useParams();
-  const { setTransaction } = useTransactionModal();
-  const [totalShare, setTotalShare] = useState("");
-  const [shareAddress, setShareAddress] = useState("");
-  const [sharePercent, setSharePercent] = useState("");
-  const [removeUserIndex, setRemoveUserIndex] = useState("");
+  const { id } = useParams()
+  const { setTransaction } = useTransactionModal()
+  const [totalShare, setTotalShare] = useState("")
+  const [shareAddress, setShareAddress] = useState("")
+  const [sharePercent, setSharePercent] = useState("")
+  const [removeUserIndex, setRemoveUserIndex] = useState("")
 
   const { data } = useContractRead({
     address: RESIDUAL_ADDRESS,
@@ -82,48 +82,48 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
       totalPercent: newData[0].toString(),
       filledShare: newData[1].toString(),
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
-    };
-  }, [data]);
+    }
+  }, [data])
 
   const percent =
-    100 - Number(formattedData?.filledShare) >= Number(sharePercent);
+    100 - Number(formattedData?.filledShare) >= Number(sharePercent)
 
   const handleSetPercent = async () => {
     try {
-      setTransaction({ loading: true, status: "pending" });
-      const tx = await setPercentAsync?.();
-      if (!tx) throw new Error("something went wrong");
-      await tx.wait();
-      setTransaction({ loading: true, status: "success" });
+      setTransaction({ loading: true, status: "pending" })
+      const tx = await setPercentAsync?.()
+      if (!tx) throw new Error("something went wrong")
+      await tx.wait()
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      setTransaction({ loading: true, status: "error" });
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   const handleAddUser = async () => {
     try {
-      setTransaction({ loading: true, status: "pending" });
-      const tx = await addUserAsync?.();
-      if (!tx) throw new Error("something went wrong");
-      await tx.wait();
-      setTransaction({ loading: true, status: "success" });
+      setTransaction({ loading: true, status: "pending" })
+      const tx = await addUserAsync?.()
+      if (!tx) throw new Error("something went wrong")
+      await tx.wait()
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      setTransaction({ loading: true, status: "error" });
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   const handleRemoveUser = async () => {
     try {
-      setTransaction({ loading: true, status: "pending" });
+      setTransaction({ loading: true, status: "pending" })
 
-      const tx = await removeUserAsync?.();
-      if (!tx) throw new Error("something went wrong");
-      await tx.wait();
-      setTransaction({ loading: true, status: "success" });
+      const tx = await removeUserAsync?.()
+      if (!tx) throw new Error("something went wrong")
+      await tx.wait()
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      setTransaction({ loading: true, status: "error" });
+      setTransaction({ loading: true, status: "error" })
     }
-  };
+  }
 
   return (
     <div className="residual-container">

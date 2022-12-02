@@ -1,28 +1,28 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSigner, useAccount } from "wagmi";
-import { Formik, Field, Form } from "formik";
-import { ethers } from "ethers";
-import axios from "axios";
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress";
-import digitalShopABI from "../../utils/abi/digitalShopABI.json";
-import { useTransactionModal } from "../../context/TransactionContext";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import React, { useCallback, useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useSigner, useAccount } from "wagmi"
+import { Formik, Field, Form } from "formik"
+import { ethers } from "ethers"
+import axios from "axios"
+import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
+import digitalShopABI from "../../utils/abi/digitalShopABI.json"
+import { useTransactionModal } from "../../context/TransactionContext"
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
+import { BsArrowLeftCircle } from "react-icons/bs"
 
 interface IAppearanceSetting {
-  setClickCard: any;
+  setClickCard: any
 }
 
 const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
-  const { id } = useParams();
-  const { data } = useSigner();
-  const { address } = useAccount();
-  const [slide, setSlide] = useState(1);
-  const { setTransaction } = useTransactionModal();
-  const [inputData, setInputData] = useState(null);
+  const { id } = useParams()
+  const { data } = useSigner()
+  const { address } = useAccount()
+  const [slide, setSlide] = useState(1)
+  const { setTransaction } = useTransactionModal()
+  const [inputData, setInputData] = useState(null)
 
-  console.log(inputData);
+  console.log(inputData)
   const handleGetMetadata = useCallback(async () => {
     if (!id) return
 
@@ -36,10 +36,10 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
             tokenId: id,
             contractAddress: "0xB566026263216f462337526A0640f244fE0A9Dee",
           },
-        }
-      );
-      console.log(data);
-      setInputData(data.metadata);
+        },
+      )
+      console.log(data)
+      setInputData(data.metadata)
     } catch (error) {
       console.log(error)
     }
@@ -51,9 +51,9 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
 
   const handleSlidePrev = () => {
     if (slide > 1) {
-      setSlide(slide - 1);
+      setSlide(slide - 1)
     }
-  };
+  }
 
   const handleSlideNext = () => {
     setSlide(slide + 1)
@@ -218,7 +218,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
         )}
       </Formik>
     </>
-  );
-};
+  )
+}
 
 export default AppearanceSetting
