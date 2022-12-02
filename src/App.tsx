@@ -22,6 +22,7 @@ import MyCharities from "./pages/MyCharities";
 import HaveToSend from "./pages/HaveToSend";
 import AwitingDelivery from "./pages/AwaitingDelivery";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import ShopPage from "./pages/Shops";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="home" element={<Dashboard />} />
+        <Route path="shop" element={<ShopPage />} />
         <Route path="mint-nft" element={<MintNftPage />} />
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />
