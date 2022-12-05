@@ -12,7 +12,7 @@ import axios from "axios"
 import { ethers } from "ethers"
 import { useTransactionModal } from "../../context/TransactionContext"
 
-const AddItem = () => {
+const AddItem: React.FC = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()

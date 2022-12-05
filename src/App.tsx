@@ -23,6 +23,7 @@ import MyCharities from "./pages/MyCharities"
 import HaveToSend from "./pages/HaveToSend"
 import AwitingDelivery from "./pages/AwaitingDelivery"
 import Dashboard from "./pages/Dashboard/Dashboard"
+import FileSettings from "./pages/FileSettings/FileSettings"
 
 const App: React.FC = () => {
   return (
@@ -45,7 +46,7 @@ const App: React.FC = () => {
         <Route path="/my-courses" element={<MyCourse />} />
         <Route path="/my-courses/:id" element={<ShopSettingsOne />} />
         <Route path="/my-websites" element={<MyWebsites />} />
-        <Route path="/my-websites/:id" element={<ShopSettingsOne />} />
+        <Route path="/my-websites/:id" element={<FileSettings />} />
         <Route path="/my-domains" element={<MyDomain />} />
         <Route path="/my-domains/:id" element={<ShopSettingsOne />} />
         <Route path="/my-digital-shop" element={<MyDigitalShop />} />
@@ -53,7 +54,7 @@ const App: React.FC = () => {
         <Route path="/my-goods-shop" element={<MyGoodsShop />} />
         <Route path="/my-goods-shop/:id" element={<ShopSettingsOne />} />
         <Route path="/my-charities" element={<MyCharities />} />
-        <Route path="/my-charities/:id" element={<ShopSettingsOne />} />
+        <Route path="/my-charities/:id" element={<FileSettings />} />
         <Route path="/have-to-send" element={<HaveToSend />} />
         <Route path="/have-to-send/:id" element={<ShopSettingsOne />} />
         <Route path="/awaiting-delivery" element={<AwitingDelivery />} />

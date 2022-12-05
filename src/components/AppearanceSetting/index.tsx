@@ -8,7 +8,7 @@ import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
 import digitalShopABI from "../../utils/abi/digitalShopABI.json"
 import { useTransactionModal } from "../../context/TransactionContext"
 
-const AppearanceSetting = () => {
+const AppearanceSetting: React.FC = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
