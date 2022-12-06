@@ -26,13 +26,13 @@ const Navigation = () => {
                 <Link to="/home">Home</Link>
               </li>
               <li>
-                <Link to="">Shops</Link>
+                <Link to="/shop">Shops</Link>
               </li>
               <li>
-                <Link to="">Websites</Link>
+                <Link to="/websites">Websites</Link>
               </li>
               <li>
-                <Link to="">Domain Names</Link>
+                <Link to="/domain-names">Domain Names</Link>
               </li>
               <li>
                 <Link to="">Full On Blockchain NFT</Link>
@@ -41,10 +41,10 @@ const Navigation = () => {
                 <Link to="">Charities</Link>
               </li>
               <li>
-                <Link to="">MarketPlace</Link>
+                <Link to="/marketplace">MarketPlace</Link>
               </li>
               <li>
-                <Link to="">Auction</Link>
+                <Link to="/action">Auction</Link>
               </li>
             </ul>
           </nav>

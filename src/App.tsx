@@ -1,4 +1,3 @@
-import React from "react"
 import "./App.css"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
@@ -23,6 +22,7 @@ import MyCharities from "./pages/MyCharities"
 import HaveToSend from "./pages/HaveToSend"
 import AwitingDelivery from "./pages/AwaitingDelivery"
 import Dashboard from "./pages/Dashboard/Dashboard"
+import ShopPage from "./pages/Shops"
 import FileSettings from "./pages/FileSettings/FileSettings"
 
 const App: React.FC = () => {
@@ -31,6 +31,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="home" element={<Dashboard />} />
+        <Route path="shop" element={<ShopPage />} />
         <Route path="mint-nft" element={<MintNftPage />} />
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />

@@ -11,6 +11,7 @@ import {
 } from "../../../utils/contractAddress"
 import residualABI from "../../../utils/abi/resideuABI.json"
 import { useParams } from "react-router-dom"
+import { useTransactionModal } from "../../../context/TransactionContext"
 
 interface IResidualProps {
   setClickCard: any
@@ -24,6 +25,7 @@ const initialValues = {
 
 const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
   const { id } = useParams()
+  const { setTransaction } = useTransactionModal()
   const [totalShare, setTotalShare] = useState("")
   const [shareAddress, setShareAddress] = useState("")
   const [sharePercent, setSharePercent] = useState("")
@@ -82,29 +84,44 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
     }
   }, [data])
-  console.log(formattedData)
+
+  const percent =
+    100 - Number(formattedData?.filledShare) >= Number(sharePercent)
 
   const handleSetPercent = async () => {
     try {
-      await setPercentAsync?.()
+      setTransaction({ loading: true, status: "pending" })
+      const tx = await setPercentAsync?.()
+      if (!tx) throw new Error("something went wrong")
+      await tx.wait()
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
   }
 
   const handleAddUser = async () => {
     try {
-      await addUserAsync?.()
+      setTransaction({ loading: true, status: "pending" })
+      const tx = await addUserAsync?.()
+      if (!tx) throw new Error("something went wrong")
+      await tx.wait()
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
   }
 
   const handleRemoveUser = async () => {
     try {
-      await removeUserAsync?.()
+      setTransaction({ loading: true, status: "pending" })
+
+      const tx = await removeUserAsync?.()
+      if (!tx) throw new Error("something went wrong")
+      await tx.wait()
+      setTransaction({ loading: true, status: "success" })
     } catch (error) {
-      console.log(error)
+      setTransaction({ loading: true, status: "error" })
     }
   }
 
@@ -176,9 +193,12 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
                 />
               </div>
               <p>Available Shares {100 - Number(formattedData?.filledShare)}</p>
+              {!percent && (
+                <div style={{ color: "red" }}>insufficient share</div>
+              )}
             </div>
             <button
-              disabled={!addUserAsync}
+              disabled={!addUserAsync || !percent}
               style={{ marginTop: "10px" }}
               onClick={() => handleAddUser()}
             >

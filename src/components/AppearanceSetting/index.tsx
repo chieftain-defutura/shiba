@@ -7,14 +7,22 @@ import axios from "axios"
 import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
 import digitalShopABI from "../../utils/abi/digitalShopABI.json"
 import { useTransactionModal } from "../../context/TransactionContext"
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
+import { BsArrowLeftCircle } from "react-icons/bs"
 
-const AppearanceSetting: React.FC = () => {
+interface IAppearanceSetting {
+  setClickCard: any
+}
+
+const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
   const [slide, setSlide] = useState(1)
   const { setTransaction } = useTransactionModal()
+  const [inputData, setInputData] = useState(null)
 
+  console.log(inputData)
   const handleGetMetadata = useCallback(async () => {
     if (!id) return
 
@@ -31,6 +39,7 @@ const AppearanceSetting: React.FC = () => {
         },
       )
       console.log(data)
+      setInputData(data.metadata)
     } catch (error) {
       console.log(error)
     }
@@ -39,6 +48,12 @@ const AppearanceSetting: React.FC = () => {
   useEffect(() => {
     handleGetMetadata()
   }, [handleGetMetadata])
+
+  const handleSlidePrev = () => {
+    if (slide > 1) {
+      setSlide(slide - 1)
+    }
+  }
 
   const handleSlideNext = () => {
     setSlide(slide + 1)
@@ -78,105 +93,131 @@ const AppearanceSetting: React.FC = () => {
   }
 
   return (
-    <Formik
-      initialValues={{
-        logo: "",
-        mainPhoto: "",
-        videoOne: "",
-        videoTwo: "",
-        videoThree: "",
-        description: "",
-        contacts: "",
-        website: "",
-        twitter: "",
-        instagram: "",
-      }}
-      onSubmit={handleAppearanceSetting}
-    >
-      {() => (
-        <Form>
-          {slide === 1 && (
-            <div className="appearance-settings-sub-menu-container sub-menu-container">
-              <div className="content">
-                <div className="content-left">
-                  <p>Logo:</p>
-                  <p>Main Photo / Video:</p>
-                  <p>Photo / Video1:</p>
-                  <p>Photo / Video2:</p>
-                  <p>Photo / Video3:</p>
+    <>
+      <div className="arrow-icon-container">
+        {slide === 1 ? (
+          <BsArrowLeftCircle
+            className="arrow-icon"
+            onClick={() => setClickCard(null)}
+          />
+        ) : (
+          <IoIosArrowBack
+            className="prev-arrow-icon"
+            onClick={handleSlidePrev}
+          />
+        )}
+        <IoIosArrowForward
+          className="next-arrow-icon"
+          onClick={handleSlideNext}
+        />
+      </div>
+      <Formik
+        initialValues={
+          inputData || {
+            logo: "",
+            mainPhoto: "",
+            videoOne: "",
+            videoTwo: "",
+            videoThree: "",
+            description: "",
+            contacts: "",
+            website: "",
+            twitter: "",
+            instagram: "",
+          }
+        }
+        enableReinitialize
+        onSubmit={handleAppearanceSetting}
+      >
+        {() => (
+          <Form>
+            {slide === 1 && (
+              <div className="appearance-settings-sub-menu-container sub-menu-container">
+                <div className="content">
+                  <div className="content-left">
+                    <p>Logo:</p>
+                    <p>Main Photo / Video:</p>
+                    <p>Photo / Video1:</p>
+                    <p>Photo / Video2:</p>
+                    <p>Photo / Video3:</p>
+                  </div>
+                  <div className="content-right">
+                    <Field
+                      name="logo"
+                      type="url"
+                      placeholder="Metadata Link 350*350"
+                    />
+                    <Field
+                      name="mainPhoto"
+                      type="url"
+                      placeholder="Metadata Link 600*400"
+                    />
+                    <Field
+                      name="videoOne"
+                      type="url"
+                      placeholder="Metadata Link"
+                    />
+                    <Field
+                      type="url"
+                      name="videoTwo"
+                      placeholder="Metadata Link"
+                    />
+                    <Field
+                      type="url"
+                      name="videoThree"
+                      placeholder="Metadata Link"
+                    />
+                  </div>
                 </div>
-                <div className="content-right">
-                  <Field
-                    name="logo"
-                    type="url"
-                    placeholder="Metadata Link 350*350"
-                  />
-                  <Field
-                    name="mainPhoto"
-                    type="url"
-                    placeholder="Metadata Link 600*400"
-                  />
-                  <Field
-                    name="videoOne"
-                    type="url"
-                    placeholder="Metadata Link"
-                  />
-                  <Field
-                    type="url"
-                    name="videoTwo"
-                    placeholder="Metadata Link"
-                  />
-                  <Field
-                    type="url"
-                    name="videoThree"
-                    placeholder="Metadata Link"
-                  />
-                </div>
-              </div>
-              <div className="btn-cont">
-                <button onClick={handleSlideNext}>Next</button>
-              </div>
-            </div>
-          )}
-          {slide === 2 && (
-            <div className="brief-description-sub-menu-container sub-menu-container">
-              <div className="content">
-                <div className="content-left">
-                  <p>Brief Description:</p>
-                  <p>Contracts:</p>
-                </div>
-                <div className="content-right">
-                  <Field as="textarea" rows={13} name="description"></Field>
-                  <Field name="contacts" type="number" placeholder="contact" />
-                </div>
-              </div>
-              <div className="btn-cont">
-                <button onClick={handleSlideNext}>Next</button>
-              </div>
-            </div>
-          )}
-          {slide === 3 && (
-            <div className="social-links-sub-menu-container sub-menu-container">
-              <div className="content">
-                <div className="content-left">
-                  <p>Website:</p>
-                  <p>Twitter:</p>
-                  <p>Instagram:</p>
-                </div>
-                <div className="content-right">
-                  <Field name="website" type="url" placeholder="Link" />
-                  <Field name="twitter" type="url" placeholder="Link" />
-                  <Field name="instagram" type="url" placeholder="Link" />
+                <div className="btn-cont">
+                  <button onClick={handleSlideNext}>Next</button>
                 </div>
               </div>
-              <div className="btn-cont">
-                <button>Submit</button>
+            )}
+            {slide === 2 && (
+              <div className="brief-description-sub-menu-container sub-menu-container">
+                <div className="content">
+                  <div className="content-left">
+                    <p>Brief Description:</p>
+                    <p>Contracts:</p>
+                  </div>
+                  <div className="content-right">
+                    <Field as="textarea" rows={13} name="description"></Field>
+                    <Field
+                      name="contacts"
+                      type="number"
+                      placeholder="contact"
+                    />
+                  </div>
+                </div>
+                <div className="btn-cont">
+                  <button onClick={handleSlideNext}>Next</button>
+                </div>
               </div>
-            </div>
-          )}
-        </Form>
-      )}
-    </Formik>
+            )}
+            {slide === 3 && (
+              <div className="social-links-sub-menu-container sub-menu-container">
+                <div className="content">
+                  <div className="content-left">
+                    <p>Website:</p>
+                    <p>Twitter:</p>
+                    <p>Instagram:</p>
+                  </div>
+                  <div className="content-right">
+                    <Field name="website" type="url" placeholder="Link" />
+                    <Field name="twitter" type="url" placeholder="Link" />
+                    <Field name="instagram" type="url" placeholder="Link" />
+                  </div>
+                </div>
+                <div className="btn-cont">
+                  <button>Submit</button>
+                </div>
+              </div>
+            )}
+          </Form>
+        )}
+      </Formik>
+    </>
   )
 }
 
