@@ -1,6 +1,6 @@
-import React from "react"
-import Navigation from "../../components/Navigation/Navigation"
-import "./SellPage.css"
+import React from 'react'
+import Navigation from '../../components/Navigation/Navigation'
+import './SellPage.css'
 
 const SellPage = () => {
   return (

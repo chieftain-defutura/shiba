@@ -1,6 +1,6 @@
-import React from "react"
-import SliderCard from "../SliderCard/SliderCard"
-import "./RecentlyListed.css"
+import React from 'react'
+import SliderCard from '../SliderCard/SliderCard'
+import './RecentlyListed.css'
 
 const RecentlyListed = () => {
   return (

@@ -1,8 +1,8 @@
-import React, { useState } from "react"
-import { IoIosArrowDown } from "react-icons/io"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
+import React, { useState } from 'react'
+import { IoIosArrowDown } from 'react-icons/io'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
 // import "./WebsitesPage.css";
 
 const ShopPage = () => {
@@ -22,16 +22,16 @@ const ShopPage = () => {
           <div
             className="header"
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
             onClick={() => setOpenDigital((m) => !m)}
           >
             <h2>Digital goods</h2>
             <IoIosArrowDown
               style={{
-                transform: openDigital ? "rotate(180deg)" : "rotate(0deg)",
+                transform: openDigital ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
             />
           </div>
@@ -60,16 +60,16 @@ const ShopPage = () => {
           <div
             className="header"
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
             onClick={() => setOpenPhysical((m) => !m)}
           >
             <h2>Physical goods</h2>
             <IoIosArrowDown
               style={{
-                transform: openPhysical ? "rotate(180deg)" : "rotate(0deg)",
+                transform: openPhysical ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
             />
           </div>
@@ -90,23 +90,23 @@ const ShopPage = () => {
               <div
                 className="header"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 0 1rem",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0 0 1rem',
                 }}
                 onClick={() => setOpenClothing((m) => !m)}
               >
                 <h2
                   style={{
-                    fontSize: "14px",
+                    fontSize: '14px',
                   }}
                 >
                   Clothing
                 </h2>
                 <IoIosArrowDown
                   style={{
-                    transform: openClothing ? "rotate(180deg)" : "rotate(0deg)",
+                    transform: openClothing ? 'rotate(180deg)' : 'rotate(0deg)',
                   }}
                 />
               </div>
@@ -131,16 +131,16 @@ const ShopPage = () => {
               <div
                 className="header"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 0 1rem",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0 0 1rem',
                 }}
                 onClick={() => setOpenAccessories((m) => !m)}
               >
                 <h2
                   style={{
-                    fontSize: "14px",
+                    fontSize: '14px',
                   }}
                 >
                   Accessories
@@ -148,8 +148,8 @@ const ShopPage = () => {
                 <IoIosArrowDown
                   style={{
                     transform: openAccessories
-                      ? "rotate(180deg)"
-                      : "rotate(0deg)",
+                      ? 'rotate(180deg)'
+                      : 'rotate(0deg)',
                   }}
                 />
               </div>
@@ -175,16 +175,16 @@ const ShopPage = () => {
           <div
             className="header"
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
             onClick={() => setOpenFood((m) => !m)}
           >
             <h2>Food</h2>
             <IoIosArrowDown
               style={{
-                transform: openFood ? "rotate(180deg)" : "rotate(0deg)",
+                transform: openFood ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
             />
           </div>

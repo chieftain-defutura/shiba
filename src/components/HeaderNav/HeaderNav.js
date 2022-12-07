@@ -1,5 +1,5 @@
-import React from "react"
-import "./HeaderNav.css"
+import React from 'react'
+import './HeaderNav.css'
 
 const HeaderNav = () => {
   return (

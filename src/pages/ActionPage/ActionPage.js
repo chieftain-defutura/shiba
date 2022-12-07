@@ -1,10 +1,9 @@
-import React, { useState } from "react"
-import { IoIosArrowDown } from "react-icons/io"
-
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
-import "./ActionPage.css"
+import React, { useState } from 'react'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
+import { IoIosArrowDown } from 'react-icons/io'
+import './ActionPage.css'
 
 const ActionPage = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
@@ -28,8 +27,8 @@ const ActionPage = () => {
                 <div
                   className={
                     clickDropDown === idx
-                      ? "drop-down-header active"
-                      : "drop-down-header"
+                      ? 'drop-down-header active'
+                      : 'drop-down-header'
                   }
                   onClick={() => handleDropDown(idx)}
                 >
@@ -40,8 +39,8 @@ const ActionPage = () => {
                   <div
                     className={
                       clickDropDown === idx
-                        ? "drop-down-body active"
-                        : "drop-down-body"
+                        ? 'drop-down-body active'
+                        : 'drop-down-body'
                     }
                   >
                     <div className="check-box-container">
@@ -134,67 +133,67 @@ export default ActionPage
 
 const accordionData = [
   {
-    title: "Domain Names",
+    title: 'Domain Names',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Physical Goods Shop",
+    title: 'Physical Goods Shop',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Digital Goods Shop",
+    title: 'Digital Goods Shop',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Charity Organisation",
+    title: 'Charity Organisation',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Websites",
+    title: 'Websites',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Full On Blockchain NFT",
-    labels: [{ label: "ART" }, { label: "File" }, { label: "Other" }],
+    title: 'Full On Blockchain NFT',
+    labels: [{ label: 'ART' }, { label: 'File' }, { label: 'Other' }],
   },
 ]

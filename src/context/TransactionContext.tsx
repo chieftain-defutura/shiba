@@ -4,13 +4,13 @@ import React, {
   useContext,
   useMemo,
   useState,
-} from "react"
-import TransactionModal from "../modal/TransactionModal"
-import useUpdateEffect from "../hooks/useUpdateEffect"
+} from 'react'
+import TransactionModal from '../modal/TransactionModal'
+import useUpdateEffect from '../hooks/useUpdateEffect'
 
 interface ITransaction {
   loading: boolean
-  status: "pending" | "success" | "error"
+  status: 'pending' | 'success' | 'error'
   message?: string
 }
 
@@ -20,7 +20,7 @@ interface ITransactionContext extends ITransaction {
 
 export const TransactionContext = createContext<ITransactionContext>({
   loading: false,
-  status: "pending",
+  status: 'pending',
   message: undefined,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setTransaction: () => {},
@@ -31,14 +31,14 @@ const TransactionContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [transaction, setTransaction] = useState<ITransaction>({
     loading: false,
-    status: "pending",
+    status: 'pending',
     message: undefined,
   })
 
   useMemo(() => {
-    if (transaction.status === "error" || transaction.status === "success") {
+    if (transaction.status === 'error' || transaction.status === 'success') {
       setTimeout(() => {
-        setTransaction({ ...transaction, status: "pending", loading: false })
+        setTransaction({ ...transaction, status: 'pending', loading: false })
       }, 3000)
     }
   }, [transaction, setTransaction])
@@ -47,7 +47,7 @@ const TransactionContextProvider: React.FC<{ children: ReactNode }> = ({
     if (!transaction.loading) {
       setTransaction({
         loading: false,
-        status: "pending",
+        status: 'pending',
         message: undefined,
       })
     }

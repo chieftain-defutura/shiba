@@ -1,9 +1,9 @@
-import React from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import React from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
-import "./Modal.scss"
-import Backdrop from "./BackDrop"
-import { modalVaraints } from "../constants/variants"
+import './Modal.scss'
+import Backdrop from './BackDrop'
+import { modalVaraints } from '../constants/variants'
 // import ErrorIcon from "/assets/icon/error.svg";
 // import SuccessIcon from "assets/icon/success.svg";
 // import ProcessIcon from "assets/icon/process.svg";
@@ -12,7 +12,7 @@ interface ITransactionModal {
   modal: boolean
   handleClose?: () => void
   message?: string
-  status: "pending" | "success" | "error"
+  status: 'pending' | 'success' | 'error'
 }
 
 const TransactionModal: React.FC<ITransactionModal> = ({
@@ -23,12 +23,12 @@ const TransactionModal: React.FC<ITransactionModal> = ({
 }) => {
   const getContent = () => {
     switch (status) {
-      case "error":
-        return "Sorry! Your transaction did not complete. Please try again later."
-      case "success":
-        return "Congratulations! Your payment is confirmed."
+      case 'error':
+        return 'Sorry! Your transaction did not complete. Please try again later.'
+      case 'success':
+        return 'Congratulations! Your payment is confirmed.'
       default:
-        return "Please be patient while your transaction is be being processed. This ususally takes few seconds to complete."
+        return 'Please be patient while your transaction is be being processed. This ususally takes few seconds to complete.'
     }
   }
 
@@ -49,12 +49,12 @@ const TransactionModal: React.FC<ITransactionModal> = ({
 
   const getTitle = () => {
     switch (status) {
-      case "error":
-        return "Failed"
-      case "success":
-        return "Success"
+      case 'error':
+        return 'Failed'
+      case 'success':
+        return 'Success'
       default:
-        return "Processing!"
+        return 'Processing!'
     }
   }
 
@@ -63,7 +63,7 @@ const TransactionModal: React.FC<ITransactionModal> = ({
       <AnimatePresence exitBeforeEnter>
         {modal && (
           <motion.div
-            className={"transaction_modal"}
+            className={'transaction_modal'}
             onClick={(e) => e.stopPropagation()}
             variants={modalVaraints}
             animate="animate"

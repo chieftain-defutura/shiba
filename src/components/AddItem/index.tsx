@@ -1,16 +1,16 @@
-import React, { useState } from "react"
-import { useAccount, useSigner } from "wagmi"
-import { useParams } from "react-router-dom"
+import React, { useState } from 'react'
+import { useAccount, useSigner } from 'wagmi'
+import { useParams } from 'react-router-dom'
 import {
   DIGITAL_GOODS_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
-} from "../../utils/contractAddress"
-import digitalShopABI from "../../utils/abi/digitalShopABI.json"
-import { PAW_TOKEN_ADDRESS } from "../../utils/contractAddress"
-import axios from "axios"
-import { ethers } from "ethers"
-import { useTransactionModal } from "../../context/TransactionContext"
+} from '../../utils/contractAddress'
+import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
+import axios from 'axios'
+import { ethers } from 'ethers'
+import { useTransactionModal } from '../../context/TransactionContext'
 
 const AddItem: React.FC = () => {
   const { id } = useParams()
@@ -18,14 +18,14 @@ const AddItem: React.FC = () => {
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
   const [newItem, setNewItem] = useState({
-    preview: "",
-    fullProduct: "",
-    ItemName: "",
-    categorys: "",
-    details: "",
-    description: "",
-    price: "",
-    currency: "",
+    preview: '',
+    fullProduct: '',
+    ItemName: '',
+    categorys: '',
+    details: '',
+    description: '',
+    price: '',
+    currency: '',
   })
 
   const handleChange = (e: any) => {
@@ -39,10 +39,10 @@ const AddItem: React.FC = () => {
   const handleAddItem = async () => {
     if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" })
+      setTransaction({ loading: true, status: 'pending' })
       const resData = await axios({
-        method: "post",
-        url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+        method: 'post',
+        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         data: {
           preview: newItem.preview,
           itemName: newItem.ItemName,
@@ -52,7 +52,7 @@ const AddItem: React.FC = () => {
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
           pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
       const JsonHash = resData.data.IpfsHash
@@ -72,12 +72,12 @@ const AddItem: React.FC = () => {
         dataHash,
       )
       await tx.wait()
-      console.log("added")
-      setTransaction({ loading: true, status: "success" })
+      console.log('added')
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log("Error sending File to IPFS:")
+      console.log('Error sending File to IPFS:')
       console.log(error)
-      setTransaction({ loading: true, status: "error" })
+      setTransaction({ loading: true, status: 'error' })
     }
   }
 

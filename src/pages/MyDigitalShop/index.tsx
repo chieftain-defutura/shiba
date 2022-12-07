@@ -1,12 +1,13 @@
-import React, { useCallback, useState, useEffect } from "react"
-import cardImg from "../../assets/img/card-3.png"
-import { Link } from "react-router-dom"
-import Navigation from "../../components/Navigation/Navigation"
-import HeaderNav from "../../components/HeaderNav/HeaderNav"
-import SideBar from "../../components/SideBar/SideBar"
-import axios from "axios"
-import { useAccount } from "wagmi"
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
+import React, { useCallback, useState, useEffect } from 'react'
+import cardImg from '../../assets/img/card-3.png'
+import { Link } from 'react-router-dom'
+import Navigation from '../../components/Navigation/Navigation'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import SideBar from '../../components/SideBar/SideBar'
+import axios from 'axios'
+import { useAccount } from 'wagmi'
+import { DIGITAL_GOODS_ADDRESS } from '../../utils/contractAddress'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
 
 const MyDigitalShop: React.FC = () => {
   const [userNftData, setUserNftData] = useState([])
@@ -24,7 +25,7 @@ const MyDigitalShop: React.FC = () => {
 
         {
           headers: {
-            "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
+            'X-API-KEY': process.env.REACT_APP_MORALIS_API_KEY,
           },
         },
       )
@@ -49,8 +50,8 @@ const MyDigitalShop: React.FC = () => {
           <SideBar />
         </div>
         <div className="website-container-right">
-          {loading ? "loading..." : ""}
-          {!userNftData.length && "noResult"}
+          {loading ? 'loading...' : ''}
+          {!userNftData.length && 'noResult'}
           {userNftData.map((f, idx) => (
             <div className="website-card-container" key={idx}>
               <div className="card">
@@ -64,7 +65,7 @@ const MyDigitalShop: React.FC = () => {
                 <div className="card-bottom">
                   <p>Shop Details</p>
                   <Link to={`/my-digital-shop/${f}`}>
-                    <button style={{ width: "50px" }}>Get In</button>
+                    <button style={{ width: '50px' }}>Get In</button>
                   </Link>
                 </div>
               </div>
@@ -72,6 +73,7 @@ const MyDigitalShop: React.FC = () => {
           ))}
         </div>
       </div>
+      <FooterBottom />
     </div>
   )
 }
