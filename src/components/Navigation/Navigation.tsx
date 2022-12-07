@@ -35,10 +35,10 @@ const Navigation = () => {
                 <Link to="/domain-names">Domain Names</Link>
               </li>
               <li>
-                <Link to="">Full On Blockchain NFT</Link>
+                <Link to="/full-on-blockChain-nft">Full On Blockchain NFT</Link>
               </li>
               <li>
-                <Link to="">Charities</Link>
+                <Link to="/charities">Charities</Link>
               </li>
               <li>
                 <Link to="/marketplace">MarketPlace</Link>

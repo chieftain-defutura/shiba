@@ -6,8 +6,8 @@ import {
   usePrepareContractWrite,
 } from 'wagmi'
 import {
-  DIGITAL_GOODS_ADDRESS,
-  RESIDUAL_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  RESIDUAL_CONTRACT_ADDRESS,
 } from '../../../utils/contractAddress'
 import residualABI from '../../../utils/abi/resideuABI.json'
 import { useParams } from 'react-router-dom'
@@ -32,28 +32,33 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
   const [removeUserIndex, setRemoveUserIndex] = useState('')
 
   const { data } = useContractRead({
-    address: RESIDUAL_ADDRESS,
+    address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'getBenificiary',
-    args: [DIGITAL_GOODS_ADDRESS, id],
+    args: [DIGITAL_GOODS_NFT_CONTRACT_ADDRESS, id],
   })
   const { config } = usePrepareContractWrite({
-    address: RESIDUAL_ADDRESS,
+    address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'setPercent',
-    args: [DIGITAL_GOODS_ADDRESS, id, totalShare],
+    args: [DIGITAL_GOODS_NFT_CONTRACT_ADDRESS, id, totalShare],
   })
   const { config: addConfig } = usePrepareContractWrite({
-    address: RESIDUAL_ADDRESS,
+    address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'addBenificiary',
-    args: [DIGITAL_GOODS_ADDRESS, id, shareAddress, sharePercent],
+    args: [DIGITAL_GOODS_NFT_CONTRACT_ADDRESS, id, shareAddress, sharePercent],
   })
   const { config: removeConfig } = usePrepareContractWrite({
-    address: RESIDUAL_ADDRESS,
+    address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'removeBenificiary',
-    args: [DIGITAL_GOODS_ADDRESS, id, removeUserIndex, removeUserIndex],
+    args: [
+      DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+      id,
+      removeUserIndex,
+      removeUserIndex,
+    ],
   })
 
   const { writeAsync: setPercentAsync } = useContractWrite(config)
@@ -64,11 +69,11 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     if (!data) return initialValues
 
     const newData = data as any
-
+    console.log(newData)
     const shareHoldersList: { address: string; sharePercent: any }[] = []
 
-    newData[2].forEach((address: string, i: number) => {
-      newData[3].forEach((sharePercent: any, j: number) => {
+    newData?.shareHolders.forEach((address: string, i: number) => {
+      newData?.sharePercent.forEach((sharePercent: any, j: number) => {
         if (i === j) {
           shareHoldersList.push({
             address,
@@ -79,8 +84,8 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     })
 
     return {
-      totalPercent: newData[0].toString(),
-      filledShare: newData[1].toString(),
+      totalPercent: newData.totalPercent.toString(),
+      filledShare: newData.filledshare.toString(),
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
     }
   }, [data])

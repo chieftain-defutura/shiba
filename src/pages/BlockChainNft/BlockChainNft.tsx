@@ -1,11 +1,11 @@
 import React from 'react'
+
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
 import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import cardImg from '../../assets/img/card-3.png'
-import './DomainNamesPage.css'
 
 const DomainNamesPage: React.FC = () => {
   const { data, isLoading, isError } = useGetNftsByContractAddressQuery({
@@ -20,7 +20,7 @@ const DomainNamesPage: React.FC = () => {
       <HeaderNav />
       <div className="domain-name-container">
         <div className="domain-name-container-left">
-          <h2 className="heading">Domain Names</h2>
+          <h2 className="heading">Full On BlockChain NFT</h2>
 
           <div className="check-box-container">
             <div className="checkbox-content">

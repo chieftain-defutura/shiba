@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux'
 
-import moralisApiSlice from './slices/moralisApiSlice'
+import moralisApi from './slices/moralisApiSlice'
 
 const store = configureStore({
   reducer: {
-    [moralisApiSlice.reducerPath]: moralisApiSlice.reducer,
+    [moralisApi.reducerPath]: moralisApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(moralisApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

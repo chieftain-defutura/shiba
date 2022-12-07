@@ -1,5 +1,33 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_shareOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_sharePercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "addBenificiary",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -31,60 +59,19 @@
     "type": "event"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
         "internalType": "address",
         "name": "contractAddress",
         "type": "address"
       },
       {
-        "indexed": false,
         "internalType": "uint256",
-        "name": "tokenid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "shareHolderIndex",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "sharePercentIndex",
+        "name": "_tokenId",
         "type": "uint256"
       }
     ],
-    "name": "RemoveBenificiary",
-    "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_contractAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tokenid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_shareOwner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_sharePercent",
-        "type": "uint256"
-      }
-    ],
-    "name": "addBenificiary",
+    "name": "finalizeToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -98,59 +85,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_tokenid",
-        "type": "uint256"
-      }
-    ],
-    "name": "getBenificiary",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "totalPercent",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "filledShare",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "maxsharelimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_contractAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
@@ -170,6 +105,31 @@
     "type": "function"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "shareOwner",
+        "type": "address"
+      }
+    ],
+    "name": "RemoveBenificiary",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -178,7 +138,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
@@ -190,6 +150,70 @@
     "name": "setPercent",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBenificiary",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address[]",
+            "name": "shareHolders",
+            "type": "address[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "sharePercent",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "filledshare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPercent",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "paused",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Residue.ResidueDetails",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxsharelimit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
+import { ethers } from 'ethers'
+import axios from 'axios'
+
 import {
-  DIGITAL_GOODS_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
-import axios from 'axios'
-import { ethers } from 'ethers'
 import { useTransactionModal } from '../../context/TransactionContext'
 
 const AddItem: React.FC = () => {
@@ -59,7 +60,7 @@ const AddItem: React.FC = () => {
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,
         data,
       )

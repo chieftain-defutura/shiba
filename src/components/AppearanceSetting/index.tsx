@@ -4,7 +4,7 @@ import { useSigner, useAccount } from 'wagmi'
 import { Formik, Field, Form } from 'formik'
 import { ethers } from 'ethers'
 import axios from 'axios'
-import { DIGITAL_GOODS_ADDRESS } from '../../utils/contractAddress'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
@@ -77,7 +77,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,
         data,
       )

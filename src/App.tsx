@@ -25,6 +25,8 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import ShopPage from './pages/Shops'
 import FileSettings from './pages/FileSettings/FileSettings'
 import MyGoodShop from './components/MyGoodShop/MyGoodShop'
+import BlockChainNft from './pages/BlockChainNft/BlockChainNft'
+import Charities from './pages/Charities/Charities'
 
 const App: React.FC = () => {
   return (
@@ -37,6 +39,8 @@ const App: React.FC = () => {
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />
         <Route path="marketplace" element={<MarketPlacePage />} />
+        <Route path="full-on-blockChain-nft" element={<BlockChainNft />} />
+        <Route path="charities" element={<Charities />} />
         <Route path="action" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
         <Route path="/my-movies" element={<MyMovies />} />

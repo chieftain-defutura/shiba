@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const moralisApiSlice = createApi({
-  reducerPath: 'moralis-api',
+  reducerPath: 'moralis',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://deep-index.moralis.io/api/v2',
     prepareHeaders: (headers) => {
@@ -10,16 +10,26 @@ const moralisApiSlice = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getNftsByContractAddress: builder.query<any, void>({
-      query: () => {
+    getNftsByContractAddress: builder.query<any, { erc721Address: string }>({
+      query: ({ erc721Address }) => {
         return {
-          url: `/nft/0x15e5eF8C7249eAb317517D0f5068F8aFd57Fb586?chain=0x5&limit=1&cursor=`,
+          url: `/nft/${erc721Address}?chain=0x5&limit=2&cursor=`,
         }
       },
     }),
+    getUserNfts: builder.query<any, { erc721Address: string; address: string }>(
+      {
+        query: ({ erc721Address, address }) => {
+          return {
+            url: `/${address}/nft?chain=0x5&token_addresses=${erc721Address}`,
+          }
+        },
+      },
+    ),
   }),
 })
 
-export const { useGetNftsByContractAddressQuery } = moralisApiSlice
+export const { useGetNftsByContractAddressQuery, useGetUserNftsQuery } =
+  moralisApiSlice
 
 export default moralisApiSlice

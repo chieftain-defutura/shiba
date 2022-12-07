@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
-import { DIGITAL_GOODS_ADDRESS } from '../../utils/contractAddress'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useParams } from 'react-router-dom'
 import { useTransactionModal } from '../../context/TransactionContext'
@@ -22,7 +22,7 @@ const Transfer = () => {
       console.log('pending')
 
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,
         data,
       )

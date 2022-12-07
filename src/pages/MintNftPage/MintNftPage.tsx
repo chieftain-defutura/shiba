@@ -26,8 +26,8 @@ import {
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
-  SHOP_NFT_CONTRACT_ADDRESS,
-  DIGITAL_GOODS_ADDRESS,
+  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import domainABI from '../../utils/abi/domainABI.json'
 import shopABI from '../../utils/abi/shopABI.json'
@@ -51,13 +51,13 @@ const ContractData = [
   },
   {
     title: DIGITAL_GOOD_SHOP,
-    contractAddress: DIGITAL_GOODS_ADDRESS,
+    contractAddress: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     // tokenAddress: SHIB_TOKEN_ADDRESS,
     // allowance: 0,
   },
   {
     title: PHYSICAL_GOODS_SHOP,
-    contractAddress: SHOP_NFT_CONTRACT_ADDRESS,
+    contractAddress: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
     // tokenAddress: LEASH_TOKEN_ADDRESS,
     // allowance: 0,
   },
@@ -171,7 +171,7 @@ const MintNftPage: React.FC = () => {
   const domainContract = useContractWrite(config)
 
   const { config: shopMints } = usePrepareContractWrite({
-    address: SHOP_NFT_CONTRACT_ADDRESS,
+    address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: shopABI,
     functionName: 'mintNFT',
     args: [selectDomain, true],
@@ -179,7 +179,7 @@ const MintNftPage: React.FC = () => {
   const shopContract = useContractWrite(shopMints)
 
   const { config: digitalMints } = usePrepareContractWrite({
-    address: DIGITAL_GOODS_ADDRESS,
+    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: digitalShopABI,
     functionName: 'mintNFT',
     args: [selectDomain, true],
