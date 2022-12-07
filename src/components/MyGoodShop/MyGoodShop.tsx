@@ -24,7 +24,7 @@ import './MyGoodShop.css'
 import Residual from '../../pages/ShopSettingsOne/components/Residual'
 // import { useParams } from "react-router-dom";
 import RemoveItem from '../../components/RemoveItem'
-// import AddItem from "../../components/AddItem"
+// import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
 import Transfer from '../../components/Transfer'
 import { Formik, Form, Field } from 'formik'
@@ -156,9 +156,10 @@ const ShopSettingsOne: React.FC = () => {
                   </div>
                 </div>
               )}
+
               {/* <div>
                 <div>
-                  {clickAddItem === "Add New Item in Shop" && slide === 1 && (
+                  {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
                     <AddItem />
                   )}
                 </div>
@@ -192,7 +193,7 @@ const ShopSettingsOne: React.FC = () => {
                   {() => (
                     <Form>
                       {clickAddItem === 'Add New Item in Shop' &&
-                        slide === 2 && (
+                        slide === 1 && (
                           <div className="item-info-sub-menu-container sub-menu-container">
                             <p className="title">Item Info</p>
                             <div className="content">
@@ -372,7 +373,7 @@ const ShopSettingsOne: React.FC = () => {
                           </div>
                         )}
                       {clickAddItem === 'Add New Item in Shop' &&
-                        slide === 3 && (
+                        slide === 2 && (
                           <div className="description-sub-menu-container sub-menu-container">
                             <p className="title">Description</p>
                             <div className="content">
@@ -414,7 +415,7 @@ const ShopSettingsOne: React.FC = () => {
                           </div>
                         )}
                       {clickAddItem === 'Add New Item in Shop' &&
-                        slide === 4 && (
+                        slide === 3 && (
                           <div className="quantity-price-shipment-sub-menu-container sub-menu-container">
                             <p className="title">
                               Quantity, Price and Shipment

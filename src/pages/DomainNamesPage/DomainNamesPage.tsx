@@ -7,14 +7,11 @@ import axios from 'axios'
 import { useAccount } from 'wagmi'
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
-// import { useAppDispatch, useAppSelector } from "../../store/store"
 
 const DomainNamesPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [userNftData, setUserNftData] = useState([])
   const [visible, setVisible] = useState(1)
-  // const dispatch = useAppDispatch()
-  // const read = useAppSelector((state) => state)
 
   const showMore = () => {
     setVisible((preValue) => preValue + 1)
