@@ -64,11 +64,11 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     if (!data) return initialValues
 
     const newData = data as any
-
+    console.log(newData)
     const shareHoldersList: { address: string; sharePercent: any }[] = []
 
-    newData[2].forEach((address: string, i: number) => {
-      newData[3].forEach((sharePercent: any, j: number) => {
+    newData?.shareHolders.forEach((address: string, i: number) => {
+      newData?.sharePercent.forEach((sharePercent: any, j: number) => {
         if (i === j) {
           shareHoldersList.push({
             address,
@@ -79,8 +79,8 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     })
 
     return {
-      totalPercent: newData[0].toString(),
-      filledShare: newData[1].toString(),
+      totalPercent: newData.totalPercent.toString(),
+      filledShare: newData.filledshare.toString(),
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
     }
   }, [data])

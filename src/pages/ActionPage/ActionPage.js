@@ -1,8 +1,9 @@
 import React, { useState } from "react"
+import { IoIosArrowDown } from "react-icons/io"
+
 import Navigation from "../../components/Navigation/Navigation"
 import FooterBottom from "../../components/FooterBottom/FooterBottom"
 import cardImg from "../../assets/img/card-3.png"
-import { IoIosArrowDown } from "react-icons/io"
 import "./ActionPage.css"
 
 const ActionPage = () => {

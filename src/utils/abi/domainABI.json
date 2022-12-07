@@ -97,12 +97,48 @@
         "internalType": "string",
         "name": "_data",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_tld",
+        "type": "string"
       }
     ],
-    "name": "mintNFT",
+    "name": "mintNft",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "domainName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "tld",
+        "type": "string"
+      }
+    ],
+    "name": "MintNft",
+    "type": "event"
   },
   {
     "inputs": [
@@ -190,7 +226,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
@@ -251,6 +287,25 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "tokenUri",
+        "type": "string"
+      }
+    ],
+    "name": "UpdateTokenUri",
+    "type": "event"
   },
   {
     "inputs": [
