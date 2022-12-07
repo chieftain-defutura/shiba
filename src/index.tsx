@@ -1,22 +1,26 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
-import "./index.css"
-import App from "./App"
-import reportWebVitals from "./reportWebVitals"
-import { BrowserRouter } from "react-router-dom"
-import { client } from "./utils/Connector/Connector"
-import { WagmiConfig } from "wagmi"
-import Provider from "./store/provider"
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+import { BrowserRouter } from 'react-router-dom'
+import { client } from './utils/Connector/Connector'
+import { WagmiConfig } from 'wagmi'
+import Provider from './store/provider'
+import { Provider as ReduxProvider } from 'react-redux'
+import store from './store/store'
 
 //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = ReactDOM.createRoot(document.getElementById("root")!)
+const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <WagmiConfig client={client}>
-        <Provider>
-          <App />
-        </Provider>
+        <ReduxProvider store={store}>
+          <Provider>
+            <App />
+          </Provider>
+        </ReduxProvider>
       </WagmiConfig>
     </BrowserRouter>
   </React.StrictMode>,

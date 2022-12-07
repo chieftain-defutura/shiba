@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import { useAccount } from "wagmi"
-import { Connector } from "../Connect"
-import LayoutModal from "../Model"
-import logo from "../../assets/img/logo.png"
-import searchIcon from "../../assets/img/search-icon.png"
-import "./Navigation.css"
-import { Link } from "react-router-dom"
+import React, { useState } from 'react'
+import { useAccount } from 'wagmi'
+import { Connector } from '../Connect'
+import LayoutModal from '../Model'
+import logo from '../../assets/img/logo.png'
+import searchIcon from '../../assets/img/search-icon.png'
+import './Navigation.css'
+import { Link } from 'react-router-dom'
 // import Link from "next/link";
 
 const Navigation = () => {

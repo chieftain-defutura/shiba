@@ -1,6 +1,6 @@
-import React from "react"
-import SliderCard from "../SliderCard/SliderCard"
-import "./PopularFood.css"
+import React from 'react'
+import SliderCard from '../SliderCard/SliderCard'
+import './PopularFood.css'
 
 const PopularFood = () => {
   return (

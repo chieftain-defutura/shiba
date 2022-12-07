@@ -1,14 +1,14 @@
-import React, { useState } from "react"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
-import { IoIosArrowDown } from "react-icons/io"
-import "./MarketPlacePage.css"
+import React, { useState } from 'react'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
+import { IoIosArrowDown } from 'react-icons/io'
+import './MarketPlacePage.css'
 
 const MarketPlacePage = () => {
   const [isAccordionActive, setIsAccordionActive] = useState(1)
   const [clickDropDown, setClickDropDown] = useState(null)
-  const [selectedCurrency, setSelectedCurrency] = useState("Select Currency")
+  const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
 
   const handleDropDown = (idx) => {
     if (clickDropDown === idx) {
@@ -45,15 +45,15 @@ const MarketPlacePage = () => {
                 key={idx}
                 className={
                   isAccordionActive === 1
-                    ? "drop-down-container "
-                    : "drop-down-container active"
+                    ? 'drop-down-container '
+                    : 'drop-down-container active'
                 }
               >
                 <div
                   className={
                     clickDropDown === idx
-                      ? "drop-down-header active"
-                      : "drop-down-header"
+                      ? 'drop-down-header active'
+                      : 'drop-down-header'
                   }
                   onClick={() => isAccordionActive === 1 && handleDropDown(idx)}
                 >
@@ -64,8 +64,8 @@ const MarketPlacePage = () => {
                   <div
                     className={
                       clickDropDown === idx
-                        ? "drop-down-body active"
-                        : "drop-down-body"
+                        ? 'drop-down-body active'
+                        : 'drop-down-body'
                     }
                   >
                     <div className="check-box-container">
@@ -94,15 +94,15 @@ const MarketPlacePage = () => {
             <div
               className={
                 isAccordionActive === 2
-                  ? "drop-down-container"
-                  : "drop-down-container active"
+                  ? 'drop-down-container'
+                  : 'drop-down-container active'
               }
             >
               <div
                 className={
                   clickDropDown === 6
-                    ? "drop-down-header active"
-                    : "drop-down-header"
+                    ? 'drop-down-header active'
+                    : 'drop-down-header'
                 }
                 onClick={() => isAccordionActive === 2 && handleDropDown(6)}
               >
@@ -113,8 +113,8 @@ const MarketPlacePage = () => {
                 <div
                   className={
                     clickDropDown === 6
-                      ? "drop-down-body active"
-                      : "drop-down-body"
+                      ? 'drop-down-body active'
+                      : 'drop-down-body'
                   }
                 >
                   <div className="check-box-container">
@@ -129,15 +129,15 @@ const MarketPlacePage = () => {
             <div
               className={
                 isAccordionActive === 2
-                  ? "drop-down-container"
-                  : "drop-down-container active"
+                  ? 'drop-down-container'
+                  : 'drop-down-container active'
               }
             >
               <div
                 className={
                   clickDropDown === 7
-                    ? "drop-down-header active"
-                    : "drop-down-header"
+                    ? 'drop-down-header active'
+                    : 'drop-down-header'
                 }
                 onClick={() => isAccordionActive === 2 && handleDropDown(7)}
               >
@@ -148,8 +148,8 @@ const MarketPlacePage = () => {
                 <div
                   className={
                     clickDropDown === 7
-                      ? "drop-down-body active"
-                      : "drop-down-body"
+                      ? 'drop-down-body active'
+                      : 'drop-down-body'
                   }
                 >
                   <div className="check-box-container">
@@ -164,15 +164,15 @@ const MarketPlacePage = () => {
             <div
               className={
                 isAccordionActive === 2
-                  ? "drop-down-container"
-                  : "drop-down-container active"
+                  ? 'drop-down-container'
+                  : 'drop-down-container active'
               }
             >
               <div
                 className={
                   clickDropDown === 8
-                    ? "drop-down-header active"
-                    : "drop-down-header"
+                    ? 'drop-down-header active'
+                    : 'drop-down-header'
                 }
                 onClick={() => isAccordionActive === 2 && handleDropDown(8)}
               >
@@ -183,8 +183,8 @@ const MarketPlacePage = () => {
                 <div
                   className={
                     clickDropDown === 8
-                      ? "drop-down-body active"
-                      : "drop-down-body"
+                      ? 'drop-down-body active'
+                      : 'drop-down-body'
                   }
                 >
                   <div className="check-box-container">
@@ -248,11 +248,11 @@ const MarketPlacePage = () => {
               <IoIosArrowDown className="arrow-icon" />
             </div>
             <div className="body">
-              <p onClick={() => setSelectedCurrency("SHI")}>SHI</p>
-              <p onClick={() => setSelectedCurrency("LEASH")}>LEASH</p>
-              <p onClick={() => setSelectedCurrency("SHIB")}>SHIB</p>
-              <p onClick={() => setSelectedCurrency("BONE")}>BONE</p>
-              <p onClick={() => setSelectedCurrency("PAW")}>PAW</p>
+              <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
+              <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
+              <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
+              <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
+              <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
             </div>
           </div>
         </div>
@@ -266,75 +266,75 @@ export default MarketPlacePage
 
 const accordionData = [
   {
-    title: "Domain Names",
+    title: 'Domain Names',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Digital Goods",
+    title: 'Digital Goods',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Physical Goods",
+    title: 'Physical Goods',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Websites",
+    title: 'Websites',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Full On Blockchain NFT",
+    title: 'Full On Blockchain NFT',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Charites",
+    title: 'Charites',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
 ]

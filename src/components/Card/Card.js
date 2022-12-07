@@ -1,6 +1,6 @@
-import React from "react"
-import cardImg from "../../assets/img/card-2.png"
-import "./Card.css"
+import React from 'react'
+import cardImg from '../../assets/img/card-2.png'
+import './Card.css'
 
 const Card = () => {
   return (

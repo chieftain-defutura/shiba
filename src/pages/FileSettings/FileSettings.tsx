@@ -1,35 +1,35 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 import {
   IoIosArrowBack,
   IoIosArrowForward,
   IoIosArrowDown,
-} from "react-icons/io"
-import { BsArrowLeftCircle } from "react-icons/bs"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import HeaderNav from "../../components/HeaderNav/HeaderNav"
-import SideBar from "../../components/SideBar/SideBar"
-import fileImg from "../../assets/img/file.png"
-import cardImgTwo from "../../assets/img/card-5.png"
-import cardImgThree from "../../assets/img/card-6.png"
-import cardImgFour from "../../assets/img/card-7.png"
-import cardImgFive from "../../assets/img/card-8.png"
-import cardImgSix from "../../assets/img/card-9.png"
+} from 'react-icons/io'
+import { BsArrowLeftCircle } from 'react-icons/bs'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import SideBar from '../../components/SideBar/SideBar'
+import fileImg from '../../assets/img/file.png'
+import cardImgTwo from '../../assets/img/card-5.png'
+import cardImgThree from '../../assets/img/card-6.png'
+import cardImgFour from '../../assets/img/card-7.png'
+import cardImgFive from '../../assets/img/card-8.png'
+import cardImgSix from '../../assets/img/card-9.png'
 // import cardImgSeven from "../../assets/img/card-10.png"
 // import cardImgEighth from "../../assets/img/card-11.png"
-import cardImgNine from "../../assets/img/card-12.png"
-import cardImgTen from "../../assets/img/card-13.png"
-import "./FileSettings.css"
-import Residual from "../ShopSettingsOne/components/Residual"
+import cardImgNine from '../../assets/img/card-12.png'
+import cardImgTen from '../../assets/img/card-13.png'
+import './FileSettings.css'
+import Residual from '../ShopSettingsOne/components/Residual'
 // import { useParams } from "react-router-dom";
-import RemoveItem from "../../components/RemoveItem"
-import AddItem from "../../components/AddItem"
-import AppearanceSetting from "../../components/AppearanceSetting"
-import Transfer from "../../components/Transfer"
-import SelectFileImg from "../../assets/img/selectFile.png"
-import UploadImg from "../../assets/img/upload.png"
-import LinkImg from "../../assets/img/link.png"
-import Unlink from "../../assets/img/unlink.png"
+import RemoveItem from '../../components/RemoveItem'
+import AddItem from '../../components/AddItem'
+import AppearanceSetting from '../../components/AppearanceSetting'
+import Transfer from '../../components/Transfer'
+import SelectFileImg from '../../assets/img/selectFile.png'
+import UploadImg from '../../assets/img/upload.png'
+import LinkImg from '../../assets/img/link.png'
+import Unlink from '../../assets/img/unlink.png'
 
 const ShopSettingsOne: React.FC = () => {
   // const { id } = useParams();
@@ -41,7 +41,7 @@ const ShopSettingsOne: React.FC = () => {
   const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
   const [onAction, setOnAction] = useState<any>(null)
   const [dropDown, setDropDown] = useState<any>(null)
-  const [selectedDropDown, setSelectedDropDown] = useState("Select Currency")
+  const [selectedDropDown, setSelectedDropDown] = useState('Select Currency')
   const [slide, setSlide] = useState(1)
 
   const handleSlidePrev = () => {
@@ -68,27 +68,27 @@ const ShopSettingsOne: React.FC = () => {
             <div className="cards-container">
               <div
                 className="card"
-                onClick={() => setClickCard("Shipment Address and Details")}
+                onClick={() => setClickCard('Shipment Address and Details')}
               >
                 <img src={fileImg} alt="card" className="card-img-1" />
                 <p>File</p>
               </div>
               <div
                 className="card"
-                onClick={() => setClickCard("appearance settings")}
+                onClick={() => setClickCard('appearance settings')}
               >
                 <img src={cardImgTwo} alt="card" className="card-img-2" />
                 <p>Appearance Settings</p>
               </div>
-              <div className="card" onClick={() => setClickCard("residual")}>
+              <div className="card" onClick={() => setClickCard('residual')}>
                 <img src={cardImgThree} alt="card" className="card-img-3" />
                 <p>Residual</p>
               </div>
-              <div className="card" onClick={() => setClickCard("transfer")}>
+              <div className="card" onClick={() => setClickCard('transfer')}>
                 <img src={cardImgFour} alt="card" className="card-img-4" />
                 <p>Transfer</p>
               </div>
-              <div className="card" onClick={() => setClickCard("put on sale")}>
+              <div className="card" onClick={() => setClickCard('put on sale')}>
                 <img src={cardImgFive} alt="card" className="card-img-5" />
                 <p>Sell</p>
               </div>
@@ -99,7 +99,7 @@ const ShopSettingsOne: React.FC = () => {
             </div>
           )}
 
-          {clickCard === "Shipment Address and Details" && !clickRemoveItem ? (
+          {clickCard === 'Shipment Address and Details' && !clickRemoveItem ? (
             <div className="stock-management-container">
               {!clickAddItem ? (
                 <BsArrowLeftCircle
@@ -119,11 +119,9 @@ const ShopSettingsOne: React.FC = () => {
                   />
                 </div>
               )}
-
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
-
               {/* {!clickAddItem && (
                 <div className="stock-management-cards">
                   <div className="stock-management-card">
@@ -162,12 +160,11 @@ const ShopSettingsOne: React.FC = () => {
               )} */}
               <div>
                 <div>
-                  {clickAddItem === "Add New Item in Shop" && slide === 1 && (
+                  {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
                     <AddItem />
                   )}
                 </div>
               </div>
-
               <div className="selectFileContainer">
                 <div className="files">
                   <img src={SelectFileImg} alt="file" />
@@ -186,102 +183,8 @@ const ShopSettingsOne: React.FC = () => {
                   <h5>Unlink</h5>
                 </div>
               </div>
-              {/* {clickAddItem === "Add New Item in Shop" && slide === 2 && (
-                <div className="item-info-sub-menu-container sub-menu-container"> */}
-              {/* <p className="title">Item Info</p> */}
-              {/* <div className="content"> */}
-              {/* <div className="content-left">
-                      <p>Item Name:</p>
-                      <p>Category:</p>
-                      <p>Size:</p>
-                      <p>Colour:</p>
-                      <p>Fabric Type:</p>
-                      <p>Item Condition:</p>
-                    </div> */}
-              {/* <div className="content-right"> */}
-              {/* <input placeholder="Item Name" /> */}
-              {/* <div className="dropdown-cont">
-                        <div
-                          className="header"
-                          onClick={() => handleDropDown(1)}
-                        >
-                          <p>
-                            {!selectedDropDown
-                              ? "Select a Category from List"
-                              : selectedDropDown}
-                          </p>
-                          <IoMdArrowDropdown className="arrow-icon-2" />
-                        </div>
-                        {dropDown === 1 && (
-                          <div className="drop-down-body">
-                            <p onClick={() => setSelectedDropDown("Demo 1")}>
-                              Demo 1
-                            </p>
-                            <p onClick={() => setSelectedDropDown("Demo 2")}>
-                              Demo 2
-                            </p>
-                            <p onClick={() => setSelectedDropDown("Demo 3")}>
-                              Demo 3
-                            </p>
-                            <p onClick={() => setSelectedDropDown("Demo 4")}>
-                              Demo 4
-                            </p>
-                            <p onClick={() => setSelectedDropDown("Demo 5")}>
-                              Demo 5
-                            </p>
-                            <p onClick={() => setSelectedDropDown("Demo 6")}>
-                              Demo 6
-                            </p>
-                          </div>
-                        )}
-                      </div> */}
-              {/* <select>
-                        <option>Select a Category from List</option>
-                      </select>
-                      <input placeholder="Available Size List(Ex. 30, 32, 35, 44)" />
-                      <input placeholder="Fabric Type Details" /> */}
-              {/* <div className="dropdown-cont">
-                        <div
-                          className="header"
-                          onClick={() => handleDropDown(2)}
-                        >
-                          <p>
-                            {!selectedDropDown2 ? "New" : selectedDropDown2}
-                          </p>
-                          <IoMdArrowDropdown className="arrow-icon-2" />
-                        </div>
-                        {dropDown === 2 && (
-                          <div className="drop-down-body">
-                            <p onClick={() => setSelectedDropDown2("Demo 1")}>
-                              Demo 1
-                            </p>
-                            <p onClick={() => setSelectedDropDown2("Demo 2")}>
-                              Demo 2
-                            </p>
-                            <p onClick={() => setSelectedDropDown2("Demo 3")}>
-                              Demo 3
-                            </p>
-                            <p onClick={() => setSelectedDropDown2("Demo 4")}>
-                              Demo 4
-                            </p>
-                            <p onClick={() => setSelectedDropDown2("Demo 5")}>
-                              Demo 5
-                            </p>
-                            <p onClick={() => setSelectedDropDown2("Demo 6")}>
-                              Demo 6
-                            </p>
-                          </div>
-                        )}
-                      </div> */}
-              {/* <select>
-                        <option>New</option>
-                      </select>
-                      <input placeholder="Used" /> */}
-              {/* </div> */}
-              {/* </div> */}
-              {/* </div> */}
-              {/* )} */}
-              {/* {clickAddItem === "Add New Item in Shop" && slide === 3 && (
+
+              {clickAddItem === 'Add New Item in Shop' && slide === 3 && (
                 <div className="description-sub-menu-container sub-menu-container">
                   <p className="title">Description</p>
                   <div className="content">
@@ -312,8 +215,8 @@ const ShopSettingsOne: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              )} */}
-              {/* {clickAddItem === "Add New Item in Shop" && slide === 4 && (
+              )}
+              {clickAddItem === 'Add New Item in Shop' && slide === 4 && (
                 <div className="quantity-price-shipment-sub-menu-container sub-menu-container">
                   <p className="title">Quantity, Price and Shipment</p>
                   <div className="content">
@@ -342,13 +245,13 @@ const ShopSettingsOne: React.FC = () => {
                     <button>Submit Listing and Put on Sale</button>
                   </div>
                 </div>
-              )} */}
+              )}
             </div>
           ) : (
             clickRemoveItem && <RemoveItem />
           )}
 
-          {clickCard === "appearance settings" && (
+          {clickCard === 'appearance settings' && (
             <div
               className="appearance-settings-container"
               id="appearance-settings-container"
@@ -370,9 +273,9 @@ const ShopSettingsOne: React.FC = () => {
             </div>
           )}
 
-          {clickCard === "residual" && <Residual setClickCard={setClickCard} />}
+          {clickCard === 'residual' && <Residual setClickCard={setClickCard} />}
 
-          {clickCard === "transfer" && (
+          {clickCard === 'transfer' && (
             <div className="residual-container">
               {!clickAddItem && (
                 <BsArrowLeftCircle
@@ -388,7 +291,7 @@ const ShopSettingsOne: React.FC = () => {
             </div>
           )}
 
-          {clickCard === "put on sale" && (
+          {clickCard === 'put on sale' && (
             <div className="sell-container">
               {!clickAddItem && (
                 <BsArrowLeftCircle
@@ -454,7 +357,7 @@ const ShopSettingsOne: React.FC = () => {
                             <button>Put On Sale</button>
                           </div>
                           <div
-                            className={!dropDown ? " right" : "right active"}
+                            className={!dropDown ? ' right' : 'right active'}
                           >
                             <div
                               className="header"
@@ -463,20 +366,20 @@ const ShopSettingsOne: React.FC = () => {
                               <p>{selectedDropDown}</p>
                               <IoIosArrowDown />
                             </div>
-                            <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
+                            <div className={!dropDown ? 'body' : 'body active'}>
+                              <p onClick={() => setSelectedDropDown('SHI')}>
                                 SHI
                               </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
+                              <p onClick={() => setSelectedDropDown('LEASH')}>
                                 LEASH
                               </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
+                              <p onClick={() => setSelectedDropDown('SHIB')}>
                                 SHIB
                               </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
+                              <p onClick={() => setSelectedDropDown('BONE')}>
                                 BONE
                               </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
+                              <p onClick={() => setSelectedDropDown('PAW')}>
                                 PAW
                               </p>
                             </div>
@@ -505,7 +408,7 @@ const ShopSettingsOne: React.FC = () => {
                             <button>Put On Sale</button>
                           </div>
                           <div
-                            className={!dropDown ? " right" : "right active"}
+                            className={!dropDown ? ' right' : 'right active'}
                           >
                             <div
                               className="header"
@@ -514,20 +417,20 @@ const ShopSettingsOne: React.FC = () => {
                               <p>{selectedDropDown}</p>
                               <IoIosArrowDown />
                             </div>
-                            <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
+                            <div className={!dropDown ? 'body' : 'body active'}>
+                              <p onClick={() => setSelectedDropDown('SHI')}>
                                 SHI
                               </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
+                              <p onClick={() => setSelectedDropDown('LEASH')}>
                                 LEASH
                               </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
+                              <p onClick={() => setSelectedDropDown('SHIB')}>
                                 SHIB
                               </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
+                              <p onClick={() => setSelectedDropDown('BONE')}>
                                 BONE
                               </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
+                              <p onClick={() => setSelectedDropDown('PAW')}>
                                 PAW
                               </p>
                             </div>

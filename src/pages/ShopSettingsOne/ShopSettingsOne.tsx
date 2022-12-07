@@ -1,31 +1,31 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 import {
   IoIosArrowBack,
   IoIosArrowForward,
   IoIosArrowDown,
-} from "react-icons/io"
-import { BsArrowLeftCircle } from "react-icons/bs"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import HeaderNav from "../../components/HeaderNav/HeaderNav"
-import SideBar from "../../components/SideBar/SideBar"
-import cardImgOne from "../../assets/img/card-4.png"
-import cardImgTwo from "../../assets/img/card-5.png"
-import cardImgThree from "../../assets/img/card-6.png"
-import cardImgFour from "../../assets/img/card-7.png"
-import cardImgFive from "../../assets/img/card-8.png"
-import cardImgSix from "../../assets/img/card-9.png"
-import cardImgSeven from "../../assets/img/card-10.png"
-import cardImgEighth from "../../assets/img/card-11.png"
-import cardImgNine from "../../assets/img/card-12.png"
-import cardImgTen from "../../assets/img/card-13.png"
-import "./ShopSettingsOne.css"
-import Residual from "./components/Residual"
+} from 'react-icons/io'
+import { BsArrowLeftCircle } from 'react-icons/bs'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import SideBar from '../../components/SideBar/SideBar'
+import cardImgOne from '../../assets/img/card-4.png'
+import cardImgTwo from '../../assets/img/card-5.png'
+import cardImgThree from '../../assets/img/card-6.png'
+import cardImgFour from '../../assets/img/card-7.png'
+import cardImgFive from '../../assets/img/card-8.png'
+import cardImgSix from '../../assets/img/card-9.png'
+import cardImgSeven from '../../assets/img/card-10.png'
+import cardImgEighth from '../../assets/img/card-11.png'
+import cardImgNine from '../../assets/img/card-12.png'
+import cardImgTen from '../../assets/img/card-13.png'
+import './ShopSettingsOne.css'
+import Residual from './components/Residual'
 // import { useParams } from "react-router-dom";
-import RemoveItem from "../../components/RemoveItem"
-import AddItem from "../../components/AddItem"
-import AppearanceSetting from "../../components/AppearanceSetting"
-import Transfer from "../../components/Transfer"
+import RemoveItem from '../../components/RemoveItem'
+import AddItem from '../../components/AddItem'
+import AppearanceSetting from '../../components/AppearanceSetting'
+import Transfer from '../../components/Transfer'
 
 const ShopSettingsOne: React.FC = () => {
   // const { id } = useParams();
@@ -35,7 +35,7 @@ const ShopSettingsOne: React.FC = () => {
   const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
   const [onAction, setOnAction] = useState<any>(null)
   const [dropDown, setDropDown] = useState<any>(null)
-  const [selectedDropDown, setSelectedDropDown] = useState("Select Currency")
+  const [selectedDropDown, setSelectedDropDown] = useState('Select Currency')
   const [slide, setSlide] = useState(1)
 
   const handleSlidePrev = () => {
@@ -62,27 +62,27 @@ const ShopSettingsOne: React.FC = () => {
             <div className="cards-container">
               <div
                 className="card"
-                onClick={() => setClickCard("stock management")}
+                onClick={() => setClickCard('stock management')}
               >
                 <img src={cardImgOne} alt="card" className="card-img-1" />
                 <p>Stock Management</p>
               </div>
               <div
                 className="card"
-                onClick={() => setClickCard("appearance settings")}
+                onClick={() => setClickCard('appearance settings')}
               >
                 <img src={cardImgTwo} alt="card" className="card-img-2" />
                 <p>Appearance Settings</p>
               </div>
-              <div className="card" onClick={() => setClickCard("residual")}>
+              <div className="card" onClick={() => setClickCard('residual')}>
                 <img src={cardImgThree} alt="card" className="card-img-3" />
                 <p>Residual</p>
               </div>
-              <div className="card" onClick={() => setClickCard("transfer")}>
+              <div className="card" onClick={() => setClickCard('transfer')}>
                 <img src={cardImgFour} alt="card" className="card-img-4" />
                 <p>Transfer</p>
               </div>
-              <div className="card" onClick={() => setClickCard("put on sale")}>
+              <div className="card" onClick={() => setClickCard('put on sale')}>
                 <img src={cardImgFive} alt="card" className="card-img-5" />
                 <p>Sell</p>
               </div>
@@ -93,7 +93,7 @@ const ShopSettingsOne: React.FC = () => {
             </div>
           )}
 
-          {clickCard === "stock management" && !clickRemoveItem ? (
+          {clickCard === 'stock management' && !clickRemoveItem ? (
             <div className="stock-management-container">
               {!clickAddItem ? (
                 <BsArrowLeftCircle
@@ -102,15 +102,15 @@ const ShopSettingsOne: React.FC = () => {
                 />
               ) : (
                 <div className="arrow-icon-container">
-                  <IoIosArrowBack
+                  {/* <IoIosArrowBack
                     className="prev-arrow-icon"
                     onClick={handleSlidePrev}
-                  />
+                  /> */}
 
-                  <IoIosArrowForward
+                  {/* <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
-                  />
+                  /> */}
                 </div>
               )}
 
@@ -130,7 +130,7 @@ const ShopSettingsOne: React.FC = () => {
                         book.
                       </p>
                       <button
-                        onClick={() => setClickAddItem("Add New Item in Shop")}
+                        onClick={() => setClickAddItem('Add New Item in Shop')}
                       >
                         Demo
                       </button>
@@ -155,7 +155,7 @@ const ShopSettingsOne: React.FC = () => {
               )}
               <div>
                 <div>
-                  {clickAddItem === "Add New Item in Shop" && slide === 1 && (
+                  {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
                     <AddItem />
                   )}
                 </div>
@@ -322,7 +322,7 @@ const ShopSettingsOne: React.FC = () => {
             clickRemoveItem && <RemoveItem />
           )}
 
-          {clickCard === "appearance settings" && (
+          {clickCard === 'appearance settings' && (
             <div
               className="appearance-settings-container"
               id="appearance-settings-container"
@@ -334,9 +334,9 @@ const ShopSettingsOne: React.FC = () => {
             </div>
           )}
 
-          {clickCard === "residual" && <Residual setClickCard={setClickCard} />}
+          {clickCard === 'residual' && <Residual setClickCard={setClickCard} />}
 
-          {clickCard === "transfer" && (
+          {clickCard === 'transfer' && (
             <div className="residual-container">
               {!clickAddItem && (
                 <BsArrowLeftCircle
@@ -352,7 +352,7 @@ const ShopSettingsOne: React.FC = () => {
             </div>
           )}
 
-          {clickCard === "put on sale" && (
+          {clickCard === 'put on sale' && (
             <div className="sell-container">
               {!clickAddItem && (
                 <BsArrowLeftCircle
@@ -418,7 +418,7 @@ const ShopSettingsOne: React.FC = () => {
                             <button>Put On Sale</button>
                           </div>
                           <div
-                            className={!dropDown ? " right" : "right active"}
+                            className={!dropDown ? ' right' : 'right active'}
                           >
                             <div
                               className="header"
@@ -427,20 +427,20 @@ const ShopSettingsOne: React.FC = () => {
                               <p>{selectedDropDown}</p>
                               <IoIosArrowDown />
                             </div>
-                            <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
+                            <div className={!dropDown ? 'body' : 'body active'}>
+                              <p onClick={() => setSelectedDropDown('SHI')}>
                                 SHI
                               </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
+                              <p onClick={() => setSelectedDropDown('LEASH')}>
                                 LEASH
                               </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
+                              <p onClick={() => setSelectedDropDown('SHIB')}>
                                 SHIB
                               </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
+                              <p onClick={() => setSelectedDropDown('BONE')}>
                                 BONE
                               </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
+                              <p onClick={() => setSelectedDropDown('PAW')}>
                                 PAW
                               </p>
                             </div>
@@ -469,7 +469,7 @@ const ShopSettingsOne: React.FC = () => {
                             <button>Put On Sale</button>
                           </div>
                           <div
-                            className={!dropDown ? " right" : "right active"}
+                            className={!dropDown ? ' right' : 'right active'}
                           >
                             <div
                               className="header"
@@ -478,20 +478,20 @@ const ShopSettingsOne: React.FC = () => {
                               <p>{selectedDropDown}</p>
                               <IoIosArrowDown />
                             </div>
-                            <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
+                            <div className={!dropDown ? 'body' : 'body active'}>
+                              <p onClick={() => setSelectedDropDown('SHI')}>
                                 SHI
                               </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
+                              <p onClick={() => setSelectedDropDown('LEASH')}>
                                 LEASH
                               </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
+                              <p onClick={() => setSelectedDropDown('SHIB')}>
                                 SHIB
                               </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
+                              <p onClick={() => setSelectedDropDown('BONE')}>
                                 BONE
                               </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
+                              <p onClick={() => setSelectedDropDown('PAW')}>
                                 PAW
                               </p>
                             </div>

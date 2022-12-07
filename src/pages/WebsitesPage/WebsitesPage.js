@@ -1,8 +1,8 @@
-import React from "react"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
-import "./WebsitesPage.css"
+import React from 'react'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
+import './WebsitesPage.css'
 
 const WebsitesPage = () => {
   return (

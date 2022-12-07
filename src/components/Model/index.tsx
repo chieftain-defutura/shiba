@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import "./Modal.css"
+import React, { useEffect } from 'react'
+import './Modal.css'
 
 interface IModal {
   children: React.ReactNode
@@ -8,10 +8,10 @@ interface IModal {
 
 const LayoutModal: React.FC<IModal> = ({ children, onClose }) => {
   useEffect(() => {
-    document.body.style.overflowY = "hidden"
+    document.body.style.overflowY = 'hidden'
 
     return () => {
-      document.body.style.overflowY = "auto"
+      document.body.style.overflowY = 'auto'
     }
   }, [])
   return (

@@ -1,6 +1,6 @@
-import React from "react"
-import { useConnect } from "wagmi"
-import "./Connect.css"
+import React from 'react'
+import { useConnect } from 'wagmi'
+import './Connect.css'
 export function Connector() {
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
@@ -14,10 +14,10 @@ export function Connector() {
           onClick={() => connect({ connector })}
         >
           {connector.name}
-          {!connector.ready && " (unsupported)"}
+          {!connector.ready && ' (unsupported)'}
           {isLoading &&
             connector.id === pendingConnector?.id &&
-            " (connecting)"}
+            ' (connecting)'}
         </button>
       ))}
       {error && <div>{error.message}</div>}

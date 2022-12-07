@@ -1,11 +1,12 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import Navigation from "../../components/Navigation/Navigation"
-import HeaderNav from "../../components/HeaderNav/HeaderNav"
-import SideBar from "../../components/SideBar/SideBar"
-import cardImg from "../../assets/img/card-3.png"
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Navigation from '../../components/Navigation/Navigation'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import SideBar from '../../components/SideBar/SideBar'
+import cardImg from '../../assets/img/card-3.png'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
 
-const MyWebsites = () => {
+const MyWebsites: React.FC = () => {
   return (
     <div>
       <Navigation />
@@ -28,7 +29,7 @@ const MyWebsites = () => {
                 <div className="card-bottom">
                   <p>Shop Details</p>
                   <Link to="/my-websites/:id">
-                    <button style={{ width: "50px" }}>Get In</button>
+                    <button style={{ width: '50px' }}>Get In</button>
                   </Link>
                 </div>
               </div>
@@ -36,6 +37,7 @@ const MyWebsites = () => {
           ))}
         </div>
       </div>
+      <FooterBottom />
     </div>
   )
 }
