@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const moralisApiSlice = createApi({
-  reducerPath: 'moralis-api',
+  reducerPath: 'moralis',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://deep-index.moralis.io/api/v2',
     prepareHeaders: (headers) => {

@@ -13,6 +13,8 @@ const DomainNamesPage: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [userNftData, setUserNftData] = useState([])
   const [visible, setVisible] = useState(1)
+  const { data } = useGetNftsByContractAddressQuery()
+  console.log(data)
   // const dispatch = useAppDispatch()
   // const read = useAppSelector((state) => state)
 
