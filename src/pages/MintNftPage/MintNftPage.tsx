@@ -164,8 +164,8 @@ const MintNftPage: React.FC = () => {
   const { config, isError } = usePrepareContractWrite({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
     abi: domainABI,
-    functionName: 'mintNFT',
-    args: [inputData.concat(selected)],
+    functionName: 'mintNft',
+    args: [inputData, selected],
   })
   // console.log(error);
   const domainContract = useContractWrite(config)
@@ -173,7 +173,7 @@ const MintNftPage: React.FC = () => {
   const { config: shopMints } = usePrepareContractWrite({
     address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: shopABI,
-    functionName: 'mintNFT',
+    functionName: 'mintNft',
     args: [selectDomain, true],
   })
   const shopContract = useContractWrite(shopMints)
@@ -181,7 +181,7 @@ const MintNftPage: React.FC = () => {
   const { config: digitalMints } = usePrepareContractWrite({
     address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: digitalShopABI,
-    functionName: 'mintNFT',
+    functionName: 'mintNft',
     args: [selectDomain, true],
   })
   const digitalShopContract = useContractWrite(digitalMints)

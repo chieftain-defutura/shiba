@@ -46,7 +46,7 @@ const MyDigitalShop: React.FC = () => {
                   </div>
                   <div className="card-bottom">
                     <p>Shop Details</p>
-                    <Link to={`/my-digital-shop/${f}`}>
+                    <Link to={`/my-digital-shop/${f.token_id}`}>
                       <button style={{ width: '50px' }}>Get In</button>
                     </Link>
                   </div>

@@ -40,7 +40,6 @@ const ShopSettingsOne: React.FC = () => {
   const [dropDown, setDropDown] = useState<any>(null)
   const [selectedDropDown, setSelectedDropDown] = useState('Select Currency')
   const [slide, setSlide] = useState(1)
-  // const [selectedDropDown2, setSelectedDropDown2] = useState("")
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -106,15 +105,15 @@ const ShopSettingsOne: React.FC = () => {
                 />
               ) : (
                 <div className="arrow-icon-container">
-                  <IoIosArrowBack
+                  {/* <IoIosArrowBack
                     className="prev-arrow-icon"
                     onClick={handleSlidePrev}
-                  />
+                  /> */}
 
-                  <IoIosArrowForward
+                  {/* <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
-                  />
+                  /> */}
                 </div>
               )}
               <h2 className="title">
@@ -157,13 +156,6 @@ const ShopSettingsOne: React.FC = () => {
                 </div>
               )}
 
-              {/* <div>
-                <div>
-                  {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
-                    <AddItem />
-                  )}
-                </div>
-              </div> */}
               <div>
                 <Formik
                   initialValues={{
@@ -195,6 +187,10 @@ const ShopSettingsOne: React.FC = () => {
                       {clickAddItem === 'Add New Item in Shop' &&
                         slide === 1 && (
                           <div className="item-info-sub-menu-container sub-menu-container">
+                            <IoIosArrowForward
+                              className="next-arrow-icon"
+                              onClick={handleSlideNext}
+                            />
                             <p className="title">Item Info</p>
                             <div className="content">
                               <div className="content-left">
@@ -226,66 +222,7 @@ const ShopSettingsOne: React.FC = () => {
                                     )
                                   })}
                                 </Field>
-                                {/* <div className="dropdown-cont">
-                                  <div
-                                    className="header"
-                                    // onClick={() => handleDropDown(1)}
-                                  >
-                                    <p>
-                                      {!selectedDropDown
-                                        ? "Select a Category from List"
-                                        : selectedDropDown}
-                                    </p>
-                                    <IoMdArrowDropdown className="arrow-icon-2" />
-                                  </div>
 
-                                  {dropDown === 1 && (
-                                    <div className="drop-down-body">
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown("Demo 1")
-                                        }
-                                      >
-                                        Demo 1
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown("Demo 2")
-                                        }
-                                      >
-                                        Demo 2
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown("Demo 3")
-                                        }
-                                      >
-                                        Demo 3
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown("Demo 4")
-                                        }
-                                      >
-                                        Demo 4
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown("Demo 5")
-                                        }
-                                      >
-                                        Demo 5
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown("Demo 6")
-                                        }
-                                      >
-                                        Demo 6
-                                      </p>
-                                    </div>
-                                  )}
-                                </div> */}
                                 <Field as="select" name="size">
                                   <option>Select a Category from List</option>
                                   <option value="1">1</option>
@@ -302,68 +239,7 @@ const ShopSettingsOne: React.FC = () => {
                                   name="fabricType"
                                   placeholder="Fabric Type Details"
                                 />
-                                {/* <div className="dropdown-cont">
-                                  <div
-                                    className="header"
-                                    // onClick={() => handleDropDown(2)}
-                                  >
-                                    <p>
-                                      {!selectedDropDown2
-                                        ? "New"
-                                        : selectedDropDown2}
-                                    </p>
-                                    <IoMdArrowDropdown className="arrow-icon-2" />
-                                  </div>
-                                  {dropDown === 2 && (
-                                    <div className="drop-down-body">
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown2("Demo 1")
-                                        }
-                                      >
-                                        Demo 1
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown2("Demo 2")
-                                        }
-                                      >
-                                        Demo 2
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown2("Demo 3")
-                                        }
-                                      >
-                                        Demo 3
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown2("Demo 4")
-                                        }
-                                      >
-                                        Demo 4
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown2("Demo 5")
-                                        }
-                                      >
-                                        Demo 5
-                                      </p>
-                                      <p
-                                        onClick={() =>
-                                          setSelectedDropDown2("Demo 6")
-                                        }
-                                      >
-                                        Demo 6
-                                      </p>
-                                    </div>
-                                  )}
-                                </div> */}
-                                {/* <Field as="select" name="itemCondition">
-                                  <option>New</option>
-                                </Field> */}
+
                                 <Field
                                   name="itemCondition"
                                   placeholder="Used"
@@ -375,6 +251,14 @@ const ShopSettingsOne: React.FC = () => {
                       {clickAddItem === 'Add New Item in Shop' &&
                         slide === 2 && (
                           <div className="description-sub-menu-container sub-menu-container">
+                            <IoIosArrowBack
+                              className="prev-arrow-icon"
+                              onClick={handleSlidePrev}
+                            />
+                            <IoIosArrowForward
+                              className="next-arrow-icon"
+                              onClick={handleSlideNext}
+                            />
                             <p className="title">Description</p>
                             <div className="content">
                               <div className="content-left">
@@ -417,6 +301,10 @@ const ShopSettingsOne: React.FC = () => {
                       {clickAddItem === 'Add New Item in Shop' &&
                         slide === 3 && (
                           <div className="quantity-price-shipment-sub-menu-container sub-menu-container">
+                            <IoIosArrowBack
+                              className="prev-arrow-icon"
+                              onClick={handleSlidePrev}
+                            />
                             <p className="title">
                               Quantity, Price and Shipment
                             </p>

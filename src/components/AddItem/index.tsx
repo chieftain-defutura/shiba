@@ -1,43 +1,59 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import axios from 'axios'
 
-import {
-  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-  LEASH_TOKEN_ADDRESS,
-  SHIB_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
+import { Field, Form, Formik } from 'formik'
 
 const AddItem: React.FC = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
-  const [newItem, setNewItem] = useState({
-    preview: '',
-    fullProduct: '',
-    ItemName: '',
-    categorys: '',
-    details: '',
-    description: '',
-    price: '',
-    currency: '',
-  })
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setNewItem((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+  const categoryList = [
+    {
+      name: 'movies',
+      subcategory: [
+        'Comedy mov1',
+        'Action mov2',
+        'Adventure mov3',
+        'Romance mov4',
+      ],
+    },
+    {
+      name: 'courses',
+      subcategory: ['cours1', 'cours2'],
+    },
+    {
+      name: 'books',
+      subcategory: [
+        'Autobiography book1',
+        'Romance book2',
+        'Novel book3',
+        'Other book4',
+      ],
+    },
+    {
+      name: 'music',
+      subcategory: ['Rock music1', 'Pop music2', 'Jazz music3', 'Other music4'],
+    },
+  ]
+
+  const getSubcategory = (category: string) => {
+    const res = categoryList.find((f) => f.name === category)
+
+    if (!res) return []
+
+    return res.subcategory
   }
 
-  const handleAddItem = async () => {
+  const handleAddItem = async (values: any) => {
     if (!address || !data) return
     try {
       setTransaction({ loading: true, status: 'pending' })
@@ -45,10 +61,10 @@ const AddItem: React.FC = () => {
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         data: {
-          preview: newItem.preview,
-          itemName: newItem.ItemName,
-          details: newItem.details,
-          description: newItem.description,
+          preview: values.preview,
+          itemName: values.ItemName,
+          details: values.details,
+          description: values.description,
         },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
@@ -66,9 +82,9 @@ const AddItem: React.FC = () => {
       )
       const tx = await contract.addItem(
         id,
-        newItem.preview,
-        newItem.fullProduct,
-        newItem.price,
+        values.preview,
+        values.fullProduct,
+        values.price,
         PAW_TOKEN_ADDRESS,
         dataHash,
       )
@@ -84,83 +100,80 @@ const AddItem: React.FC = () => {
 
   return (
     <div className="photo-sub-menu-container sub-menu-container">
-      <p className="title">Photos</p>
-      <div className="content">
-        <div className="content-left">
-          <p>preview:</p>
-          <p>Full Product:</p>
-          <p>Item Name:</p>
-          <p>Category:</p>
-          <p>Details:</p>
-          <p>Description:</p>
-          <p>Price:</p>
-          <p>Currency:</p>
-        </div>
-        <div className="content-right">
-          <input
-            name="preview"
-            type="url"
-            placeholder="Metadata Link"
-            onChange={handleChange}
-          />
-          <input
-            name="fullProduct"
-            type="url"
-            placeholder="Metadata Link"
-            onChange={handleChange}
-          />
-          <input name="ItemName" placeholder="Item" onChange={handleChange} />
-          <select name="categorys" onChange={handleChange}>
-            <option value="" label="select a category">
-              Select a Category
-            </option>
-            <option value="movies" label="movies">
-              Movies
-            </option>
-            <option value="courses" label="courses">
-              Courses
-            </option>
-            <option value="books" label="books">
-              Books
-            </option>
-            <option value="music" label="music">
-              Music
-            </option>
-          </select>
-          <input name="details" placeholder="Details" onChange={handleChange} />
-          <textarea
-            rows={5}
-            name="description"
-            onChange={handleChange}
-          ></textarea>
-          <input name="price" placeholder="0.00" onChange={handleChange} />
-          <select name="currency" onChange={handleChange}>
-            <option value="" label="Select a Category">
-              Select a Category
-            </option>
-            {/* <option value="shi" label="shi">
-              SHI
-            </option> */}
-            <option value={LEASH_TOKEN_ADDRESS} label="leash">
-              LEASH
-            </option>
-            <option value={SHIB_TOKEN_ADDRESS} label="shib">
-              SHIB
-            </option>
-            {/* <option value="bone" label="bone">
-              BONE
-            </option> */}
-            <option value={PAW_TOKEN_ADDRESS} label="paw">
-              PAW
-            </option>
-          </select>
-          <div className="btn-cont">
-            <button onClick={handleAddItem}>
-              Submit Listing and Put on Sale
-            </button>
-          </div>
-        </div>
-      </div>
+      <Formik
+        initialValues={{
+          preview: '',
+          fullProduct: '',
+          itemName: '',
+          category: '',
+          subCategory: '',
+          details: '',
+          description: '',
+          price: '',
+          currency: '',
+        }}
+        onSubmit={handleAddItem}
+      >
+        {({ values }) => (
+          <Form>
+            <p className="title">Photos</p>
+            <div className="content">
+              <div className="content-left">
+                <p>preview:</p>
+                <p>Full Product:</p>
+                <p>Item Name:</p>
+                <p>Category:</p>
+                <p>SubCategory:</p>
+                <p>Details:</p>
+                <p>Description:</p>
+                <p>Price:</p>
+                <p>Currency:</p>
+              </div>
+              <div className="content-right">
+                <Field name="preview" type="url" placeholder="Metadata Link" />
+                <Field
+                  name="fullProduct"
+                  type="url"
+                  placeholder="Metadata Link"
+                />
+                <Field name="itemName" placeholder="Item" type="text" />
+                <Field as="select" name="category">
+                  <option value="">Select a Category</option>
+                  <option value="movies">Movies</option>
+                  <option value="courses">Courses</option>
+                  <option value="books">Books</option>
+                  <option value="music">Music</option>
+                </Field>
+
+                <Field as="select" name="subCategory">
+                  <option value="">Select a SubCategory</option>
+                  {getSubcategory(values.category).map((f, index) => {
+                    return (
+                      <>
+                        <option value={f} key={index}>
+                          {f}
+                        </option>
+                      </>
+                    )
+                  })}
+                </Field>
+                <Field name="details" placeholder="Details" type="text" />
+                <Field as="textarea" rows={5} name="description"></Field>
+                <Field name="price" placeholder="0.00" />
+                <Field as="select" name="currency">
+                  <option value="">Select a Category</option>
+                  <option value="leash">LEASH</option>
+                  <option value="shib">SHIB</option>
+                  <option value="paw">PAW</option>
+                </Field>
+                <div className="btn-cont">
+                  <button>Submit Listing and Put on Sale</button>
+                </div>
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   )
 }

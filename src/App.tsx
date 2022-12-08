@@ -27,6 +27,7 @@ import FileSettings from './pages/FileSettings/FileSettings'
 import MyGoodShop from './components/MyGoodShop/MyGoodShop'
 import BlockChainNft from './pages/BlockChainNft/BlockChainNft'
 import Charities from './pages/Charities/Charities'
+import Domain from './components/Domains/Domain'
 
 const App: React.FC = () => {
   return (
@@ -54,7 +55,7 @@ const App: React.FC = () => {
         <Route path="/my-websites" element={<MyWebsites />} />
         <Route path="/my-websites/:id" element={<FileSettings />} />
         <Route path="/my-domains" element={<MyDomain />} />
-        <Route path="/my-domains/:id" element={<ShopSettingsOne />} />
+        <Route path="/my-domains/:id" element={<Domain />} />
         <Route path="/my-digital-shop" element={<MyDigitalShop />} />
         <Route path="/my-digital-shop/:id" element={<ShopSettingsOne />} />
         <Route path="/my-goods-shop" element={<MyGoodsShop />} />

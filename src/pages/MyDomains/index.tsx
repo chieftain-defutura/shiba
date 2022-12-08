@@ -48,7 +48,7 @@ const MyDomain: React.FC = () => {
                   </div>
                   <div className="card-bottom">
                     <p>Shop Details</p>
-                    <Link to={`/my-domains/${f}`}>
+                    <Link to={`/my-domains/${f.token_id}`}>
                       <button style={{ width: '50px' }}>Get In</button>
                     </Link>
                   </div>
