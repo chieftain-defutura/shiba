@@ -46,20 +46,20 @@ const ContractData = [
   {
     title: UNATTACHED_DOMAIN_NAME,
     contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
-    // tokenAddress: PAW_TOKEN_ADDRESS,
-    // allowance: 0,
+    tokenAddress: PAW_TOKEN_ADDRESS,
+    allowance: 0,
   },
   {
     title: DIGITAL_GOOD_SHOP,
     contractAddress: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    // tokenAddress: SHIB_TOKEN_ADDRESS,
-    // allowance: 0,
+    tokenAddress: SHIB_TOKEN_ADDRESS,
+    allowance: 0,
   },
   {
     title: PHYSICAL_GOODS_SHOP,
     contractAddress: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
-    // tokenAddress: LEASH_TOKEN_ADDRESS,
-    // allowance: 0,
+    tokenAddress: LEASH_TOKEN_ADDRESS,
+    allowance: 0,
   },
   {
     title: WEBSITE,
