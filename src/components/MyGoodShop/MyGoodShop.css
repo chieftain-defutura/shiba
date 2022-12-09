@@ -205,7 +205,8 @@
 .sub-menu-container .content-right {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  align-items: center;
+  gap: 40px;
   width: 100%;
 }
 

@@ -84,7 +84,7 @@
   width: 100%;
   /* background-color: var(--bgColorTwo); */
   border-radius: 10px;
-  margin-top: 53px;
+  margin-top: 10px;
   padding: 27px;
   position: relative;
 }
@@ -205,7 +205,7 @@
 .sub-menu-container .content-right {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 60px;
   width: 100%;
 }
 
