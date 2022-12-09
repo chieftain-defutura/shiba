@@ -49,8 +49,8 @@ const ActionPage = () => {
           },
         },
       )
-      setMintData(data.data.auctions)
-      console.log(data.data.auctions)
+      // setMintData(data.data.auctions)
+      console.log(data)
     } catch (error) {
       console.log(error)
     }
