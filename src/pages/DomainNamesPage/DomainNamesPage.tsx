@@ -1,23 +1,46 @@
-import React from 'react'
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import React, { useState, useCallback, useEffect } from 'react'
+import { useAccount } from 'wagmi'
+import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import axios from 'axios'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import cardImg from '../../assets/img/card-3.png'
 import './DomainNamesPage.css'
 
-const DomainNamesPage: React.FC = () => {
-  const { data, isLoading, isError } = useGetNftsByContractAddressQuery({
-    erc721Address: DOMAIN_NFT_CONTRACT_ADDRESS,
-  })
+const DomainNamesPage = () => {
+  const { address } = useAccount()
+  const [loading, setLoading] = useState(false)
+  const [userNftData, setUserNftData] = useState([])
+  console.log(userNftData)
 
-  const nftsData: any[] = data ? data?.result : []
+  const handleGetUserNft = useCallback(async () => {
+    try {
+      if (!address) return
+      setLoading(true)
 
+      const { data } = await axios.get(
+        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${DOMAIN_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
+
+        {
+          headers: {
+            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
+          },
+        },
+      )
+      setLoading(false)
+      console.log(data)
+      setUserNftData(data.nfts.map((r: any) => r))
+    } catch (error) {
+      console.log(error)
+    }
+  }, [address])
+
+  useEffect(() => {
+    handleGetUserNft()
+  }, [handleGetUserNft])
   return (
     <div>
       <Navigation />
-      <HeaderNav />
       <div className="domain-name-container">
         <div className="domain-name-container-left">
           <h2 className="heading">Domain Names</h2>
@@ -29,32 +52,29 @@ const DomainNamesPage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="domain-name-container-right">
-          {isLoading ? (
-            <div>Loading</div>
-          ) : isError ? (
-            <div>Error</div>
-          ) : (
-            nftsData.map((f, idx) => (
-              <div className="domain-name-card-container" key={idx}>
-                <div className="card">
-                  <div className="card-top">
-                    <img src={cardImg} alt="card" />
-                  </div>
-                  <div className="card-center">
-                    <h3 className="title">Owner</h3>
-                    <h4 className="sub-title">
-                      {f.minter_address?.slice(0, 6)}...
-                      {f.minter_address?.slice(f.minter_address?.length - 6)}
-                    </h4>
-                  </div>
-                  <div className="card-bottom">
-                    <p>Token Id: {f.token_id}</p>
-                  </div>
+        <div className="website-container-right">
+          {loading ? 'loading...' : ''}
+          {!userNftData.length && 'noResult'}
+          {userNftData.map((f, idx) => (
+            <div className="website-card-container" key={idx}>
+              <div className="card">
+                <div className="card-top">
+                  <img src={cardImg} alt="card" />
+                </div>
+                <div className="card-center">
+                  <h3 className="title">The Holy Grail</h3>
+                  <h4 className="sub-title">Pixart Motion</h4>
+                </div>
+                <div className="card-bottom">
+                  <p>Shop Details</p>
+                  <p>id: {idx}</p>
+                  {/* <Link to={`/my-digital-shop/${f}`}>
+                    <button style={{ width: "50px" }}>Get In</button>
+                  </Link> */}
                 </div>
               </div>
-            ))
-          )}
+            </div>
+          ))}
         </div>
       </div>
       <FooterBottom />

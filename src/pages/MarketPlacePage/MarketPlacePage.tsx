@@ -1,28 +1,74 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
+import { useAccount } from 'wagmi'
+import axios from 'axios'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import cardImg from '../../assets/img/card-3.png'
 import { IoIosArrowDown } from 'react-icons/io'
 import './MarketPlacePage.css'
+import { formatEther } from 'ethers/lib/utils.js'
+import FixedSaleCard from '../../components/FixedSaleCard'
+
+const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
 const MarketPlacePage = () => {
-  const [isAccordionActive, setIsAccordionActive] = useState(1)
+  const { address } = useAccount()
+  const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
+  const [mintData, setMintData] = useState<any[]>([])
+  console.log(mintData)
 
-  const handleDropDown = (idx) => {
+  const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
       return setClickDropDown(null)
     }
     setClickDropDown(idx)
   }
 
-  const handleAccordionActive = (idx) => {
+  const handleAccordionActive = (idx: any) => {
     if (isAccordionActive === idx) {
       return setIsAccordionActive(null)
     }
     setIsAccordionActive(idx)
   }
+
+  const handleGetUserNft = useCallback(async () => {
+    try {
+      if (!address) return
+      const { data } = await axios.post(
+        API_URL,
+        {
+          query: `
+          query {
+            fixedSales(where:{status:"ACTIVE"}){
+            id
+            auctionId
+            tokenId
+            price
+            erc20TokenAddress
+            erc721TokenAddress
+            status
+          }
+          }
+        `,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      setMintData(data.data.fixedSales)
+      console.log(data.data.fixedSales)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [address])
+
+  useEffect(() => {
+    handleGetUserNft()
+  }, [handleGetUserNft])
 
   return (
     <div>
@@ -224,21 +270,9 @@ const MarketPlacePage = () => {
         </div>
         <div className="marketplace-container-right">
           <div className="marketplace-container-right-content">
-            {Array.from({ length: 7 }).map((_, idx) => (
-              <div className="marketplace-card-container" key={idx}>
-                <div className="card">
-                  <div className="card-top">
-                    <img src={cardImg} alt="card" />
-                  </div>
-                  <div className="card-center">
-                    <h3 className="title">The Holy Grail</h3>
-                    <h4 className="sub-title">Pixart Motion</h4>
-                  </div>
-                  <div className="card-bottom">
-                    <p>Fixed price</p>
-                    <button>0.001 ETH</button>
-                  </div>
-                </div>
+            {mintData.map((f, idx) => (
+              <div key={idx}>
+                <FixedSaleCard {...f} />
               </div>
             ))}
           </div>
