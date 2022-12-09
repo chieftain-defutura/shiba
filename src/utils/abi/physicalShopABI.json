@@ -8,7 +8,7 @@
       },
       {
         "internalType": "contract IERC20",
-        "name": "_SHIBToken",
+        "name": "_LEASHToken",
         "type": "address"
       }
     ],
@@ -26,21 +26,21 @@
       },
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "metadata",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "itemId",
         "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "category",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "fullproduct",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "quantity",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -51,14 +51,8 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "tokenAddress",
+        "name": "tokenaddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "productDetails",
-        "type": "string"
       }
     ],
     "name": "AddItem",
@@ -69,21 +63,15 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "itemId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "userAddress",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "string",
         "name": "review",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
       }
     ],
     "name": "AddReview",
@@ -168,19 +156,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "RemoveItem",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "from",
@@ -207,21 +182,21 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "metadata",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "itemid",
         "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "category",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "fullproduct",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "quantity",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -232,14 +207,8 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "tokenAddress",
+        "name": "tokenaddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "productDetails",
-        "type": "string"
       }
     ],
     "name": "UpdateItem",
@@ -286,13 +255,18 @@
       },
       {
         "internalType": "string",
-        "name": "_category",
+        "name": "_metadata",
         "type": "string"
       },
       {
-        "internalType": "string",
-        "name": "_fullproduct",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "_itemid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -301,13 +275,8 @@
       },
       {
         "internalType": "address",
-        "name": "_tokenAddress",
+        "name": "_tokenaddress",
         "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "_productDetails",
-        "type": "string"
       }
     ],
     "name": "addItem",
@@ -466,13 +435,39 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getCategory",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getItemDetails",
     "outputs": [
       {
-        "internalType": "string[]",
+        "internalType": "uint256",
         "name": "",
-        "type": "string[]"
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -486,54 +481,12 @@
         "type": "uint256"
       }
     ],
-    "name": "getItemDetails",
+    "name": "getItemIdofShop",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "itemId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "category",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "fullproduct",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "tokenAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "productDetails",
-            "type": "string"
-          },
-          {
-            "internalType": "address[]",
-            "name": "reviewAddress",
-            "type": "address[]"
-          },
-          {
-            "internalType": "string[]",
-            "name": "review",
-            "type": "string[]"
-          }
-        ],
-        "internalType": "struct DigitalGoods.Item",
+        "internalType": "uint256[]",
         "name": "",
-        "type": "tuple"
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -554,25 +507,6 @@
         "name": "",
         "type": "address[]"
       },
-      {
-        "internalType": "string[]",
-        "name": "",
-        "type": "string[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_category",
-        "type": "string"
-      }
-    ],
-    "name": "getSubCategory",
-    "outputs": [
       {
         "internalType": "string[]",
         "name": "",
@@ -972,23 +906,23 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_shopId",
+        "name": "_shopid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_metadata",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_itemid",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_itemId",
+        "name": "_quantity",
         "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_category",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_fullproduct",
-        "type": "string"
       },
       {
         "internalType": "uint256",
@@ -997,13 +931,8 @@
       },
       {
         "internalType": "address",
-        "name": "_tokenAddress",
+        "name": "_tokenaddress",
         "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "_productDetails",
-        "type": "string"
       }
     ],
     "name": "updateItem",

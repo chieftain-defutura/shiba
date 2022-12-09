@@ -2,8 +2,8 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "_token",
+        "internalType": "contract IDomain",
+        "name": "_domain",
         "type": "address"
       }
     ],
@@ -68,37 +68,18 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      }
-    ],
-    "name": "BurnNft",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "tokenId",
+        "name": "domainId",
         "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "domainName",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "tld",
-        "type": "string"
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       }
     ],
     "name": "MintNft",
@@ -151,19 +132,6 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_tld",
-        "type": "string"
-      }
-    ],
-    "name": "addTld",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "to",
         "type": "address"
@@ -212,57 +180,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "domainexist",
+    "inputs": [],
+    "name": "domain",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "contract IDomain",
         "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "domainnames",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "domainused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -282,57 +206,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getDomainName",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_data",
-        "type": "string"
-      }
-    ],
-    "name": "getMintPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getTld",
-    "outputs": [
-      {
-        "internalType": "string[]",
-        "name": "",
-        "type": "string[]"
       }
     ],
     "stateMutability": "view",
@@ -365,14 +238,9 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_data",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_tld",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "_domainTokenId",
+        "type": "uint256"
       }
     ],
     "name": "mintNft",
@@ -410,19 +278,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "removeTld",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -548,16 +403,16 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "index",
         "type": "uint256"
       }
     ],
-    "name": "tld",
+    "name": "tokenByIndex",
     "outputs": [
       {
-        "internalType": "string",
+        "internalType": "uint256",
         "name": "",
-        "type": "string"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -565,26 +420,7 @@
   },
   {
     "inputs": [],
-    "name": "token",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenByIndex",
+    "name": "tokenId",
     "outputs": [
       {
         "internalType": "uint256",
@@ -640,19 +476,6 @@
   },
   {
     "inputs": [],
-    "name": "tokenid",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "totalSupply",
     "outputs": [
       {
@@ -684,25 +507,6 @@
     ],
     "name": "transferFrom",
     "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_token",
-        "type": "uint256"
-      }
-    ],
-    "name": "useShop",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
     "stateMutability": "nonpayable",
     "type": "function"
   }
