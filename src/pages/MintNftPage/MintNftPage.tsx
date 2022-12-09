@@ -123,12 +123,12 @@ const MintNftPage: React.FC = () => {
       {
         ...shibAllownaceData,
         functionName: 'allowance',
-        args: [address as any, DOMAIN_NFT_CONTRACT_ADDRESS],
+        args: [address as any, DIGITAL_GOODS_NFT_CONTRACT_ADDRESS],
       },
       {
         ...leashAllownaceData,
         functionName: 'allowance',
-        args: [address as any, DOMAIN_NFT_CONTRACT_ADDRESS],
+        args: [address as any, PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS],
       },
     ],
   })
@@ -190,7 +190,7 @@ const MintNftPage: React.FC = () => {
     address: selectedNftType?.tokenAddress,
     abi: erc20ABI,
     functionName: 'approve',
-    args: [DOMAIN_NFT_CONTRACT_ADDRESS, ethers.constants.MaxUint256],
+    args: [selectedNftType?.contractAddress, ethers.constants.MaxUint256],
   })
 
   const tokenContract = useContractWrite(tokenApprove)
@@ -241,7 +241,7 @@ const MintNftPage: React.FC = () => {
     const NewNftContractData = [...NftContractData]
     NewNftContractData[0].allowance = Number(data[1]?.toString())
     NewNftContractData[1].allowance = Number(data[2]?.toString())
-    // NewNftContractData[2].allowance = Number(data[3].toString());
+    NewNftContractData[2].allowance = Number(data[3].toString())
     setIsNftContractData(NewNftContractData)
     // eslint-disable-next-line   react-hooks/exhaustive-deps
   }, [data])
