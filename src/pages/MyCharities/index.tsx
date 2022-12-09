@@ -48,7 +48,7 @@ const MyCharities: React.FC = () => {
                   </div>
                   <div className="card-bottom">
                     <p>Shop Details</p>
-                    <Link to={`/my-charities/${f}`}>
+                    <Link to={`/my-charities/${f.token_id}`}>
                       <button style={{ width: '50px' }}>Get In</button>
                     </Link>
                   </div>
