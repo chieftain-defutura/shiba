@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { useSigner, useAccount } from "wagmi"
-import { Formik, Field, Form } from "formik"
-import { ethers } from "ethers"
-import axios from "axios"
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
-import digitalShopABI from "../../utils/abi/digitalShopABI.json"
-import { useTransactionModal } from "../../context/TransactionContext"
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
-import { BsArrowLeftCircle } from "react-icons/bs"
+import React, { useCallback, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSigner, useAccount } from 'wagmi'
+import { Formik, Field, Form } from 'formik'
+import { ethers } from 'ethers'
+import axios from 'axios'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { useTransactionModal } from '../../context/TransactionContext'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { BsArrowLeftCircle } from 'react-icons/bs'
 
 interface IAppearanceSetting {
   setClickCard: any
@@ -32,9 +32,9 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
         {
           params: {
             refreshCache: false,
-            tokenType: "ERC721",
+            tokenType: 'ERC721',
             tokenId: id,
-            contractAddress: "0xB566026263216f462337526A0640f244fE0A9Dee",
+            contractAddress: '0xB566026263216f462337526A0640f244fE0A9Dee',
           },
         },
       )
@@ -62,33 +62,33 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
   const handleAppearanceSetting = async (values: any) => {
     if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" })
+      setTransaction({ loading: true, status: 'pending' })
       const resData = await axios({
-        method: "post",
-        url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+        method: 'post',
+        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         data: values,
         headers: {
           pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
           pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,
         data,
       )
       const tx = await contract.setBaseURI(id, dataHash)
       await tx.wait()
-      console.log("updated")
-      setTransaction({ loading: true, status: "success" })
+      console.log('updated')
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log("Error sending File to IPFS:")
+      console.log('Error sending File to IPFS:')
       console.log(error)
-      setTransaction({ loading: true, status: "error" })
+      setTransaction({ loading: true, status: 'error' })
     }
   }
 
@@ -114,16 +114,16 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
       <Formik
         initialValues={
           inputData || {
-            logo: "",
-            mainPhoto: "",
-            videoOne: "",
-            videoTwo: "",
-            videoThree: "",
-            description: "",
-            contacts: "",
-            website: "",
-            twitter: "",
-            instagram: "",
+            logo: '',
+            mainPhoto: '',
+            videoOne: '',
+            videoTwo: '',
+            videoThree: '',
+            description: '',
+            contacts: '',
+            website: '',
+            twitter: '',
+            instagram: '',
           }
         }
         enableReinitialize

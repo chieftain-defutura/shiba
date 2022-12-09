@@ -1,13 +1,13 @@
-import React from "react"
-import "./SideBar.css"
-import { Link } from "react-router-dom"
-import { useAccount, useContractReads } from "wagmi"
+import React from 'react'
+import './SideBar.css'
+import { Link } from 'react-router-dom'
+import { useAccount, useContractReads } from 'wagmi'
 import {
-  SHOP_NFT_CONTRACT_ADDRESS,
-  DIGITAL_GOODS_ADDRESS,
+  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
-} from "../../utils/contractAddress"
-import shopAbi from "../../utils/abi/shopABI.json"
+} from '../../utils/contractAddress'
+import shopAbi from '../../utils/abi/physicalShopABI.json'
 
 const SideBar: React.FC = () => {
   const { address } = useAccount()
@@ -16,19 +16,19 @@ const SideBar: React.FC = () => {
       {
         address: DOMAIN_NFT_CONTRACT_ADDRESS,
         abi: shopAbi,
-        functionName: "balanceOf",
+        functionName: 'balanceOf',
         args: [address],
       },
       {
-        address: DIGITAL_GOODS_ADDRESS,
+        address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         abi: shopAbi,
-        functionName: "balanceOf",
+        functionName: 'balanceOf',
         args: [address],
       },
       {
-        address: SHOP_NFT_CONTRACT_ADDRESS,
+        address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
         abi: shopAbi,
-        functionName: "balanceOf",
+        functionName: 'balanceOf',
         args: [address],
       },
     ],

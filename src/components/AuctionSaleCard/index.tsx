@@ -1,11 +1,11 @@
-import React from "react"
-import { formatEther } from "ethers/lib/utils.js"
-import { useTransactionModal } from "../../context/TransactionContext"
-import { ethers } from "ethers"
-import { erc20ABI, useAccount, useSigner } from "wagmi"
-import { AUCTION_MARKETPLACE_ADDRESS } from "../../utils/contractAddress"
-import auctionMarketplaceABI from "../../utils/abi/auctionMarketplaceABI.json"
-import cardImg from "../../assets/img/card-3.png"
+import React from 'react'
+import { formatEther } from 'ethers/lib/utils.js'
+import { useTransactionModal } from '../../context/TransactionContext'
+import { ethers } from 'ethers'
+import { erc20ABI, useAccount, useSigner } from 'wagmi'
+import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
+import cardImg from '../../assets/img/card-3.png'
 
 interface IAuctionSaleCard {
   price: any
@@ -26,7 +26,7 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
     if (!address || !data) return
 
     try {
-      setTransaction({ loading: true, status: "pending" })
+      setTransaction({ loading: true, status: 'pending' })
       const erc20Contract = new ethers.Contract(
         erc20TokenAddress,
         erc20ABI,
@@ -35,31 +35,31 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
 
       const allowance = Number(
         (
-          await erc20Contract.allowance(address, AUCTION_MARKETPLACE_ADDRESS)
+          await erc20Contract.allowance(address, MARKETPLACE_CONTRACT_ADDRESS)
         ).toString(),
       )
 
       if (allowance <= 0) {
         const tx = await erc20Contract.approve(
-          AUCTION_MARKETPLACE_ADDRESS,
+          MARKETPLACE_CONTRACT_ADDRESS,
           ethers.constants.MaxUint256,
         )
         await tx.wait()
       }
 
       const contract = new ethers.Contract(
-        AUCTION_MARKETPLACE_ADDRESS,
+        MARKETPLACE_CONTRACT_ADDRESS,
         auctionMarketplaceABI,
         data,
       )
       const tx = await contract.placeBid(auctionId, price)
       await tx.wait()
-      console.log("added")
-      setTransaction({ loading: true, status: "success" })
+      console.log('added')
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log("Error sending File to IPFS:")
+      console.log('Error sending File to IPFS:')
       console.log(error)
-      setTransaction({ loading: true, status: "error" })
+      setTransaction({ loading: true, status: 'error' })
     }
   }
   return (

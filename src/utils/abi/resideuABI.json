@@ -47,15 +47,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "shareHolderIndex",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "sharePercentIndex",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "shareOwner",
+        "type": "address"
       }
     ],
     "name": "RemoveBenificiary",
@@ -70,7 +64,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
@@ -93,36 +87,66 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "finalizeToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_contractAddress",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       }
     ],
     "name": "getBenificiary",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "totalPercent",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "filledShare",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address[]",
+        "components": [
+          {
+            "internalType": "address[]",
+            "name": "shareHolders",
+            "type": "address[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "sharePercent",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "filledshare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPercent",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "paused",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Residue.ResidueDetails",
         "name": "",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -150,7 +174,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
@@ -178,7 +202,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {

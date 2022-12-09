@@ -1,10 +1,10 @@
-import React from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import React from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
-import "./Modal.scss"
-import Backdrop from "./BackDrop"
-import { modalVaraints } from "../constants/variants"
-import { useSwitchNetwork } from "wagmi"
+import './Modal.scss'
+import Backdrop from './BackDrop'
+import { modalVaraints } from '../constants/variants'
+import { useSwitchNetwork } from 'wagmi'
 
 interface IWrongNetworkModal {
   modal: boolean
@@ -20,7 +20,7 @@ const WrongNetworkModal: React.FC<IWrongNetworkModal> = ({
       <AnimatePresence exitBeforeEnter>
         {modal && (
           <motion.div
-            className={"transaction_modal"}
+            className={'transaction_modal'}
             onClick={(e) => e.stopPropagation()}
             variants={modalVaraints}
             animate="animate"

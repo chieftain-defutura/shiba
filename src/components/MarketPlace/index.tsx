@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect } from 'react'
 import {
   useAccount,
   useSigner,
@@ -6,7 +6,7 @@ import {
   useContractWrite,
   erc721ABI,
   useContractRead,
-} from "wagmi"
+} from 'wagmi'
 // import {
 //   DIGITAL_GOOD_SHOP,
 //   PHYSICAL_GOODS_SHOP,
@@ -15,24 +15,24 @@ import {
 //   UNATTACHED_DOMAIN_NAME,
 //   NFT_ART,
 // } from "../../constants/mintPageConstatnts"
-import { useParams } from "react-router-dom"
-import { ethers } from "ethers"
-import { useTransactionModal } from "../../context/TransactionContext"
-import { IoIosArrowDown } from "react-icons/io"
+import { useParams } from 'react-router-dom'
+import { ethers } from 'ethers'
+import { useTransactionModal } from '../../context/TransactionContext'
+import { IoIosArrowDown } from 'react-icons/io'
 import {
-  AUCTION_MARKETPLACE_ADDRESS,
+  MARKETPLACE_CONTRACT_ADDRESS,
   // DOMAIN_NFT_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
-  DIGITAL_GOODS_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
   // SHOP_NFT_CONTRACT_ADDRESS,
-} from "../../utils/contractAddress"
-import auctionMarketplaceABI from "../../utils/abi/auctionMarketplaceABI.json"
-import { getUserMarketPlaceAllowance } from "../../utils/methods"
-import { parseUnits } from "ethers/lib/utils.js"
+} from '../../utils/contractAddress'
+import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
+import { getUserMarketPlaceAllowance } from '../../utils/methods'
+import { parseUnits } from 'ethers/lib/utils.js'
 
 // interface IContractData {
 //   title: string
@@ -57,7 +57,7 @@ interface ITokenData {
 //   },
 //   {
 //     title: DIGITAL_GOOD_SHOP,
-//     contractAddress: DIGITAL_GOODS_ADDRESS,
+//     contractAddress: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
 //     // tokenAddress: SHIB_TOKEN_ADDRESS,
 //     // allowance: 0,
 //   },
@@ -83,34 +83,34 @@ interface ITokenData {
 
 const TokensList = [
   {
-    title: "Shi",
+    title: 'Shi',
     address: SHI_TOKEN_ADDRESS,
     allowance: 0,
-    decimal: "18",
+    decimal: '18',
   },
   {
-    title: "Shib",
+    title: 'Shib',
     address: SHIB_TOKEN_ADDRESS,
     allowance: 0,
-    decimal: "18",
+    decimal: '18',
   },
   {
-    title: "Leash",
+    title: 'Leash',
     address: LEASH_TOKEN_ADDRESS,
     allowance: 0,
-    decimal: "18",
+    decimal: '18',
   },
   {
-    title: "Bone",
+    title: 'Bone',
     address: BONE_TOKEN_ADDRESS,
     allowance: 0,
-    decimal: "18",
+    decimal: '18',
   },
   {
-    title: "Paw",
+    title: 'Paw',
     address: PAW_TOKEN_ADDRESS,
     allowance: 0,
-    decimal: "18",
+    decimal: '18',
   },
 ]
 
@@ -122,20 +122,20 @@ const MarketPlace = () => {
   const [dropDown, setDropDown] = useState<any>(null)
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
-  const [price, setPrice] = useState("")
+  const [price, setPrice] = useState('')
 
   const { data: readData } = useContractRead({
-    address: DIGITAL_GOODS_ADDRESS,
+    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: erc721ABI,
-    functionName: "isApprovedForAll",
-    args: [address as any, AUCTION_MARKETPLACE_ADDRESS],
+    functionName: 'isApprovedForAll',
+    args: [address as any, MARKETPLACE_CONTRACT_ADDRESS],
   })
 
   const { config: tokenApprove } = usePrepareContractWrite({
-    address: DIGITAL_GOODS_ADDRESS,
+    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: erc721ABI,
-    functionName: "setApprovalForAll",
-    args: [AUCTION_MARKETPLACE_ADDRESS, true],
+    functionName: 'setApprovalForAll',
+    args: [MARKETPLACE_CONTRACT_ADDRESS, true],
   })
   const tokenContract = useContractWrite(tokenApprove)
 
@@ -169,22 +169,22 @@ const MarketPlace = () => {
 
   const handleApproveToken = async () => {
     try {
-      setTransaction({ loading: true, status: "pending" })
+      setTransaction({ loading: true, status: 'pending' })
       const data = await tokenContract.writeAsync?.()
       await data?.wait()
-      setTransaction({ loading: true, status: "success" })
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
       console.log(error)
-      setTransaction({ loading: true, status: "error" })
+      setTransaction({ loading: true, status: 'error' })
     }
   }
 
   const handlePutOnSale = async () => {
     if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" })
+      setTransaction({ loading: true, status: 'pending' })
       const contract = new ethers.Contract(
-        AUCTION_MARKETPLACE_ADDRESS,
+        MARKETPLACE_CONTRACT_ADDRESS,
         auctionMarketplaceABI,
         data,
       )
@@ -192,15 +192,15 @@ const MarketPlace = () => {
         id,
         parseUnits(price, selectedDropDown?.decimal).toString(),
         selectedDropDown?.address,
-        DIGITAL_GOODS_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
       )
       await tx.wait()
-      console.log("added")
-      setTransaction({ loading: true, status: "success" })
+      console.log('added')
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log("Error sending File to IPFS:")
+      console.log('Error sending File to IPFS:')
       console.log(error)
-      setTransaction({ loading: true, status: "error" })
+      setTransaction({ loading: true, status: 'error' })
     }
   }
 
@@ -227,12 +227,12 @@ const MarketPlace = () => {
                   <button onClick={handlePutOnSale}>Put On Sale</button>
                 )}
               </div>
-              <div className={!dropDown ? " right" : "right active"}>
+              <div className={!dropDown ? ' right' : 'right active'}>
                 <div className="header" onClick={() => setDropDown(!dropDown)}>
                   <p>{selectedDropDown?.title}</p>
                   <IoIosArrowDown />
                 </div>
-                <div className={!dropDown ? "body" : "body active"}>
+                <div className={!dropDown ? 'body' : 'body active'}>
                   {tokenData.map((f, index) => {
                     return (
                       <p key={index} onClick={() => setSelectedDropDown(f)}>

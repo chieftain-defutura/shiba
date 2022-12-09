@@ -1,14 +1,14 @@
-import React, { useState, useCallback, useEffect } from "react"
-import { useAccount } from "wagmi"
+import React, { useState, useCallback, useEffect } from 'react'
+import { useAccount } from 'wagmi'
 import {
-  DIGITAL_GOODS_ADDRESS,
-  SHOP_NFT_CONTRACT_ADDRESS,
-} from "../../utils/contractAddress"
-import axios from "axios"
-import { IoIosArrowDown } from "react-icons/io"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+} from '../../utils/contractAddress'
+import axios from 'axios'
+import { IoIosArrowDown } from 'react-icons/io'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
 // import "./WebsitesPage.css";
 
 const ShopPage = () => {
@@ -29,20 +29,20 @@ const ShopPage = () => {
       setLoading(true)
 
       const { data } = await axios.get(
-        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${DIGITAL_GOODS_ADDRESS}&withMetadata=true`,
+        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${DIGITAL_GOODS_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
 
         {
           headers: {
-            "X-API-KEY": process.env.REACT_APP_ALCHEMY_API_KEY,
+            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
           },
         },
       )
       const { data: physicalData } = await axios.get(
-        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${SHOP_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
+        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
 
         {
           headers: {
-            "X-API-KEY": process.env.REACT_APP_ALCHEMY_API_KEY,
+            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
           },
         },
       )
@@ -70,16 +70,16 @@ const ShopPage = () => {
           <div
             className="header"
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
             onClick={() => setOpenDigital((m) => !m)}
           >
             <h2>Digital goods</h2>
             <IoIosArrowDown
               style={{
-                transform: openDigital ? "rotate(180deg)" : "rotate(0deg)",
+                transform: openDigital ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
             />
           </div>
@@ -108,16 +108,16 @@ const ShopPage = () => {
           <div
             className="header"
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
             onClick={() => setOpenPhysical((m) => !m)}
           >
             <h2>Physical goods</h2>
             <IoIosArrowDown
               style={{
-                transform: openPhysical ? "rotate(180deg)" : "rotate(0deg)",
+                transform: openPhysical ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
             />
           </div>
@@ -138,23 +138,23 @@ const ShopPage = () => {
               <div
                 className="header"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 0 1rem",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0 0 1rem',
                 }}
                 onClick={() => setOpenClothing((m) => !m)}
               >
                 <h2
                   style={{
-                    fontSize: "14px",
+                    fontSize: '14px',
                   }}
                 >
                   Clothing
                 </h2>
                 <IoIosArrowDown
                   style={{
-                    transform: openClothing ? "rotate(180deg)" : "rotate(0deg)",
+                    transform: openClothing ? 'rotate(180deg)' : 'rotate(0deg)',
                   }}
                 />
               </div>
@@ -179,16 +179,16 @@ const ShopPage = () => {
               <div
                 className="header"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 0 1rem",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0 0 1rem',
                 }}
                 onClick={() => setOpenAccessories((m) => !m)}
               >
                 <h2
                   style={{
-                    fontSize: "14px",
+                    fontSize: '14px',
                   }}
                 >
                   Accessories
@@ -196,8 +196,8 @@ const ShopPage = () => {
                 <IoIosArrowDown
                   style={{
                     transform: openAccessories
-                      ? "rotate(180deg)"
-                      : "rotate(0deg)",
+                      ? 'rotate(180deg)'
+                      : 'rotate(0deg)',
                   }}
                 />
               </div>
@@ -223,16 +223,16 @@ const ShopPage = () => {
           <div
             className="header"
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
             onClick={() => setOpenFood((m) => !m)}
           >
             <h2>Food</h2>
             <IoIosArrowDown
               style={{
-                transform: openFood ? "rotate(180deg)" : "rotate(0deg)",
+                transform: openFood ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
             />
           </div>
@@ -260,8 +260,8 @@ const ShopPage = () => {
         </div>
 
         <div className="website-container-right">
-          {loading ? "loading..." : ""}
-          {!digitalNftData.length || (!physicalNftData.length && "noResult")}
+          {loading ? 'loading...' : ''}
+          {!digitalNftData.length || (!physicalNftData.length && 'noResult')}
 
           {!openDigital &&
             digitalNftData.map((f, idx) => (

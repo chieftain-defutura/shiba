@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import { useAccount } from "wagmi"
-import { Connector } from "../Connect"
-import LayoutModal from "../Model"
-import logo from "../../assets/img/logo.png"
-import searchIcon from "../../assets/img/search-icon.png"
-import "./Navigation.css"
-import { Link } from "react-router-dom"
+import React, { useState } from 'react'
+import { useAccount } from 'wagmi'
+import { Connector } from '../Connect'
+import LayoutModal from '../Model'
+import logo from '../../assets/img/logo.png'
+import searchIcon from '../../assets/img/search-icon.png'
+import './Navigation.css'
+import { Link } from 'react-router-dom'
 // import Link from "next/link";
 
 const Navigation = () => {
@@ -35,10 +35,10 @@ const Navigation = () => {
                 <Link to="/domain-names">Domain Names</Link>
               </li>
               <li>
-                <Link to="">Full On Blockchain NFT</Link>
+                <Link to="/full-on-blockChain-nft">Full On Blockchain NFT</Link>
               </li>
               <li>
-                <Link to="">Charities</Link>
+                <Link to="/charities">Charities</Link>
               </li>
               <li>
                 <Link to="/marketplace">MarketPlace</Link>

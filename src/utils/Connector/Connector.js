@@ -1,10 +1,10 @@
-import { createClient, defaultChains, configureChains } from "wagmi"
+import { createClient, defaultChains, configureChains } from 'wagmi'
 
-import { publicProvider } from "wagmi/providers/public"
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet"
-import { InjectedConnector } from "wagmi/connectors/injected"
-import { MetaMaskConnector } from "wagmi/connectors/metaMask"
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect"
+import { publicProvider } from 'wagmi/providers/public'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
   publicProvider(),
@@ -17,7 +17,7 @@ export const client = createClient({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: "wagmi",
+        appName: 'wagmi',
       },
     }),
     new WalletConnectConnector({
@@ -29,7 +29,7 @@ export const client = createClient({
     new InjectedConnector({
       chains,
       options: {
-        name: "Injected",
+        name: 'Injected',
       },
     }),
   ],

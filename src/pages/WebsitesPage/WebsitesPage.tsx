@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { useAccount } from "wagmi"
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from "../../utils/contractAddress"
-import axios from "axios"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
-import "./WebsitesPage.css"
+import React, { useCallback, useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
+import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import axios from 'axios'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
+import './WebsitesPage.css'
 
 const WebsitesPage = () => {
   const { address } = useAccount()
@@ -23,7 +23,7 @@ const WebsitesPage = () => {
 
         {
           headers: {
-            "X-API-KEY": process.env.REACT_APP_ALCHEMY_API_KEY,
+            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
           },
         },
       )
@@ -77,8 +77,8 @@ const WebsitesPage = () => {
           </div>
         </div>
         <div className="website-container-right">
-          {loading ? "loading..." : ""}
-          {!website.length && "noResult"}
+          {loading ? 'loading...' : ''}
+          {!website.length && 'noResult'}
           {website.map((f, idx) => (
             <div className="website-card-container" key={idx}>
               <div className="card">

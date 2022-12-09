@@ -1,39 +1,39 @@
-import { ethers } from "ethers"
-import React, { useState } from "react"
-import { useAccount, useSigner } from "wagmi"
-import { DIGITAL_GOODS_ADDRESS } from "../../utils/contractAddress"
-import digitalShopABI from "../../utils/abi/digitalShopABI.json"
-import { useParams } from "react-router-dom"
-import { useTransactionModal } from "../../context/TransactionContext"
+import { ethers } from 'ethers'
+import React, { useState } from 'react'
+import { useAccount, useSigner } from 'wagmi'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { useParams } from 'react-router-dom'
+import { useTransactionModal } from '../../context/TransactionContext'
 
 const Transfer = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
-  const [toAddress, setToAddress] = useState("")
+  const [toAddress, setToAddress] = useState('')
 
   const result = ethers.utils.isAddress(toAddress)
   console.log(result)
   const handleSubmit = async () => {
     if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: "pending" })
-      console.log("pending")
+      setTransaction({ loading: true, status: 'pending' })
+      console.log('pending')
 
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,
         data,
       )
 
       const tx = await contract.transferFrom(address, toAddress, id)
       await tx.wait()
-      console.log("success")
-      setTransaction({ loading: true, status: "success" })
+      console.log('success')
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
       console.log(error)
-      setTransaction({ loading: true, status: "error" })
+      setTransaction({ loading: true, status: 'error' })
     }
   }
 

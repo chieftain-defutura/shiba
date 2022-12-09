@@ -33,7 +33,7 @@
   cursor: pointer;
 }
 
-.website-container-left .check-box-container input[type="checkbox"] {
+.website-container-left .check-box-container input[type='checkbox'] {
   appearance: none;
   -webkit-appearance: none;
   width: 15px;
@@ -46,18 +46,18 @@
   padding: 5px;
 }
 
-.website-container-left .check-box-container input[type="checkbox"]:after {
-  font-family: "Font Awesome 6 Free";
+.website-container-left .check-box-container input[type='checkbox']:after {
+  font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   font-size: 14px;
-  content: "\f00c";
+  content: '\f00c';
   color: var(--black);
   display: none;
 }
 
 .website-container-left
   .check-box-container
-  input[type="checkbox"]:checked:after {
+  input[type='checkbox']:checked:after {
   display: block;
 }
 

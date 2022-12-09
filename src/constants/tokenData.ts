@@ -4,27 +4,27 @@ import {
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-} from "../utils/contractAddress"
+} from '../utils/contractAddress'
 
 export const TokenData = [
   {
-    tokenName: "SHI",
+    tokenName: 'SHI',
     tokenAddress: SHI_TOKEN_ADDRESS,
   },
   {
-    tokenName: "LEASH",
+    tokenName: 'LEASH',
     tokenAddress: LEASH_TOKEN_ADDRESS,
   },
   {
-    tokenName: "SHIB",
+    tokenName: 'SHIB',
     tokenAddress: SHIB_TOKEN_ADDRESS,
   },
   {
-    tokenName: "BONE",
+    tokenName: 'BONE',
     tokenAddress: BONE_TOKEN_ADDRESS,
   },
   {
-    tokenName: "PAW",
+    tokenName: 'PAW',
     tokenAddress: PAW_TOKEN_ADDRESS,
   },
 ]

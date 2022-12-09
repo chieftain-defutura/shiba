@@ -5,6 +5,11 @@
         "internalType": "contract IDomain",
         "name": "_domain",
         "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_SHIBToken",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -21,8 +26,14 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "string",
-        "name": "preview",
+        "name": "category",
         "type": "string"
       },
       {
@@ -40,7 +51,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "tokenaddress",
+        "name": "tokenAddress",
         "type": "address"
       },
       {
@@ -58,8 +69,14 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
-        "name": "tokenAddress",
+        "name": "userAddress",
         "type": "address"
       },
       {
@@ -67,12 +84,6 @@
         "internalType": "string",
         "name": "review",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "itemid",
-        "type": "uint256"
       }
     ],
     "name": "AddReview",
@@ -134,17 +145,23 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "token",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "value",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "domainId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       }
     ],
-    "name": "MintNFT",
+    "name": "MintNft",
     "type": "event"
   },
   {
@@ -197,7 +214,7 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "preview",
+        "name": "category",
         "type": "string"
       },
       {
@@ -229,10 +246,29 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "tokenUri",
+        "type": "string"
+      }
+    ],
+    "name": "UpdateTokenUri",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
-        "name": "_tld",
+        "name": "_category",
         "type": "string"
       }
     ],
@@ -245,12 +281,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_shopid",
+        "name": "_shopId",
         "type": "uint256"
       },
       {
         "internalType": "string",
-        "name": "_preview",
+        "name": "_category",
         "type": "string"
       },
       {
@@ -288,11 +324,29 @@
       },
       {
         "internalType": "uint256",
-        "name": "_itemid",
+        "name": "_itemId",
         "type": "uint256"
       }
     ],
     "name": "addReview",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_category",
+        "type": "string"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_subcategory",
+        "type": "string[]"
+      }
+    ],
+    "name": "addSubCategory",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -380,6 +434,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "erc20Token",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -399,6 +466,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getCategory",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -409,29 +489,51 @@
     "name": "getItemDetails",
     "outputs": [
       {
-        "internalType": "uint256",
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "itemId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "category",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "fullproduct",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "productDetails",
+            "type": "string"
+          },
+          {
+            "internalType": "address[]",
+            "name": "reviewAddress",
+            "type": "address[]"
+          },
+          {
+            "internalType": "string[]",
+            "name": "review",
+            "type": "string[]"
+          }
+        ],
+        "internalType": "struct DigitalGoods.Item",
         "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -441,7 +543,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_itemid",
+        "name": "_itemId",
         "type": "uint256"
       }
     ],
@@ -452,6 +554,25 @@
         "name": "",
         "type": "address[]"
       },
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_category",
+        "type": "string"
+      }
+    ],
+    "name": "getSubCategory",
+    "outputs": [
       {
         "internalType": "string[]",
         "name": "",
@@ -486,19 +607,27 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "mintFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_token",
+        "name": "_domainTokenId",
         "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "_value",
-        "type": "bool"
       }
     ],
-    "name": "mintNFT",
+    "name": "mintNft",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -634,7 +763,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_tokenid",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
@@ -667,6 +796,30 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "subCategory",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -724,6 +877,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "tokenId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -761,19 +927,6 @@
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "tokenid",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -819,17 +972,17 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_shopid",
+        "name": "_shopId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_itemid",
+        "name": "_itemId",
         "type": "uint256"
       },
       {
         "internalType": "string",
-        "name": "_preview",
+        "name": "_category",
         "type": "string"
       },
       {
@@ -861,6 +1014,19 @@
         "type": "uint256"
       }
     ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateMintFee",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   }

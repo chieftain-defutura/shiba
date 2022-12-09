@@ -1,20 +1,20 @@
-import React, { useState, useCallback, useEffect } from "react"
-import { useAccount } from "wagmi"
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from "../../utils/contractAddress"
-import axios from "axios"
-import Navigation from "../../components/Navigation/Navigation"
-import FooterBottom from "../../components/FooterBottom/FooterBottom"
-import cardImg from "../../assets/img/card-3.png"
-import { IoIosArrowDown } from "react-icons/io"
-import "./ActionPage.css"
-import AuctionSaleCard from "../../components/AuctionSaleCard"
+import React, { useState, useCallback, useEffect } from 'react'
+import { useAccount } from 'wagmi'
+import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import axios from 'axios'
+import Navigation from '../../components/Navigation/Navigation'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
+import { IoIosArrowDown } from 'react-icons/io'
+import './ActionPage.css'
+import AuctionSaleCard from '../../components/AuctionSaleCard'
 
-const API_URL = "https://api.thegraph.com/subgraphs/name/arunram2000/dapplink"
+const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
 const ActionPage = () => {
   const { address } = useAccount()
   const [clickDropDown, setClickDropDown] = useState(null)
-  const [selectedCurrency, setSelectedCurrency] = useState("Select Currency")
+  const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
   const [mintData, setMintData] = useState<any[]>([])
   console.log(mintData)
   const handleDropDown = (idx: any) => {
@@ -45,7 +45,7 @@ const ActionPage = () => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         },
       )
@@ -72,8 +72,8 @@ const ActionPage = () => {
                 <div
                   className={
                     clickDropDown === idx
-                      ? "drop-down-header active"
-                      : "drop-down-header"
+                      ? 'drop-down-header active'
+                      : 'drop-down-header'
                   }
                   onClick={() => handleDropDown(idx)}
                 >
@@ -84,8 +84,8 @@ const ActionPage = () => {
                   <div
                     className={
                       clickDropDown === idx
-                        ? "drop-down-body active"
-                        : "drop-down-body"
+                        ? 'drop-down-body active'
+                        : 'drop-down-body'
                     }
                   >
                     <div className="check-box-container">
@@ -161,11 +161,11 @@ const ActionPage = () => {
               <IoIosArrowDown className="arrow-icon" />
             </div>
             <div className="body">
-              <p onClick={() => setSelectedCurrency("SHI")}>SHI</p>
-              <p onClick={() => setSelectedCurrency("LEASH")}>LEASH</p>
-              <p onClick={() => setSelectedCurrency("SHIB")}>SHIB</p>
-              <p onClick={() => setSelectedCurrency("BONE")}>BONE</p>
-              <p onClick={() => setSelectedCurrency("PAW")}>PAW</p>
+              <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
+              <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
+              <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
+              <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
+              <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
             </div>
           </div>
         </div>
@@ -179,67 +179,67 @@ export default ActionPage
 
 const accordionData = [
   {
-    title: "Domain Names",
+    title: 'Domain Names',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Physical Goods Shop",
+    title: 'Physical Goods Shop',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Digital Goods Shop",
+    title: 'Digital Goods Shop',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Charity Organisation",
+    title: 'Charity Organisation',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "auctions",
+    title: 'auctions',
     labels: [
-      { label: "Human Rights" },
-      { label: "Education" },
-      { label: "Religion" },
-      { label: "Animals" },
-      { label: "Enviorment" },
-      { label: "Health" },
-      { label: "Sport" },
+      { label: 'Human Rights' },
+      { label: 'Education' },
+      { label: 'Religion' },
+      { label: 'Animals' },
+      { label: 'Enviorment' },
+      { label: 'Health' },
+      { label: 'Sport' },
     ],
   },
   {
-    title: "Full On Blockchain NFT",
-    labels: [{ label: "ART" }, { label: "File" }, { label: "Other" }],
+    title: 'Full On Blockchain NFT',
+    labels: [{ label: 'ART' }, { label: 'File' }, { label: 'Other' }],
   },
 ]

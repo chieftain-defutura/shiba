@@ -1,11 +1,13 @@
-import React from "react"
-import cardImg from "../../assets/img/card-3.png"
-import { Link } from "react-router-dom"
-import Navigation from "../../components/Navigation/Navigation"
-import HeaderNav from "../../components/HeaderNav/HeaderNav"
-import SideBar from "../../components/SideBar/SideBar"
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-const HaveToSend = () => {
+import Navigation from '../../components/Navigation/Navigation'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import SideBar from '../../components/SideBar/SideBar'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
+
+const HaveToSend: React.FC = () => {
   return (
     <div>
       <Navigation />
@@ -28,7 +30,7 @@ const HaveToSend = () => {
                 <div className="card-bottom">
                   <p>Shop Details</p>
                   <Link to="/have-to-send/:id">
-                    <button style={{ width: "50px" }}>Get In</button>
+                    <button style={{ width: '50px' }}>Get In</button>
                   </Link>
                 </div>
               </div>
@@ -36,6 +38,7 @@ const HaveToSend = () => {
           ))}
         </div>
       </div>
+      <FooterBottom />
     </div>
   )
 }
