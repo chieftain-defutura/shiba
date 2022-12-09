@@ -1,9 +1,5 @@
 import React, { useState } from "react"
-import {
-  IoIosArrowBack,
-  IoIosArrowForward,
-  IoIosArrowDown,
-} from "react-icons/io"
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { BsArrowLeftCircle } from "react-icons/bs"
 import Navigation from "../../components/Navigation/Navigation"
 import FooterBottom from "../../components/FooterBottom/FooterBottom"
@@ -30,6 +26,8 @@ import SelectFileImg from "../../assets/img/selectFile.png"
 import UploadImg from "../../assets/img/upload.png"
 import LinkImg from "../../assets/img/link.png"
 import Unlink from "../../assets/img/unlink.png"
+import MarketPlace from "../../components/MarketPlace"
+import Auction from "../../components/Auction"
 
 const ShopSettingsOne: React.FC = () => {
   // const { id } = useParams();
@@ -40,8 +38,8 @@ const ShopSettingsOne: React.FC = () => {
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
   const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
   const [onAction, setOnAction] = useState<any>(null)
-  const [dropDown, setDropDown] = useState<any>(null)
-  const [selectedDropDown, setSelectedDropDown] = useState("Select Currency")
+  // const [dropDown, setDropDown] = useState<any>(null)
+  // const [selectedDropDown, setSelectedDropDown] = useState("Select Currency")
   const [slide, setSlide] = useState(1)
 
   const handleSlidePrev = () => {
@@ -437,107 +435,9 @@ const ShopSettingsOne: React.FC = () => {
                 </div>
               )}
 
-              {onMarketPlace && (
-                <div className="on-marketplace-container">
-                  <p className="title">On Marketplace</p>
-                  <div className="on-marketplace-sub-container">
-                    <div className="content">
-                      <div className="content-left">
-                        <p>Select Charity Organisation From List</p>
-                        <p>Price</p>
-                      </div>
-                      <div className="content-right">
-                        <select></select>
-                        <div className="price-select-container">
-                          <div className="left">
-                            <input />
-                            <button>Put On Sale</button>
-                          </div>
-                          <div
-                            className={!dropDown ? " right" : "right active"}
-                          >
-                            <div
-                              className="header"
-                              onClick={() => setDropDown(!dropDown)}
-                            >
-                              <p>{selectedDropDown}</p>
-                              <IoIosArrowDown />
-                            </div>
-                            <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
-                                SHI
-                              </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
-                                LEASH
-                              </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
-                                SHIB
-                              </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
-                                BONE
-                              </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
-                                PAW
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {onMarketPlace && <MarketPlace />}
 
-              {onAction && (
-                <div className="on-marketplace-container">
-                  <p className="title">On Auction</p>
-                  <div className="on-marketplace-sub-container">
-                    <div className="content">
-                      <div className="content-left">
-                        <p>Select Charity Organisation From List</p>
-                        <p>Reserve Price</p>
-                      </div>
-                      <div className="content-right">
-                        <select></select>
-                        <div className="price-select-container">
-                          <div className="left">
-                            <input />
-                            <button>Put On Sale</button>
-                          </div>
-                          <div
-                            className={!dropDown ? " right" : "right active"}
-                          >
-                            <div
-                              className="header"
-                              onClick={() => setDropDown(!dropDown)}
-                            >
-                              <p>{selectedDropDown}</p>
-                              <IoIosArrowDown />
-                            </div>
-                            <div className={!dropDown ? "body" : "body active"}>
-                              <p onClick={() => setSelectedDropDown("SHI")}>
-                                SHI
-                              </p>
-                              <p onClick={() => setSelectedDropDown("LEASH")}>
-                                LEASH
-                              </p>
-                              <p onClick={() => setSelectedDropDown("SHIB")}>
-                                SHIB
-                              </p>
-                              <p onClick={() => setSelectedDropDown("BONE")}>
-                                BONE
-                              </p>
-                              <p onClick={() => setSelectedDropDown("PAW")}>
-                                PAW
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {onAction && <Auction />}
             </div>
           )}
         </div>

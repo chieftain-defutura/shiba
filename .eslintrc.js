@@ -24,20 +24,6 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
-    quotes: [
-      "error",
-      "double",
-      {
-        avoidEscape: true,
-      },
-    ],
-    "@typescript-eslint/quotes": [
-      "error",
-      "double",
-      {
-        avoidEscape: true,
-      },
-    ],
     semi: ["error", "never"],
     "react/jsx-uses-react": ["off"],
     "react/react-in-jsx-scope": ["off"],
@@ -45,7 +31,13 @@ module.exports = {
     "no-shadow": "off",
     "@typescript-eslint/no-explicit-any": ["off"],
     "@typescript-eslint/no-unused-vars": ["off"],
-    "no-unused-vars": "error",
+    "no-unused-vars": "warn",
     "react/prop-types": ["off"],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
 }
