@@ -30,7 +30,7 @@ import {
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import domainABI from '../../utils/abi/domainABI.json'
-import shopABI from '../../utils/abi/shopABI.json'
+import shopABI from '../../utils/abi/physicalShopABI.json'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import SideBar from '../../components/SideBar/SideBar'
