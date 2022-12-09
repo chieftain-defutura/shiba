@@ -174,7 +174,7 @@ const MintNftPage: React.FC = () => {
     address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: shopABI,
     functionName: 'mintNft',
-    args: [selectDomain, true],
+    args: [selectDomain],
   })
   const shopContract = useContractWrite(shopMints)
 
@@ -182,7 +182,7 @@ const MintNftPage: React.FC = () => {
     address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     abi: digitalShopABI,
     functionName: 'mintNft',
-    args: [selectDomain, true],
+    args: [selectDomain],
   })
   const digitalShopContract = useContractWrite(digitalMints)
 
