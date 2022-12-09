@@ -7,7 +7,7 @@ import {
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
-import shopAbi from '../../utils/abi/shopABI.json'
+import shopAbi from '../../utils/abi/physicalShopABI.json'
 
 const SideBar: React.FC = () => {
   const { address } = useAccount()
