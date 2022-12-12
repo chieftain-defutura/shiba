@@ -10,6 +10,7 @@ import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
+import Button from '../Button'
 
 const AddItem: React.FC = () => {
   const { id } = useParams()
@@ -152,7 +153,7 @@ const AddItem: React.FC = () => {
                   })}
                 </Field>
                 <Field name="details" placeholder="Details" type="text" />
-                <Field as="textarea" rows={5} name="description"></Field>
+                <Field as="textarea" rows={2} name="description"></Field>
                 <Field name="price" placeholder="0.00" />
                 <Field as="select" name="currency">
                   <option value="">Select a Category</option>
@@ -161,7 +162,10 @@ const AddItem: React.FC = () => {
                   <option value="paw">PAW</option>
                 </Field>
                 <div className="btn-cont">
-                  <button>Submit Listing and Put on Sale</button>
+                  <Button variant="primary">
+                    Submit Listing and Put on Sale
+                  </Button>
+                  {/* <button>Submit Listing and Put on Sale</button> */}
                 </div>
               </div>
             </div>

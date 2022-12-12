@@ -1,4 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
+import { useAccount } from 'wagmi'
+import {
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+} from '../../utils/contractAddress'
+import axios from 'axios'
 import { IoIosArrowDown } from 'react-icons/io'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -6,12 +12,54 @@ import cardImg from '../../assets/img/card-3.png'
 // import "./WebsitesPage.css";
 
 const ShopPage = () => {
+  const { address } = useAccount()
   const [openDigital, setOpenDigital] = useState(false)
   const [openPhysical, setOpenPhysical] = useState(false)
   const [openClothing, setOpenClothing] = useState(false)
   const [openAccessories, setOpenAccessories] = useState(false)
   const [openFood, setOpenFood] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [digitalNftData, setDigitalNftData] = useState([])
+  const [physicalNftData, setPhysicalNftData] = useState([])
+  console.log(digitalNftData)
 
+  const handleDigitalNftData = useCallback(async () => {
+    try {
+      if (!address) return
+      setLoading(true)
+
+      const { data } = await axios.get(
+        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${DIGITAL_GOODS_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
+
+        {
+          headers: {
+            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
+          },
+        },
+      )
+      const { data: physicalData } = await axios.get(
+        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
+
+        {
+          headers: {
+            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
+          },
+        },
+      )
+      setLoading(false)
+      console.log(data)
+      setDigitalNftData(data.nfts.map((r: any) => r))
+      setPhysicalNftData(physicalData.nfts.map((r: any) => r))
+    } catch (error) {
+      console.log(error)
+    }
+  }, [address])
+
+  useEffect(() => {
+    handleDigitalNftData()
+  }, [handleDigitalNftData])
+
+  // const filterCategory =()=>{}
   return (
     <div>
       <Navigation />
@@ -212,24 +260,48 @@ const ShopPage = () => {
         </div>
 
         <div className="website-container-right">
-          {Array.from({ length: 7 }).map((_, idx) => (
-            <div className="website-card-container" key={idx}>
-              <div className="card">
-                <div className="card-top">
-                  <img src={cardImg} alt="card" />
-                </div>
-                <div className="card-center">
-                  <h3 className="title">The Holy Grail</h3>
-                  <h4 className="sub-title">Pixart Motion</h4>
-                </div>
-                <div className="card-bottom">
-                  <p>Fixed price</p>
-                  <button>0.001 ETH</button>
+          {loading ? 'loading...' : ''}
+          {!digitalNftData.length || (!physicalNftData.length && 'noResult')}
+
+          {!openDigital &&
+            digitalNftData.map((f, idx) => (
+              <div className="website-card-container" key={idx}>
+                <div className="card">
+                  <div className="card-top">
+                    <img src={cardImg} alt="card" />
+                  </div>
+                  <div className="card-center">
+                    <h3 className="title">The Holy Grail</h3>
+                    <h4 className="sub-title">Pixart Motion</h4>
+                  </div>
+                  <div className="card-bottom">
+                    <p>Category: Book</p>
+                    <p>id: {idx}</p>
+                  </div>
                 </div>
               </div>
-              <h4 className="domain-name">Domain:</h4>
-            </div>
-          ))}
+            ))}
+          {!openPhysical &&
+            physicalNftData.map((f, idx) => (
+              <div className="website-card-container" key={idx}>
+                <div className="card">
+                  <div className="card-top">
+                    <img src={cardImg} alt="card" />
+                  </div>
+                  <div className="card-center">
+                    <h3 className="title">The Holy Grail</h3>
+                    <h4 className="sub-title">Pixart Motion</h4>
+                  </div>
+                  <div className="card-bottom">
+                    <p>Category: Music</p>
+                    <p>id: {idx}</p>
+                    {/* <Link to={`/my-digital-shop/${f}`}>
+                    <button style={{ width: "50px" }}>Get In</button>
+                  </Link> */}
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
       <FooterBottom />
