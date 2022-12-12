@@ -156,6 +156,10 @@ const ShopSettingsOne: React.FC = () => {
                       {clickAddItem === 'Add New Item in Shop' &&
                         slide === 1 && (
                           <div className="item-info-sub-menu-container sub-menu-container">
+                            <BsArrowLeftCircle
+                              className="arrow-icon"
+                              onClick={() => setClickCard(null)}
+                            />
                             <p className="title">Item Info</p>
                             <div className="content">
                               <div className="content-left">

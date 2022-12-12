@@ -1,12 +1,13 @@
 import React from 'react'
-import cardImg from '../../assets/img/card-3.png'
 import { Link } from 'react-router-dom'
+
 import Navigation from '../../components/Navigation/Navigation'
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import SideBar from '../../components/SideBar/SideBar'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import cardImg from '../../assets/img/card-3.png'
 
-const AwitingDelivery = () => {
+const AwitingDelivery: React.FC = () => {
   return (
     <div>
       <Navigation />

@@ -108,6 +108,7 @@
   line-height: 36px;
   text-align: center;
   text-transform: capitalize;
+  margin-bottom: 30px;
 }
 
 .stock-management-container .stock-management-cards {
@@ -162,7 +163,7 @@
 }
 
 .stock-management-container .card-content button:hover {
-  /* background: var(--textColorTwo); */
+  background: var(--textColorTwo);
   box-shadow: 0px 0px 24px rgba(253, 230, 63, 0.4);
 }
 
@@ -186,7 +187,7 @@
 
 .sub-menu-container {
   width: 100%;
-  padding: 65px 97px 0 97px;
+  /* padding: 65px 97px 0 97px; */
 }
 
 .sub-menu-container .title {
@@ -205,7 +206,8 @@
 .sub-menu-container .content-right {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  text-align: center;
+  gap: 30px;
   width: 100%;
 }
 
@@ -213,6 +215,8 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 27px;
+  width: 150px;
+  text-align: left;
 }
 
 .sub-menu-container .content-right input,
@@ -223,6 +227,7 @@ select {
   background-color: var(--textColorOne);
   border: 0;
   outline: 0;
+  text-align: center;
   padding: 3px 16px;
 }
 
@@ -297,13 +302,15 @@ select {
 .brief-description-sub-menu-container .content-left,
 .residual-container-sub-menu-container .content-left {
   width: 30%;
+  margin-top: 30px;
 }
 
 .stock-management-container .description-sub-menu-container .content-right,
 .appearance-settings-sub-menu-container .content-right,
 .brief-description-sub-menu-container .content-right,
 .residual-container-sub-menu-container .content-right {
-  width: 70%;
+  /* width: 70%; */
+  margin-top: 30px;
 }
 
 .stock-management-container .description-sub-menu-container .content-right,
@@ -326,20 +333,22 @@ select {
   .quantity-price-shipment-sub-menu-container
   .btn-cont
   button {
+  width: 65%;
   height: 38px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* background: var(--textColorTwo); */
+  /* justify-content: center; */
+  background: var(--textColorTwo);
   border: 1px solid var(--textColorTwo);
   box-shadow: 0px 0px 24px rgba(253, 230, 63, 0.4);
   border-radius: 999px;
   padding: 4px 50px;
   border: 0;
   outline: 0;
-  margin-top: 32px;
+  margin-top: 36px;
+  margin-left: 160px;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   color: var(--textColorOne);
   cursor: pointer;
@@ -521,6 +530,7 @@ select {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-left: 150px;
 }
 
 .brief-description-sub-menu-container .content-left {
@@ -660,7 +670,7 @@ select {
 .on-marketplace-container .on-marketplace-sub-container .content-left {
   display: flex;
   flex-direction: column;
-  gap: 52px;
+  gap: 34px;
 }
 
 .on-marketplace-container .on-marketplace-sub-container .content-left p {
@@ -668,6 +678,7 @@ select {
   font-size: 18px;
   line-height: 27px;
   margin: 0;
+  width: 200px;
 }
 
 .on-marketplace-container .on-marketplace-sub-container .content-right {
@@ -718,7 +729,7 @@ select {
   .price-select-container
   .left
   button {
-  width: 100%;
+  /* width: 100%; */
   padding: 4px 50px;
   height: 38px;
   background: var(--textColorTwo);
@@ -726,7 +737,7 @@ select {
   box-shadow: 0px 0px 24px rgba(253, 230, 63, 0.4);
   border-radius: 999px;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   font-family: var(--oswaldFont);
   color: var(--textColorOne);
@@ -737,11 +748,12 @@ select {
   .on-marketplace-sub-container
   .price-select-container
   .right {
-  width: 50%;
-  height: 70px;
+  width: 30%;
+  height: 60px;
   background-color: var(--bgColorTwo);
-  padding: 14px;
+  padding: 12px;
   transition: 0.2s ease-in-out;
+  margin-top: -15px;
 }
 
 .on-marketplace-container
