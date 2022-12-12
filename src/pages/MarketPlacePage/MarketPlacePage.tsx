@@ -46,7 +46,10 @@ const MarketPlacePage = () => {
             auctionId
             tokenId
             price
-            erc20TokenAddress
+            erc20Token{
+              id
+              symbol
+            }
             erc721TokenAddress
             status
           }
