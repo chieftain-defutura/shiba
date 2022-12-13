@@ -23,7 +23,6 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
-  console.log(erc20TokenAddress)
   const handleSale = async () => {
     if (!address || !data) return
 
@@ -76,7 +75,7 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
         <div className="card-bottom">
-          <p>Fixed price</p>
+          <p>Reserved price</p>
           <button onClick={handleSale}>{formatEther(price)} ETH</button>
         </div>
       </div>

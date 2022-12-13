@@ -8,6 +8,7 @@ import cardImg from '../../assets/img/card-3.png'
 import { IoIosArrowDown } from 'react-icons/io'
 import './ActionPage.css'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
@@ -49,7 +50,7 @@ const ActionPage = () => {
           },
         },
       )
-      // setMintData(data.data.auctions)
+      setMintData(data.data.auctions)
       console.log(data)
     } catch (error) {
       console.log(error)
@@ -63,6 +64,7 @@ const ActionPage = () => {
   return (
     <div>
       <Navigation />
+      <HeaderNav />
       <div className="action-container">
         <div className="action-container-left">
           <h2 className="heading">Auction</h2>

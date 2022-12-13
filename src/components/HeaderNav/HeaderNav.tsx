@@ -1,7 +1,6 @@
 import React from 'react'
 import './HeaderNav.css'
-import { useBalance } from 'wagmi'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
