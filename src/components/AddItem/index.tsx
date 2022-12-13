@@ -56,7 +56,7 @@ const AddItem: React.FC = () => {
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         data: {
           preview: values.preview,
-          itemName: values.ItemName,
+          itemName: values.itemName,
           details: values.details,
           description: values.description,
         },
