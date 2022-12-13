@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
@@ -7,32 +7,41 @@ import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
+import Modal from '../Model'
 
 interface IAuctionSaleCard {
   price: any
   auctionId: number
-  erc20TokenAddress: string
+  owner: string
+  highestBid: string | null
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
 }
 
 const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
-  erc20TokenAddress,
+  erc20Token,
   auctionId,
   price,
+  owner,
+  highestBid,
 }) => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
+  const [open, setOpen] = useState(false)
+  const [placeBid, setPLaceBit] = useState('')
+
   const handleSale = async () => {
     if (!address || !data) return
 
     try {
+      setOpen(false)
       setTransaction({ loading: true, status: 'pending' })
-      const erc20Contract = new ethers.Contract(
-        erc20TokenAddress,
-        erc20ABI,
-        data,
-      )
+      const erc20Contract = new ethers.Contract(erc20Token.id, erc20ABI, data)
 
       const allowance = Number(
         (
@@ -53,13 +62,37 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
         auctionMarketplaceABI,
         data,
       )
+      console.log(auctionId)
+      const tx = await contract.placeBid(
+        auctionId,
+        ethers.utils.parseUnits(placeBid, erc20Token.decimals),
+      )
+      await tx.wait()
+      console.log('added')
 
-      const tx = await contract.placeBid(auctionId, price)
+      setTransaction({ loading: true, status: 'success' })
+    } catch (error) {
+      console.log(error)
+      setTransaction({ loading: true, status: 'error' })
+    }
+  }
+
+  const handleFinishAuction = async () => {
+    if (!address || !data) return
+
+    try {
+      setTransaction({ loading: true, status: 'pending' })
+
+      const contract = new ethers.Contract(
+        MARKETPLACE_CONTRACT_ADDRESS,
+        auctionMarketplaceABI,
+        data,
+      )
+      const tx = await contract.finishAuction(auctionId)
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
@@ -76,7 +109,25 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
         </div>
         <div className="card-bottom">
           <p>Reserved price</p>
-          <button onClick={handleSale}>{formatEther(price)} ETH</button>
+          <button>
+            {formatEther(highestBid ? highestBid : price)} {erc20Token.symbol}
+          </button>
+          {address?.toLowerCase() === owner.toLowerCase() ? (
+            <button onClick={handleFinishAuction}> Finish Auction</button>
+          ) : (
+            <button onClick={() => setOpen(true)}>place bid</button>
+          )}
+
+          <Modal isOpen={open}>
+            <div onClick={() => setOpen(false)}> X</div>
+            <div>
+              <input
+                type="text"
+                onChange={(e) => setPLaceBit(e.target.value)}
+              />
+              <button onClick={handleSale}>Place Bit</button>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>

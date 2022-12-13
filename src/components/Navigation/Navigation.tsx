@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { Connector } from '../Connect'
-import LayoutModal from '../Model'
+import Modal from '../Model'
 import logo from '../../assets/img/logo.png'
 import searchIcon from '../../assets/img/search-icon.png'
 import './Navigation.css'
@@ -60,11 +60,9 @@ const Navigation = () => {
               <button className="login-btn" onClick={() => setOpen(true)}>
                 Login
               </button>
-              {open && (
-                <LayoutModal onClose={() => setOpen(false)}>
-                  <Connector />
-                </LayoutModal>
-              )}
+              <Modal isOpen={open} handleClose={() => setOpen(false)}>
+                <Connector />
+              </Modal>
             </>
           ) : (
             <div className="address">

@@ -1,26 +1,81 @@
-import React, { useEffect } from 'react'
-import './Modal.css'
+import React, { ReactNode } from 'react'
+import { createPortal } from 'react-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import Backdrop from '../../modal/BackDrop'
 
-interface IModal {
-  children: React.ReactNode
-  onClose?: () => void
+const modalVaraints = {
+  initial: {
+    opacity: 0,
+    scale: 0.5,
+    x: '-50%',
+    y: '-50%',
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.3 },
+    scale: 1,
+    x: '-50%',
+    y: '-50%',
+  },
+  exit: {
+    opacity: 0,
+    scale: 0,
+    x: '-50%',
+    y: '-50%',
+  },
 }
 
-const LayoutModal: React.FC<IModal> = ({ children, onClose }) => {
-  useEffect(() => {
-    document.body.style.overflowY = 'hidden'
+interface IReactModal {
+  children: ReactNode
+  handleClose?: () => void
+  isOpen: boolean
+  overlay?: boolean
+}
 
-    return () => {
-      document.body.style.overflowY = 'auto'
-    }
-  }, [])
+interface IModal {
+  children: ReactNode
+  handleClose?: () => void
+  isOpen: boolean
+  overlay?: boolean
+}
+
+const BaseModal: React.FC<IModal> = ({
+  children,
+  handleClose,
+  isOpen,
+  overlay = true,
+}) => {
+  if (!isOpen) return null
+
   return (
-    <div className="layout_modal" onClick={() => onClose && onClose()}>
-      <div className="layout_modal_main" onClick={(e) => e.stopPropagation()}>
-        {children}
-      </div>
-    </div>
+    <Backdrop isOpen={isOpen} handleClose={handleClose} overlay={overlay}>
+      <AnimatePresence exitBeforeEnter>
+        {isOpen && (
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            variants={modalVaraints}
+            className="fixed-modal"
+            animate="animate"
+            initial="initial"
+            exit="initial"
+            key="content"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Backdrop>
   )
 }
 
-export default LayoutModal
+const Modal: React.FC<IReactModal> = (props) => {
+  const element = document.getElementById('react-modal')
+  if (!element) return null
+
+  return createPortal(
+    <BaseModal {...props}>{props.children}</BaseModal>,
+    element,
+  )
+}
+
+export default Modal

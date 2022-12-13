@@ -1,10 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import axios from 'axios'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import cardImg from '../../assets/img/card-3.png'
 import { IoIosArrowDown } from 'react-icons/io'
 import './ActionPage.css'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
@@ -36,10 +34,14 @@ const ActionPage = () => {
             auctions(where:{status:"ACTIVE"}){
               id
               tokenId
+              auctionId
+              owner
+              highestBid
               price
               erc20Token{
                 id
                 symbol
+                decimals
               }
               erc721TokenAddress
               status
