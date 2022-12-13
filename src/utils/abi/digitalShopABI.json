@@ -39,7 +39,19 @@
       {
         "indexed": false,
         "internalType": "string",
+        "name": "subcategory",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
         "name": "fullproduct",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "metadata",
         "type": "string"
       },
       {
@@ -53,12 +65,6 @@
         "internalType": "address",
         "name": "tokenAddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "productDetails",
-        "type": "string"
       }
     ],
     "name": "AddItem",
@@ -170,7 +176,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "index",
+        "name": "itemId",
         "type": "uint256"
       }
     ],
@@ -220,7 +226,19 @@
       {
         "indexed": false,
         "internalType": "string",
+        "name": "subcategory",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
         "name": "fullproduct",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "metadata",
         "type": "string"
       },
       {
@@ -234,12 +252,6 @@
         "internalType": "address",
         "name": "tokenAddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "productDetails",
-        "type": "string"
       }
     ],
     "name": "UpdateItem",
@@ -291,7 +303,17 @@
       },
       {
         "internalType": "string",
+        "name": "_subcategory",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
         "name": "_fullproduct",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_metadata",
         "type": "string"
       },
       {
@@ -303,11 +325,6 @@
         "internalType": "address",
         "name": "_tokenAddress",
         "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "_productDetails",
-        "type": "string"
       }
     ],
     "name": "addItem",
@@ -502,7 +519,17 @@
           },
           {
             "internalType": "string",
+            "name": "subcategory",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
             "name": "fullproduct",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadata",
             "type": "string"
           },
           {
@@ -514,11 +541,6 @@
             "internalType": "address",
             "name": "tokenAddress",
             "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "productDetails",
-            "type": "string"
           },
           {
             "internalType": "address[]",
@@ -686,6 +708,24 @@
       }
     ],
     "name": "removeItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_category",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "removeIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeSubCategory",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -987,7 +1027,17 @@
       },
       {
         "internalType": "string",
+        "name": "_subcategory",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
         "name": "_fullproduct",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_metadata",
         "type": "string"
       },
       {
@@ -999,11 +1049,6 @@
         "internalType": "address",
         "name": "_tokenAddress",
         "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "_productDetails",
-        "type": "string"
       }
     ],
     "name": "updateItem",

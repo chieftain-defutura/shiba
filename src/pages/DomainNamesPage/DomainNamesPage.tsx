@@ -7,7 +7,7 @@ import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import cardImg from '../../assets/img/card-3.png'
 import './DomainNamesPage.css'
 
-const DomainNamesPage = () => {
+const DomainNamesPage: React.FC = () => {
   const { address } = useAccount()
   const [loading, setLoading] = useState(false)
   const [userNftData, setUserNftData] = useState([])

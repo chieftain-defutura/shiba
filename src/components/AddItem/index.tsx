@@ -3,12 +3,14 @@ import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import axios from 'axios'
+import { Field, Form, Formik } from 'formik'
 
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
-import { Field, Form, Formik } from 'formik'
+import { getEncryptedData } from '../../utils/formatters'
+import Button from '../Button'
 
 const AddItem: React.FC = () => {
   const { id } = useParams()
@@ -19,29 +21,19 @@ const AddItem: React.FC = () => {
   const categoryList = [
     {
       name: 'movies',
-      subcategory: [
-        'Comedy mov1',
-        'Action mov2',
-        'Adventure mov3',
-        'Romance mov4',
-      ],
+      subcategory: ['comedy', 'action', 'adventure', 'romance'],
     },
     {
       name: 'courses',
-      subcategory: ['cours1', 'cours2'],
+      subcategory: ['education', 'others'],
     },
     {
       name: 'books',
-      subcategory: [
-        'Autobiography book1',
-        'Romance book2',
-        'Novel book3',
-        'Other book4',
-      ],
+      subcategory: ['auto_biography', 'romance', 'novel', 'others'],
     },
     {
       name: 'music',
-      subcategory: ['Rock music1', 'Pop music2', 'Jazz music3', 'Other music4'],
+      subcategory: ['rock', 'pop', 'jazz', 'others'],
     },
   ]
 
@@ -55,6 +47,8 @@ const AddItem: React.FC = () => {
 
   const handleAddItem = async (values: any) => {
     if (!address || !data) return
+    const encryptedFullProductLink = getEncryptedData(values.fullProduct)
+    console.log(encryptedFullProductLink)
     try {
       setTransaction({ loading: true, status: 'pending' })
       const resData = await axios({
@@ -82,11 +76,12 @@ const AddItem: React.FC = () => {
       )
       const tx = await contract.addItem(
         id,
-        values.preview,
-        values.fullProduct,
+        values.category,
+        values.subCategory,
+        encryptedFullProductLink,
+        dataHash,
         values.price,
         PAW_TOKEN_ADDRESS,
-        dataHash,
       )
       await tx.wait()
       console.log('added')
@@ -158,7 +153,7 @@ const AddItem: React.FC = () => {
                   })}
                 </Field>
                 <Field name="details" placeholder="Details" type="text" />
-                <Field as="textarea" rows={5} name="description"></Field>
+                <Field as="textarea" rows={2} name="description"></Field>
                 <Field name="price" placeholder="0.00" />
                 <Field as="select" name="currency">
                   <option value="">Select a Category</option>
@@ -167,7 +162,10 @@ const AddItem: React.FC = () => {
                   <option value="paw">PAW</option>
                 </Field>
                 <div className="btn-cont">
-                  <button>Submit Listing and Put on Sale</button>
+                  <Button variant="primary">
+                    Submit Listing and Put on Sale
+                  </Button>
+                  {/* <button>Submit Listing and Put on Sale</button> */}
                 </div>
               </div>
             </div>

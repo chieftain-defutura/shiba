@@ -3,7 +3,6 @@ import {
   IoIosArrowBack,
   IoIosArrowForward,
   IoIosArrowDown,
-  // IoMdArrowDropdown,
 } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
@@ -20,7 +19,6 @@ import cardImgSeven from '../../assets/img/card-10.png'
 import cardImgEighth from '../../assets/img/card-11.png'
 import cardImgNine from '../../assets/img/card-12.png'
 import cardImgTen from '../../assets/img/card-13.png'
-import './MyGoodShop.css'
 import Residual from '../../pages/ShopSettingsOne/components/Residual'
 // import { useParams } from "react-router-dom";
 import RemoveItem from '../../components/RemoveItem'

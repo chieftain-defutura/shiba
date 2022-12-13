@@ -1,25 +1,32 @@
 import React from 'react'
 import './HeaderNav.css'
-import { useAccount, useBalance } from 'wagmi'
+import { useBalance } from 'wagmi'
+import { useAccount } from 'wagmi'
+import {
+  PAW_TOKEN_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  BONE_TOKEN_ADDRESS,
+  SHI_TOKEN_ADDRESS,
+} from '../../utils/contractAddress'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
 
   const { data: pawBalanceData } = useBalance({
     address: address,
-    token: '0xDe84104b17889bcad097AAF42A089591f523981d',
+    token: PAW_TOKEN_ADDRESS,
   })
   const { data: boneBalanceData } = useBalance({
     address: address,
-    token: '0xB77B2660264763927AbE1Fcf845490d38860EF4F',
+    token: BONE_TOKEN_ADDRESS,
   })
   const { data: shibBalanceData } = useBalance({
     address: address,
-    token: '0xd1B82CBC72ea2787178E4E9F4268901671039334',
+    token: SHI_TOKEN_ADDRESS,
   })
   const { data: leashBalanceData } = useBalance({
     address: address,
-    token: '0xB77B2660264763927AbE1Fcf845490d38860EF4F',
+    token: LEASH_TOKEN_ADDRESS,
   })
   const { data: shiBalanceData } = useBalance({
     address: address,

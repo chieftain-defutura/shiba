@@ -37,7 +37,10 @@ const ActionPage = () => {
               id
               tokenId
               price
-              erc20TokenAddress
+              erc20Token{
+                id
+                symbol
+              }
               erc721TokenAddress
               status
             }
@@ -50,8 +53,8 @@ const ActionPage = () => {
           },
         },
       )
-      setMintData(data.data.auctions)
       console.log(data)
+      setMintData(data.data.auctions)
     } catch (error) {
       console.log(error)
     }

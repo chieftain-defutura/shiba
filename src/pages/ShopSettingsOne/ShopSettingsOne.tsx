@@ -15,7 +15,7 @@ import cardImgSeven from '../../assets/img/card-10.png'
 import cardImgEighth from '../../assets/img/card-11.png'
 import cardImgNine from '../../assets/img/card-12.png'
 import cardImgTen from '../../assets/img/card-13.png'
-import './ShopSettingsOne.css'
+// import './ShopSettingsOne.css'
 import Residual from './components/Residual'
 // import { useParams } from "react-router-dom";
 import RemoveItem from '../../components/RemoveItem'
