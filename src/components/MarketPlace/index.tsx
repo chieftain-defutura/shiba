@@ -1,45 +1,20 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import {
-  useAccount,
-  useSigner,
-  usePrepareContractWrite,
-  useContractWrite,
-  erc721ABI,
-  useContractRead,
-} from 'wagmi'
-// import {
-//   DIGITAL_GOOD_SHOP,
-//   PHYSICAL_GOODS_SHOP,
-//   WEBSITE,
-//   CHARITY,
-//   UNATTACHED_DOMAIN_NAME,
-//   NFT_ART,
-// } from "../../constants/mintPageConstatnts"
+import React, { useState } from 'react'
+import { useAccount, useSigner, erc721ABI, useContractRead } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
-  // DOMAIN_NFT_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-  // SHOP_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
-import { getUserMarketPlaceAllowance } from '../../utils/methods'
 import { parseUnits } from 'ethers/lib/utils.js'
-
-// interface IContractData {
-//   title: string
-//   contractAddress: string
-//   tokenAddress?: string
-//   allowance?: number
-// }
 
 interface ITokenData {
   title: string
@@ -47,39 +22,6 @@ interface ITokenData {
   allowance: number
   decimal: string
 }
-
-// const ContractData = [
-//   {
-//     title: UNATTACHED_DOMAIN_NAME,
-//     contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
-//     // tokenAddress: PAW_TOKEN_ADDRESS,
-//     // allowance: 0,
-//   },
-//   {
-//     title: DIGITAL_GOOD_SHOP,
-//     contractAddress: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-//     // tokenAddress: SHIB_TOKEN_ADDRESS,
-//     // allowance: 0,
-//   },
-//   {
-//     title: PHYSICAL_GOODS_SHOP,
-//     contractAddress: SHOP_NFT_CONTRACT_ADDRESS,
-//     // tokenAddress: LEASH_TOKEN_ADDRESS,
-//     // allowance: 0,
-//   },
-//   {
-//     title: WEBSITE,
-//     contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
-//   },
-//   {
-//     title: CHARITY,
-//     contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
-//   },
-//   {
-//     title: NFT_ART,
-//     contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
-//   },
-// ]
 
 const TokensList = [
   {
@@ -131,47 +73,21 @@ const MarketPlace = () => {
     args: [address as any, MARKETPLACE_CONTRACT_ADDRESS],
   })
 
-  const { config: tokenApprove } = usePrepareContractWrite({
-    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    abi: erc721ABI,
-    functionName: 'setApprovalForAll',
-    args: [MARKETPLACE_CONTRACT_ADDRESS, true],
-  })
-  const tokenContract = useContractWrite(tokenApprove)
-
-  const handleGetUserAllowance = useCallback(async () => {
-    try {
-      if (!address || !data) return
-
-      const result = await Promise.all(
-        TokensList.map(async (token) => {
-          const allowance = await getUserMarketPlaceAllowance(
-            token.address,
-            data,
-            address,
-          )
-          return {
-            ...token,
-            allowance,
-          }
-        }),
-      )
-
-      setTokenData([...result])
-      console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address, data])
-  useEffect(() => {
-    handleGetUserAllowance()
-  }, [handleGetUserAllowance])
-
   const handleApproveToken = async () => {
+    if (!data) return
     try {
       setTransaction({ loading: true, status: 'pending' })
-      const data = await tokenContract.writeAsync?.()
-      await data?.wait()
+      const contract = new ethers.Contract(
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+        erc721ABI,
+        data,
+      )
+      const tx = await contract.setApprovalForAll(
+        MARKETPLACE_CONTRACT_ADDRESS,
+        true,
+      )
+      await tx?.wait()
+
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
       console.log(error)

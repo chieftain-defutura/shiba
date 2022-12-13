@@ -10,28 +10,25 @@ import cardImg from '../../assets/img/card-3.png'
 interface IFixedSaleCard {
   price: any
   auctionId: number
-  erc20TokenAddress: string
+  erc20Token: {
+    id: string
+  }
 }
 
 const FixedSaleCard: React.FC<IFixedSaleCard> = ({
-  erc20TokenAddress,
+  erc20Token,
   auctionId,
   price,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
-  console.log(erc20TokenAddress)
   const handleSale = async () => {
     if (!address || !data) return
 
     try {
       setTransaction({ loading: true, status: 'pending' })
-      const erc20Contract = new ethers.Contract(
-        erc20TokenAddress,
-        erc20ABI,
-        data,
-      )
+      const erc20Contract = new ethers.Contract(erc20Token.id, erc20ABI, data)
 
       const allowance = Number(
         (
@@ -75,7 +72,8 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
         </div>
         <div className="card-bottom">
           <p>Fixed price</p>
-          <button onClick={handleSale}>{formatEther(price)} ETH</button>
+          <button>{formatEther(price)} ETH</button>
+          <button onClick={handleSale}>buy</button>
         </div>
       </div>
     </div>
