@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import axios from 'axios'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import cardImg from '../../assets/img/card-3.png'
 import { IoIosArrowDown } from 'react-icons/io'
 import './ActionPage.css'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
@@ -16,7 +17,12 @@ const ActionPage = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
   const [mintData, setMintData] = useState<any[]>([])
-  console.log(mintData)
+
+  const { isLoading, isError } = useGetUserNftsQuery({
+    erc721Address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+    address: address ?? '',
+  })
+
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
       return setClickDropDown(null)
@@ -35,8 +41,15 @@ const ActionPage = () => {
             auctions(where:{status:"ACTIVE"}){
               id
               tokenId
+              auctionId
+              owner
+              highestBid
               price
-              erc20TokenAddress
+              erc20Token{
+                id
+                symbol
+                decimals
+              }
               erc721TokenAddress
               status
             }
@@ -49,8 +62,8 @@ const ActionPage = () => {
           },
         },
       )
+      console.log(data)
       setMintData(data.data.auctions)
-      console.log(data.data.auctions)
     } catch (error) {
       console.log(error)
     }
@@ -63,6 +76,7 @@ const ActionPage = () => {
   return (
     <div>
       <Navigation />
+      <HeaderNav />
       <div className="action-container">
         <div className="action-container-left">
           <h2 className="heading">Auction</h2>
@@ -149,11 +163,19 @@ const ActionPage = () => {
         </div>
         <div className="marketplace-container-right">
           <div className="marketplace-container-right-content">
-            {mintData.map((f, idx) => (
-              <div key={idx}>
-                <AuctionSaleCard {...f} />
-              </div>
-            ))}
+            {isLoading ? (
+              <div>Loading</div>
+            ) : isError ? (
+              <div>Error</div>
+            ) : !mintData.length ? (
+              <div>No Result</div>
+            ) : (
+              mintData.map((f, idx) => (
+                <div key={idx}>
+                  <AuctionSaleCard {...f} />
+                </div>
+              ))
+            )}
           </div>
           <div className="currency-select-container">
             <div className="header">

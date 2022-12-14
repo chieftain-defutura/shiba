@@ -1,29 +1,32 @@
 import React from 'react'
-import { formatEther } from 'ethers/lib/utils.js'
+import { formatUnits } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
+import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
-import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import cardImg from '../../assets/img/card-3.png'
 
-interface IFixedSaleCard {
-  price: any
-  auctionId: number
+interface IAuctionSaleCard {
+  id: number
+  shopId: number
+  price: number
   erc20Token: {
     id: string
+    symbol: string
+    decimals: string
   }
+  subcategory: string
+  category: string
 }
 
-const FixedSaleCard: React.FC<IFixedSaleCard> = ({
-  erc20Token,
-  auctionId,
-  price,
-}) => {
+const DigitalItem: React.FC<IAuctionSaleCard> = ({ erc20Token, price, id }) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
-  const handleSale = async () => {
+
+  const handleBuy = async () => {
     if (!address || !data) return
 
     try {
@@ -32,29 +35,32 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
 
       const allowance = Number(
         (
-          await erc20Contract.allowance(address, MARKETPLACE_CONTRACT_ADDRESS)
+          await erc20Contract.allowance(
+            address,
+            DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+          )
         ).toString(),
       )
 
       if (allowance <= 0) {
         const tx = await erc20Contract.approve(
-          MARKETPLACE_CONTRACT_ADDRESS,
+          DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
           ethers.constants.MaxUint256,
         )
         await tx.wait()
       }
 
       const contract = new ethers.Contract(
-        MARKETPLACE_CONTRACT_ADDRESS,
-        auctionMarketplaceABI,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+        digitalShopABI,
         data,
       )
-      const tx = await contract.finishFixedSale(auctionId)
+      const tx = await contract.buyItem(id)
       await tx.wait()
       console.log('added')
+
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
@@ -71,13 +77,15 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
         <div className="card-bottom">
-          <p>Fixed price</p>
-          <button>{formatEther(price)} ETH</button>
-          <button onClick={handleSale}>buy</button>
+          <p>Reserved price</p>
+          <button>
+            {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
+          </button>
+          <button onClick={handleBuy}>Buy</button>
         </div>
       </div>
     </div>
   )
 }
 
-export default FixedSaleCard
+export default DigitalItem

@@ -8,6 +8,8 @@ import { IoIosArrowDown } from 'react-icons/io'
 import './MarketPlacePage.css'
 import { formatEther } from 'ethers/lib/utils.js'
 import FixedSaleCard from '../../components/FixedSaleCard'
+import CorporateMarketplace from '../../components/CorporateMarketplace'
+import GoodsMaretPlace from '../../components/GoodsMarketplace'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
@@ -46,7 +48,10 @@ const MarketPlacePage = () => {
             auctionId
             tokenId
             price
-            erc20TokenAddress
+            erc20Token{
+              id
+              symbol
+            }
             erc721TokenAddress
             status
           }
@@ -60,7 +65,6 @@ const MarketPlacePage = () => {
         },
       )
       setMintData(data.data.fixedSales)
-      console.log(data.data.fixedSales)
     } catch (error) {
       console.log(error)
     }
@@ -269,13 +273,12 @@ const MarketPlacePage = () => {
           </div>
         </div>
         <div className="marketplace-container-right">
-          <div className="marketplace-container-right-content">
-            {mintData.map((f, idx) => (
-              <div key={idx}>
-                <FixedSaleCard {...f} />
-              </div>
-            ))}
-          </div>
+          {isAccordionActive === 1 ? (
+            <CorporateMarketplace />
+          ) : (
+            <GoodsMaretPlace />
+          )}
+
           <div className="currency-select-container">
             <div className="header">
               <p>{selectedCurrency}</p>

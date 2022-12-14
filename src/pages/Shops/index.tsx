@@ -260,8 +260,8 @@ const ShopPage = () => {
         </div>
 
         <div className="website-container-right">
-          {loading ? 'loading...' : ''}
-          {!digitalNftData.length || (!physicalNftData.length && 'noResult')}
+          {loading && 'loading...'}
+          {!digitalNftData.length || (physicalNftData.length ? 'noResult' : '')}
 
           {!openDigital &&
             digitalNftData.map((f, idx) => (
