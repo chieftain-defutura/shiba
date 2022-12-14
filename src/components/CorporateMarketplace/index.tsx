@@ -6,7 +6,7 @@ import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import FixedSaleCard from '../FixedSaleCard'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
-const CorporateMarketplace = () => {
+const CorporateMarketplace: React.FC = () => {
   const { address } = useAccount()
   const [mintData, setMintData] = useState<any[]>([])
 

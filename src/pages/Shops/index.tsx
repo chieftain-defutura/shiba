@@ -9,9 +9,8 @@ import { IoIosArrowDown } from 'react-icons/io'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import cardImg from '../../assets/img/card-3.png'
-// import "./WebsitesPage.css";
 
-const ShopPage = () => {
+const ShopPage: React.FC = () => {
   const { address } = useAccount()
   const [openDigital, setOpenDigital] = useState(false)
   const [openPhysical, setOpenPhysical] = useState(false)

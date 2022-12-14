@@ -1,8 +1,9 @@
 .website-container {
   color: var(--textColorOne);
   padding: 51px 100px;
-  display: flex;
-  /* gap: 145px; */
+  display: grid;
+  grid-template-columns: 1.5fr 4fr;
+  gap: 100px;
   font-family: var(--oswaldFont);
 }
 
@@ -15,7 +16,7 @@
   font-size: 35px;
   line-height: 52px;
   color: var(--textColorTwo);
-  margin-bottom: 13px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -23,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin: 18px 0;
 }
 
 .website-container-left .check-box-container label {

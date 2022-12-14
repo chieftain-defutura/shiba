@@ -98,6 +98,12 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
         {slide === 1 ? (
           <BsArrowLeftCircle
             className="arrow-icon"
+            style={{
+              fontSize: '27px',
+              position: 'absolute',
+              top: '40px',
+              cursor: 'pointer',
+            }}
             onClick={() => setClickCard(null)}
           />
         ) : (
@@ -106,10 +112,6 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
             onClick={handleSlidePrev}
           />
         )}
-        {/* <IoIosArrowForward
-          className="next-arrow-icon"
-          onClick={handleSlideNext}
-        /> */}
       </div>
       <Formik
         initialValues={
@@ -137,6 +139,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
                   className="next-arrow-icon"
                   onClick={handleSlideNext}
                 />
+
                 <div className="content">
                   <div className="content-left">
                     <p>Logo:</p>

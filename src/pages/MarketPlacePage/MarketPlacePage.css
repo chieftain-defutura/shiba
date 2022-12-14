@@ -2,7 +2,7 @@
   color: var(--textColorOne);
   padding: 51px 144px;
   display: flex;
-  gap: 145px;
+  gap: 10px;
   font-family: var(--oswaldFont);
 }
 
@@ -143,7 +143,7 @@
   cursor: pointer;
 }
 
-.marketplace-container-left .check-box-container input[type="checkbox"] {
+.marketplace-container-left .check-box-container input[type='checkbox'] {
   appearance: none;
   -webkit-appearance: none;
   width: 15px;
@@ -156,18 +156,18 @@
   padding: 5px;
 }
 
-.marketplace-container-left .check-box-container input[type="checkbox"]:after {
-  font-family: "Font Awesome 6 Free";
+.marketplace-container-left .check-box-container input[type='checkbox']:after {
+  font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   font-size: 14px;
-  content: "\f00c";
+  content: '\f00c';
   color: var(--black);
   display: none;
 }
 
 .marketplace-container-left
   .check-box-container
-  input[type="checkbox"]:checked:after {
+  input[type='checkbox']:checked:after {
   display: block;
 }
 
@@ -268,16 +268,17 @@
   grid-row-gap: 40px;
 }
 
-.marketplace-container-right .marketplace-card-container {
+/* .marketplace-container-right .marketplace-card-container {
   width: 154px;
   height: 208px;
-}
+} */
 
 .marketplace-container-right .marketplace-card-container .card {
-  background-color: var(--bgColorSeven);
-  height: 208px;
-  width: 100%;
+  /* background-color: var(--bgColorSeven); */
+  height: 250px;
+  /* width: 100%; */
   border-radius: 8px;
+  gap: 30px;
 }
 
 .marketplace-container-right .card .card-top img {
@@ -285,8 +286,8 @@
 }
 
 .marketplace-container-right .card .card-center {
-  padding: 7px 10px 20px 10px;
-  border-bottom: 1px solid #343741;
+  padding: 7px 10px 10px 10px;
+  /* border-bottom: 1px solid #343741; */
 }
 
 .marketplace-container-right .card .card-center .title {
@@ -304,10 +305,13 @@
 }
 
 .marketplace-container-right .card .card-bottom {
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 10px 8px 0;
+  border-top: 1px solid #343741;
+  /* display: flex; */
+  /* align-items: center; */
+  /* gap: 9px; */
+
+  /* justify-content: space-between; */
 }
 
 .marketplace-container-right .card .card-bottom p {

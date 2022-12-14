@@ -1,0 +1,14 @@
+.marketplace-card-container {
+  .card-bottom {
+    .card-price {
+      display: flex;
+      align-items: center;
+    }
+    .card-auction {
+      margin: 8px 0;
+    }
+    .card-btn button {
+      width: 100%;
+    }
+  }
+}

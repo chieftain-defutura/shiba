@@ -8,6 +8,7 @@ import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
 import Modal from '../Model'
+import '../../components/AuctionSaleCard/AuctionSaleCard.scss'
 
 interface IAuctionSaleCard {
   price: any
@@ -108,15 +109,22 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
         <div className="card-bottom">
-          <p>Reserved price</p>
-          <button>
-            {formatEther(highestBid ? highestBid : price)} {erc20Token.symbol}
-          </button>
-          {address?.toLowerCase() === owner.toLowerCase() ? (
-            <button onClick={handleFinishAuction}> Finish Auction</button>
-          ) : (
-            <button onClick={() => setOpen(true)}>place bid</button>
-          )}
+          <div className="card-price">
+            <p>Reserved price</p>
+            <button>
+              {formatEther(highestBid ? highestBid : price)} {erc20Token.symbol}
+            </button>
+          </div>
+          <div className="card-auction">
+            <p>Auction ends in 5 days</p>
+          </div>
+          <div className="card-btn">
+            {address?.toLowerCase() === owner.toLowerCase() ? (
+              <button onClick={handleFinishAuction}> Finish Auction</button>
+            ) : (
+              <button onClick={() => setOpen(true)}>place bid</button>
+            )}
+          </div>
 
           <Modal isOpen={open}>
             <div onClick={() => setOpen(false)}> X</div>

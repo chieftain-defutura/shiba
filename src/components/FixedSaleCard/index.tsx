@@ -6,6 +6,7 @@ import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
+import './FixedSaleCard.scss'
 
 interface IFixedSaleCard {
   price: any
@@ -70,10 +71,12 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
           <h3 className="title">The Holy Grail</h3>
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
-        <div className="card-bottom">
+        <div className="cards-bottom">
           <p>Fixed price</p>
           <button>{formatEther(price)} ETH</button>
-          <button onClick={handleSale}>buy</button>
+        </div>
+        <div className="card-buy">
+          <button onClick={handleSale}>Buy</button>
         </div>
       </div>
     </div>

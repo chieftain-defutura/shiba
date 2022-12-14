@@ -56,7 +56,7 @@ const TokensList = [
   },
 ]
 
-const MarketPlace = () => {
+const MarketPlace: React.FC = () => {
   const { id } = useParams()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()

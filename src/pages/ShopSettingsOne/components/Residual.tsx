@@ -134,6 +134,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     <div className="residual-container">
       <BsArrowLeftCircle
         className="arrow-icon"
+        style={{ position: 'absolute', top: '40px' }}
         onClick={() => setClickCard(null)}
       />
       <h2 className="title">Residual</h2>
@@ -151,7 +152,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
                 />
                 <button
                   disabled={!setPercentAsync}
-                  style={{ marginTop: '10px' }}
+                  style={{ marginTop: '10px', marginLeft: '0px' }}
                   onClick={() => handleSetPercent()}
                 >
                   Set Residual %
@@ -204,7 +205,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
             </div>
             <button
               disabled={!addUserAsync || !percent}
-              style={{ marginTop: '10px' }}
+              style={{ marginTop: '10px', marginLeft: '0px' }}
               onClick={() => handleAddUser()}
             >
               Add user
@@ -228,7 +229,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
           </div>
           <button
             disabled={!removeUserAsync}
-            style={{ marginTop: '10px' }}
+            style={{ marginTop: '10px', marginLeft: '0px' }}
             onClick={() => handleRemoveUser()}
           >
             Remove user

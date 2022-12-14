@@ -45,11 +45,36 @@ const HeaderNav: React.FC = () => {
             <button>My Items: 105</button>
           </li>
 
-          <li>SHI: {shiBalanceData?.formatted}</li>
-          <li>LEASH: {leashBalanceData?.formatted}</li>
-          <li>SHIB: {shibBalanceData?.formatted}</li>
-          <li>BONE: {boneBalanceData?.formatted}</li>
-          <li>PAW: {pawBalanceData?.formatted}</li>
+          <li>
+            SHI:
+            {new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+            }).format(Number(shiBalanceData?.formatted))}
+          </li>
+          <li>
+            LEASH:
+            {new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+            }).format(Number(leashBalanceData?.formatted))}
+          </li>
+          <li>
+            SHIB:
+            {new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+            }).format(Number(shibBalanceData?.formatted))}
+          </li>
+          <li>
+            BONE:
+            {new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+            }).format(Number(boneBalanceData?.formatted))}
+          </li>
+          <li>
+            PAW:
+            {new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+            }).format(Number(pawBalanceData?.formatted))}
+          </li>
 
           <li>
             <button>Send Crypto</button>

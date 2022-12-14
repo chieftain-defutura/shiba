@@ -6,7 +6,8 @@ import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import DigitalItem from '../DigitalItem'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
-const GoodsMaretPlace = () => {
+
+const GoodsMaretPlace: React.FC = () => {
   const { address } = useAccount()
   const [mintData, setMintData] = useState<any[]>([])
 

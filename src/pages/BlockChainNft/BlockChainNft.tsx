@@ -1,6 +1,5 @@
 import React from 'react'
 
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
@@ -17,7 +16,7 @@ const DomainNamesPage: React.FC = () => {
   return (
     <div>
       <Navigation />
-      <HeaderNav />
+
       <div className="domain-name-container">
         <div className="domain-name-container-left">
           <h2 className="heading">Full On BlockChain NFT</h2>

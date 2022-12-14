@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
                   <p>{f.description}</p>
 
                   <Link to={`/${f.link}`}>
-                    <button>Open</button>
+                    <button style={{ padding: '15px' }}>Open</button>
                   </Link>
                 </div>
               </div>

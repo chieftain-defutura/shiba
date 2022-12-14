@@ -6,7 +6,7 @@ import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useParams } from 'react-router-dom'
 import { useTransactionModal } from '../../context/TransactionContext'
 
-const Transfer = () => {
+const Transfer: React.FC = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
@@ -44,7 +44,9 @@ const Transfer = () => {
       </div>
       {!result && <div>please enter valid address</div>}
       <div className="btn-cont">
-        <button onClick={handleSubmit}>Submit Changes</button>
+        <button onClick={handleSubmit} style={{ marginLeft: '10px' }}>
+          Submit Changes
+        </button>
       </div>
     </div>
   )

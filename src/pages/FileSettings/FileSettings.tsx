@@ -278,7 +278,7 @@ const ShopSettingsOne: React.FC = () => {
               {!clickAddItem && (
                 <BsArrowLeftCircle
                   className="arrow-icon"
-                  onClick={() => setClickCard(null)}
+                  onClick={() => setClickCard('put on sale')}
                 />
               )}
               <h2 className="title">
@@ -294,7 +294,7 @@ const ShopSettingsOne: React.FC = () => {
               {!clickAddItem && (
                 <BsArrowLeftCircle
                   className="arrow-icon"
-                  onClick={() => setClickCard(null)}
+                  onClick={() => setClickCard('put on sale')}
                 />
               )}
               <h2 className="title">

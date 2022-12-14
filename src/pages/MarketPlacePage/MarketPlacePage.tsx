@@ -3,17 +3,17 @@ import { useAccount } from 'wagmi'
 import axios from 'axios'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import cardImg from '../../assets/img/card-3.png'
+// import cardImg from '../../assets/img/card-3.png'
 import { IoIosArrowDown } from 'react-icons/io'
 import './MarketPlacePage.css'
-import { formatEther } from 'ethers/lib/utils.js'
-import FixedSaleCard from '../../components/FixedSaleCard'
+// import { formatEther } from 'ethers/lib/utils.js'
+// import FixedSaleCard from '../../components/FixedSaleCard'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
-const MarketPlacePage = () => {
+const MarketPlacePage: React.FC = () => {
   const { address } = useAccount()
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)

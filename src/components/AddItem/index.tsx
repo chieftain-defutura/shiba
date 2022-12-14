@@ -10,6 +10,7 @@ import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
+import Button from '../Button'
 
 const AddItem: React.FC = () => {
   const { id } = useParams()
@@ -164,7 +165,9 @@ const AddItem: React.FC = () => {
                   {/* <Button variant="primary" >
                     Submit Listing and Put on Sale
                   </Button> */}
-                  <button type="submit">Submit Listing and Put on Sale</button>
+                  <Button variant="primary">
+                    Submit Listing and Put on Sale
+                  </Button>
                 </div>
               </div>
             </div>

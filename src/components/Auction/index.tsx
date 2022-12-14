@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
+// import { BsArrowLeftCircle } from 'react-icons/bs'
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
@@ -64,7 +65,7 @@ const TokensList = [
   },
 ]
 
-const Auction = () => {
+const Auction: React.FC = () => {
   const { id } = useParams()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -73,6 +74,7 @@ const Auction = () => {
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
+  // const [clickCard, setClickCard] = useState<any>(null)
 
   const { data: readData } = useContractRead({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,

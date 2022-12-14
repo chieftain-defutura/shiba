@@ -1,6 +1,5 @@
 import React from 'react'
 
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
@@ -17,7 +16,7 @@ const DomainNamesPage: React.FC = () => {
   return (
     <div>
       <Navigation />
-      <HeaderNav />
+
       <div className="domain-name-container">
         <div className="domain-name-container-left">
           <h2 className="heading">Charities</h2>
@@ -34,6 +33,8 @@ const DomainNamesPage: React.FC = () => {
             <div>Loading</div>
           ) : isError ? (
             <div>Error</div>
+          ) : !nftsData.length ? (
+            <div>No Result</div>
           ) : (
             nftsData.map((f, idx) => (
               <div className="domain-name-card-container" key={idx}>
