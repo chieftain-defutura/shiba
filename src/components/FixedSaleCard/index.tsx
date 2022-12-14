@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatEther } from 'ethers/lib/utils.js'
+import { formatEther, formatUnits } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
@@ -12,6 +12,8 @@ interface IFixedSaleCard {
   auctionId: number
   erc20Token: {
     id: string
+    decimals: string
+    symbol: string
   }
 }
 
@@ -72,7 +74,9 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
         </div>
         <div className="card-bottom">
           <p>Fixed price</p>
-          <button>{formatEther(price)} ETH</button>
+          <button>
+            {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
+          </button>
           <button onClick={handleSale}>buy</button>
         </div>
       </div>

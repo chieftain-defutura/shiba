@@ -10,23 +10,21 @@ import cardImgTwo from '../../assets/img/card-5.png'
 import cardImgThree from '../../assets/img/card-6.png'
 import cardImgFour from '../../assets/img/card-7.png'
 import cardImgFive from '../../assets/img/card-8.png'
-import cardImgSix from '../../assets/img/card-9.png'
 import cardImgSeven from '../../assets/img/card-10.png'
 import cardImgEighth from '../../assets/img/card-11.png'
 import cardImgNine from '../../assets/img/card-12.png'
 import cardImgTen from '../../assets/img/card-13.png'
-// import './ShopSettingsOne.css'
+import './ShopSetting.css'
 import Residual from './components/Residual'
-// import { useParams } from "react-router-dom";
 import RemoveItem from '../../components/RemoveItem'
 import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
 import Transfer from '../../components/Transfer'
 import MarketPlace from '../../components/MarketPlace'
 import Auction from '../../components/Auction'
+import FinalizeToken from './components/FinalizeToken'
 
 const ShopSettingsOne: React.FC = () => {
-  // const { id } = useParams();
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
@@ -85,8 +83,7 @@ const ShopSettingsOne: React.FC = () => {
                 <p>Sell</p>
               </div>
               <div className="card">
-                <img src={cardImgSix} alt="card" className="card-img-6" />
-                <p>Finalize Token</p>
+                <FinalizeToken />
               </div>
             </div>
           )}

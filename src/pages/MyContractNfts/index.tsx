@@ -6,15 +6,16 @@ import Navigation from '../../components/Navigation/Navigation'
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import SideBar from '../../components/SideBar/SideBar'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import cardImg from '../../assets/img/card-3.png'
 
-const MyGoodsShop: React.FC = () => {
+const MyContractNfts: React.FC<{ contractData: { address: string } }> = ({
+  contractData,
+}) => {
   const { address } = useAccount()
 
   const { data, isLoading, isError } = useGetUserNftsQuery({
-    erc721Address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+    erc721Address: contractData.address,
     address: address ?? '',
   })
 
@@ -33,6 +34,8 @@ const MyGoodsShop: React.FC = () => {
             <div>Loading</div>
           ) : isError ? (
             <div>Error</div>
+          ) : !nftsData.length ? (
+            <div>No Result</div>
           ) : (
             nftsData.map((f, idx) => (
               <div className="website-card-container" key={idx}>
@@ -46,7 +49,7 @@ const MyGoodsShop: React.FC = () => {
                   </div>
                   <div className="card-bottom">
                     <p>Shop Details</p>
-                    <Link to={`/my-goods-shop/${f.token_id}`}>
+                    <Link to={`/my-digital-shop/${f.token_id}`}>
                       <button style={{ width: '50px' }}>Get In</button>
                     </Link>
                   </div>
@@ -61,4 +64,4 @@ const MyGoodsShop: React.FC = () => {
   )
 }
 
-export default MyGoodsShop
+export default MyContractNfts

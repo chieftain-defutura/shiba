@@ -1,17 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
 import axios from 'axios'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import cardImg from '../../assets/img/card-3.png'
 import { IoIosArrowDown } from 'react-icons/io'
 import './MarketPlacePage.css'
-import { formatEther } from 'ethers/lib/utils.js'
-import FixedSaleCard from '../../components/FixedSaleCard'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
-
-const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
 const MarketPlacePage = () => {
   const { address } = useAccount()
@@ -39,7 +35,7 @@ const MarketPlacePage = () => {
     try {
       if (!address) return
       const { data } = await axios.post(
-        API_URL,
+        SUB_GRAPH_API_URL,
         {
           query: `
           query {
@@ -274,9 +270,9 @@ const MarketPlacePage = () => {
         </div>
         <div className="marketplace-container-right">
           {isAccordionActive === 1 ? (
-            <CorporateMarketplace />
-          ) : (
             <GoodsMaretPlace />
+          ) : (
+            <CorporateMarketplace />
           )}
 
           <div className="currency-select-container">
