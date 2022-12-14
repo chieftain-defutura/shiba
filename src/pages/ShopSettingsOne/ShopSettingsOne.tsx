@@ -4,6 +4,7 @@ import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import fileImg from '../../assets/img/file.png'
 import SideBar from '../../components/SideBar/SideBar'
 import cardImgOne from '../../assets/img/card-4.png'
 import cardImgTwo from '../../assets/img/card-5.png'
@@ -24,7 +25,9 @@ import MarketPlace from '../../components/MarketPlace'
 import Auction from '../../components/Auction'
 import FinalizeToken from './components/FinalizeToken'
 
-const ShopSettingsOne: React.FC = () => {
+const ShopSettingsOne: React.FC<{ contractData: { transfer: boolean } }> = ({
+  contractData,
+}) => {
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
@@ -56,6 +59,23 @@ const ShopSettingsOne: React.FC = () => {
           <h2 className="heading">shoesboutique.shib</h2>
           {!clickCard && (
             <div className="cards-container">
+              {contractData ? (
+                <div
+                  className="card"
+                  onClick={() => setClickCard('Shipment Address and Details')}
+                >
+                  <img src={fileImg} alt="card" className="card-img-1" />
+                  <p>File</p>
+                </div>
+              ) : (
+                <div
+                  className="card"
+                  onClick={() => setClickCard('stock management')}
+                >
+                  <img src={cardImgOne} alt="card" className="card-img-1" />
+                  <p>Stock Management</p>
+                </div>
+              )}
               <div
                 className="card"
                 onClick={() => setClickCard('stock management')}
