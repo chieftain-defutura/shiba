@@ -21,6 +21,7 @@ const initialValues = {
   totalPercent: '0',
   filledShare: '0',
   shareHolders: [],
+  paused: true,
 }
 
 const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
@@ -87,6 +88,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
       totalPercent: newData.totalPercent.toString(),
       filledShare: newData.filledshare.toString(),
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
+      paused: newData.paused,
     }
   }, [data])
 
@@ -141,32 +143,35 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
 
       <div className="residual-container-sub-menu-container sub-menu-container">
         <div className="content" style={{ flexDirection: 'column' }}>
-          <div className="content-block">
-            <h4>Set Residual %</h4>
-            {formattedData.totalPercent === '0' ? (
-              <>
+          {!formattedData.paused && (
+            <div className="content-block">
+              <h4>Set Residual %</h4>
+              {formattedData.totalPercent === '0' ? (
+                <>
+                  <input
+                    placeholder="Max 10"
+                    value={totalShare}
+                    onChange={({ target }) => setTotalShare(target.value)}
+                  />
+                  <button
+                    disabled={!setPercentAsync}
+                    style={{ marginTop: '10px' }}
+                    onClick={() => handleSetPercent()}
+                  >
+                    Set Residual %
+                  </button>
+                </>
+              ) : (
                 <input
                   placeholder="Max 10"
-                  value={totalShare}
+                  value={formattedData.totalPercent}
+                  disabled
                   onChange={({ target }) => setTotalShare(target.value)}
                 />
-                <button
-                  disabled={!setPercentAsync}
-                  style={{ marginTop: '10px', marginLeft: '0px' }}
-                  onClick={() => handleSetPercent()}
-                >
-                  Set Residual %
-                </button>
-              </>
-            ) : (
-              <input
-                placeholder="Max 10"
-                value={formattedData.totalPercent}
-                disabled
-                onChange={({ target }) => setTotalShare(target.value)}
-              />
-            )}
-          </div>
+              )}
+            </div>
+          )}
+
           <div className="content-block">
             <h4>Residual Getters List and their Shares</h4>
             <select>
@@ -181,59 +186,66 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
               ))}
             </select>
           </div>
-          <div className="content-block">
-            <div>
-              <h4>Add Residual Getter</h4>
-              <div className="add-getter-cont">
-                <input
-                  className="address"
-                  placeholder="Address"
-                  value={shareAddress}
-                  onChange={({ target }) => setShareAddress(target.value)}
-                />
-                <input
-                  className="share"
-                  placeholder="Share"
-                  value={sharePercent}
-                  onChange={({ target }) => setSharePercent(target.value)}
-                />
+
+          {!formattedData.paused && (
+            <>
+              <div className="content-block">
+                <div>
+                  <h4>Add Residual Getter</h4>
+                  <div className="add-getter-cont">
+                    <input
+                      className="address"
+                      placeholder="Address"
+                      value={shareAddress}
+                      onChange={({ target }) => setShareAddress(target.value)}
+                    />
+                    <input
+                      className="share"
+                      placeholder="Share"
+                      value={sharePercent}
+                      onChange={({ target }) => setSharePercent(target.value)}
+                    />
+                  </div>
+                  <p>
+                    Available Shares {100 - Number(formattedData?.filledShare)}
+                  </p>
+                  {!percent && (
+                    <div style={{ color: 'red' }}>insufficient share</div>
+                  )}
+                </div>
+                <button
+                  disabled={!addUserAsync || !percent}
+                  style={{ marginTop: '10px' }}
+                  onClick={() => handleAddUser()}
+                >
+                  Add user
+                </button>
               </div>
-              <p>Available Shares {100 - Number(formattedData?.filledShare)}</p>
-              {!percent && (
-                <div style={{ color: 'red' }}>insufficient share</div>
-              )}
-            </div>
-            <button
-              disabled={!addUserAsync || !percent}
-              style={{ marginTop: '10px', marginLeft: '0px' }}
-              onClick={() => handleAddUser()}
-            >
-              Add user
-            </button>
-          </div>
-          <div className="content-block">
-            <h4>Remove Residual Getter</h4>
-            <select
-              value={removeUserIndex}
-              onChange={({ target }) => setRemoveUserIndex(target.value)}
-            >
-              <option value="">Select Address to Remove</option>
-              {formattedData?.shareHolders.map((list, index) => (
-                <option key={index.toString()} value={index}>
-                  {`${list.address.slice(0, 10)}...${list.address.slice(
-                    list.address.length - 10,
-                  )}`}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button
-            disabled={!removeUserAsync}
-            style={{ marginTop: '10px', marginLeft: '0px' }}
-            onClick={() => handleRemoveUser()}
-          >
-            Remove user
-          </button>
+              <div className="content-block">
+                <h4>Remove Residual Getter</h4>
+                <select
+                  value={removeUserIndex}
+                  onChange={({ target }) => setRemoveUserIndex(target.value)}
+                >
+                  <option value="">Select Address to Remove</option>
+                  {formattedData?.shareHolders.map((list, index) => (
+                    <option key={index.toString()} value={index}>
+                      {`${list.address.slice(0, 10)}...${list.address.slice(
+                        list.address.length - 10,
+                      )}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                disabled={!removeUserAsync}
+                style={{ marginTop: '10px' }}
+                onClick={() => handleRemoveUser()}
+              >
+                Remove user
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

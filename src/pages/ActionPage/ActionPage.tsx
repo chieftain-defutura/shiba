@@ -8,8 +8,8 @@ import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { IoIosArrowDown } from 'react-icons/io'
 import './ActionPage.css'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
-
-const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
+import HeaderNav from '../../components/HeaderNav/HeaderNav'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
 
 const ActionPage: React.FC = () => {
   const { address } = useAccount()
@@ -33,7 +33,7 @@ const ActionPage: React.FC = () => {
     try {
       if (!address) return
       const { data } = await axios.post(
-        API_URL,
+        SUB_GRAPH_API_URL,
         {
           query: `
           query{

@@ -20,6 +20,7 @@ import {
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import { getUserMarketPlaceAllowance } from '../../utils/methods'
@@ -145,7 +146,7 @@ const Auction: React.FC = () => {
         parseUnits(price, selectedDropDown?.decimal).toString(),
         selectedDropDown?.address,
         1,
-        DOMAIN_NFT_CONTRACT_ADDRESS,
+        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
       )
       await tx.wait()
       console.log('added')
