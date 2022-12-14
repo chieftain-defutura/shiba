@@ -12,6 +12,10 @@ import {
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
 
+  // function financial(x) {
+  //   return Number.parseFloat(x).toFixed(2);
+  // };
+
   const { data: pawBalanceData } = useBalance({
     address: address,
     token: PAW_TOKEN_ADDRESS,
