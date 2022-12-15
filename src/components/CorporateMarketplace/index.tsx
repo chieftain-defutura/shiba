@@ -44,7 +44,6 @@ const CorporateMarketplace: React.FC = () => {
           },
         },
       )
-      // console.log(data)
       setMintData(data.data.fixedSales)
     } catch (error) {
       console.log(error)

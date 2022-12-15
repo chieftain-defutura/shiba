@@ -8,7 +8,6 @@ import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { IoIosArrowDown } from 'react-icons/io'
 import './ActionPage.css'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import { SUB_GRAPH_API_URL } from '../../constants/api'
 
 const ActionPage: React.FC = () => {

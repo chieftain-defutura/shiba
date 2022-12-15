@@ -12,7 +12,7 @@
 
 .marketplace-container-left .heading {
   font-weight: 700;
-  font-size: 35px;
+  font-size: 32px;
   line-height: 52px;
   color: var(--textColorTwo);
   margin-bottom: 30px;
@@ -264,8 +264,9 @@
 
 .marketplace-container-right-content {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-row-gap: 40px;
+  grid-column-gap: 0px;
 }
 
 /* .marketplace-container-right .marketplace-card-container {
@@ -335,4 +336,6 @@
   align-items: center;
   justify-content: center;
   padding: 4px 12px 4px 12px;
+  margin: 8px 0;
+  width: 100%;
 }

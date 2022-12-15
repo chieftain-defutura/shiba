@@ -75,7 +75,7 @@ const ShopPage: React.FC = () => {
             }}
             onClick={() => setOpenDigital((m) => !m)}
           >
-            <h2>Digital goods</h2>
+            <h2 style={{ fontSize: '14px' }}>Digital goods</h2>
             <IoIosArrowDown
               style={{
                 transform: openDigital ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -113,7 +113,9 @@ const ShopPage: React.FC = () => {
             }}
             onClick={() => setOpenPhysical((m) => !m)}
           >
-            <h2>Physical goods</h2>
+            <h2 style={{ fontSize: '14px', padding: '12px 0' }}>
+              Physical goods
+            </h2>
             <IoIosArrowDown
               style={{
                 transform: openPhysical ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -228,7 +230,7 @@ const ShopPage: React.FC = () => {
             }}
             onClick={() => setOpenFood((m) => !m)}
           >
-            <h2>Food</h2>
+            <h2 style={{ fontSize: '14px' }}>Food</h2>
             <IoIosArrowDown
               style={{
                 transform: openFood ? 'rotate(180deg)' : 'rotate(0deg)',

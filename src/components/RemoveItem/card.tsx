@@ -1,6 +1,5 @@
 import React from 'react'
 import { ethers } from 'ethers'
-import { useParams } from 'react-router-dom'
 import { useAccount, useSigner } from 'wagmi'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'

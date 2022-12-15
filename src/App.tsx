@@ -1,8 +1,9 @@
 import './App.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import HomePage from './pages/HomePage'
 import { Routes, Route } from 'react-router-dom'
+
+import HomePage from './pages/HomePage'
 import MintNftPage from './pages/MintNftPage/MintNftPage'
 import DomainNamesPage from './pages/DomainNamesPage/DomainNamesPage'
 import WebsitesPage from './pages/WebsitesPage/WebsitesPage'
@@ -12,13 +13,11 @@ import ShopSettingsOne from './pages/ShopSettingsOne/ShopSettingsOne'
 import SellPage from './pages/SellPage/SellPage'
 import Dashboard from './pages/Dashboard/Dashboard'
 import ShopPage from './pages/Shops'
-import FileSettings from './pages/FileSettings/FileSettings'
-import MyGoodShop from './components/MyGoodShop/MyGoodShop'
 import BlockChainNft from './pages/BlockChainNft/BlockChainNft'
 import Charities from './pages/Charities/Charities'
-import Domain from './components/Domains/Domain'
 import { ContractDetails } from './constants/contract'
 import MyContractNfts from './pages/MyContractNfts'
+import HomeLayout from './Layout/HomeLayout'
 
 const App: React.FC = () => {
   return (
@@ -35,6 +34,7 @@ const App: React.FC = () => {
         <Route path="charities" element={<Charities />} />
         <Route path="action" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
+        <Route path="homeLayout" element={<HomeLayout />} />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>

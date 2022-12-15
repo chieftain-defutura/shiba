@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -30,19 +29,13 @@ const ShopSettingsOne: React.FC = () => {
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
   const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
   const [onAction, setOnAction] = useState<any>(null)
-  const [dropDown, setDropDown] = useState<any>(null)
-  const [selectedDropDown, setSelectedDropDown] = useState('Select Currency')
   const [slide, setSlide] = useState(1)
 
-  const handleSlidePrev = () => {
-    if (slide > 1) {
-      setSlide(slide - 1)
-    }
+  if (slide > 1) {
+    setSlide(slide - 1)
   }
 
-  const handleSlideNext = () => {
-    setSlide(slide + 1)
-  }
+  setSlide(slide + 1)
 
   return (
     <div>

@@ -6,7 +6,6 @@ import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import cardImg from '../../assets/img/card-3.png'
-import { useParams } from 'react-router-dom'
 
 interface IAuctionSaleCard {
   id: number
@@ -22,7 +21,6 @@ interface IAuctionSaleCard {
 }
 
 const DigitalItem: React.FC<IAuctionSaleCard> = ({ erc20Token, price, id }) => {
-  const {} = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()

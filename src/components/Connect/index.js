@@ -1,5 +1,6 @@
 import React from 'react'
 import { useConnect } from 'wagmi'
+import Button from '../Button'
 import './Connect.css'
 export function Connector() {
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -8,7 +9,8 @@ export function Connector() {
   return (
     <div className="connector">
       {connectors.map((connector) => (
-        <button
+        <Button
+          variant="primary"
           disabled={!connector.ready}
           key={connector.id}
           onClick={() => connect({ connector })}
@@ -18,7 +20,7 @@ export function Connector() {
           {isLoading &&
             connector.id === pendingConnector?.id &&
             ' (connecting)'}
-        </button>
+        </Button>
       ))}
       {error && <div>{error.message}</div>}
     </div>
