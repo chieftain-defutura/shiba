@@ -12,13 +12,13 @@ import ShopSettingsOne from './pages/ShopSettingsOne/ShopSettingsOne'
 import SellPage from './pages/SellPage/SellPage'
 import Dashboard from './pages/Dashboard/Dashboard'
 import ShopPage from './pages/Shops'
-import FileSettings from './pages/FileSettings/FileSettings'
-import MyGoodShop from './components/MyGoodShop/MyGoodShop'
 import BlockChainNft from './pages/BlockChainNft/BlockChainNft'
 import Charities from './pages/Charities/Charities'
-import Domain from './components/Domains/Domain'
-import { ContractDetails } from './constants/contract'
+import { ContractDetails, DigitalItemsCategory } from './constants/contract'
 import MyContractNfts from './pages/MyContractNfts'
+import MyItems from './pages/MyItems'
+import ShopDetailsPage from './pages/DetailsPage/ShopDetailsPage'
+import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
 
 const App: React.FC = () => {
   return (
@@ -49,19 +49,14 @@ const App: React.FC = () => {
           </Route>
         ))}
 
-        {/* <Route path="/my-movies" element={<MyMovies />} />
-        <Route path="/my-movies/:id" element={<ShopSettingsOne />} />
-        <Route path="/my-music" element={<MyMusic />} />
-        <Route path="/my-music/:id" element={<ShopSettingsOne />} />
-        <Route path="/my-books" element={<MyBooks />} />
-        <Route path="/my-books/:id" element={<ShopSettingsOne />} />
-        <Route path="/my-courses" element={<MyCourse />} />
-        <Route path="/my-courses/:id" element={<ShopSettingsOne />} />
+        {DigitalItemsCategory.map((f, i) => (
+          <Route key={i} path={`/${f.path}`}>
+            <Route index element={<MyItems digitalItem={f} />} />
+          </Route>
+        ))}
 
-        <Route path="/have-to-send" element={<HaveToSend />} />
-        <Route path="/have-to-send/:id" element={<ShopSettingsOne />} />
-        <Route path="/awaiting-delivery" element={<AwitingDelivery />} />
-        <Route path="/awaiting-delivery/:id" element={<ShopSettingsOne />} /> */}
+        <Route path="/shop-details/:shopId" element={<ShopDetailsPage />} />
+        <Route path="/item-details/:itemId" element={<ItemDetailsPage />} />
       </Routes>
     </div>
   )

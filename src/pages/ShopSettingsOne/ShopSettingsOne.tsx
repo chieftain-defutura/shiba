@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -25,6 +24,7 @@ import MarketPlace from '../../components/MarketPlace'
 import Auction from '../../components/Auction'
 import FinalizeToken from './components/FinalizeToken'
 import { IContractData } from '../../constants/contract'
+import PhysicalShopForm from '../../components/PhysicalShopForm'
 
 const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   contractData,
@@ -34,19 +34,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
   const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
   const [onAction, setOnAction] = useState<any>(null)
-  const [dropDown, setDropDown] = useState<any>(null)
-  const [selectedDropDown, setSelectedDropDown] = useState('Select Currency')
   const [slide, setSlide] = useState(1)
-
-  const handleSlidePrev = () => {
-    if (slide > 1) {
-      setSlide(slide - 1)
-    }
-  }
-
-  const handleSlideNext = () => {
-    setSlide(slide + 1)
-  }
 
   return (
     <div>
@@ -185,7 +173,13 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
               <div>
                 <div>
                   {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
-                    <AddItem />
+                    <>
+                      {contractData.pathName === 'my-digital-shop' ? (
+                        <AddItem />
+                      ) : (
+                        <PhysicalShopForm />
+                      )}
+                    </>
                   )}
                 </div>
               </div>

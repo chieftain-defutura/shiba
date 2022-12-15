@@ -5,7 +5,13 @@ import { ethers } from 'ethers'
 import axios from 'axios'
 import { Field, Form, Formik } from 'formik'
 
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import {
+  BONE_TOKEN_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+  SHI_TOKEN_ADDRESS,
+} from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
@@ -75,6 +81,8 @@ const AddItem: React.FC = () => {
         digitalShopABI,
         data,
       )
+      console.log(values.currency)
+
       const tx = await contract.addItem(
         id,
         values.category,
@@ -82,8 +90,9 @@ const AddItem: React.FC = () => {
         encryptedFullProductLink,
         dataHash,
         parseUnits(values.price, '18'),
-        PAW_TOKEN_ADDRESS,
+        values.currency,
       )
+
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
@@ -93,7 +102,6 @@ const AddItem: React.FC = () => {
       setTransaction({ loading: true, status: 'error' })
     }
   }
-
   return (
     <div className="photo-sub-menu-container sub-menu-container">
       <Formik
@@ -158,9 +166,11 @@ const AddItem: React.FC = () => {
                 <Field name="price" placeholder="0.00" />
                 <Field as="select" name="currency">
                   <option value="">Select a Category</option>
-                  <option value="leash">LEASH</option>
-                  <option value="shib">SHIB</option>
-                  <option value="paw">PAW</option>
+                  <option value={LEASH_TOKEN_ADDRESS}>LEASH</option>
+                  <option value={SHIB_TOKEN_ADDRESS}>SHIB</option>
+                  <option value={PAW_TOKEN_ADDRESS}>PAW</option>
+                  <option value={BONE_TOKEN_ADDRESS}>BONE</option>
+                  <option value={SHI_TOKEN_ADDRESS}>SHI</option>
                 </Field>
                 <div className="btn-cont">
                   {/* <Button variant="primary" >

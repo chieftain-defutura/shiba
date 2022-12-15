@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatEther, formatUnits } from 'ethers/lib/utils.js'
+import { formatUnits } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'

@@ -1,8 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import axios from 'axios'
-import { ethers } from 'ethers'
 import { useParams } from 'react-router-dom'
-import { useContractRead, useAccount } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { SUB_GRAPH_API_URL } from '../../constants/api'
 import Card from './card'
@@ -47,7 +46,7 @@ const RemoveItem = () => {
     } catch (error) {
       console.log(error)
     }
-  }, [address])
+  }, [address, id])
 
   useEffect(() => {
     handleGetUserNft()

@@ -22,6 +22,11 @@ export interface IContractDetails {
   [key: string]: IContractData
 }
 
+export interface IDigitalItemsCategory {
+  path: string
+  name: string
+}
+
 export const ContractDetails: IContractDetails = {
   'my-digital-shop': {
     address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -79,3 +84,13 @@ export const ContractDetails: IContractDetails = {
     transfer: true,
   },
 }
+
+export const DigitalItemsCategory: IDigitalItemsCategory[] = [
+  {
+    path: 'my-movies',
+    name: 'movies',
+  },
+  { path: 'my-music', name: 'music' },
+  { path: 'my-books', name: 'books' },
+  { path: 'my-courses', name: 'courses' },
+]

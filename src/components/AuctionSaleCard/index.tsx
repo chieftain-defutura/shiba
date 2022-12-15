@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
@@ -29,7 +28,6 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
   owner,
   highestBid,
 }) => {
-  const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()

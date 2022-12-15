@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
-import {
-  IoIosArrowBack,
-  IoIosArrowForward,
-  IoIosArrowDown,
-} from 'react-icons/io'
+import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -25,8 +21,6 @@ import RemoveItem from '../../components/RemoveItem'
 // import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
 import Transfer from '../../components/Transfer'
-import { Formik, Form, Field } from 'formik'
-import { TokenData } from '../../constants/tokenData'
 
 const ShopSettingsOne: React.FC = () => {
   // const { id } = useParams();
@@ -37,17 +31,17 @@ const ShopSettingsOne: React.FC = () => {
   const [onAction, setOnAction] = useState<any>(null)
   const [dropDown, setDropDown] = useState<any>(null)
   const [selectedDropDown, setSelectedDropDown] = useState('Select Currency')
-  const [slide, setSlide] = useState(1)
+  // const [slide, setSlide] = useState(1)
 
-  const handleSlidePrev = () => {
-    if (slide > 1) {
-      setSlide(slide - 1)
-    }
-  }
+  // const handleSlidePrev = () => {
+  //   if (slide > 1) {
+  //     setSlide(slide - 1)
+  //   }
+  // }
 
-  const handleSlideNext = () => {
-    setSlide(slide + 1)
-  }
+  // const handleSlideNext = () => {
+  //   setSlide(slide + 1)
+  // }
 
   return (
     <div>
@@ -153,205 +147,6 @@ const ShopSettingsOne: React.FC = () => {
                   </div>
                 </div>
               )}
-
-              <div>
-                <Formik
-                  initialValues={{
-                    itemName: '',
-                    category: '',
-                    size: '',
-                    colour: '',
-                    fabricType: '',
-                    itemCondition: '',
-                    productDescription: '',
-                    productDetails: '',
-                    manufacturer: '',
-                    brand: '',
-                    refundPossible: '',
-                    department: '',
-                    quantity: '',
-                    price: '',
-                    currency: '',
-                    shipmentArea: '',
-                    shipmentFee: '',
-                    deliveredIn: '',
-                  }}
-                  onSubmit={(values) => {
-                    console.log(values)
-                  }}
-                >
-                  {() => (
-                    <Form>
-                      {clickAddItem === 'Add New Item in Shop' &&
-                        slide === 1 && (
-                          <div className="item-info-sub-menu-container sub-menu-container">
-                            <IoIosArrowForward
-                              className="next-arrow-icon"
-                              onClick={handleSlideNext}
-                            />
-                            <p className="title">Item Info</p>
-                            <div className="content">
-                              <div className="content-left">
-                                <p>Item Name:</p>
-                                <p>Category:</p>
-                                <p>Size:</p>
-                                <p>Colour:</p>
-                                <p>Fabric Type:</p>
-                                <p>Item Condition:</p>
-                              </div>
-                              <div className="content-right">
-                                <Field
-                                  placeholder="Item Name"
-                                  name="itemName"
-                                  type="text"
-                                />
-                                <Field as="select" name="category">
-                                  <option value="">Select a Currency</option>
-                                  {TokenData.map((f, index) => {
-                                    return (
-                                      <>
-                                        <option
-                                          value={f.tokenAddress}
-                                          key={index}
-                                        >
-                                          {f.tokenName}
-                                        </option>
-                                      </>
-                                    )
-                                  })}
-                                </Field>
-
-                                <Field as="select" name="size">
-                                  <option>Select a Category from List</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                </Field>
-                                <Field
-                                  name="colour"
-                                  placeholder="Available Size List(Ex. 30, 32, 35, 44)"
-                                />
-
-                                <Field
-                                  name="fabricType"
-                                  placeholder="Fabric Type Details"
-                                />
-
-                                <Field
-                                  name="itemCondition"
-                                  placeholder="Used"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      {clickAddItem === 'Add New Item in Shop' &&
-                        slide === 2 && (
-                          <div className="description-sub-menu-container sub-menu-container">
-                            <IoIosArrowBack
-                              className="prev-arrow-icon"
-                              onClick={handleSlidePrev}
-                            />
-                            <IoIosArrowForward
-                              className="next-arrow-icon"
-                              onClick={handleSlideNext}
-                            />
-                            <p className="title">Description</p>
-                            <div className="content">
-                              <div className="content-left">
-                                <p>Product Description:</p>
-                                <p>Product Details:</p>
-                                <p>Manufacturer:</p>
-                                <p>Brand:</p>
-                                <p>Refund Possible:</p>
-                                <p>Department:</p>
-                              </div>
-                              <div className="content-right">
-                                <Field
-                                  name="productDescription"
-                                  placeholder="Product Description"
-                                />
-                                <Field
-                                  name="productDetails"
-                                  placeholder="Product Details"
-                                />
-                                <Field
-                                  name="manufacturer"
-                                  placeholder="Manufacturer"
-                                />
-                                <Field name="brand" placeholder="Brand" />
-                                <Field as="select" name="refundPossible">
-                                  <option>Yes / No</option>
-                                  <option value="yes">Yes</option>
-                                  <option value="no">No</option>
-                                </Field>
-                                <Field as="select" name="department">
-                                  <option>Menu / Women / Kids</option>
-                                  <option value="menu">Menu</option>
-                                  <option value="women">Women</option>
-                                  <option value="kids">Kids</option>
-                                </Field>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      {clickAddItem === 'Add New Item in Shop' &&
-                        slide === 3 && (
-                          <div className="quantity-price-shipment-sub-menu-container sub-menu-container">
-                            <IoIosArrowBack
-                              className="prev-arrow-icon"
-                              onClick={handleSlidePrev}
-                            />
-                            <p className="title">
-                              Quantity, Price and Shipment
-                            </p>
-                            <div className="content">
-                              <div className="content-left">
-                                <p>Quantity:</p>
-                                <p>Price:</p>
-                                <p>Currency:</p>
-                                <p>Shipment Area:</p>
-                                <p>Shipment Fee:</p>
-                                <p>Delivered In:</p>
-                              </div>
-                              <div className="content-right">
-                                <Field name="quantity" placeholder="Quantity" />
-                                <Field name="price" placeholder="Price" />
-                                <Field as="select" name="currency">
-                                  <option>
-                                    Select Currency (SHI or LEASH or SHIB or
-                                    BONE or PAW)
-                                  </option>
-                                  <option value="shi">SHI</option>
-                                  <option value="leash">LEASH</option>
-                                  <option value="shib">SHIB</option>
-                                  <option value="bone">BONE</option>
-                                  <option value="paw">PAW</option>
-                                </Field>
-                                <Field
-                                  name="shipmentArea"
-                                  placeholder="Insert Shipment Areas (Ex. USA, Germany, Asia or Worldwide)"
-                                />
-                                <Field
-                                  name="shipmentFee"
-                                  placeholder="Shipment Fee"
-                                />
-                                <Field
-                                  name="deliveredIn"
-                                  placeholder="Ex. 10-20 Working days"
-                                />
-                              </div>
-                            </div>
-                            <div className="btn-cont">
-                              <button>Submit Listing and Put on Sale</button>
-                            </div>
-                          </div>
-                        )}
-                    </Form>
-                  )}
-                </Formik>
-              </div>
             </div>
           ) : (
             clickRemoveItem && <RemoveItem />
