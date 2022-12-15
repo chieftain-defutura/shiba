@@ -23,8 +23,9 @@ import Transfer from '../../components/Transfer'
 import MarketPlace from '../../components/MarketPlace'
 import Auction from '../../components/Auction'
 import FinalizeToken from './components/FinalizeToken'
+import { IContractData } from '../../constants/contract'
 
-const ShopSettingsOne: React.FC<{ contractData: { transfer: boolean } }> = ({
+const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   contractData,
 }) => {
   const [clickCard, setClickCard] = useState<any>(null)
@@ -52,7 +53,7 @@ const ShopSettingsOne: React.FC<{ contractData: { transfer: boolean } }> = ({
           <h2 className="heading">shoesboutique.shib</h2>
           {!clickCard && (
             <div className="cards-container">
-              {contractData ? (
+              {contractData.file === true && (
                 <div
                   className="card"
                   onClick={() => setClickCard('Shipment Address and Details')}
@@ -60,7 +61,9 @@ const ShopSettingsOne: React.FC<{ contractData: { transfer: boolean } }> = ({
                   <img src={fileImg} alt="card" className="card-img-1" />
                   <p>File</p>
                 </div>
-              ) : (
+              )}
+
+              {contractData.stockManagement === true && (
                 <div
                   className="card"
                   onClick={() => setClickCard('stock management')}
@@ -69,35 +72,46 @@ const ShopSettingsOne: React.FC<{ contractData: { transfer: boolean } }> = ({
                   <p>Stock Management</p>
                 </div>
               )}
-              <div
-                className="card"
-                onClick={() => setClickCard('stock management')}
-              >
-                <img src={cardImgOne} alt="card" className="card-img-1" />
-                <p>Stock Management</p>
-              </div>
-              <div
-                className="card"
-                onClick={() => setClickCard('appearance settings')}
-              >
-                <img src={cardImgTwo} alt="card" className="card-img-2" />
-                <p>Appearance Settings</p>
-              </div>
-              <div className="card" onClick={() => setClickCard('residual')}>
-                <img src={cardImgThree} alt="card" className="card-img-3" />
-                <p>Residual</p>
-              </div>
-              <div className="card" onClick={() => setClickCard('transfer')}>
-                <img src={cardImgFour} alt="card" className="card-img-4" />
-                <p>Transfer</p>
-              </div>
-              <div className="card" onClick={() => setClickCard('put on sale')}>
-                <img src={cardImgFive} alt="card" className="card-img-5" />
-                <p>Sell</p>
-              </div>
-              <div className="card">
-                <FinalizeToken />
-              </div>
+
+              {contractData.appearanceSetting === true && (
+                <div
+                  className="card"
+                  onClick={() => setClickCard('appearance settings')}
+                >
+                  <img src={cardImgTwo} alt="card" className="card-img-2" />
+                  <p>Appearance Settings</p>
+                </div>
+              )}
+
+              {contractData.residual === true && (
+                <div className="card" onClick={() => setClickCard('residual')}>
+                  <img src={cardImgThree} alt="card" className="card-img-3" />
+                  <p>Residual</p>
+                </div>
+              )}
+
+              {contractData.transfer === true && (
+                <div className="card" onClick={() => setClickCard('transfer')}>
+                  <img src={cardImgFour} alt="card" className="card-img-4" />
+                  <p>Transfer</p>
+                </div>
+              )}
+
+              {contractData.sell === true && (
+                <div
+                  className="card"
+                  onClick={() => setClickCard('put on sale')}
+                >
+                  <img src={cardImgFive} alt="card" className="card-img-5" />
+                  <p>Sell</p>
+                </div>
+              )}
+
+              {contractData.finalizeToken === true && (
+                <div className="card">
+                  <FinalizeToken />
+                </div>
+              )}
             </div>
           )}
 

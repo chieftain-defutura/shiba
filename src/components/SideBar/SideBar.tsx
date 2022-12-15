@@ -6,6 +6,8 @@ import {
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
+  CHARITIES_NFT_CONTRACT_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import shopAbi from '../../utils/abi/physicalShopABI.json'
 
@@ -27,6 +29,18 @@ const SideBar: React.FC = () => {
       },
       {
         address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+        abi: shopAbi,
+        functionName: 'balanceOf',
+        args: [address],
+      },
+      {
+        address: CHARITIES_NFT_CONTRACT_ADDRESS,
+        abi: shopAbi,
+        functionName: 'balanceOf',
+        args: [address],
+      },
+      {
+        address: WEBSITE_NFT_CONTRACT_ADDRESS,
         abi: shopAbi,
         functionName: 'balanceOf',
         args: [address],
@@ -71,7 +85,9 @@ const SideBar: React.FC = () => {
             <div className="content">
               <Link to="/my-websites">
                 <p className="name">My Websites</p>
-                <p className="number">0</p>
+                <p className="number">
+                  {balanceData?.[4] ? balanceData[4].toString() : 0}
+                </p>
               </Link>
             </div>
           </div>
@@ -116,7 +132,9 @@ const SideBar: React.FC = () => {
             <div className="content">
               <Link to="/my-charities">
                 <p className="name">My Charities</p>
-                <p className="number">0</p>
+                <p className="number">
+                  {balanceData?.[3] ? balanceData[3].toString() : 0}
+                </p>
               </Link>
             </div>
           </div>
