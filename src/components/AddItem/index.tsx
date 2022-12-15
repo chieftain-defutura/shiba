@@ -11,6 +11,7 @@ import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
 import Button from '../Button'
+import { parseUnits } from 'ethers/lib/utils.js'
 
 const AddItem: React.FC = () => {
   const { id } = useParams()
@@ -80,7 +81,7 @@ const AddItem: React.FC = () => {
         values.subCategory,
         encryptedFullProductLink,
         dataHash,
-        values.price,
+        parseUnits(values.price, '18'),
         PAW_TOKEN_ADDRESS,
       )
       await tx.wait()

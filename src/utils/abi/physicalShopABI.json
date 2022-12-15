@@ -26,11 +26,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "_itemid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_quantity",
         "type": "uint256"
       },
@@ -56,42 +51,6 @@
       }
     ],
     "name": "addItem",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_review",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_itemId",
-        "type": "uint256"
-      }
-    ],
-    "name": "addReview",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_category",
-        "type": "string"
-      },
-      {
-        "internalType": "string[]",
-        "name": "_subcategory",
-        "type": "string[]"
-      }
-    ],
-    "name": "addSubCategory",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -168,23 +127,65 @@
     "type": "event"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
         "internalType": "string",
-        "name": "review",
+        "name": "_review",
         "type": "string"
       },
+      {
+        "internalType": "uint256",
+        "name": "_itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "addReview",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": false,
         "internalType": "uint256",
         "name": "itemId",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "review",
+        "type": "string"
       }
     ],
     "name": "AddReview",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_category",
+        "type": "string"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_subcategory",
+        "type": "string[]"
+      }
+    ],
+    "name": "addSubCategory",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "anonymous": false,
@@ -309,7 +310,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "index",
+        "name": "_shopId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_itemId",
         "type": "uint256"
       }
     ],
@@ -317,6 +323,19 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemoveItem",
+    "type": "event"
   },
   {
     "inputs": [
@@ -475,7 +494,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_shopid",
+        "name": "_shopId",
         "type": "uint256"
       },
       {
@@ -485,7 +504,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_itemid",
+        "name": "_itemId",
         "type": "uint256"
       },
       {
@@ -527,7 +546,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "itemid",
+        "name": "itemId",
         "type": "uint256"
       },
       {
@@ -690,6 +709,11 @@
     ],
     "name": "getItemDetails",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "",

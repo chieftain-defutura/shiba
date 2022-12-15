@@ -42,7 +42,10 @@ const App: React.FC = () => {
               index
               element={<MyContractNfts contractData={ContractDetails[d]} />}
             />
-            <Route path={`/${d}/:id`} element={<ShopSettingsOne />} />
+            <Route
+              path={`/${d}/:id`}
+              element={<ShopSettingsOne contractData={ContractDetails[d]} />}
+            />
           </Route>
         ))}
 

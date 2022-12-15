@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import axios from 'axios'
+import { MdKeyboardArrowDown } from 'react-icons/md'
+import { useContractReads, erc20ABI, useAccount, useSigner } from 'wagmi'
+
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import Navigation from '../../components/Navigation/Navigation'
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import {
   DIGITAL_GOOD_SHOP,
   PHYSICAL_GOODS_SHOP,
@@ -15,25 +17,20 @@ import {
 import './MintNftPage.css'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import {
-  useContractReads,
-  usePrepareContractWrite,
-  useContractWrite,
-  erc20ABI,
-  useAccount,
-} from 'wagmi'
-import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
+  CHARITIES_NFT_CONTRACT_ADDRESS,
+  ART_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import domainABI from '../../utils/abi/domainABI.json'
-import shopABI from '../../utils/abi/physicalShopABI.json'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import SideBar from '../../components/SideBar/SideBar'
+import { mintDomainNft, mintNft } from '../../utils/methods'
 
 interface IContractData {
   title: string
@@ -63,15 +60,15 @@ const ContractData = [
   },
   {
     title: WEBSITE,
-    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
+    contractAddress: WEBSITE_NFT_CONTRACT_ADDRESS,
   },
   {
     title: CHARITY,
-    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
+    contractAddress: CHARITIES_NFT_CONTRACT_ADDRESS,
   },
   {
     title: NFT_ART,
-    contractAddress: DOMAIN_NFT_CONTRACT_ADDRESS,
+    contractAddress: ART_NFT_CONTRACT_ADDRESS,
   },
 ]
 
@@ -93,19 +90,24 @@ const leashAllownaceData = {
 }
 
 const MintNftPage: React.FC = () => {
-  const { setTransaction } = useTransactionModal()
+  const { setTransaction, loading } = useTransactionModal()
   const { address } = useAccount()
+  const { data: signerData } = useSigner()
   // const provider = useProvider({ chainId: 5 });
   const [isDropDownClick, setIsDropDownClick] = useState(false)
   const [selectedOption, setSelectedOption] = useState('')
-  const [selectedNftType, setSelectedNftType] = useState<any>()
+  const [selectedNftType, setSelectedNftType] = useState<
+    IContractData | undefined
+  >()
   const [selected, setSelected] = useState('')
   const [isInValid, setIsInvalid] = useState(false)
   const [NftContractData, setIsNftContractData] =
     useState<IContractData[]>(ContractData)
   const [inputData, setInputData] = useState('')
-  const [mintData, setMintData] = useState([])
   const [selectDomain, setSelectDomain] = useState('')
+  const [userDomainNfts, setUserDomainNfts] = useState<
+    { tokenId: string; name: string }[]
+  >([])
 
   // const { chain } = useNetwork();
 
@@ -133,82 +135,9 @@ const MintNftPage: React.FC = () => {
     ],
   })
 
-  const { data: domainNamesData } = useContractReads({
-    contracts: mintData.map((d) => ({
-      ...GetTld,
-      functionName: 'getDomainName',
-      args: [d],
-    })),
-  })
-  const alteredDomainNamesData = useMemo(() => {
-    if (!domainNamesData) return
-    const existingDomainData: { tokenId: number; name: string }[] = []
-    const data = (domainNamesData as string[]) ?? []
-    console.log(data, mintData)
-
-    mintData.forEach((id: any, i) => {
-      data.forEach((d, j) => {
-        if (i === j) {
-          existingDomainData.push({ tokenId: id, name: d })
-        }
-      })
-    })
-
-    return existingDomainData
-  }, [domainNamesData, mintData])
-
   const domainData: string[] = useMemo(() => {
     return (data?.[0] as string[]) ?? []
   }, [data])
-
-  const { config, isError } = usePrepareContractWrite({
-    address: DOMAIN_NFT_CONTRACT_ADDRESS,
-    abi: domainABI,
-    functionName: 'mintNft',
-    args: [inputData, selected],
-  })
-  // console.log(error);
-  const domainContract = useContractWrite(config)
-
-  const { config: shopMints } = usePrepareContractWrite({
-    address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
-    abi: shopABI,
-    functionName: 'mintNft',
-    args: [selectDomain],
-  })
-  const shopContract = useContractWrite(shopMints)
-
-  const { config: digitalMints } = usePrepareContractWrite({
-    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    abi: digitalShopABI,
-    functionName: 'mintNft',
-    args: [selectDomain],
-  })
-  const digitalShopContract = useContractWrite(digitalMints)
-
-  const { config: tokenApprove } = usePrepareContractWrite({
-    address: selectedNftType?.tokenAddress,
-    abi: erc20ABI,
-    functionName: 'approve',
-    args: [selectedNftType?.contractAddress, ethers.constants.MaxUint256],
-  })
-
-  const tokenContract = useContractWrite(tokenApprove)
-
-  useEffect(() => {
-    if (
-      domainContract.isError ||
-      shopContract.isError ||
-      digitalShopContract.isError
-    ) {
-      setTransaction({ loading: true, status: 'error' })
-    }
-  }, [
-    domainContract.isError,
-    shopContract.isError,
-    digitalShopContract.isError,
-    setTransaction,
-  ])
 
   useEffect(() => {
     if (domainData.length) setSelected(domainData[0])
@@ -216,7 +145,7 @@ const MintNftPage: React.FC = () => {
 
   const handleGetUserNft = useCallback(async () => {
     try {
-      if (!address) return
+      if (!address || !signerData) return
       const { data } = await axios.get(
         `https://deep-index.moralis.io/api/v2/${address}/nft?chain=0x5&token_addresses=${DOMAIN_NFT_CONTRACT_ADDRESS}`,
         {
@@ -226,11 +155,24 @@ const MintNftPage: React.FC = () => {
         },
       )
 
-      setMintData(data.result.map((r: any) => r.token_id))
+      const result = await Promise.all(
+        data.result.map(async (r: any) => {
+          const contract = new ethers.Contract(
+            DOMAIN_NFT_CONTRACT_ADDRESS,
+            domainABI,
+            signerData,
+          )
+          return {
+            tokenId: r.token_id,
+            name: await contract.getDomainName(r.token_id),
+          }
+        }),
+      )
+      setUserDomainNfts(result)
     } catch (error) {
       console.log(error)
     }
-  }, [address])
+  }, [address, signerData])
 
   useEffect(() => {
     handleGetUserNft()
@@ -241,7 +183,7 @@ const MintNftPage: React.FC = () => {
     const NewNftContractData = [...NftContractData]
     NewNftContractData[0].allowance = Number(data[1]?.toString())
     NewNftContractData[1].allowance = Number(data[2]?.toString())
-    NewNftContractData[2].allowance = Number(data[3].toString())
+    NewNftContractData[2].allowance = Number(data[3]?.toString())
     setIsNftContractData(NewNftContractData)
     // eslint-disable-next-line   react-hooks/exhaustive-deps
   }, [data])
@@ -287,9 +229,26 @@ const MintNftPage: React.FC = () => {
 
   const handleApproveToken = async () => {
     try {
+      if (!selectedNftType?.tokenAddress || !signerData) return
+
       setTransaction({ loading: true, status: 'pending' })
-      const data = await tokenContract.writeAsync?.()
-      await data?.wait()
+      const nftContract = new ethers.Contract(
+        selectedNftType.tokenAddress,
+        erc20ABI,
+        signerData,
+      )
+      const tx = await nftContract.approve(
+        selectedNftType.contractAddress,
+        ethers.constants.MaxUint256,
+      )
+      await tx.wait()
+
+      setSelectedNftType((d) =>
+        d
+          ? { ...d, allowance: Number(ethers.constants.MaxUint256.toString()) }
+          : undefined,
+      )
+
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
       console.log(error)
@@ -299,41 +258,19 @@ const MintNftPage: React.FC = () => {
 
   const mintButton = async () => {
     try {
-      console.log(selectedNftType)
       if (!selectedNftType) return
+      console.log(selectedNftType)
 
-      if (
-        selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
-        domainContract.writeAsync
-      ) {
+      if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
         setTransaction({ loading: true, status: 'pending' })
-        const data = await domainContract.writeAsync?.()
-        if (!data) return
-        await data?.wait()
+        await mintDomainNft(inputData, selected, signerData)
         setTransaction({ loading: true, status: 'success' })
+        return
       }
 
-      if (
-        selectedNftType?.title === PHYSICAL_GOODS_SHOP &&
-        shopContract.writeAsync
-      ) {
-        setTransaction({ loading: true, status: 'pending' })
-        const data = await shopContract.writeAsync?.()
-        if (!data) return
-        await data?.wait()
-        setTransaction({ loading: true, status: 'success' })
-      }
-
-      if (
-        selectedNftType?.title === DIGITAL_GOOD_SHOP &&
-        digitalShopContract.writeAsync
-      ) {
-        setTransaction({ loading: true, status: 'pending' })
-        const data = await digitalShopContract.writeAsync?.()
-        if (!data) return
-        await data?.wait()
-        setTransaction({ loading: true, status: 'success' })
-      }
+      setTransaction({ loading: true, status: 'pending' })
+      await mintNft(selectDomain, selectedNftType.contractAddress, signerData)
+      setTransaction({ loading: true, status: 'success' })
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
@@ -469,14 +406,11 @@ const MintNftPage: React.FC = () => {
                       onChange={(e) => setSelectDomain(e.target.value)}
                     >
                       <option value="">please select</option>
-
-                      {alteredDomainNamesData?.map((f, index) => {
+                      {userDomainNfts.map((f, index) => {
                         return (
-                          <>
-                            <option key={index} value={f.tokenId}>
-                              {f.name}
-                            </option>
-                          </>
+                          <option key={index} value={f.tokenId}>
+                            {f.name}
+                          </option>
                         )
                       })}
                     </select>
@@ -503,14 +437,7 @@ const MintNftPage: React.FC = () => {
                   onClick={() => {
                     mintButton()
                   }}
-                  disabled={
-                    isInValid ||
-                    !!errorMessage ||
-                    domainContract.isLoading ||
-                    shopContract.isLoading ||
-                    (selectedNftType?.title === UNATTACHED_DOMAIN_NAME &&
-                      isError)
-                  }
+                  disabled={loading || !!errorMessage}
                 >
                   Create
                 </button>
