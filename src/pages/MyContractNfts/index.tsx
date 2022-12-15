@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAccount } from 'wagmi'
+import { IContractData } from '../../constants/contract'
 import { Link } from 'react-router-dom'
 
 import Navigation from '../../components/Navigation/Navigation'
@@ -9,7 +10,7 @@ import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import cardImg from '../../assets/img/card-3.png'
 
-const MyContractNfts: React.FC<{ contractData: { address: string } }> = ({
+const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
   contractData,
 }) => {
   const { address } = useAccount()
@@ -49,7 +50,7 @@ const MyContractNfts: React.FC<{ contractData: { address: string } }> = ({
                   </div>
                   <div className="card-bottom">
                     <p>Shop Details</p>
-                    <Link to={`/my-digital-shop/${f.token_id}`}>
+                    <Link to={`/${contractData.pathName}/${f.token_id}`}>
                       <button style={{ width: '50px' }}>Get In</button>
                     </Link>
                   </div>
