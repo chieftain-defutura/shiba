@@ -81,7 +81,7 @@
 .appearance-settings-container,
 .residual-container,
 .sell-container {
-  width: 100%;
+  width: 120%;
   /* background-color: var(--bgColorTwo); */
   border-radius: 10px;
   margin-top: 10px;
@@ -107,6 +107,8 @@
   font-size: 24px;
   line-height: 36px;
   text-align: center;
+
+  /* margin-left: 250px; */
   text-transform: capitalize;
   margin-bottom: 30px;
 }
@@ -152,11 +154,11 @@
   border-radius: 999px;
   font-weight: 700;
   font-size: 20px;
-  line-height: 30px;
+  line-height: 23px;
   color: var(--textColorOne);
   font-family: var(--oswaldFont);
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   cursor: pointer;
   transition: 0.2s ease-in-out;
@@ -208,7 +210,7 @@
   flex-direction: column;
   text-align: center;
   gap: 30px;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .sub-menu-container .content-left p {
@@ -316,7 +318,8 @@ select {
 .stock-management-container .description-sub-menu-container .content-right,
 .residual-container-sub-menu-container .content-right input,
 select {
-  width: 100%;
+  /* width: 100%; */
+  height: 30px;
   text-align: center;
   position: relative;
 }
@@ -567,15 +570,17 @@ select {
 .residual-container-sub-menu-container .add-getter-cont {
   display: flex;
   align-items: center;
-  gap: 14px;
+  /* gap: 14px; */
 }
 
 .residual-container-sub-menu-container .add-getter-cont .address {
-  width: 75%;
+  /* width: 75%; */
+  height: 30px;
 }
 
 .residual-container-sub-menu-container .add-getter-cont .share {
-  width: 25%;
+  /* width: 25%; */
+  height: 30px;
 }
 
 .transfer-sub-menu-container input {

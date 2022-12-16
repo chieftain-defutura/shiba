@@ -18,6 +18,7 @@ import Charities from './pages/Charities/Charities'
 import { ContractDetails } from './constants/contract'
 import MyContractNfts from './pages/MyContractNfts'
 import HomeLayout from './Layout/HomeLayout'
+import MusicDetailsPage from './pages/MusicDetailsPage'
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <Route path="action" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
         <Route path="homeLayout" element={<HomeLayout />} />
+        <Route path="musicDetailsPage" element={<MusicDetailsPage />} />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>

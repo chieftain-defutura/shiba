@@ -451,7 +451,7 @@ const ShopSettingsOne: React.FC = () => {
                 </div>
               )}
 
-              {onAction && <Auction />}
+              {/* {onAction && <Auction />} */}
             </div>
           )}
         </div>

@@ -316,7 +316,7 @@ select {
 .stock-management-container .description-sub-menu-container .content-right,
 .residual-container-sub-menu-container .content-right input,
 select {
-  width: 100%;
+  /* width: 100%; */
   text-align: center;
   position: relative;
 }

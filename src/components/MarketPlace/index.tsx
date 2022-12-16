@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
+import { BsArrowLeftCircle } from 'react-icons/bs'
+
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
@@ -56,7 +58,9 @@ const TokensList = [
   },
 ]
 
-const MarketPlace: React.FC = () => {
+const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
+  setOnMarketplace,
+}) => {
   const { id } = useParams()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -65,6 +69,7 @@ const MarketPlace: React.FC = () => {
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
+  const [clickCard, setClickCard] = useState<any>(null)
 
   const { data: readData } = useContractRead({
     address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -122,6 +127,13 @@ const MarketPlace: React.FC = () => {
 
   return (
     <div className="on-marketplace-container">
+      <BsArrowLeftCircle
+        className="arrow-icon"
+        onClick={() => {
+          setClickCard('put on sale')
+          setOnMarketplace(null)
+        }}
+      />
       <p className="title">On Marketplace</p>
       <div className="on-marketplace-sub-container">
         <div className="content">

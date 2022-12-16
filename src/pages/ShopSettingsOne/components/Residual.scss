@@ -1,0 +1,43 @@
+.residual-container {
+  .residual-container-sub-menu-container {
+    .residual {
+      width: 65%;
+      height: 30px;
+      margin-left: 80px;
+    }
+    .setResidual {
+      margin: 12px auto;
+    }
+    .residualSelect {
+      text-align: center;
+      margin-left: 50px;
+      width: 65%;
+    }
+    .add-getter-cont {
+      margin-top: 30px;
+      .address {
+        margin-left: 25px;
+        width: 50%;
+      }
+      .share {
+        width: 36%;
+      }
+    }
+    .residualPara {
+      text-align: center;
+      margin: 15px;
+    }
+    .residualBtn {
+      margin: 5px auto;
+      width: 32%;
+    }
+    .residual-Select {
+      margin-left: 5px;
+      width: 65%;
+    }
+    .residualRemoveBtn {
+      width: 32%;
+      margin: 30px auto;
+    }
+  }
+}

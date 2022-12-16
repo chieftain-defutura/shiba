@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -35,11 +36,15 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   const [onAction, setOnAction] = useState<any>(null)
   const [slide, setSlide] = useState(1)
 
-  if (slide > 1) {
-    setSlide(slide - 1)
+  const handleSlidePrev = () => {
+    if (slide > 1) {
+      setSlide(slide - 1)
+    }
   }
 
-  setSlide(slide + 1)
+  const handleSlideNext = () => {
+    setSlide(slide + 1)
+  }
 
   return (
     <div>
@@ -117,26 +122,24 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
 
           {clickCard === 'stock management' && !clickRemoveItem ? (
             <div className="stock-management-container">
-              {!clickAddItem ? (
-                <BsArrowLeftCircle
-                  className="arrow-icon"
-                  onClick={() => setClickCard(null)}
-                />
-              ) : (
-                <div className="arrow-icon-container">
-                  {/* <IoIosArrowBack
+              {/* <BsArrowLeftCircle
+                className="arrow-icon"
+                // onClick={() => setClickCard(null)}
+              /> */}
+
+              <div className="arrow-icon-container">
+                {/* <IoIosArrowBack
                     className="prev-arrow-icon"
                     onClick={handleSlidePrev}
                   /> */}
 
-                  {/* <IoIosArrowForward
+                {/* <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
                   /> */}
-                </div>
-              )}
+              </div>
 
-              <h2 className="title">
+              <h2 className="title" style={{ marginLeft: '100px' }}>
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
               {!clickAddItem && (
@@ -178,7 +181,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
               <div>
                 <div>
                   {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
-                    <AddItem />
+                    <AddItem setAddItem={setClickCard} />
                   )}
                 </div>
               </div>
@@ -225,6 +228,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                   onClick={() => setClickCard(null)}
                 />
               )}
+
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
@@ -266,9 +270,11 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                 </div>
               )}
 
-              {onMarketPlace && <MarketPlace />}
+              {onMarketPlace && (
+                <MarketPlace setOnMarketplace={setOnMarketPlace} />
+              )}
 
-              {onAction && <Auction />}
+              {onAction && <Auction setOnAction={setOnAction} />}
             </div>
           )}
         </div>

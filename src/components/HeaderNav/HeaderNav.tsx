@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import './HeaderNav.css'
 import { useBalance } from 'wagmi'
 import { useAccount } from 'wagmi'
@@ -8,13 +8,19 @@ import {
   BONE_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import {
+  updateBoneBalance,
+  updateLeashBalance,
+  updatePawBalance,
+  updateShiBalance,
+  updateShibBalance,
+} from '../../store/slices/userSlice'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
-
-  // function financial(x) {
-  //   return Number.parseFloat(x).toFixed(2);
-  // };
+  const dispatch = useAppDispatch()
+  const balances = useAppSelector((store) => store.user)
 
   const { data: pawBalanceData } = useBalance({
     address: address,
@@ -36,6 +42,21 @@ const HeaderNav: React.FC = () => {
     address: address,
     token: '0x84b17f5f0Aa6fe08dBf8a5357E366Dd2A9665467',
   })
+
+  useMemo(() => {
+    if (pawBalanceData) dispatch(updatePawBalance(pawBalanceData.formatted))
+    if (shiBalanceData) dispatch(updateShiBalance(shiBalanceData.formatted))
+    if (leashBalanceData)
+      dispatch(updateLeashBalance(leashBalanceData.formatted))
+    if (shibBalanceData) dispatch(updateShibBalance(shibBalanceData.formatted))
+    if (boneBalanceData) dispatch(updateBoneBalance(boneBalanceData.formatted))
+  }, [
+    pawBalanceData,
+    updateShiBalance,
+    leashBalanceData,
+    shibBalanceData,
+    boneBalanceData,
+  ])
 
   return (
     <div className="header-nav-container">

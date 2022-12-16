@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
-// import { BsArrowLeftCircle } from 'react-icons/bs'
+import { BsArrowLeftCircle } from 'react-icons/bs'
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
@@ -66,7 +66,9 @@ const TokensList = [
   },
 ]
 
-const Auction: React.FC = () => {
+const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
+  setOnAction,
+}) => {
   const { id } = useParams()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -75,7 +77,9 @@ const Auction: React.FC = () => {
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
-  // const [clickCard, setClickCard] = useState<any>(null)
+  const [clickAddItem, setClickAddItem] = useState<any>(null)
+  const [clickCard, setClickCard] = useState<any>(null)
+  const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
 
   const { data: readData } = useContractRead({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
@@ -159,48 +163,63 @@ const Auction: React.FC = () => {
   }
 
   return (
-    <div className="on-marketplace-container">
-      <p className="title">On Marketplace</p>
-      <div className="on-marketplace-sub-container">
-        <div className="content">
-          <div className="content-left">
-            <p>Select Charity Organisation From List</p>
-            <p>Price</p>
-          </div>
-          <div className="content-right">
-            <select></select>
-            <div className="price-select-container">
-              <div className="left">
-                <input
-                  placeholder="price"
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-                {!readData ? (
-                  <button onClick={() => handleApproveToken()}>Approve</button>
-                ) : (
-                  <button onClick={handlePutOnSale}>Put On Sale</button>
-                )}
-              </div>
-              <div className={!dropDown ? ' right' : 'right active'}>
-                <div className="header" onClick={() => setDropDown(!dropDown)}>
-                  <p>{selectedDropDown?.title}</p>
-                  <IoIosArrowDown />
+    <>
+      <div className="on-marketplace-container">
+        <BsArrowLeftCircle
+          className="arrow-icon"
+          onClick={() => {
+            setClickCard('put on sale')
+            setOnAction(null)
+          }}
+        />
+
+        <p className="title">On Marketplace</p>
+        <div className="on-marketplace-sub-container">
+          <div className="content">
+            <div className="content-left">
+              <p>Select Charity Organisation From List</p>
+              <p>Price</p>
+            </div>
+            <div className="content-right">
+              <select></select>
+              <div className="price-select-container">
+                <div className="left">
+                  <input
+                    placeholder="price"
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                  {!readData ? (
+                    <button onClick={() => handleApproveToken()}>
+                      Approve
+                    </button>
+                  ) : (
+                    <button onClick={handlePutOnSale}>Put On Sale</button>
+                  )}
                 </div>
-                <div className={!dropDown ? 'body' : 'body active'}>
-                  {tokenData.map((f, index) => {
-                    return (
-                      <p key={index} onClick={() => setSelectedDropDown(f)}>
-                        {f.title}
-                      </p>
-                    )
-                  })}
+                <div className={!dropDown ? ' right' : 'right active'}>
+                  <div
+                    className="header"
+                    onClick={() => setDropDown(!dropDown)}
+                  >
+                    <p>{selectedDropDown?.title}</p>
+                    <IoIosArrowDown />
+                  </div>
+                  <div className={!dropDown ? 'body' : 'body active'}>
+                    {tokenData.map((f, index) => {
+                      return (
+                        <p key={index} onClick={() => setSelectedDropDown(f)}>
+                          {f.title}
+                        </p>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

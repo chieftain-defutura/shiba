@@ -111,6 +111,15 @@ const MintNftPage: React.FC = () => {
 
   // const { chain } = useNetwork();
 
+  const domainError = useMemo(() => {
+    const regex = new RegExp(
+      '^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:.[a-zA-Z]{2,})+$',
+    )
+    const isValid = regex.test(inputData.concat(selected))
+    console.log(isValid)
+    return isValid ? null : 'Invalid domain name'
+  }, [inputData, selected])
+
   const { data } = useContractReads({
     contracts: [
       {
@@ -400,10 +409,16 @@ const MintNftPage: React.FC = () => {
                       })}
                     </select>
                   </div>
+                  {domainError && (
+                    <p style={{ color: 'red', fontSize: '16px' }}>
+                      {domainError}
+                    </p>
+                  )}
                   <div className="right-2">
                     <select
                       className="custom-select-box"
                       onChange={(e) => setSelectDomain(e.target.value)}
+                      style={{ width: '100%' }}
                     >
                       <option value="">please select</option>
                       {userDomainNfts.map((f, index) => {

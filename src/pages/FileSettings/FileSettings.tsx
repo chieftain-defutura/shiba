@@ -159,7 +159,7 @@ const ShopSettingsOne: React.FC = () => {
               <div>
                 <div>
                   {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
-                    <AddItem />
+                    <AddItem setAddItem={setClickCard} />
                   )}
                 </div>
               </div>
@@ -338,9 +338,11 @@ const ShopSettingsOne: React.FC = () => {
                 </div>
               )}
 
-              {onMarketPlace && <MarketPlace />}
+              {onMarketPlace && (
+                <MarketPlace setOnMarketplace={setOnMarketPlace} />
+              )}
 
-              {onAction && <Auction />}
+              {onAction && <Auction setOnAction={setOnAction} />}
             </div>
           )}
         </div>

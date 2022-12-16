@@ -12,6 +12,7 @@ import {
 import residualABI from '../../../utils/abi/resideuABI.json'
 import { useParams } from 'react-router-dom'
 import { useTransactionModal } from '../../../context/TransactionContext'
+import './Residual.scss'
 
 interface IResidualProps {
   setClickCard: any
@@ -145,60 +146,74 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
         <div className="content" style={{ flexDirection: 'column' }}>
           {!formattedData.paused && (
             <div className="content-block">
-              <h4>Set Residual %</h4>
+              {/* <h4>Set Residual %</h4> */}
               {formattedData.totalPercent === '0' ? (
                 <>
+                  <label>Set Residual %</label>
+
                   <input
+                    className="residual"
                     placeholder="Max 10"
                     value={totalShare}
                     onChange={({ target }) => setTotalShare(target.value)}
                   />
                   <button
+                    className="setResidual"
                     disabled={!setPercentAsync}
-                    style={{ marginTop: '10px' }}
                     onClick={() => handleSetPercent()}
                   >
                     Set Residual %
                   </button>
                 </>
               ) : (
-                <input
-                  placeholder="Max 10"
-                  value={formattedData.totalPercent}
-                  disabled
-                  onChange={({ target }) => setTotalShare(target.value)}
-                />
+                <>
+                  <label> Residual %</label>
+
+                  <input
+                    className="residual"
+                    placeholder="Max 10"
+                    value={formattedData.totalPercent}
+                    disabled
+                    onChange={({ target }) => setTotalShare(target.value)}
+                  />
+                </>
               )}
             </div>
           )}
 
           <div className="content-block">
-            <h4>Residual Getters List and their Shares</h4>
-            <select>
-              {formattedData?.shareHolders.map((list, index) => (
-                <option key={index.toString()}>
-                  {`${list.address.slice(0, 6)}...${list.address.slice(
-                    list.address.length - 6,
-                  )}`}
-                  &nbsp;
-                  {list.sharePercent} Shares
-                </option>
-              ))}
-            </select>
+            {/* <h4>Residual Getters List and their Shares</h4> */}
+            <label>
+              Residual Getters List <br /> and their Shares
+              <select className="residualSelect">
+                {formattedData?.shareHolders.map((list, index) => (
+                  <option key={index.toString()}>
+                    {`${list.address.slice(0, 6)}...${list.address.slice(
+                      list.address.length - 6,
+                    )}`}
+                    &nbsp;
+                    {list.sharePercent} Shares
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
 
           {!formattedData.paused && (
             <>
               <div className="content-block">
                 <div>
-                  <h4>Add Residual Getter</h4>
+                  {/* <h4>Add Residual Getter</h4> */}
                   <div className="add-getter-cont">
-                    <input
-                      className="address"
-                      placeholder="Address"
-                      value={shareAddress}
-                      onChange={({ target }) => setShareAddress(target.value)}
-                    />
+                    <label>
+                      Add Residual Getter
+                      <input
+                        className="address"
+                        placeholder="Address"
+                        value={shareAddress}
+                        onChange={({ target }) => setShareAddress(target.value)}
+                      />
+                    </label>
                     <input
                       className="share"
                       placeholder="Share"
@@ -206,7 +221,7 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
                       onChange={({ target }) => setSharePercent(target.value)}
                     />
                   </div>
-                  <p>
+                  <p className="residualPara">
                     Available Shares {100 - Number(formattedData?.filledShare)}
                   </p>
                   {!percent && (
@@ -214,32 +229,36 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
                   )}
                 </div>
                 <button
+                  className="residualBtn"
                   disabled={!addUserAsync || !percent}
-                  style={{ marginTop: '10px' }}
                   onClick={() => handleAddUser()}
                 >
                   Add user
                 </button>
               </div>
               <div className="content-block">
-                <h4>Remove Residual Getter</h4>
-                <select
-                  value={removeUserIndex}
-                  onChange={({ target }) => setRemoveUserIndex(target.value)}
-                >
-                  <option value="">Select Address to Remove</option>
-                  {formattedData?.shareHolders.map((list, index) => (
-                    <option key={index.toString()} value={index}>
-                      {`${list.address.slice(0, 10)}...${list.address.slice(
-                        list.address.length - 10,
-                      )}`}
-                    </option>
-                  ))}
-                </select>
+                {/* <h4>Remove Residual Getter</h4> */}
+                <label>
+                  Remove Residual Getter
+                  <select
+                    className="residual-Select"
+                    value={removeUserIndex}
+                    onChange={({ target }) => setRemoveUserIndex(target.value)}
+                  >
+                    <option value="">Select Address to Remove</option>
+                    {formattedData?.shareHolders.map((list, index) => (
+                      <option key={index.toString()} value={index}>
+                        {`${list.address.slice(0, 10)}...${list.address.slice(
+                          list.address.length - 10,
+                        )}`}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
               <button
                 disabled={!removeUserAsync}
-                style={{ marginTop: '10px' }}
+                className="residualRemoveBtn"
                 onClick={() => handleRemoveUser()}
               >
                 Remove user

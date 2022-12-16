@@ -12,8 +12,13 @@ import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
 import Button from '../Button'
 import { parseUnits } from 'ethers/lib/utils.js'
+import { BsArrowLeftCircle } from 'react-icons/bs'
 
-const AddItem: React.FC = () => {
+interface IAddItem {
+  setAddItem: any
+}
+
+const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
@@ -112,6 +117,11 @@ const AddItem: React.FC = () => {
       >
         {({ values }) => (
           <Form>
+            <BsArrowLeftCircle
+              className="arrow-icon"
+              style={{ position: 'absolute', top: '40px' }}
+              onClick={() => setAddItem(null)}
+            />
             <p className="title">Photos</p>
             <div className="content">
               <div className="content-left">
