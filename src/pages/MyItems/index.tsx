@@ -22,7 +22,7 @@ const MyItems: React.FC<{ digitalItem: IDigitalItemsCategory }> = ({
         SUB_GRAPH_API_URL,
         {
           query: `query{
-    digitalItems(where:{status:"PURCHASED", category:"${digitalItem.name}"}){
+    digitalItems(where:{status:PURCHASED, category:"${digitalItem.name}"}){
       id
       shopId
       price

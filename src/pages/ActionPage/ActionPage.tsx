@@ -36,7 +36,7 @@ const ActionPage: React.FC = () => {
         {
           query: `
           query{
-            auctions(where:{status:"ACTIVE"}){
+            auctions(where:{status:ACTIVE}){
               id
               tokenId
               auctionId
