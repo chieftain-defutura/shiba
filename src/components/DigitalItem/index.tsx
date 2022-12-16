@@ -66,7 +66,6 @@ const DigitalItem: React.FC<IAuctionSaleCard> = ({ erc20Token, price, id }) => {
       setTransaction({ loading: true, status: 'error' })
     }
   }
-  console.log(handleBuy)
 
   return (
     <div className="marketplace-card-container">
@@ -84,7 +83,7 @@ const DigitalItem: React.FC<IAuctionSaleCard> = ({ erc20Token, price, id }) => {
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>
 
-          {/* <button onClick={handleBuy}>Buy</button> */}
+          <button onClick={handleBuy}>Buy</button>
         </div>
       </div>
     </div>

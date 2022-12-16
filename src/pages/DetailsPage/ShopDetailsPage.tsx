@@ -44,7 +44,7 @@ const ShopDetailsPage: React.FC = () => {
       <HomeLayout>
         <div className="shoesboutique-container-right">
           <h2 className="title">
-            shoesboutique.shib{' '}
+            shoesboutique.shib
             {upVoteClick && (
               <div className="vote-detail">
                 <img src={upVoteIcon} alt="up vote" />

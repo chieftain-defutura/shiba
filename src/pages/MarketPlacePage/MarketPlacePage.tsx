@@ -1,7 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useAccount } from 'wagmi'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
-import axios from 'axios'
+import React, { useState } from 'react'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { IoIosArrowDown } from 'react-icons/io'
@@ -10,12 +7,9 @@ import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
 
 const MarketPlacePage = () => {
-  const { address } = useAccount()
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
-  const [mintData, setMintData] = useState<any[]>([])
-  console.log(mintData)
 
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
@@ -30,45 +24,6 @@ const MarketPlacePage = () => {
     }
     setIsAccordionActive(idx)
   }
-
-  const handleGetUserNft = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-          query {
-            fixedSales(where:{status:ACTIVE}){
-            id
-            auctionId
-            tokenId
-            price
-            erc20Token{
-              id
-              symbol
-            }
-            erc721TokenAddress
-            status
-          }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      setMintData(data.data.fixedSales)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
-
-  useEffect(() => {
-    handleGetUserNft()
-  }, [handleGetUserNft])
 
   return (
     <div>

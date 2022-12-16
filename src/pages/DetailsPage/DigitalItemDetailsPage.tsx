@@ -1,5 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import Slider from 'react-slick'
+import { useParams } from 'react-router-dom'
+import { useAccount } from 'wagmi'
+import axios from 'axios'
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
@@ -7,6 +10,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMinus } from 'react-icons/bi'
 import HomeLayout from '../../Layout/HomeLayout'
 import './DigitalItemDetailsPage.css'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
 
 const settings = {
   dots: false,
@@ -18,8 +22,56 @@ const settings = {
 }
 
 const DigitalItemsDetailsPage: React.FC = () => {
+  const { itemId } = useParams()
+  const { address } = useAccount()
   const [quantity, setQuantity] = useState(1)
   const slider = useRef<Slider>(null)
+  const [digitalDetails, setDigitalDetails] = useState<any[]>([])
+  // const NFT_METADATA_API = `https://eth-goerli.g.alchemy.com/nft/v2/:${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTMetadata?contractAddress=${}&tokenId=${id}&tokenType=ERC721&refreshCache=false`
+
+  const handleGetUserNft = useCallback(async () => {
+    try {
+      const { data } = await axios.post(
+        SUB_GRAPH_API_URL,
+        {
+          query: `
+          query{
+            digitalItem(id:"${itemId}"){
+              id
+              shopDetails{
+                id
+              }
+              price
+              owner {
+                id
+              }
+              erc20Token {
+                id
+                symbol
+                decimals
+              }
+              subcategory
+              category
+            }
+          }
+        `,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      console.log(data.data)
+      setDigitalDetails(data.data.digitalItems)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [itemId])
+
+  useEffect(() => {
+    handleGetUserNft()
+  }, [handleGetUserNft])
 
   const handlePlus = () => {
     setQuantity(quantity + 1)
