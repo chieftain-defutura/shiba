@@ -35,7 +35,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
   const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
   const [onAction, setOnAction] = useState<any>(null)
-  const [slide, setSlide] = useState(1)
+  const slide = 1
 
   return (
     <div>
@@ -113,10 +113,10 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
 
           {clickCard === 'stock management' && !clickRemoveItem ? (
             <div className="stock-management-container">
-              {/* <BsArrowLeftCircle
+              <BsArrowLeftCircle
                 className="arrow-icon"
-                // onClick={() => setClickCard(null)}
-              /> */}
+                onClick={() => setClickCard(null)}
+              />
 
               <div className="arrow-icon-container">
                 {/* <IoIosArrowBack

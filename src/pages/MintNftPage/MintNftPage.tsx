@@ -100,16 +100,31 @@ const MintNftPage: React.FC = () => {
     IContractData | undefined
   >()
   const [selected, setSelected] = useState('')
-  const [isInValid, setIsInvalid] = useState(false)
   const [NftContractData, setIsNftContractData] =
     useState<IContractData[]>(ContractData)
   const [inputData, setInputData] = useState('')
+  console.log(inputData)
+
   const [selectDomain, setSelectDomain] = useState('')
   const [userDomainNfts, setUserDomainNfts] = useState<
     { tokenId: string; name: string }[]
   >([])
 
   // const { chain } = useNetwork();
+
+  const pawAmount = useMemo(() => {
+    if (!inputData.length) return 0
+    const strlength = inputData.length
+    if (strlength >= 2 && strlength <= 3) return 1000000
+    if (strlength >= 4 && strlength <= 5) return 100000
+    if (strlength >= 6 && strlength <= 7) return 10 ** 21 / 10 ** 18
+    if (strlength >= 8 && strlength <= 10) return 10 ** 20 / 10 ** 18
+    if (strlength >= 11 && strlength <= 14) return (5 * 10 ** 19) / 10 ** 18
+    if (strlength >= 15 && strlength <= 17) return (2 * 10 ** 19) / 10 ** 18
+    if (strlength >= 18 && strlength <= 20) return 10 ** 18 / 10 ** 18
+    if (strlength >= 21 && strlength <= 25) return 10 ** 17 / 10 ** 18
+    return 10 ** 16 / 10 ** 18
+  }, [inputData])
 
   const domainError = useMemo(() => {
     const regex = new RegExp(
@@ -207,16 +222,13 @@ const MintNftPage: React.FC = () => {
 
   const canShowCreateButton = useMemo(() => {
     if (!selectedNftType) {
-      setIsInvalid(true)
       return true
     }
 
     // eslint-disable-next-line no-prototype-builtins
     if (!selectedNftType.hasOwnProperty('tokenAddress')) {
-      setIsInvalid(false)
       return true
     }
-    setIsInvalid(false)
 
     if (selectedNftType?.allowance === 0) return false
     return true
@@ -305,8 +317,8 @@ const MintNftPage: React.FC = () => {
                   <p className="title">Total SHIB cost:</p>
                 </div>
                 <div className="content-input">
-                  <input />
-                  <input />
+                  <input readOnly value={0.02} />
+                  <input readOnly value={1000000} />
                 </div>
               </div>
             </div>
@@ -395,6 +407,7 @@ const MintNftPage: React.FC = () => {
                     <input
                       onChange={(e) => setInputData(e.target.value)}
                       placeholder="shoesboutique"
+                      value={inputData}
                     />
                     <select
                       className="custom-select-box"
@@ -409,11 +422,12 @@ const MintNftPage: React.FC = () => {
                       })}
                     </select>
                   </div>
-                  {domainError && (
+                  {selectedOption === UNATTACHED_DOMAIN_NAME && domainError && (
                     <p style={{ color: 'red', fontSize: '16px' }}>
                       {domainError}
                     </p>
                   )}
+
                   <div className="right-2">
                     <select
                       className="custom-select-box"
@@ -438,7 +452,7 @@ const MintNftPage: React.FC = () => {
             <div className="box-left">
               <div className="content">
                 <p className="title">Total PAW cost:</p>
-                <input />
+                <input value={pawAmount} readOnly />
               </div>
             </div>
 

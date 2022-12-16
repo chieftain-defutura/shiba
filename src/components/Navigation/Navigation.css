@@ -5,7 +5,6 @@
   color: var(--textColorOne);
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   padding: 0 50px;
   font-family: var(--oswaldFont);
 }
@@ -54,6 +53,10 @@
 }
 
 .navigation-container .container-left nav li a:hover {
+  color: var(--textColorTwo);
+  border-bottom: 3px solid var(--textColorTwo);
+}
+.navigation-container .container-left nav li a.active {
   color: var(--textColorTwo);
   border-bottom: 3px solid var(--textColorTwo);
 }

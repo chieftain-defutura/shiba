@@ -5,7 +5,7 @@ import Modal from '../Model'
 import logo from '../../assets/img/logo.png'
 import searchIcon from '../../assets/img/search-icon.png'
 import './Navigation.css'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 // import Link from "next/link";
 
 const Navigation = () => {
@@ -23,28 +23,30 @@ const Navigation = () => {
           <nav>
             <ul>
               <li>
-                <Link to="/home">Home</Link>
+                <NavLink to="/home">Home</NavLink>
               </li>
               <li>
-                <Link to="/shop">Shops</Link>
+                <NavLink to="/shop">Shops</NavLink>
               </li>
               <li>
-                <Link to="/websites">Websites</Link>
+                <NavLink to="/websites">Websites</NavLink>
               </li>
               <li>
-                <Link to="/domain-names">Domain Names</Link>
+                <NavLink to="/domain-names">Domain Names</NavLink>
               </li>
               <li>
-                <Link to="/full-on-blockChain-nft">Full On Blockchain NFT</Link>
+                <NavLink to="/full-on-blockChain-nft">
+                  Full On Blockchain NFT
+                </NavLink>
               </li>
               <li>
-                <Link to="/charities">Charities</Link>
+                <NavLink to="/charities">Charities</NavLink>
               </li>
               <li>
-                <Link to="/marketplace">MarketPlace</Link>
+                <NavLink to="/marketplace">MarketPlace</NavLink>
               </li>
               <li>
-                <Link to="/action">Auction</Link>
+                <NavLink to="/action">Auction</NavLink>
               </li>
             </ul>
           </nav>

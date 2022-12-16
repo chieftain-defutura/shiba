@@ -77,7 +77,6 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
-  const [openDaysInput, setOpenDaysInput] = useState(false)
   const [clickCard, setClickCard] = useState<any>(null)
   const [days, setDays] = useState('')
   const { data: readData } = useContractRead({

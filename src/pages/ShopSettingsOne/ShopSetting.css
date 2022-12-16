@@ -35,7 +35,7 @@
 .shop-setting-one-container-right .cards-container .card {
   width: 200px;
   height: 200px;
-  /* background-color: var(--bgColorTwo); */
+  background-color: var(--bgColorTwo);
   border-radius: 5px;
   padding: 16px;
   display: flex;
@@ -82,7 +82,7 @@
 .residual-container,
 .sell-container {
   width: 120%;
-  /* background-color: var(--bgColorTwo); */
+  background-color: var(--bgColorTwo);
   border-radius: 10px;
   margin-top: 10px;
   padding: 27px;
@@ -593,7 +593,7 @@ select {
 }
 
 .sell-container {
-  background-color: transparent;
+  background-color: var(--bgColorTwo);
 }
 
 .put-on-sale-sub-menu-container {

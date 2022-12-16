@@ -1,0 +1,157 @@
+.awaiting-delivery-container {
+  display: flex;
+  gap: 67px;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+}
+
+.awaiting-delivery-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.awaiting-delivery-header .heading {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.awaiting-delivery-header img {
+  cursor: pointer;
+}
+
+.awaiting-delivery-container-right {
+  flex: 5;
+}
+
+.awaiting-delivery-container-right .content-box {
+  width: 86%;
+  margin-left: auto;
+  padding-top: 50px;
+}
+
+.awaiting-delivery-container-right .content-box table {
+  width: 100%;
+  margin-top: 47px;
+}
+
+.awaiting-delivery-container-right .content-box table {
+  width: 100%;
+  margin-top: 47px;
+  border: 0;
+}
+
+.awaiting-delivery-container-right .content-box table thead {
+  height: 60px;
+  text-align: center;
+}
+
+.awaiting-delivery-container-right .content-box table .body-tr {
+  margin-top: 30px !important;
+  border-radius: 5px;
+  height: 60px;
+  background-color: var(--textColorOne);
+  border: 0;
+  color: black;
+  text-align: center;
+}
+
+.awaiting-delivery-container-right .content-box table td {
+  padding: 8px 9px;
+}
+
+.awaiting-delivery-container-right .content-box table td p {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.awaiting-delivery-container-right .content-box table td button {
+  width: 100%;
+  height: 45px;
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  background-color: var(--textColorTwo);
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+.awaiting-delivery-container-right .content-box table td .complaint-btn {
+  background-color: var(--bgColorFour);
+}
+
+.awaiting-delivery-container-right .content-box table .spacer {
+  height: 30px;
+}
+
+.awaiting-delivery-container-right .received-container,
+.complain-container {
+  width: 100%;
+  height: 416px;
+  background-color: var(--textColorOne);
+  border-radius: 5px;
+  margin-top: 42px;
+}
+
+.awaiting-delivery-container-right .received-container .received-top,
+.complain-container .complain-top {
+  padding: 29px 28px;
+  height: 75%;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.awaiting-delivery-container-right .received-container .received-top p,
+.complain-container .complain-top p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 30px;
+  color: #000000;
+}
+
+.awaiting-delivery-container-right .received-container .received-bottom,
+.complain-container .complain-bottom {
+  height: 25%;
+  padding: 14px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.awaiting-delivery-container-right .received-container .received-bottom input,
+.complain-container .complain-bottom input {
+  height: 100%;
+  width: 100%;
+  background-color: #d9d9d9;
+  outline: 0;
+  border-radius: 3px;
+  border: 0;
+  padding: 0 10px;
+}
+.awaiting-delivery-container-right .received-container .received-bottom button,
+.complain-container .complain-bottom button {
+  height: 100%;
+  background-color: var(--textColorTwo);
+  outline: 0;
+  border-radius: 3px;
+  border: 0;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  font-family: var(--oswaldFont);
+  color: var(--textColorOne);
+  cursor: pointer;
+}
+
+.awaiting-delivery-container-right .complain-container .complain-bottom button {
+  background-color: var(--bgColorFour);
+}
