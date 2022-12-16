@@ -2,8 +2,8 @@
   color: var(--textColorOne);
   padding: 51px 100px;
   display: grid;
-  grid-template-columns: 1.5fr 4fr;
-  gap: 100px;
+  grid-template-columns: 1.1fr 4fr;
+  gap: 60px;
   font-family: var(--oswaldFont);
 }
 
@@ -21,9 +21,12 @@
 }
 
 .website-container-left .checkbox-content {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: space-between;
+
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 4fr 0.5fr;
   margin: 18px 0;
 }
 
@@ -65,12 +68,13 @@
 .website-container-right {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 20px;
+  row-gap: 20px;
+  column-gap: 20px;
 }
 
 .website-container-right .website-card-container {
   width: 154px;
-  height: 247px;
+  /* height: 247px; */
 }
 
 .website-container-right .card {
