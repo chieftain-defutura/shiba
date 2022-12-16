@@ -1,14 +1,12 @@
 import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
-import { Link } from 'react-router-dom'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { BiMinus } from 'react-icons/bi'
-
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { BiMinus } from 'react-icons/bi'
 import HomeLayout from '../../Layout/HomeLayout'
-import './ItemDetailsPage.css'
+import './DigitalItemDetailsPage.css'
 
 const settings = {
   dots: false,
@@ -19,7 +17,7 @@ const settings = {
   slidesToScroll: 1,
 }
 
-const ItemDetailsPage: React.FC = () => {
+const DigitalItemsDetailsPage: React.FC = () => {
   const [quantity, setQuantity] = useState(1)
   const slider = useRef<Slider>(null)
 
@@ -36,9 +34,9 @@ const ItemDetailsPage: React.FC = () => {
   return (
     <div>
       <HomeLayout>
-        <div className="categories-details-container">
-          <div className="categories-details-container-right">
-            <h2 className="title">shoesboutique.shib</h2>
+        <div className="music-details-container">
+          <div className="music-details-container-right">
+            <h2 className="title">digitalboutique.shib</h2>
             <div className="content-box">
               <div className="content-box-left">
                 <div className="slider">
@@ -70,19 +68,14 @@ const ItemDetailsPage: React.FC = () => {
               </div>
               <div className="content-box-right">
                 <div className="product-details">
-                  <p>Item Name: Shoes1</p>
-                  <p>Available Sizes: 34, 39, 40</p>
-                  <p>Available Colours: Red, Black</p>
-                  <p>Fabric Type: 100% Cotton</p>
-                  <p>Item Condition: New</p>
-                  <p>Manufacturer: Canada</p>
-                  <p>Brand: SuperBrand</p>
+                  <p>Name: MusicName</p>
                   <br />
-                  <p>Refund Possible: Yes</p>
-                  <p>Department: Women</p>
-                  <p>Shipment Area: Worldwide</p>
-                  <p>Shipment Fee: 2000 SHI</p>
-                  <p>Delivered In: 15-20 Working Days</p>
+                  <p>
+                    Details: First and foremost, Ashley McDonald is a country
+                    storyteller. And like many a great storyteller, she takes...{' '}
+                    <span>more</span>
+                  </p>
+                  <button className="preview-btn">Preview</button>
                 </div>
                 <br />
                 <div className="quantity-container">
@@ -100,11 +93,8 @@ const ItemDetailsPage: React.FC = () => {
                 <div className="buy-container">
                   <div className="top">
                     <p>Price: 10000 SHI</p>
-                    <p>Total: 12000 SHI</p>
                   </div>
-                  <Link to="/categories-shipping">
-                    <button>Buy</button>
-                  </Link>
+                  <button>Buy</button>
                 </div>
               </div>
             </div>
@@ -115,4 +105,4 @@ const ItemDetailsPage: React.FC = () => {
   )
 }
 
-export default ItemDetailsPage
+export default DigitalItemsDetailsPage

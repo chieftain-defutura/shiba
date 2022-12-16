@@ -1,16 +1,15 @@
-.categories-details-container {
-  padding: 20px 122px;
+.music-details-container {
   display: flex;
   gap: 138px;
   color: var(--textColorOne);
   font-family: var(--oswaldFont);
 }
 
-.categories-details-container-right {
+.music-details-container-right {
   flex: 5;
 }
 
-.categories-details-container-right .title {
+.music-details-container-right .title {
   font-weight: 900;
   font-size: 25px;
   line-height: 30px;
@@ -21,7 +20,7 @@
   gap: 44px;
 }
 
-.categories-details-container-right .content-box {
+.music-details-container-right .content-box {
   width: 90%;
   height: 455px;
   border: 1px solid #828282;
@@ -34,18 +33,17 @@
   position: relative;
 }
 
-.categories-details-container-right .content-box-left {
-  width: 593px;
+.music-details-container-right .content-box-left {
+  width: 511px;
   border: 0 !important;
 }
 
-.categories-details-container-right .content-box-left .slider {
+.music-details-container-right .content-box-left .slider {
   position: relative;
-  height: 331px;
-  margin-bottom: 18px;
+  height: 303px;
 }
 
-.categories-details-container-right .content-box-left .slider .slider-btn {
+.music-details-container-right .content-box-left .slider .slider-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -58,56 +56,85 @@
   justify-content: center;
 }
 
-.categories-details-container-right .content-box-left .prev-btn {
+.music-details-container-right .content-box-left .prev-btn {
   position: absolute;
   top: 50%;
   left: 2%;
   transform: translate(-0%, -50%);
 }
 
-.categories-details-container-right .content-box-left .next-btn {
+.music-details-container-right .content-box-left .next-btn {
   position: absolute;
   top: 50%;
   right: 2%;
   transform: translate(-0%, -50%);
 }
 
-.categories-details-container-right .content-box-left .description-cont {
+.music-details-container-right .content-box-left .description-cont {
   margin-top: 18px;
 }
 
-.categories-details-container-right .content-box-left .description-cont h3 {
+.music-details-container-right .content-box-left .description-cont h3 {
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
 }
 
-.categories-details-container-right .content-box-left .description-cont p {
+.music-details-container-right .content-box-left .description-cont p {
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   margin-top: 12px;
 }
 
-.categories-details-container-right .content-box-right .product-details p {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
+.music-details-container-right .content-box-right .product-details {
+  height: 280px;
+  position: relative;
 }
 
-.categories-details-container-right .content-box-right .quantity-container {
+.music-details-container-right
+  .content-box-right
+  .product-details
+  .preview-btn {
+  width: 100%;
+  height: 31px;
+  background-color: var(--bgColorFour);
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+}
+
+.music-details-container-right .content-box-right .product-details p {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.music-details-container-right .content-box-right .product-details p span {
+  color: var(--bgColorFour);
+  cursor: pointer;
+}
+
+.music-details-container-right .content-box-right .quantity-container {
   display: flex;
   align-items: center;
   gap: 7px;
 }
 
-.categories-details-container-right .content-box-right .quantity-container p {
+.music-details-container-right .content-box-right .quantity-container p {
   font-weight: 500;
   font-size: 18px;
   line-height: 27px;
 }
 
-.categories-details-container-right
+.music-details-container-right
   .content-box-right
   .quantity-container
   .quantity-box {
@@ -121,7 +148,7 @@
   padding: 0 4px;
 }
 
-.categories-details-container-right
+.music-details-container-right
   .content-box-right
   .quantity-container
   .quantity-box
@@ -132,7 +159,7 @@
   color: black;
 }
 
-.categories-details-container-right
+.music-details-container-right
   .content-box-right
   .quantity-container
   .quantity-box
@@ -146,24 +173,24 @@
   cursor: pointer;
 }
 
-.categories-details-container-right .content-box-right .buy-container {
-  width: 178px;
-  margin-top: 50px;
+.music-details-container-right .content-box-right .buy-container {
+  width: 100%;
+  margin-top: 17px;
 }
 
-.categories-details-container-right .content-box-right .buy-container .top {
+.music-details-container-right .content-box-right .buy-container .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 17px;
 }
 
-.categories-details-container-right .content-box-right .buy-container .top p {
+.music-details-container-right .content-box-right .buy-container .top p {
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
 }
-.categories-details-container-right .content-box-right .buy-container button {
+.music-details-container-right .content-box-right .buy-container button {
   width: 100%;
   height: 31px;
   border: 0;
