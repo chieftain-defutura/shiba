@@ -1,8 +1,11 @@
 .domain-name-container {
   color: var(--textColorOne);
-  padding: 51px 144px;
-  display: flex;
-  gap: 145px;
+  padding: 51px 100px;
+  /* display: flex;
+  gap: 145px; */
+  display: grid;
+  grid-template-columns: 1.1fr 4fr;
+  gap: 60px;
   font-family: var(--oswaldFont);
 }
 
@@ -20,9 +23,12 @@
 }
 
 .domain-name-container-left .checkbox-content {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 2fr 0.5fr;
+  margin: 18px 0;
 }
 
 .domain-name-container-left .check-box-container label {

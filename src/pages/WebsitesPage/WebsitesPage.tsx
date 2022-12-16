@@ -1,43 +1,30 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useAccount } from 'wagmi'
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import axios from 'axios'
+import React from 'react'
+// import { useAccount } from 'wagmi'
+import {
+  // DOMAIN_NFT_CONTRACT_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
+} from '../../utils/contractAddress'
+// import axios from 'axios'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import cardImg from '../../assets/img/card-3.png'
 import './WebsitesPage.css'
+import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
 
 const WebsitesPage: React.FC = () => {
-  const { address } = useAccount()
-  const [loading, setLoading] = useState(false)
-  const [website, setWbsiteData] = useState([])
-  console.log(website)
+  // const { address } = useAccount()
+  // const [loading, setLoading] = useState(false)
+  // const [website, setWbsiteData] = useState([])
+  // console.log(website)
 
-  const handleGetWebsiteData = useCallback(async () => {
-    try {
-      if (!address) return
-      setLoading(true)
+  const { data, isLoading, isError } = useGetNftsByContractAddressQuery({
+    erc721Address: WEBSITE_NFT_CONTRACT_ADDRESS,
+  })
 
-      const { data } = await axios.get(
-        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${DOMAIN_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
+  const nftsData: any[] = data ? data?.result : []
 
-        {
-          headers: {
-            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
-          },
-        },
-      )
-      setLoading(false)
-      console.log(data)
-      setWbsiteData(data.nfts.map((r: any) => r))
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
+  console.log(nftsData)
 
-  useEffect(() => {
-    handleGetWebsiteData()
-  }, [handleGetWebsiteData])
   return (
     <div>
       <Navigation />
@@ -77,28 +64,32 @@ const WebsitesPage: React.FC = () => {
           </div>
         </div>
         <div className="website-container-right">
-          {loading ? 'loading...' : ''}
-          {!website.length && 'noResult'}
-          {website.map((f, idx) => (
-            <div className="website-card-container" key={idx}>
-              <div className="card">
-                <div className="card-top">
-                  <img src={cardImg} alt="card" />
-                </div>
-                <div className="card-center">
-                  <h3 className="title">The Holy Grail</h3>
-                  <h4 className="sub-title">Pixart Motion</h4>
-                </div>
-                <div className="card-bottom">
-                  <p>Shop Details</p>
-                  <p>id: {idx}</p>
-                  {/* <Link to={`/my-digital-shop/${f}`}>
-                    <button style={{ width: "50px" }}>Get In</button>
-                  </Link> */}
+          {isLoading ? (
+            <div>Loading</div>
+          ) : isError ? (
+            <div>Error</div>
+          ) : (
+            nftsData.map((f, idx) => (
+              <div className="website-card-container" key={idx}>
+                <div className="card">
+                  <div className="card-top">
+                    <img src={cardImg} alt="card" />
+                  </div>
+                  <div className="card-center">
+                    <h3 className="title">The Holy Grail</h3>
+                    <h4 className="sub-title">Pixart Motion</h4>
+                  </div>
+                  <div className="card-bottom">
+                    <p>Shop Details</p>
+                    <p>Token Id: {f.token_id}</p>
+                    {/* <Link to={`/my-digital-shop/${f}`}>
+                      <button style={{ width: "50px" }}>Get In</button>
+                    </Link> */}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
       <FooterBottom />

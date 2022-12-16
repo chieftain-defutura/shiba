@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import Slider from 'react-slick'
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'

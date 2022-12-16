@@ -1,8 +1,11 @@
 .marketplace-container {
   color: var(--textColorOne);
-  padding: 51px 144px;
-  display: flex;
-  gap: 10px;
+  padding: 51px 100px;
+  /* display: flex;
+  gap: 10px; */
+  display: grid;
+  grid-template-columns: 1.1fr 4fr;
+  gap: 60px;
   font-family: var(--oswaldFont);
 }
 
@@ -264,7 +267,7 @@
 
 .marketplace-container-right-content {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-row-gap: 40px;
   grid-column-gap: 0px;
 }
@@ -280,6 +283,7 @@
   /* width: 100%; */
   border-radius: 8px;
   gap: 30px;
+  margin-left: 0px;
 }
 
 .marketplace-container-right .card .card-top img {
@@ -337,5 +341,5 @@
   justify-content: center;
   padding: 4px 12px 4px 12px;
   margin: 8px 0;
-  width: 100%;
+  width: 90%;
 }

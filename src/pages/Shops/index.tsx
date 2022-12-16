@@ -58,7 +58,6 @@ const ShopPage: React.FC = () => {
     handleDigitalNftData()
   }, [handleDigitalNftData])
 
-  // const filterCategory =()=>{}
   return (
     <div>
       <Navigation />
@@ -71,7 +70,7 @@ const ShopPage: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: '120px',
             }}
             onClick={() => setOpenDigital((m) => !m)}
           >
@@ -109,7 +108,7 @@ const ShopPage: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: '110px',
             }}
             onClick={() => setOpenPhysical((m) => !m)}
           >
@@ -226,7 +225,7 @@ const ShopPage: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: '170px',
             }}
             onClick={() => setOpenFood((m) => !m)}
           >
@@ -262,7 +261,7 @@ const ShopPage: React.FC = () => {
 
         <div className="website-container-right">
           {loading && 'loading...'}
-          {!digitalNftData.length || (physicalNftData.length ? 'noResult' : '')}
+          {/* {!digitalNftData.length || (physicalNftData.length && 'noResult')} */}
 
           {!openDigital &&
             digitalNftData.map((f, idx) => (
