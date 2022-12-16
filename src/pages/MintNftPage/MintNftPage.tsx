@@ -100,7 +100,6 @@ const MintNftPage: React.FC = () => {
     IContractData | undefined
   >()
   const [selected, setSelected] = useState('')
-  const [isInValid, setIsInvalid] = useState(false)
   const [NftContractData, setIsNftContractData] =
     useState<IContractData[]>(ContractData)
   const [inputData, setInputData] = useState('')
@@ -223,16 +222,13 @@ const MintNftPage: React.FC = () => {
 
   const canShowCreateButton = useMemo(() => {
     if (!selectedNftType) {
-      setIsInvalid(true)
       return true
     }
 
     // eslint-disable-next-line no-prototype-builtins
     if (!selectedNftType.hasOwnProperty('tokenAddress')) {
-      setIsInvalid(false)
       return true
     }
-    setIsInvalid(false)
 
     if (selectedNftType?.allowance === 0) return false
     return true

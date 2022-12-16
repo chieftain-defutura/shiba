@@ -18,7 +18,6 @@ import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
 import Button from '../Button'
 import { parseUnits } from 'ethers/lib/utils.js'
-import { BsArrowLeftCircle } from 'react-icons/bs'
 
 interface IAddItem {
   setAddItem: any

@@ -29,14 +29,10 @@ const ShopDetailsPage: React.FC = () => {
   const [upVoteClick, setUpVoteClick] = useState(false)
   const [downVoteClick, setDownVoteClick] = useState(false)
 
-  const handlePlus = () => {
-    setQuantity(quantity + 1)
-  }
+  setQuantity(quantity + 1)
 
-  const handleMinus = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
-    }
+  if (quantity > 1) {
+    setQuantity(quantity - 1)
   }
 
   return (
