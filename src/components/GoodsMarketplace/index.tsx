@@ -1,20 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import axios from 'axios'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import DigitalItem from '../DigitalItem'
 
 const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 
 const GoodsMaretPlace: React.FC = () => {
   const { address } = useAccount()
-  const [mintData, setMintData] = useState<any[]>([])
-
-  const { isLoading, isError } = useGetUserNftsQuery({
-    erc721Address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    address: address ?? '',
-  })
+  const [physicalItems, setPhysicalItems] = useState<any[]>([])
+  const [digitalItems, setDigitalItems] = useState<any[]>([])
 
   const handleGetUserNft = useCallback(async () => {
     try {
@@ -36,6 +30,18 @@ const GoodsMaretPlace: React.FC = () => {
               subcategory
               category
             }
+            physicalItems{
+              id
+              shopId
+              price
+              erc20Token {
+                id
+                symbol
+                decimals
+              }
+              subcategory
+              category
+            }
           }
         `,
         },
@@ -45,8 +51,9 @@ const GoodsMaretPlace: React.FC = () => {
           },
         },
       )
-      console.log(data)
-      setMintData(data.data.digitalItems)
+      console.log(data.data)
+      setPhysicalItems(data.data.physicalItems)
+      setDigitalItems(data.data.digitalItems)
     } catch (error) {
       console.log(error)
     }
@@ -57,19 +64,20 @@ const GoodsMaretPlace: React.FC = () => {
   }, [handleGetUserNft])
   return (
     <div className="marketplace-container-right-content">
-      {isLoading ? (
-        <div>Loading</div>
-      ) : isError ? (
-        <div>Error</div>
-      ) : !mintData.length ? (
+      {!physicalItems.length && !digitalItems.length ? (
         <div>No Result</div>
       ) : (
-        mintData.map((f, idx) => (
+        physicalItems.map((f, idx) => (
           <div key={idx}>
             <DigitalItem {...f} />
           </div>
         ))
       )}
+      {digitalItems.map((f, idx) => (
+        <div key={idx}>
+          <DigitalItem {...f} />
+        </div>
+      ))}
     </div>
   )
 }

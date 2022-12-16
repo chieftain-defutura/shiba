@@ -46,7 +46,7 @@ const RemoveItem: React.FC = () => {
     } catch (error) {
       console.log(error)
     }
-  }, [address])
+  }, [address, id])
 
   useEffect(() => {
     handleGetUserNft()

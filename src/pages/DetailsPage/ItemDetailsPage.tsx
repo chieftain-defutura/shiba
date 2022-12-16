@@ -7,7 +7,7 @@ import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMinus } from 'react-icons/bi'
 import HomeLayout from '../../Layout/HomeLayout'
-import './MusicDetailsPage.css'
+import './ItemDetailsPage.css'
 
 const settings = {
   dots: false,
@@ -18,7 +18,7 @@ const settings = {
   slidesToScroll: 1,
 }
 
-const MusicDetailsPage: React.FC = () => {
+const ItemDetailsPage: React.FC = () => {
   const [quantity, setQuantity] = useState(1)
   const slider = useRef<Slider>(null)
 
@@ -106,4 +106,4 @@ const MusicDetailsPage: React.FC = () => {
   )
 }
 
-export default MusicDetailsPage
+export default ItemDetailsPage
