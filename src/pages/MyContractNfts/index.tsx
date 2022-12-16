@@ -49,7 +49,10 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Shop Details</p>
+                    <Link to={`/shop-details/${f.id}`}>
+                      <p>Shop Details</p>
+                    </Link>
+
                     <Link to={`/${contractData.pathName}/${f.token_id}`}>
                       <button style={{ width: '50px' }}>Get In</button>
                     </Link>

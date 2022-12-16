@@ -21,6 +21,7 @@ import MyItems from './pages/MyItems'
 import ShopDetailsPage from './pages/DetailsPage/ShopDetailsPage'
 import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
 import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
+import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
 
 const App: React.FC = () => {
   return (
@@ -63,6 +64,10 @@ const App: React.FC = () => {
 
         <Route path="/shop-details/:shopId" element={<ShopDetailsPage />} />
         <Route path="/item-details/:itemId" element={<ItemDetailsPage />} />
+        <Route
+          path="/digital-item-details/:itemId"
+          element={<DigitalItemsDetailsPage />}
+        />
       </Routes>
     </div>
   )

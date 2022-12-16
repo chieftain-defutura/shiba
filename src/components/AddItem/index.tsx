@@ -125,11 +125,11 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
       >
         {({ values }) => (
           <Form>
-            <BsArrowLeftCircle
+            {/* <BsArrowLeftCircle
               className="arrow-icon"
               style={{ position: 'absolute', top: '40px' }}
               onClick={() => setAddItem(null)}
-            />
+            /> */}
             <p className="title">Photos</p>
             <div className="content">
               <div className="content-left">

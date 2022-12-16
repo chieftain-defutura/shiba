@@ -1,15 +1,16 @@
-.music-details-container {
+.shoesboutique-container {
+  padding: 20px 122px;
   display: flex;
   gap: 138px;
   color: var(--textColorOne);
   font-family: var(--oswaldFont);
 }
 
-.music-details-container-right {
+.shoesboutique-container-right {
   flex: 5;
 }
 
-.music-details-container-right .title {
+.shoesboutique-container-right .title {
   font-weight: 900;
   font-size: 25px;
   line-height: 30px;
@@ -20,12 +21,11 @@
   gap: 44px;
 }
 
-.music-details-container-right .content-box {
-  width: 90%;
+.shoesboutique-container-right .content-box {
+  width: 100%;
   height: 455px;
   border: 1px solid #828282;
   border-radius: 10px;
-  margin: 0 auto;
   margin-top: 53px;
   padding: 15px;
   display: flex;
@@ -33,17 +33,17 @@
   position: relative;
 }
 
-.music-details-container-right .content-box-left {
+.shoesboutique-container-right .content-box-left {
   width: 511px;
   border: 0 !important;
 }
 
-.music-details-container-right .content-box-left .slider {
+.shoesboutique-container-right .content-box-left .slider {
   position: relative;
   height: 303px;
 }
 
-.music-details-container-right .content-box-left .slider .slider-btn {
+.shoesboutique-container-right .content-box-left .slider .slider-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -56,152 +56,151 @@
   justify-content: center;
 }
 
-.music-details-container-right .content-box-left .prev-btn {
+.shoesboutique-container-right .content-box-left .prev-btn {
   position: absolute;
   top: 50%;
   left: 2%;
   transform: translate(-0%, -50%);
 }
 
-.music-details-container-right .content-box-left .next-btn {
+.shoesboutique-container-right .content-box-left .next-btn {
   position: absolute;
   top: 50%;
   right: 2%;
   transform: translate(-0%, -50%);
 }
 
-.music-details-container-right .content-box-left .description-cont {
-  margin-top: 18px;
+.shoesboutique-container-right .content-box-left .description-cont {
+  margin-top: 12px;
 }
 
-.music-details-container-right .content-box-left .description-cont h3 {
+.shoesboutique-container-right .content-box-left .description-cont h3 {
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
 }
 
-.music-details-container-right .content-box-left .description-cont p {
+.shoesboutique-container-right .content-box-left .description-cont p {
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   margin-top: 12px;
 }
 
-.music-details-container-right .content-box-right .product-details {
-  height: 280px;
+.shoesboutique-container-right .content-box-right .sales-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.shoesboutique-container-right .content-box-right .sale-card {
+  width: 385px;
+  border-radius: 5px;
+  background-color: var(--textColorOne);
+  padding: 5px;
+  text-align: center;
+  color: #000000;
+}
+
+.shoesboutique-container-right .content-box-right .sale-card .title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #000000;
+  border-bottom: 0.25px solid #5a5a5a;
+  padding-bottom: 2px;
+}
+
+.shoesboutique-container-right .content-box-right .sale-card img {
+  margin: 5px auto;
+}
+
+.shoesboutique-container-right .content-box-right .sale-card .card-footer {
+  display: flex;
   position: relative;
 }
 
-.music-details-container-right
+.shoesboutique-container-right .content-box-right .sale-card .card-footer p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.shoesboutique-container-right
   .content-box-right
-  .product-details
-  .preview-btn {
-  width: 100%;
-  height: 31px;
-  background-color: var(--bgColorFour);
-  color: var(--textColorOne);
-  font-family: var(--oswaldFont);
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 27px;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
+  .sale-card
+  .card-footer
+  .price {
   position: absolute;
-  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
 }
 
-.music-details-container-right .content-box-right .product-details p {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.music-details-container-right .content-box-right .product-details p span {
-  color: var(--bgColorFour);
-  cursor: pointer;
-}
-
-.music-details-container-right .content-box-right .quantity-container {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.music-details-container-right .content-box-right .quantity-container p {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 27px;
-}
-
-.music-details-container-right
-  .content-box-right
-  .quantity-container
-  .quantity-box {
-  width: 101px;
-  height: 22px;
-  background-color: var(--textColorOne);
-  border-radius: 2px;
+.shoesboutique-container-right .content-box-right .button-cont {
+  margin-top: 9px;
+  padding: 0 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 4px;
 }
 
-.music-details-container-right
-  .content-box-right
-  .quantity-container
-  .quantity-box
-  p {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: black;
-}
-
-.music-details-container-right
-  .content-box-right
-  .quantity-container
-  .quantity-box
-  button {
+.shoesboutique-container-right .content-box-right .button-cont button {
   background-color: transparent;
   border: 0;
   outline: 0;
+  color: var(--textColorOne);
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.music-details-container-right .content-box-right .buy-container {
-  width: 100%;
-  margin-top: 17px;
-}
-
-.music-details-container-right .content-box-right .buy-container .top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 17px;
-}
-
-.music-details-container-right .content-box-right .buy-container .top p {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-}
-.music-details-container-right .content-box-right .buy-container button {
-  width: 100%;
-  height: 31px;
-  border: 0;
-  border-radius: 5px;
-  outline: 0;
-  background-color: var(--textColorTwo);
+  gap: 7px;
   font-weight: 500;
   font-size: 18px;
   line-height: 27px;
-  color: var(--textColorOne);
   font-family: var(--oswaldFont);
-  text-transform: uppercase;
   cursor: pointer;
+}
+
+.shoesboutique-container-right .vote-detail {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  font-family: var(--oswaldFont);
+}
+
+.shoesboutique-container-bottom {
+  display: flex;
+  align-items: center;
+  gap: 39px;
+  position: absolute;
+  bottom: 25px;
+  right: 75px;
+}
+
+.shoesboutique-container-bottom img {
+  cursor: pointer;
+}
+
+.shoesboutique-container-right .up-vote-box {
+  width: 100%;
+  height: 303px;
+  background-color: var(--textColorOne);
+  border-radius: 5px;
+  padding: 24px 18px;
+  position: relative;
+  color: #000000;
+}
+
+.shoesboutique-container-right .up-vote-box .close-icon {
+  position: absolute;
+  top: 9px;
+  right: 12px;
+  cursor: pointer;
+}
+
+.shoesboutique-container-right .up-vote-box p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
 }
