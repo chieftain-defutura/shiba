@@ -56,6 +56,10 @@
   color: var(--textColorTwo);
   border-bottom: 3px solid var(--textColorTwo);
 }
+.navigation-container .container-left nav li a.active {
+  color: var(--textColorTwo);
+  border-bottom: 3px solid var(--textColorTwo);
+}
 
 .container-right {
   display: flex;
