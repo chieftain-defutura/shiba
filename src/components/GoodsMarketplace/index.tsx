@@ -33,7 +33,7 @@ const GoodsMaretPlace: React.FC = () => {
               subcategory
               category
             }
-            physicalItems{
+            physicalItems(where:{status:ACTIVE}){
               id
               shopDetails{
                 id
