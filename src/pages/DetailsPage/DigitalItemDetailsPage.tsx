@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import Slider from 'react-slick'
 import { useParams } from 'react-router-dom'
-import { useAccount } from 'wagmi'
 import axios from 'axios'
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
@@ -23,7 +22,7 @@ const settings = {
 
 const DigitalItemsDetailsPage: React.FC = () => {
   const { itemId } = useParams()
-  const { address } = useAccount()
+
   const [quantity, setQuantity] = useState(1)
   const slider = useRef<Slider>(null)
   const [digitalDetails, setDigitalDetails] = useState<any[]>([])
