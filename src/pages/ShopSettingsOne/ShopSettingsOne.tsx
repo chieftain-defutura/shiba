@@ -16,7 +16,7 @@ import cardImgNine from '../../assets/img/card-12.png'
 import cardImgTen from '../../assets/img/card-13.png'
 import './ShopSetting.css'
 import Residual from './components/Residual'
-import RemoveItem from '../../components/RemoveItem'
+import RemoveItem from '../../components/RemoveItem/DigitalRemoveCard'
 import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
 import Transfer from '../../components/Transfer'
@@ -25,6 +25,8 @@ import Auction from '../../components/Auction'
 import FinalizeToken from './components/FinalizeToken'
 import { IContractData } from '../../constants/contract'
 import PhysicalShopForm from '../../components/PhysicalShopForm'
+import PhysicalRemoveItem from '../../components/RemoveItem/PhysicalRemoveCard'
+import DigitalRemoveItem from '../../components/RemoveItem/DigitalRemoveCard'
 
 const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   contractData,
@@ -183,7 +185,11 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
               </div>
             </div>
           ) : (
-            clickRemoveItem && <RemoveItem />
+            <>
+              {contractData.pathName === 'my-goods-shop'
+                ? clickRemoveItem && <PhysicalRemoveItem />
+                : clickRemoveItem && <DigitalRemoveItem />}
+            </>
           )}
 
           {clickCard === 'appearance settings' && (

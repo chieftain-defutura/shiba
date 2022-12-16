@@ -2,8 +2,8 @@ import React from 'react'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
 import { useTransactionModal } from '../../context/TransactionContext'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import physicalShopABI from '../../utils/abi/physicalShopABI.json'
 import cardImg from '../../assets/img/card-3.png'
 import { formatUnits } from 'ethers/lib/utils.js'
 
@@ -18,7 +18,12 @@ interface ICard {
   price: number
 }
 
-const Card: React.FC<ICard> = ({ id: itemId, shopId, erc20Token, price }) => {
+const PhysicalCard: React.FC<ICard> = ({
+  id: itemId,
+  shopId,
+  erc20Token,
+  price,
+}) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -28,8 +33,8 @@ const Card: React.FC<ICard> = ({ id: itemId, shopId, erc20Token, price }) => {
     try {
       setTransaction({ loading: true, status: 'pending' })
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-        digitalShopABI,
+        PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+        physicalShopABI,
         data,
       )
       const tx = await contract.removeItem(shopId, itemId)
@@ -63,11 +68,11 @@ const Card: React.FC<ICard> = ({ id: itemId, shopId, erc20Token, price }) => {
           <button onClick={handleRemoveItem}>Remove Shop</button>
         </div>
       </div>
-      <div className="remove-card-bottom">
+      {/* <div className="remove-card-bottom">
         <p>Name: shoes winter</p>
-      </div>
+      </div> */}
     </div>
   )
 }
 
-export default Card
+export default PhysicalCard
