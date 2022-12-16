@@ -9,7 +9,9 @@ import { formatUnits } from 'ethers/lib/utils.js'
 
 interface ICard {
   id: number
-  shopId: number
+  shopDetails: {
+    id: number
+  }
   erc20Token: {
     id: string
     symbol: string
@@ -20,7 +22,7 @@ interface ICard {
 
 const DigitalCard: React.FC<ICard> = ({
   id: itemId,
-  shopId,
+  shopDetails: { id: shopId },
   erc20Token,
   price,
 }) => {

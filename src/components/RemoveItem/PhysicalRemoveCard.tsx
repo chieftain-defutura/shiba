@@ -18,21 +18,23 @@ const PhysicalRemoveItem = () => {
         SUB_GRAPH_API_URL,
         {
           query: `
-           query{
-      physicalItems(where:{status:ACTIVE, shopId:${id}}){
-        id
-        shopId
-            price
-        owner
-        erc20Token {
-          id
-          symbol
-          decimals
-        }
-        subcategory
-        category
-      }
-    }
+          query{
+            physicalItems(where:{ status: ACTIVE,shopDetails: "${id}"}){
+              id
+              shopDetails{
+                id
+              }
+                  price
+              owner
+              erc20Token {
+                id
+                symbol
+                decimals
+              }
+              subcategory
+              category
+            }
+          }
             `,
         },
         {
@@ -41,8 +43,9 @@ const PhysicalRemoveItem = () => {
           },
         },
       )
-      setRemovePhysicalItems(data.data.physicalItems)
       console.log(data)
+
+      setRemovePhysicalItems(data.data.physicalItems)
     } catch (error) {
       console.log(error)
     }

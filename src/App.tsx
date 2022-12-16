@@ -58,7 +58,10 @@ const App: React.FC = () => {
         ))}
 
         <Route path="/shop-details/:shopId" element={<ShopDetailsPage />} />
-        <Route path="/item-details/:itemId" element={<ItemDetailsPage />} />
+        <Route
+          path="/physical-item-details/:itemId"
+          element={<ItemDetailsPage />}
+        />
         <Route
           path="/digital-item-details/:itemId"
           element={<DigitalItemsDetailsPage />}
