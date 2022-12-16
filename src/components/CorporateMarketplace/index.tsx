@@ -23,7 +23,7 @@ const CorporateMarketplace: React.FC = () => {
         {
           query: `
           query {
-            fixedSales(where:{status:"ACTIVE"}){
+            fixedSales(where:{status:ACTIVE}){
             id
             auctionId
             tokenId

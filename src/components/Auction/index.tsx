@@ -77,10 +77,9 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
-  const [clickAddItem, setClickAddItem] = useState<any>(null)
+  const [openDaysInput, setOpenDaysInput] = useState(false)
   const [clickCard, setClickCard] = useState<any>(null)
-  const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
-
+  const [days, setDays] = useState('')
   const { data: readData } = useContractRead({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
     abi: erc721ABI,
@@ -145,11 +144,12 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
         auctionMarketplaceABI,
         data,
       )
+      console.log(id)
       const tx = await contract.createSaleAuction(
         id,
         parseUnits(price, selectedDropDown?.decimal).toString(),
         selectedDropDown?.address,
-        1,
+        Number(days),
         DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
       )
       await tx.wait()
@@ -188,14 +188,8 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
                     placeholder="price"
                     onChange={(e) => setPrice(e.target.value)}
                   />
-                  {!readData ? (
-                    <button onClick={() => handleApproveToken()}>
-                      Approve
-                    </button>
-                  ) : (
-                    <button onClick={handlePutOnSale}>Put On Sale</button>
-                  )}
                 </div>
+
                 <div className={!dropDown ? ' right' : 'right active'}>
                   <div
                     className="header"
@@ -214,6 +208,35 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
                     })}
                   </div>
                 </div>
+                <select onChange={(e) => setDays(e.target.value)}>
+                  <option value="">select an option</option>
+                  <option value="1">1</option>
+                  <option value="5">3</option>
+                  <option value="7">7</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  gap: '10px',
+                }}
+              >
+                {!readData ? (
+                  <button onClick={() => handleApproveToken()}>Approve</button>
+                ) : (
+                  <button onClick={handlePutOnSale}>Put On Sale</button>
+                )}
+                {days === 'custom' && (
+                  <input
+                    style={{
+                      width: '100%',
+                    }}
+                    onChange={(e) => setDays(e.target.value)}
+                    type="text"
+                  />
+                )}
               </div>
             </div>
           </div>

@@ -274,7 +274,6 @@ const MarketPlacePage = () => {
           ) : (
             <CorporateMarketplace />
           )}
-
           <div className="currency-select-container">
             <div className="header">
               <p>{selectedCurrency}</p>

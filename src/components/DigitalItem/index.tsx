@@ -9,7 +9,9 @@ import cardImg from '../../assets/img/card-3.png'
 
 interface IAuctionSaleCard {
   id: number
-  shopId: number
+  shopDetail: {
+    id: number
+  }
   price: number
   erc20Token: {
     id: string

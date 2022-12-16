@@ -19,9 +19,11 @@ const DigitalRemoveItem: React.FC = () => {
         {
           query: `
        query{
-  digitalItems(where:{status:ACTIVE, shopId:${id}}){
+  digitalItems(where:{status:ACTIVE,shopDetails: "${id}"}){
     id
-    shopId
+    shopDetails{
+      id
+    }
 		price
     owner
     erc20Token {
