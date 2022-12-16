@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
@@ -18,6 +18,7 @@ import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
 import Button from '../Button'
 import { parseUnits } from 'ethers/lib/utils.js'
+import { getDigitalShopCategory } from '../../utils/methods'
 
 interface IAddItem {
   setAddItem: any
@@ -29,31 +30,24 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
 
-  const categoryList = [
-    {
-      name: 'movies',
-      subcategory: ['comedy', 'action', 'adventure', 'romance'],
-    },
-    {
-      name: 'courses',
-      subcategory: ['education', 'others'],
-    },
-    {
-      name: 'books',
-      subcategory: ['auto_biography', 'romance', 'novel', 'others'],
-    },
-    {
-      name: 'music',
-      subcategory: ['rock', 'pop', 'jazz', 'others'],
-    },
-  ]
+  const getCategory = useCallback(async () => {
+    if (!data) return
+    const result = await getDigitalShopCategory(data)
+    console.log(result)
+  }, [data])
+
+  useEffect(() => {
+    getCategory()
+  }, [getCategory])
 
   const getSubcategory = (category: string) => {
-    const res = categoryList.find((f) => f.name === category)
+    // const res = categoryList.find((f) => f.name === category)
 
-    if (!res) return []
+    // if (!res) return []
 
-    return res.subcategory
+    return [category]
+
+    // return res.subcategory
   }
 
   const handleAddItem = async (values: any) => {
@@ -85,7 +79,7 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
         digitalShopABI,
         data,
       )
-      console.log(values.currency)
+      // console.log(values.currency)
 
       const tx = await contract.addItem(
         id,
@@ -106,6 +100,7 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
       setTransaction({ loading: true, status: 'error' })
     }
   }
+
   return (
     <div className="photo-sub-menu-container sub-menu-container">
       <Formik
@@ -162,11 +157,9 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
                   <option value="">Select a SubCategory</option>
                   {getSubcategory(values.category).map((f, index) => {
                     return (
-                      <>
-                        <option value={f} key={index}>
-                          {f}
-                        </option>
-                      </>
+                      <option value={f} key={index}>
+                        {f}
+                      </option>
                     )
                   })}
                 </Field>
