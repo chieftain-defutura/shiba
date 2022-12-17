@@ -22,9 +22,9 @@
 
 .website-container-left .checkbox-content {
   /* display: flex;
-  align-items: center;
-
-  justify-content: space-between; */
+    align-items: center;
+  
+    justify-content: space-between; */
   display: grid;
   grid-template-columns: 4fr 0.5fr;
   margin: 18px 0;

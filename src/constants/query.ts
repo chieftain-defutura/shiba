@@ -10,6 +10,7 @@ export const domainPageQuery = `
   }
 `
 
+<<<<<<< HEAD
 export const physicalItemQuery = `
 query($id: String!){
   physicalItem(id:$id){
@@ -56,4 +57,40 @@ query($id: String!){
     category
   }
 }
+=======
+export const websitePageQuery = `
+  query {
+    websiteTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
+        id
+        domainName
+        owner {
+          id
+        }
+    }
+  }
+`
+
+export const charitiesPageQuery = `
+  query {
+    charityTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
+        id
+        domainName
+        owner {
+          id
+        }
+    }
+  }
+`
+
+export const fullOnBlockchainPageQuery = `
+  query {
+    fullOnBlockchainArtTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
+        id
+        domainName
+        owner {
+          id
+        }
+    }
+  }
+>>>>>>> c9f1dedaa8002a693b265251e92ecb2d3b922e9b
 `
