@@ -11,7 +11,7 @@ import HaveToSendCard from '../../components/HaveToSendCard'
 const HaveToSend = () => {
   const { address } = useAccount()
 
-  const [result, reexecuteQuery] = useQuery<{
+  const [result] = useQuery<{
     shipments: IAwaitingDelivery[]
   }>({
     query: awaitingDelivery,
@@ -20,7 +20,7 @@ const HaveToSend = () => {
     },
     pause: !address,
   })
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(data)
 
   return (

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import Slider from 'react-slick'
 import { ethers } from 'ethers'
 import { useQuery } from 'urql'
@@ -10,11 +10,8 @@ import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { BiMinus } from 'react-icons/bi'
 import HomeLayout from '../../Layout/HomeLayout'
 import './DigitalItemDetailsPage.css'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
 import { IDigitalItem } from '../../constants/types'
 import { DigitalItemQuery } from '../../constants/query'
 
@@ -31,14 +28,13 @@ const DigitalItemsDetailsPage: React.FC = () => {
   const { itemId } = useParams()
   const { data: signerData } = useSigner()
   const { address } = useAccount()
-  const [quantity, setQuantity] = useState(1)
   const slider = useRef<Slider>(null)
-  const [result, reexecuteQuery] = useQuery<{ digitalItem: IDigitalItem }>({
+  const [result] = useQuery<{ digitalItem: IDigitalItem }>({
     query: DigitalItemQuery,
     variables: { id: itemId },
   })
 
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(result)
   // const NFT_METADATA_API = `https://eth-goerli.g.alchemy.com/nft/v2/:${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTMetadata?contractAddress=${}&tokenId=${id}&tokenType=ERC721&refreshCache=false`
 
@@ -85,16 +81,6 @@ const DigitalItemsDetailsPage: React.FC = () => {
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
-    }
-  }
-
-  const handlePlus = () => {
-    setQuantity(quantity + 1)
-  }
-
-  const handleMinus = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
     }
   }
 

@@ -28,11 +28,9 @@ const settings = {
 
 const ShopDetailsPage: React.FC = () => {
   const { shopId } = useParams()
-  const [quantity, setQuantity] = useState(1)
   const slider = useRef<Slider>(null)
   const [upVoteClick, setUpVoteClick] = useState(false)
   const [downVoteClick, setDownVoteClick] = useState(false)
-  const [physicalDetails, setPhysicalDetails] = useState<any[]>([])
 
   const handleGetUserNft = useCallback(async () => {
     try {
@@ -68,7 +66,7 @@ const ShopDetailsPage: React.FC = () => {
         },
       )
       console.log(data.data)
-      setPhysicalDetails(data.data.digitalItems)
+      // setPhysicalDetails(data.data.digitalItems)
     } catch (error) {
       console.log(error)
     }
@@ -77,16 +75,6 @@ const ShopDetailsPage: React.FC = () => {
   useEffect(() => {
     handleGetUserNft()
   }, [handleGetUserNft])
-
-  const handlePlus = () => {
-    setQuantity(quantity + 1)
-  }
-
-  const handleMinus = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
-    }
-  }
 
   return (
     <div>

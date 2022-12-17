@@ -9,12 +9,12 @@ import {
 } from '../../constants/query'
 
 export const GoodsDigital = () => {
-  const [result, reexecuteQuery] = useQuery<{
+  const [result] = useQuery<{
     digitalItems: IGoodsDigitalItem[]
   }>({
     query: goodsDigitalItemsQuery,
   })
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(data)
 
   return (
@@ -39,12 +39,12 @@ export const GoodsDigital = () => {
 }
 
 export const GoodsPhysical = () => {
-  const [result, reexecuteQuery] = useQuery<{
+  const [result] = useQuery<{
     physicalItems: IGoodsDigitalItem[]
   }>({
     query: goodsPhysicalItemsQuery,
   })
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(data)
 
   return (

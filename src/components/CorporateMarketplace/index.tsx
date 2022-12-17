@@ -5,7 +5,7 @@ import { IFixedSale } from '../../constants/types'
 import { fixedSaleQuery } from '../../constants/query'
 
 const CorporateMarketplace: React.FC = () => {
-  const [result, reexecuteQuery] = useQuery<{
+  const [result] = useQuery<{
     fixedSales: IFixedSale[]
   }>({
     query: fixedSaleQuery,
