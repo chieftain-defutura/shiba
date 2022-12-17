@@ -79,12 +79,19 @@
 
 .website-container-right .card {
   background-color: var(--bgColorSeven);
-  height: 208px;
   width: 100%;
   border-radius: 8px;
 }
 
+.website-container-right .card .card-top {
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+
 .website-container-right .card .card-top img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 8px 8px 0px 0px;
 }
 
