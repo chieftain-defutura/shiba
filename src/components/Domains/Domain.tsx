@@ -325,7 +325,10 @@ const ShopSettingsOne: React.FC = () => {
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
-              <AppearanceSetting setClickCard={setClickCard} />
+              <AppearanceSetting
+                setClickCard={setClickCard}
+                contractAddress={''}
+              />
             </div>
           )}
 

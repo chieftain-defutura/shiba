@@ -133,7 +133,7 @@ const ItemDetailsPage: React.FC = () => {
             }}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ isValid, dirty }) => (
               <Form>
                 <div className="categories-details-container-right">
                   <h2 className="title">shoesboutique.shib</h2>
@@ -257,10 +257,15 @@ const ItemDetailsPage: React.FC = () => {
                         <div>
                           {!categoriesShipping ? (
                             <div onClick={() => setCategoriesShipping(true)}>
-                              Buy
+                              <button>Buy</button>
                             </div>
                           ) : (
-                            <button type="submit">Buy</button>
+                            <button
+                              type="submit"
+                              disabled={!(dirty && isValid)}
+                            >
+                              Buy
+                            </button>
                           )}
                         </div>
                       </div>

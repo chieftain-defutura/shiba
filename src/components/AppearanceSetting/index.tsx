@@ -4,17 +4,21 @@ import { useSigner, useAccount } from 'wagmi'
 import { Formik, Field, Form } from 'formik'
 import { ethers } from 'ethers'
 import axios from 'axios'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 
+import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { useTransactionModal } from '../../context/TransactionContext'
+
 interface IAppearanceSetting {
   setClickCard: any
+  contractAddress: string
 }
 
-const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
+const AppearanceSetting: React.FC<IAppearanceSetting> = ({
+  setClickCard,
+  contractAddress,
+}) => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
@@ -34,7 +38,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
             refreshCache: false,
             tokenType: 'ERC721',
             tokenId: id,
-            contractAddress: '0xB566026263216f462337526A0640f244fE0A9Dee',
+            contractAddress,
           },
         },
       )
@@ -43,7 +47,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
     } catch (error) {
       console.log(error)
     }
-  }, [id])
+  }, [contractAddress, id])
 
   useEffect(() => {
     handleGetMetadata()
@@ -77,7 +81,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
       const contract = new ethers.Contract(
-        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+        contractAddress,
         digitalShopABI,
         data,
       )

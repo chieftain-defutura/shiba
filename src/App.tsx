@@ -24,6 +24,7 @@ import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
 import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
 import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
 import HaveToSend from './pages/HaveToSendPage'
+import Loading from './components/Loading/Loading'
 
 const App: React.FC = () => {
   return (
@@ -45,6 +46,7 @@ const App: React.FC = () => {
         <Route path="sell" element={<SellPage />} />
         <Route path="awaiting-delivery" element={<AwaitingDeliveryPage />} />
         <Route path="have-to-send" element={<HaveToSend />} />
+        <Route path="loading" element={<Loading />} />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>
