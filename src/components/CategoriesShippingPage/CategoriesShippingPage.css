@@ -1,0 +1,202 @@
+.categories-shipping-container {
+  display: flex;
+  gap: 138px;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+}
+
+.categories-shipping-container-right {
+  flex: 5;
+}
+
+.categories-shipping-container-right .title {
+  font-weight: 900;
+  font-size: 25px;
+  line-height: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 44px;
+}
+
+.categories-shipping-container-right .content-box {
+  width: 90%;
+  height: 455px;
+  border: 1px solid #828282;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 53px;
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.categories-shipping-container-right .content-box-left {
+  width: 593px;
+  border: 0 !important;
+}
+
+.categories-shipping-container-right
+  .content-box-left
+  .shipping-form-container {
+  width: 593px;
+  height: 331px;
+  border-radius: 5px;
+  background-color: var(--bgColorTwo);
+  padding: 15px 62px;
+}
+
+.categories-shipping-container-right .shipping-form-container .form-container {
+  margin-top: 31px;
+  display: flex;
+}
+
+.categories-shipping-container-right
+  .shipping-form-container
+  .form-container
+  .left {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 30%;
+}
+
+.categories-shipping-container-right
+  .shipping-form-container
+  .form-container
+  .left
+  p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.categories-shipping-container-right
+  .shipping-form-container
+  .form-container
+  .right {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.categories-shipping-container-right
+  .shipping-form-container
+  .form-container
+  .right
+  input {
+  width: 100%;
+  height: 21px;
+  outline: 0;
+  padding: 2px 10px;
+}
+
+.categories-shipping-container-right .content-box-left .description-cont {
+  margin-top: 18px;
+}
+
+.categories-shipping-container-right .content-box-left .description-cont h3 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.categories-shipping-container-right .content-box-left .description-cont p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  margin-top: 12px;
+}
+
+.categories-shipping-container-right .content-box-right .product-details p {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.categories-shipping-container-right .content-box-right .quantity-container {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.categories-shipping-container-right .content-box-right .quantity-container p {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.categories-shipping-container-right
+  .content-box-right
+  .quantity-container
+  .quantity-box {
+  width: 101px;
+  height: 22px;
+  background-color: var(--textColorOne);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.categories-shipping-container-right
+  .content-box-right
+  .quantity-container
+  .quantity-box
+  p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: black;
+}
+
+.categories-shipping-container-right
+  .content-box-right
+  .quantity-container
+  .quantity-box
+  button {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.categories-shipping-container-right .content-box-right .buy-container {
+  width: 178px;
+  margin-top: 50px;
+}
+
+.categories-shipping-container-right .content-box-right .buy-container .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 17px;
+}
+
+.categories-shipping-container-right .content-box-right .buy-container .top p {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+}
+.categories-shipping-container-right .content-box-right .buy-container button {
+  width: 100%;
+  height: 31px;
+  border: 0;
+  border-radius: 5px;
+  outline: 0;
+  background-color: var(--textColorTwo);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+  text-transform: uppercase;
+  cursor: pointer;
+}

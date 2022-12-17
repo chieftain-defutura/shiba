@@ -1,5 +1,6 @@
 .sidebar-container {
   color: var(--textColorOne);
+  font-family: var(--oswaldFont);
 }
 .sidebar-container .box {
   width: 249px;

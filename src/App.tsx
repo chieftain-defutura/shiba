@@ -20,6 +20,7 @@ import MyContractNfts from './pages/MyContractNfts'
 import MyItems from './pages/MyItems'
 import ShopDetailsPage from './pages/DetailsPage/ShopDetailsPage'
 import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
+import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
 import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
 
 const App: React.FC = () => {
@@ -37,6 +38,10 @@ const App: React.FC = () => {
         <Route path="charities" element={<Charities />} />
         <Route path="action" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
+        <Route
+          path="awaiting-delivery-page"
+          element={<AwaitingDeliveryPage />}
+        />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>

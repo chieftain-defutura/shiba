@@ -1,29 +1,18 @@
 import React from 'react'
-// import { useAccount } from 'wagmi'
-import {
-  // DOMAIN_NFT_CONTRACT_ADDRESS,
-  WEBSITE_NFT_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
-// import axios from 'axios'
+
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import { WEBSITE_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
 import cardImg from '../../assets/img/card-3.png'
 import './WebsitesPage.css'
-import { useGetNftsByContractAddressQuery } from '../../store/slices/moralisApiSlice'
 
 const WebsitesPage: React.FC = () => {
-  // const { address } = useAccount()
-  // const [loading, setLoading] = useState(false)
-  // const [website, setWbsiteData] = useState([])
-  // console.log(website)
-
   const { data, isLoading, isError } = useGetNftsByContractAddressQuery({
     erc721Address: WEBSITE_NFT_CONTRACT_ADDRESS,
   })
 
   const nftsData: any[] = data ? data?.result : []
-
-  console.log(nftsData)
 
   return (
     <div>

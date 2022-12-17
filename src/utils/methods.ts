@@ -1,10 +1,12 @@
 import { ethers } from 'ethers'
 import { formatEther } from 'ethers/lib/utils.js'
+import DigitalShopABI from '../utils/abi/digitalShopABI.json'
 
 import erc20ABI from '../utils/abi/erc20ABI.json'
 import nftABI from '../utils/abi/websiteABI.json'
 import domainNftABI from '../utils/abi/domainABI.json'
 import {
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
   MARKETPLACE_CONTRACT_ADDRESS,
 } from './contractAddress'
@@ -44,4 +46,27 @@ export const mintDomainNft = async (
   )
   const tx = await nftContract.mintNft(domainName.trim(), tld)
   await tx.wait()
+}
+
+export const getDigitalShopCategory = async (data: any) => {
+  const contract = new ethers.Contract(
+    DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+    DigitalShopABI,
+    data,
+  )
+
+  const categoryList = await contract.getCategory()
+
+  const result = await Promise.all(
+    categoryList.map(async (category: string) => {
+      const subCategory = await contract.getSubCategory(category)
+
+      return {
+        name: category,
+        subCategory: subCategory,
+      }
+    }),
+  )
+
+  return result
 }

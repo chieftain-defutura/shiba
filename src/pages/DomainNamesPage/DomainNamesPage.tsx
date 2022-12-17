@@ -3,7 +3,6 @@ import { useQuery } from 'urql'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import cardImg from '../../assets/img/card-3.png'
 import './DomainNamesPage.css'
 import { domainPageQuery } from '../../constants/query'
 import { IDomainNft } from '../../constants/types'
