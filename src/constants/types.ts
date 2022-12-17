@@ -6,7 +6,30 @@ export type IDomainNft = {
   }
 }
 
-<<<<<<< HEAD
+export type ICharityToken = {
+  id: string
+  domainName: string
+  owner: {
+    id: string
+  }
+}
+
+export type IWebsiteToken = {
+  id: string
+  domainName: string
+  owner: {
+    id: string
+  }
+}
+
+export type IFullOnBlockchainArtToken = {
+  id: string
+  domainName: string
+  owner: {
+    id: string
+  }
+}
+
 export type IPhysicalItem = {
   id: string
   erc20Token: {
@@ -45,28 +68,4 @@ export type IDigitalItem = {
   }
   subcategory: string
   category: string
-=======
-export type ICharityToken = {
-  id: string
-  domainName: string
-  owner: {
-    id: string
-  }
-}
-
-export type IWebsiteToken = {
-  id: string
-  domainName: string
-  owner: {
-    id: string
-  }
-}
-
-export type IFullOnBlockchainArtToken = {
-  id: string
-  domainName: string
-  owner: {
-    id: string
-  }
->>>>>>> c9f1dedaa8002a693b265251e92ecb2d3b922e9b
 }
