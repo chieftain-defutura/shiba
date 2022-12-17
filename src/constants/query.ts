@@ -174,3 +174,26 @@ export const myItems = `
       }
     }
   `
+export const userCollectionsQuery = `
+  query($user: String!){
+    userCollections(where:{user:$user},orderBy:category,orderDirection:asc){
+      id
+      user
+      totalItems
+      category
+    }
+  }
+`
+export const userDigitalItemsPageQuery = `
+query($owner: String!,$category: String!){
+  digitalItems(where:{owner:$owner,category:$category}){
+    id
+    fullproduct
+    metadata
+    category
+    owner {
+      id
+    }
+  }
+}
+`

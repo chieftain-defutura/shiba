@@ -1,6 +1,8 @@
 import React from 'react'
-import './SideBar.css'
 import { Link } from 'react-router-dom'
+import { useQuery } from 'urql'
+
+import './SideBar.css'
 import { useAccount, useContractReads } from 'wagmi'
 import {
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -10,9 +12,19 @@ import {
   WEBSITE_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import shopAbi from '../../utils/abi/physicalShopABI.json'
+import { userCollectionsQuery } from '../../constants/query'
+import { IUserCollection } from '../../constants/types'
 
 const SideBar: React.FC = () => {
   const { address } = useAccount()
+  const [result] = useQuery<{ userCollections: IUserCollection[] }>({
+    query: userCollectionsQuery,
+    variables: { user: address },
+    pause: !address,
+  })
+
+  const { data } = result
+
   const { data: balanceData } = useContractReads({
     contracts: [
       {
@@ -53,7 +65,15 @@ const SideBar: React.FC = () => {
         <div className="box">
           <h2 className="heading">My Items</h2>
           <div className="content-cont">
-            <div className="content">
+            {data?.userCollections.map((item) => (
+              <div className="content" key={item.id}>
+                <Link to={`/my-${item.category}`}>
+                  <p className="name">My {item.category}</p>
+                  <p className="number">{item.totalItems}</p>
+                </Link>
+              </div>
+            ))}
+            {/* <div className="content">
               <Link to="/my-movies">
                 <p className="name">My Movies</p>
                 <p className="number">0</p>
@@ -76,7 +96,7 @@ const SideBar: React.FC = () => {
                 <p className="name">My Courses</p>
                 <p className="number">0</p>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="box">

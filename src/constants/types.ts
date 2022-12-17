@@ -119,4 +119,19 @@ export type IMyItems = {
   }
   subcategory: string
   category: string
+export type IUserCollection = {
+  id: string
+  user: string
+  category: string
+  totalItems: string
+}
+
+export type IUserDigitalItem = {
+  id: string
+  fullproduct: string
+  metadata: string
+  category: string
+  owner: {
+    id: string
+  }
 }

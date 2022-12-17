@@ -1,8 +1,9 @@
 import React from 'react'
 import { formatUnits } from 'ethers/lib/utils.js'
-import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
+
+import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import cardImg from '../../assets/img/card-3.png'
@@ -72,7 +73,6 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
           <button>
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>
-
           <button onClick={handleBuy}>Buy</button>
         </div>
       </div>
