@@ -2,9 +2,10 @@ import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
 import axios from 'axios'
 import { ethers } from 'ethers'
+import { useQuery } from 'urql'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMinus } from 'react-icons/bi'
-import { useAccount, useSigner } from 'wagmi'
+import { useAccount, useSigner, erc20ABI } from 'wagmi'
 import { Formik, Form, Field } from 'formik'
 import { useTransactionModal } from '../../context/TransactionContext'
 import shipmentABI from '../../utils/abi/shipmentABI.json'
@@ -16,6 +17,8 @@ import HomeLayout from '../../Layout/HomeLayout'
 import './ItemDetailsPage.css'
 import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import { useParams } from 'react-router-dom'
+import { physicalItemQuery } from '../../constants/query'
+import { IPhysicalItem } from '../../constants/types'
 
 const settings = {
   dots: false,
@@ -29,11 +32,19 @@ const settings = {
 const ItemDetailsPage: React.FC = () => {
   const { itemId } = useParams()
   const { address } = useAccount()
-  const { data } = useSigner()
+  const { data: signerData } = useSigner()
   const [quantity, setQuantity] = useState(1)
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
   const slider = useRef<Slider>(null)
+  const [result, reexecuteQuery] = useQuery<{ physicalItem: IPhysicalItem }>({
+    query: physicalItemQuery,
+    variables: { id: itemId },
+  })
+
+  const { data, fetching, error } = result
+
+  console.log(data)
 
   const handlePlus = () => {
     setQuantity(quantity + 1)
@@ -46,10 +57,28 @@ const ItemDetailsPage: React.FC = () => {
   }
 
   const handleSubmit = async (values: any) => {
-    if (!address || !data) return
+    if (!address || !signerData || !data) return
 
     try {
       setTransaction({ loading: true, status: 'pending' })
+      const erc20Contract = new ethers.Contract(
+        data.physicalItem.erc20Token.id,
+        erc20ABI,
+        signerData,
+      )
+
+      const allowance = Number(
+        (await erc20Contract.allowance(address, SHIPMENT_CONTRACT)).toString(),
+      )
+
+      if (allowance <= 0) {
+        const tx = await erc20Contract.approve(
+          SHIPMENT_CONTRACT,
+          ethers.constants.MaxUint256,
+        )
+        await tx.wait()
+      }
+
       const resData = await axios({
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
@@ -71,7 +100,11 @@ const ItemDetailsPage: React.FC = () => {
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
-      const contract = new ethers.Contract(SHIPMENT_CONTRACT, shipmentABI, data)
+      const contract = new ethers.Contract(
+        SHIPMENT_CONTRACT,
+        shipmentABI,
+        signerData,
+      )
 
       const tx = await contract.createBuyOrder(itemId, quantity, dataHash)
 

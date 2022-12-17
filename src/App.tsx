@@ -38,10 +38,7 @@ const App: React.FC = () => {
         <Route path="charities" element={<Charities />} />
         <Route path="action" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
-        <Route
-          path="awaiting-delivery-page"
-          element={<AwaitingDeliveryPage />}
-        />
+        <Route path="awaiting-delivery" element={<AwaitingDeliveryPage />} />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>
