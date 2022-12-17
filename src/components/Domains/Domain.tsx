@@ -21,7 +21,6 @@ import AppearanceSetting from '../../components/AppearanceSetting'
 import Transfer from '../../components/Transfer'
 import { Formik, Form, Field } from 'formik'
 import { TokenData } from '../../constants/tokenData'
-import Auction from '../Auction'
 
 const ShopSettingsOne: React.FC = () => {
   const [clickCard, setClickCard] = useState<any>(null)

@@ -20,7 +20,7 @@ import {
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
   const dispatch = useAppDispatch()
-  const balances = useAppSelector((store) => store.user)
+  // const balances = useAppSelector((store) => store.user)
 
   const { data: pawBalanceData } = useBalance({
     address: address,
