@@ -3,30 +3,39 @@ import { useQuery } from 'urql'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import './DomainNamesPage.css'
-import { domainPageQuery } from '../../constants/query'
-import { IDomainNft } from '../../constants/types'
+import { websitePageQuery } from '../../constants/query'
+import cardImg from '../../assets/img/card-3.png'
+import './ContractNftsPage.css'
+import { IWebsiteToken } from '../../constants/types'
 import { formatAddress } from '../../constants/variants'
 
-const DomainNamesPage: React.FC = () => {
-  const [result] = useQuery<{ domainTokens: IDomainNft[] }>({
-    query: domainPageQuery,
+const WebsitesPage: React.FC = () => {
+  const [result] = useQuery<{ websiteTokens: IWebsiteToken[] }>({
+    query: websitePageQuery,
   })
 
   const { data, fetching, error } = result
 
-  const nftData = data?.domainTokens ?? []
+  const nftData = data?.websiteTokens ?? []
 
   return (
     <div>
       <Navigation />
-      <div className="domain-name-container">
-        <div className="domain-name-container-left">
-          <h2 className="heading">Domain Names</h2>
+      <div className="website-container">
+        <div className="website-container-left">
+          <h2 className="heading">Websites</h2>
 
           <div className="check-box-container">
             <div className="checkbox-content">
-              <label htmlFor="shib">.shib</label>
+              <label htmlFor="shib">News</label>
+              <input id="shib" type="checkbox" />
+            </div>
+            <div className="checkbox-content">
+              <label htmlFor="shib">Portfolio</label>
+              <input id="shib" type="checkbox" />
+            </div>
+            <div className="checkbox-content">
+              <label htmlFor="shib">Brochure</label>
               <input id="shib" type="checkbox" />
             </div>
           </div>
@@ -39,12 +48,12 @@ const DomainNamesPage: React.FC = () => {
           ) : !nftData.length ? (
             'No Nfts Here'
           ) : (
-            <div className="domain-name-container-right">
+            <div className="website-container-right">
               {nftData.map((f, idx: number) => (
-                <div className="domain-name-card-container" key={idx}>
+                <div className="website-card-container" key={idx}>
                   <div className="card">
                     <div className="card-top">
-                      <h3>{f.domainName}</h3>
+                      <img src={cardImg} alt="" />
                     </div>
                     <div className="card-center">
                       <h3 className="title">Owner</h3>
@@ -58,6 +67,12 @@ const DomainNamesPage: React.FC = () => {
                 </Link> */}
                     </div>
                   </div>
+                  <div style={{ padding: '5px 0' }}>
+                    <p style={{ fontSize: '14px' }}>Domain:</p>
+                    <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                      <b>{f.domainName}</b>
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -69,4 +84,4 @@ const DomainNamesPage: React.FC = () => {
   )
 }
 
-export default DomainNamesPage
+export default WebsitesPage

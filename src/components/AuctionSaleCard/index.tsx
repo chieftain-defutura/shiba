@@ -75,6 +75,27 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
     }
   }
 
+  const handleRemoveSale = async () => {
+    if (!address || !data) return
+
+    try {
+      setTransaction({ loading: true, status: 'pending' })
+      const contract = new ethers.Contract(
+        MARKETPLACE_CONTRACT_ADDRESS,
+        auctionMarketplaceABI,
+        data,
+      )
+      const tx = await contract.removeSale(auctionId)
+      await tx.wait()
+      console.log('added')
+
+      setTransaction({ loading: true, status: 'success' })
+    } catch (error) {
+      console.log(error)
+      setTransaction({ loading: true, status: 'error' })
+    }
+  }
+
   const handleFinishAuction = async () => {
     if (!address || !data) return
 
@@ -117,7 +138,10 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
           </div>
           <div className="card-btn">
             {address?.toLowerCase() === owner.toLowerCase() ? (
-              <button onClick={handleFinishAuction}> Finish Auction</button>
+              <>
+                <button onClick={handleFinishAuction}> Finish Auction</button>
+                <button onClick={handleRemoveSale}>Remove Sale</button>
+              </>
             ) : (
               <button onClick={() => setOpen(true)}>place bid</button>
             )}

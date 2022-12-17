@@ -1,0 +1,90 @@
+.shipping-queue-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.shipping-queue-header .heading {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.shipping-queue-header img {
+  cursor: pointer;
+}
+
+.shipping-queue-container-right {
+  flex: 5;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+}
+
+.shipping-queue-container-right .content-box {
+  width: 86%;
+  margin-left: auto;
+}
+
+.shipping-queue-container-right .content-box table {
+  width: 100%;
+  margin-top: 47px;
+}
+
+.shipping-queue-container-right .content-box table {
+  width: 100%;
+  margin-top: 47px;
+  border: 0;
+}
+
+.shipping-queue-container-right .content-box table thead {
+  height: 60px;
+  text-align: center;
+}
+
+.shipping-queue-container-right .content-box table .body-tr {
+  margin-top: 30px !important;
+  border-radius: 5px;
+  height: 60px;
+  background-color: var(--textColorOne);
+  border: 0;
+  color: black;
+  text-align: center;
+}
+
+.shipping-queue-container-right .content-box table td {
+  padding: 8px 9px;
+}
+
+.shipping-queue-container-right .content-box table td p {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.shipping-queue-container-right .content-box table td button {
+  width: 100%;
+  height: 45px;
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  background-color: var(--textColorTwo);
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+.shipping-queue-container-right .content-box table td .cancel-btn {
+  background-color: var(--bgColorFour);
+}
+
+.shipping-queue-container-right .content-box table .spacer {
+  height: 30px;
+}

@@ -6,15 +6,16 @@ import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import MintNftPage from './pages/MintNftPage/MintNftPage'
 import DomainNamesPage from './pages/DomainNamesPage/DomainNamesPage'
-import WebsitesPage from './pages/WebsitesPage/WebsitesPage'
+import WebsitesPage from './pages/ContractNftsPage/WebsitesPage'
+import FullOnBlockChainPage from './pages/ContractNftsPage/FullOnBlockchain'
+import Charities from './pages/ContractNftsPage/Charities'
+
 import MarketPlacePage from './pages/MarketPlacePage/MarketPlacePage'
 import ActionPage from './pages/ActionPage/ActionPage'
 import ShopSettingsOne from './pages/ShopSettingsOne/ShopSettingsOne'
 import SellPage from './pages/SellPage/SellPage'
 import Dashboard from './pages/Dashboard/Dashboard'
 import ShopPage from './pages/Shops'
-import BlockChainNft from './pages/BlockChainNft/BlockChainNft'
-import Charities from './pages/Charities/Charities'
 import { ContractDetails, DigitalItemsCategory } from './constants/contract'
 import MyContractNfts from './pages/MyContractNfts'
 import MyItems from './pages/MyItems'
@@ -22,6 +23,7 @@ import ShopDetailsPage from './pages/DetailsPage/ShopDetailsPage'
 import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
 import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
 import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
+import HaveToSend from './pages/HaveToSendPage'
 
 const App: React.FC = () => {
   return (
@@ -34,14 +36,15 @@ const App: React.FC = () => {
         <Route path="domain-names" element={<DomainNamesPage />} />
         <Route path="websites" element={<WebsitesPage />} />
         <Route path="marketplace" element={<MarketPlacePage />} />
-        <Route path="full-on-blockChain-nft" element={<BlockChainNft />} />
+        <Route
+          path="full-on-blockChain-nft"
+          element={<FullOnBlockChainPage />}
+        />
         <Route path="charities" element={<Charities />} />
         <Route path="action" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
-        <Route
-          path="awaiting-delivery-page"
-          element={<AwaitingDeliveryPage />}
-        />
+        <Route path="awaiting-delivery" element={<AwaitingDeliveryPage />} />
+        <Route path="have-to-send" element={<HaveToSend />} />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>
