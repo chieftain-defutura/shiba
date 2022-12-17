@@ -77,7 +77,6 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
   const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
-  const [clickCard, setClickCard] = useState<any>(null)
   const [days, setDays] = useState('')
   const { data: readData } = useContractRead({
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
@@ -167,7 +166,6 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
         <BsArrowLeftCircle
           className="arrow-icon"
           onClick={() => {
-            setClickCard('put on sale')
             setOnAction(null)
           }}
         />
@@ -223,9 +221,20 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
                 }}
               >
                 {!readData ? (
-                  <button onClick={() => handleApproveToken()}>Approve</button>
+                  <button
+                    className="putOnSaleBtn"
+                    onClick={() => handleApproveToken()}
+                  >
+                    Approve
+                  </button>
                 ) : (
-                  <button onClick={handlePutOnSale}>Put On Sale</button>
+                  <button
+                    className="putOnSaleBtn"
+                    disabled={!price || !selectedDropDown || !days}
+                    onClick={handlePutOnSale}
+                  >
+                    Put On Sale
+                  </button>
                 )}
                 {days === 'custom' && (
                   <input

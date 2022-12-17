@@ -27,10 +27,12 @@
 }
 
 .marketplace-container-left .accordion-container .accordion-header {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+  cursor: pointer; */
+  display: grid;
+  grid-template-columns: 3fr 0.4fr;
 }
 
 .marketplace-container-left .accordion-container .accordion-header .title {
@@ -214,8 +216,8 @@
 }
 
 .marketplace-container-right {
-  flex: 5;
-  height: 100vh;
+  /* flex: 5;
+  height: 100vh; */
   position: relative;
 }
 
@@ -312,6 +314,7 @@
 .marketplace-container-right .card .card-bottom {
   padding: 10px 8px 0;
   border-top: 1px solid #343741;
+  width: 155px;
   /* display: flex; */
   /* align-items: center; */
   /* gap: 9px; */
@@ -340,6 +343,7 @@
   align-items: center;
   justify-content: center;
   padding: 4px 12px 4px 12px;
-  margin: 8px 0;
-  width: 90%;
+  margin: 8px auto;
+
+  width: 105%;
 }

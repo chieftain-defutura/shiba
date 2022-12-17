@@ -66,10 +66,8 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
   const [dropDown, setDropDown] = useState<any>(null)
-  const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
   const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
   const [price, setPrice] = useState('')
-  const [clickCard, setClickCard] = useState<any>(null)
 
   const { data: readData } = useContractRead({
     address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -130,7 +128,6 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
       <BsArrowLeftCircle
         className="arrow-icon"
         onClick={() => {
-          setClickCard('put on sale')
           setOnMarketplace(null)
         }}
       />
@@ -149,11 +146,6 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
                   placeholder="price"
                   onChange={(e) => setPrice(e.target.value)}
                 />
-                {!readData ? (
-                  <button onClick={() => handleApproveToken()}>Approve</button>
-                ) : (
-                  <button onClick={handlePutOnSale}>Put On Sale</button>
-                )}
               </div>
               <div className={!dropDown ? ' right' : 'right active'}>
                 <div className="header" onClick={() => setDropDown(!dropDown)}>
@@ -161,7 +153,7 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
                   <IoIosArrowDown />
                 </div>
                 <div className={!dropDown ? 'body' : 'body active'}>
-                  {tokenData.map((f, index) => {
+                  {TokensList.map((f, index) => {
                     return (
                       <p key={index} onClick={() => setSelectedDropDown(f)}>
                         {f.title}
@@ -170,6 +162,24 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
                   })}
                 </div>
               </div>
+            </div>
+            <div>
+              {!readData ? (
+                <button
+                  className="putOnSaleBtn"
+                  onClick={() => handleApproveToken()}
+                >
+                  Approve
+                </button>
+              ) : (
+                <button
+                  className="putOnSaleBtn"
+                  disabled={!price || !selectedDropDown}
+                  onClick={handlePutOnSale}
+                >
+                  Put On Sale
+                </button>
+              )}
             </div>
           </div>
         </div>

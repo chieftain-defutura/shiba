@@ -130,7 +130,10 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                   /> */}
               </div>
 
-              <h2 className="title" style={{ marginLeft: '100px' }}>
+              <h2
+                className="title"
+                // style={{ marginLeft: '-110px' }}
+              >
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
               {!clickAddItem && (

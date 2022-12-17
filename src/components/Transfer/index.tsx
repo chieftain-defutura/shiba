@@ -44,7 +44,11 @@ const Transfer: React.FC = () => {
       </div>
       {!result && <div>please enter valid address</div>}
       <div className="btn-cont">
-        <button onClick={handleSubmit} style={{ marginLeft: '10px' }}>
+        <button
+          onClick={handleSubmit}
+          disabled={!toAddress}
+          style={{ marginLeft: '10px' }}
+        >
           Submit Changes
         </button>
       </div>

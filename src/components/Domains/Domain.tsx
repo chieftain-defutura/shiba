@@ -414,8 +414,8 @@ const ShopSettingsOne: React.FC = () => {
                         <div className="price-select-container">
                           <div className="left">
                             <input />
-                            <button>Put On Sale</button>
                           </div>
+                          <button>Put On Sale</button>
                           <div
                             className={!dropDown ? ' right' : 'right active'}
                           >
