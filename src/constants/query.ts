@@ -93,3 +93,84 @@ query($id: String!){
   }
 }
 `
+
+export const fixedSaleQuery = `
+query {
+  fixedSales(where:{status:ACTIVE}){
+  id
+  auctionId
+  tokenId
+  owner
+  price
+  erc20Token{
+    id
+    symbol
+    decimals
+  }
+  erc721TokenAddress
+  status
+}
+}`
+
+export const goodsDigitalItemsQuery = `
+query{
+  digitalItems(where:{status:ACTIVE}){
+    id
+    shopDetails{
+      id
+    }
+    price
+    erc20Token {
+      id
+      symbol
+      decimals
+    }
+    subcategory
+    category
+  }}`
+
+export const goodsPhysicalItemsQuery = `
+query{
+  physicalItems(where:{status:ACTIVE}){
+    id
+    shopDetails{
+      id
+    }
+    price
+    erc20Token {
+      id
+      symbol
+      decimals
+    }
+    subcategory
+    category
+  }}`
+
+export const awaitingDelivery = `
+  query($owner: String!){
+    shipments(owner:$owner){
+      id
+      owner
+      status
+      quantity
+    }
+  }
+  `
+
+export const myItems = `
+  query($category:String!){
+    digitalItems(where:{status:PURCHASED, category:$category}){
+      id
+      shopId
+      price
+      owner
+      erc20Token {
+        id
+        symbol
+        decimals
+      }
+      subcategory
+      category
+      }
+    }
+  `

@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
+import { useQuery } from 'urql'
 import { useAccount } from 'wagmi'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
+import { IAwaitingDelivery } from '../../constants/types'
+import { awaitingDelivery } from '../../constants/query'
 import './HaveToSend.css'
 import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import HomeLayout from '../../Layout/HomeLayout'
@@ -9,39 +10,18 @@ import HaveToSendCard from '../../components/HaveToSendCard'
 
 const HaveToSend = () => {
   const { address } = useAccount()
-  const [shipment, setShipment] = useState<any[]>([])
-  const handleHaveToSend = useCallback(async () => {
-    try {
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-          query{
-            shipments(where: {owner:"${address}"}){
-              id
-              owner
-              status
-              quantity
-            }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data.data)
-      setShipment(data.data.shipments)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
 
-  useEffect(() => {
-    handleHaveToSend()
-  }, [handleHaveToSend])
+  const [result, reexecuteQuery] = useQuery<{
+    shipments: IAwaitingDelivery[]
+  }>({
+    query: awaitingDelivery,
+    variables: {
+      owner: address,
+    },
+    pause: !address,
+  })
+  const { data, fetching, error } = result
+  console.log(data)
 
   return (
     <div>
@@ -60,10 +40,10 @@ const HaveToSend = () => {
                 </tr>
               </thead>
               <tbody>
-                {!shipment.length ? (
+                {!data?.shipments.length ? (
                   <div>No Result</div>
                 ) : (
-                  shipment.map((f, idx) => (
+                  data.shipments.map((f, idx) => (
                     <div key={idx}>
                       <HaveToSendCard {...f} />
                     </div>

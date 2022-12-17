@@ -1,69 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useAccount } from 'wagmi'
-import axios from 'axios'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
+import React from 'react'
+import { useQuery } from 'urql'
 import FixedSaleCard from '../FixedSaleCard'
+import { IFixedSale } from '../../constants/types'
+import { fixedSaleQuery } from '../../constants/query'
 
-const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
 const CorporateMarketplace: React.FC = () => {
-  const { address } = useAccount()
-  const [mintData, setMintData] = useState<any[]>([])
-
-  const { isLoading, isError } = useGetUserNftsQuery({
-    erc721Address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    address: address ?? '',
+  const [result, reexecuteQuery] = useQuery<{
+    fixedSales: IFixedSale[]
+  }>({
+    query: fixedSaleQuery,
   })
+  const { data, fetching, error } = result
+  console.log(data)
 
-  const handleGetUserNft = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        API_URL,
-        {
-          query: `
-          query {
-            fixedSales(where:{status:ACTIVE}){
-            id
-            auctionId
-            tokenId
-            owner
-            price
-            erc20Token{
-              id
-              symbol
-            }
-            erc721TokenAddress
-            status
-          }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      setMintData(data.data.fixedSales)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
-
-  useEffect(() => {
-    handleGetUserNft()
-  }, [handleGetUserNft])
   return (
     <div className="marketplace-container-right-content">
-      {isLoading ? (
+      {fetching ? (
         <div>Loading</div>
-      ) : isError ? (
+      ) : error ? (
         <div>Error</div>
-      ) : !mintData.length ? (
+      ) : !data?.fixedSales.length ? (
         <div>No Result</div>
       ) : (
-        mintData.map((f, idx) => (
+        data?.fixedSales.map((f, idx) => (
           <div key={idx}>
             <FixedSaleCard {...f} />
           </div>
