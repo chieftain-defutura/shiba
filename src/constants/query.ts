@@ -45,3 +45,51 @@ export const fullOnBlockchainPageQuery = `
     }
   }
 `
+
+export const physicalItemQuery = `
+query($id: String!){
+  physicalItem(id:$id){
+    id
+    shopDetails{
+      id
+      domainId
+      domainName
+    }
+		price
+    owner {
+      id
+    }
+    erc20Token {
+      id
+      symbol
+      decimals
+    }
+    subcategory
+    category
+  }
+}
+`
+
+export const DigitalItemQuery = `
+query($id: String!){
+  digitalItem(id:$id){
+    id
+    shopDetails{
+      id
+      domainId
+      domainName
+    }
+		price
+    owner {
+      id
+    }
+    erc20Token {
+      id
+      symbol
+      decimals
+    }
+    subcategory
+    category
+  }
+}
+`

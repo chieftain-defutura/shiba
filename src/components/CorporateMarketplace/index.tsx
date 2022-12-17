@@ -27,6 +27,7 @@ const CorporateMarketplace: React.FC = () => {
             id
             auctionId
             tokenId
+            owner
             price
             erc20Token{
               id

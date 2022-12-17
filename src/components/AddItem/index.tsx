@@ -3,6 +3,7 @@ import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { Field, Form, Formik } from 'formik'
 
 import {
@@ -28,6 +29,7 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
+  const navigate = useNavigate()
   const { setTransaction } = useTransactionModal()
 
   const getCategory = useCallback(async () => {
@@ -94,6 +96,7 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
+      navigate('/')
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)

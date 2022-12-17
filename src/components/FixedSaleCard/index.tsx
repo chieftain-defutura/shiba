@@ -11,6 +11,7 @@ import './FixedSaleCard.scss'
 interface IFixedSaleCard {
   price: any
   auctionId: number
+  owner: string
   erc20Token: {
     id: string
     decimals: string
@@ -22,6 +23,7 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
   erc20Token,
   auctionId,
   price,
+  owner,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
@@ -54,15 +56,32 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
       )
       const tx = await contract.finishFixedSale(auctionId)
       await tx.wait()
-      console.log('added')
+      console.log('saled')
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
   }
 
+  const handleRemove = async () => {
+    if (!address || !data) return
+    try {
+      setTransaction({ loading: true, status: 'pending' })
+      const contract = new ethers.Contract(
+        MARKETPLACE_CONTRACT_ADDRESS,
+        auctionMarketplaceABI,
+        data,
+      )
+      const tx = await contract.removeSale(auctionId)
+      await tx.wait()
+
+      setTransaction({ loading: true, status: 'success' })
+    } catch (error) {
+      console.log(error)
+      setTransaction({ loading: true, status: 'error' })
+    }
+  }
   return (
     <div className="marketplace-card-container">
       <div className="card">
@@ -78,9 +97,16 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
           <button>
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>
-          <button onClick={handleSale} style={{ width: '100%' }}>
-            buy
-          </button>
+
+          {address?.toLowerCase() === owner.toLowerCase() ? (
+            <button onClick={handleRemove} style={{ width: '100%' }}>
+              Remove Sale
+            </button>
+          ) : (
+            <button onClick={handleSale} style={{ width: '100%' }}>
+              buy
+            </button>
+          )}
         </div>
       </div>
     </div>
