@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
@@ -31,11 +31,14 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
   const { address } = useAccount()
   const navigate = useNavigate()
   const { setTransaction } = useTransactionModal()
+  const [categoryList, setCategoryList] = useState<
+    { name: string; subCategory: string[] }[]
+  >([])
 
   const getCategory = useCallback(async () => {
     if (!data) return
     const result = await getDigitalShopCategory(data)
-    console.log(result)
+    setCategoryList(result)
   }, [data])
 
   useEffect(() => {
@@ -43,13 +46,11 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
   }, [getCategory])
 
   const getSubcategory = (category: string) => {
-    // const res = categoryList.find((f) => f.name === category)
+    const res = categoryList.find((f) => f.name === category)
 
-    // if (!res) return []
+    if (!res) return []
 
-    return [category]
-
-    // return res.subcategory
+    return res.subCategory
   }
 
   const handleAddItem = async (values: any) => {
@@ -81,7 +82,6 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
         digitalShopABI,
         data,
       )
-      // console.log(values.currency)
 
       const tx = await contract.addItem(
         id,
@@ -120,7 +120,7 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
         }}
         onSubmit={handleAddItem}
       >
-        {({ values }) => (
+        {({ values, isValid, dirty }) => (
           <Form>
             {/* <BsArrowLeftCircle
               className="arrow-icon"
@@ -181,7 +181,11 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
                   {/* <Button variant="primary" >
                     Submit Listing and Put on Sale
                   </Button> */}
-                  <Button variant="primary">
+                  <Button
+                    variant="primary"
+                    type="button"
+                    disabled={!(dirty && isValid)}
+                  >
                     Submit Listing and Put on Sale
                   </Button>
                 </div>

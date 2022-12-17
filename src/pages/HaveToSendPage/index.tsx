@@ -1,10 +1,48 @@
-import React from 'react'
-
+import React, { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
+import { useAccount } from 'wagmi'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
 import './HaveToSend.css'
 import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import HomeLayout from '../../Layout/HomeLayout'
+import HaveToSendCard from '../../components/HaveToSendCard'
 
 const HaveToSend = () => {
+  const { address } = useAccount()
+  const [shipment, setShipment] = useState<any[]>([])
+  const handleHaveToSend = useCallback(async () => {
+    try {
+      const { data } = await axios.post(
+        SUB_GRAPH_API_URL,
+        {
+          query: `
+          query{
+            shipments(where: {owner:"${address}"}){
+              id
+              owner
+              status
+              quantity
+            }
+          }
+        `,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      console.log(data.data)
+      setShipment(data.data.shipments)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [address])
+
+  useEffect(() => {
+    handleHaveToSend()
+  }, [handleHaveToSend])
+
   return (
     <div>
       <HomeLayout>
@@ -22,65 +60,15 @@ const HaveToSend = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="body-tr">
-                  <td>
-                    <p>Shoes1</p>
-                  </td>
-                  <td>
-                    <p>1</p>
-                  </td>
-                  <td>
-                    <button>Start Shipment</button>
-                  </td>
-                  <td>
-                    <button className="cancel-btn">Cancel Order</button>
-                  </td>
-                </tr>
-                <tr className="spacer"></tr>
-                <tr className="body-tr">
-                  <td>
-                    <p>Shoes2</p>
-                  </td>
-                  <td>
-                    <p>4</p>
-                  </td>
-                  <td>
-                    <button>Start Shipment</button>
-                  </td>
-                  <td>
-                    <button className="cancel-btn">Cancel Order</button>
-                  </td>
-                </tr>
-                <tr className="spacer"></tr>
-                <tr className="body-tr">
-                  <td>
-                    <p>Shoes3</p>
-                  </td>
-                  <td>
-                    <p>1</p>
-                  </td>
-                  <td>
-                    <button>Start Shipment</button>
-                  </td>
-                  <td>
-                    <button className="cancel-btn">Cancel Order</button>
-                  </td>
-                </tr>
-                <tr className="spacer"></tr>
-                <tr className="body-tr">
-                  <td>
-                    <p>Shoes4</p>
-                  </td>
-                  <td>
-                    <p>2</p>
-                  </td>
-                  <td>
-                    <button>Start Shipment</button>
-                  </td>
-                  <td>
-                    <button className="cancel-btn">Cancel Order</button>
-                  </td>
-                </tr>
+                {!shipment.length ? (
+                  <div>No Result</div>
+                ) : (
+                  shipment.map((f, idx) => (
+                    <div key={idx}>
+                      <HaveToSendCard {...f} />
+                    </div>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

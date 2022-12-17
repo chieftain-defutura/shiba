@@ -21,7 +21,7 @@
 }
 
 .header-nav-container .header-nav li button {
-  height: 55px;
+  height: 35px;
   width: 114px;
   border-radius: 5px;
   background-color: var(--textColorTwo);

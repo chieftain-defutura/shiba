@@ -7,7 +7,6 @@ import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
 import Modal from '../Model'
-import '../../components/AuctionSaleCard/AuctionSaleCard.scss'
 
 interface IAuctionSaleCard {
   price: any

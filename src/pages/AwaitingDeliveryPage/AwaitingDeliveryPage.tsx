@@ -1,11 +1,50 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { useAccount } from 'wagmi'
+import axios from 'axios'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
 import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import './AwaitingDeliveryPage.css'
 import HomeLayout from '../../Layout/HomeLayout'
+import AwaitingDeliveryCard from '../../components/AwaitingDeliveryCard'
 
 const AwaitingDeliveryPage: React.FC = () => {
   const [isReceived, setIsReceived] = useState(false)
   const [isComplain, setIsComplain] = useState(false)
+
+  const { address } = useAccount()
+  const [shipment, setShipment] = useState<any[]>([])
+  const handleAwaitingDelivery = useCallback(async () => {
+    try {
+      const { data } = await axios.post(
+        SUB_GRAPH_API_URL,
+        {
+          query: `
+          query{
+            shipments(where: {owner:"${address}"}){
+              id
+              owner
+              status
+              quantity
+            }
+          }
+        `,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      console.log(data.data)
+      setShipment(data.data.shipments)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [address])
+
+  useEffect(() => {
+    handleAwaitingDelivery()
+  }, [handleAwaitingDelivery])
 
   const handleBackBtn = () => {
     if (isReceived) return setIsReceived(false)
@@ -22,97 +61,14 @@ const AwaitingDeliveryPage: React.FC = () => {
                 <img src={ArrowIcon} alt="" onClick={handleBackBtn} />
                 <h2 className="heading">Awaiting Delivery</h2>
               </div>
-              {!isReceived && !isComplain && (
-                <table cellSpacing={0} cellPadding={0}>
-                  <thead>
-                    <tr>
-                      <td>Product Name </td>
-                      <td>Quantity</td>
-                      <td>Status</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="body-tr">
-                      <td>
-                        <p>Shoes1</p>
-                      </td>
-                      <td>
-                        <p>1</p>
-                      </td>
-                      <td>
-                        <p>Shipped/Pending</p>
-                      </td>
-                      <td>
-                        <button onClick={() => setIsReceived(true)}>
-                          Received
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="complaint-btn"
-                          onClick={() => setIsComplain(true)}
-                        >
-                          Complaint
-                        </button>
-                      </td>
-                    </tr>
-                    <tr className="spacer"></tr>
-                    <tr className="body-tr">
-                      <td>
-                        <p>Shoes2</p>
-                      </td>
-                      <td>
-                        <p>4</p>
-                      </td>
-                      <td>
-                        <p>Shipped/Pending</p>
-                      </td>
-                      <td>
-                        <button onClick={() => setIsReceived(true)}>
-                          Received
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="complaint-btn"
-                          onClick={() => setIsComplain(true)}
-                        >
-                          Complaint
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              )}
-              {isReceived && (
-                <div className="received-container">
-                  <div className="received-top">
-                    <p>0x002...02: All Great received, and very satisfied!</p>
-                    <p>0x003...03: Thank you, wish you grow and many sells</p>
-                    <p>0x003...04: Will buy always from you mate</p>
-                    <p>0x004...04: Great seller</p>
-                    <p>0x005...05: Just received shoes!</p>
+              {!shipment.length ? (
+                <div>No Result</div>
+              ) : (
+                shipment.map((f, idx) => (
+                  <div key={idx}>
+                    <AwaitingDeliveryCard {...f} />
                   </div>
-                  <div className="received-bottom">
-                    <input />
-                    <button>Send and Mark as Received</button>
-                  </div>
-                </div>
-              )}
-              {isComplain && (
-                <div className="complain-container">
-                  <div className="complain-top">
-                    <p>0x002...02: All Great received, and very satisfied!</p>
-                    <p>0x003...03: Thank you, wish you grow and many sells</p>
-                    <p>0x003...04: Will buy always from you mate</p>
-                    <p>0x004...04: Great seller</p>
-                    <p>0x005...05: Just received shoes!</p>
-                  </div>
-                  <div className="complain-bottom">
-                    <input />
-                    <button>Send and Complain</button>
-                  </div>
-                </div>
+                ))
               )}
             </div>
           </div>

@@ -388,7 +388,7 @@ const MintNftPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="box-2">
+          <div className="box-2" style={{ marginLeft: '65px' }}>
             <div className="box-left">
               <p className="title">Connect to:</p>
               <div className="content-container">

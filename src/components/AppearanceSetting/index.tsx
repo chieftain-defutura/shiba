@@ -4,11 +4,11 @@ import { useSigner, useAccount } from 'wagmi'
 import { Formik, Field, Form } from 'formik'
 import { ethers } from 'ethers'
 import axios from 'axios'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
+
+import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { useTransactionModal } from '../../context/TransactionContext'
 
 interface IAppearanceSetting {
   setClickCard: any

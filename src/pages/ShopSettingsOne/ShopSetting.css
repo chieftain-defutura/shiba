@@ -81,7 +81,7 @@
 .appearance-settings-container,
 .residual-container,
 .sell-container {
-  width: 120%;
+  width: 100%;
   background-color: var(--bgColorTwo);
   border-radius: 10px;
   margin-top: 10px;
@@ -570,16 +570,13 @@ select {
 .residual-container-sub-menu-container .add-getter-cont {
   display: flex;
   align-items: center;
-  /* gap: 14px; */
 }
 
 .residual-container-sub-menu-container .add-getter-cont .address {
-  /* width: 75%; */
   height: 30px;
 }
 
 .residual-container-sub-menu-container .add-getter-cont .share {
-  /* width: 25%; */
   height: 30px;
 }
 
@@ -615,7 +612,7 @@ select {
 }
 
 .put-on-sale-sub-menu-container .card .card-right {
-  padding: 23px;
+  padding: 5px;
 }
 
 .put-on-sale-sub-menu-container .card .card-right .card-title {
@@ -703,14 +700,33 @@ select {
   .on-marketplace-sub-container
   .price-select-container {
   display: flex;
-  gap: 20px;
+  gap: 10px;
+}
+.putOnSaleBtn {
+  background: var(--textColorTwo);
+  border: 1px solid var(--textColorTwo);
+  box-shadow: 0px 0px 24px rgb(253 230 63 / 40%);
+  border-radius: 999px;
+  height: 38px;
+  padding: 4px 30px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  font-family: var(--oswaldFont);
+  color: var(--textColorOne);
+  cursor: pointer;
+  transition: all 300ms linear;
+}
+button:disabled {
+  cursor: no-drop;
+  opacity: 0.8;
 }
 
 .on-marketplace-container
   .on-marketplace-sub-container
   .price-select-container
   .left {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 72px;
@@ -753,7 +769,7 @@ select {
   .on-marketplace-sub-container
   .price-select-container
   .right {
-  width: 30%;
+  width: 100%;
   height: 60px;
   background-color: var(--bgColorTwo);
   padding: 12px;
@@ -766,6 +782,7 @@ select {
   .price-select-container
   .right.active {
   height: auto;
+  /* width: 115px; */
 }
 
 .on-marketplace-container

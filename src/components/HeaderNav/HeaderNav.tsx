@@ -8,7 +8,7 @@ import {
   BONE_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
-import { useAppDispatch, useAppSelector } from '../../store/store'
+import { useAppDispatch } from '../../store/store'
 import {
   updateBoneBalance,
   updateLeashBalance,
@@ -20,7 +20,6 @@ import {
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
   const dispatch = useAppDispatch()
-  const balances = useAppSelector((store) => store.user)
 
   const { data: pawBalanceData } = useBalance({
     address: address,
@@ -52,10 +51,11 @@ const HeaderNav: React.FC = () => {
     if (boneBalanceData) dispatch(updateBoneBalance(boneBalanceData.formatted))
   }, [
     pawBalanceData,
-    updateShiBalance,
+    shiBalanceData,
     leashBalanceData,
     shibBalanceData,
     boneBalanceData,
+    dispatch,
   ])
 
   return (

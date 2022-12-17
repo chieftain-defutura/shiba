@@ -5,7 +5,6 @@ import { Routes, Route } from 'react-router-dom'
 
 import HomePage from './pages/HomePage'
 import MintNftPage from './pages/MintNftPage/MintNftPage'
-
 import DomainNamesPage from './pages/DomainNamesPage/DomainNamesPage'
 import WebsitesPage from './pages/ContractNftsPage/WebsitesPage'
 import FullOnBlockChainPage from './pages/ContractNftsPage/FullOnBlockchain'
