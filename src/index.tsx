@@ -10,6 +10,13 @@ import Provider from './store/provider'
 import { Provider as ReduxProvider } from 'react-redux'
 import store from './store/store'
 
+import { createClient, Provider as UrqlProvider } from 'urql'
+import { SUB_GRAPH_API_URL } from './constants/api'
+
+const urqlClient = createClient({
+  url: SUB_GRAPH_API_URL,
+})
+
 //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
@@ -17,9 +24,11 @@ root.render(
     <BrowserRouter>
       <WagmiConfig client={client}>
         <ReduxProvider store={store}>
-          <Provider>
-            <App />
-          </Provider>
+          <UrqlProvider value={urqlClient}>
+            <Provider>
+              <App />
+            </Provider>
+          </UrqlProvider>
         </ReduxProvider>
       </WagmiConfig>
     </BrowserRouter>

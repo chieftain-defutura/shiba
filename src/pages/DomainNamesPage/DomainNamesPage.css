@@ -75,18 +75,26 @@
 
 .domain-name-container-right .domain-name-card-container {
   width: 154px;
-  height: 247px;
 }
 
 .domain-name-container-right .card {
   background-color: var(--bgColorSeven);
-  height: 208px;
   width: 100%;
   border-radius: 8px;
 }
 
-.domain-name-container-right .card .card-top img {
+.domain-name-container-right .card .card-top {
+  display: grid;
+  place-items: center;
+  height: 100px;
+  padding: 10px;
+  background-color: #343741;
   border-radius: 8px 8px 0px 0px;
+}
+
+.domain-name-container-right .card .card-top h3 {
+  text-align: center;
+  word-break: break-all;
 }
 
 .domain-name-container-right .card .card-center {
