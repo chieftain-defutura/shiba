@@ -1,7 +1,13 @@
 import React from 'react'
-import cardImg from '../../assets/img/card-3.png'
 
-const DigitalItemCategoryCard = () => {
+import cardImg from '../../assets/img/card-3.png'
+import { IUserDigitalItem } from '../../constants/types'
+import { getDecryptedData } from '../../utils/formatters'
+
+const DigitalItemCategoryCard: React.FC<IUserDigitalItem> = ({
+  fullproduct,
+}) => {
+  console.log(getDecryptedData(fullproduct))
   return (
     <div className="card">
       <div className="card-top">

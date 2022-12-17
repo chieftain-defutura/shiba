@@ -1,75 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { useAccount } from 'wagmi'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
-import Navigation from '../../components/Navigation/Navigation'
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
-import SideBar from '../../components/SideBar/SideBar'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import { useQuery } from 'urql'
+
+import './ItemsPage.scss'
 import DigitalItemCategoryCard from '../../components/DigitalItemCategoryCard.tsx'
 import { IDigitalItemsCategory } from '../../constants/contract'
+import { userDigitalItemsPageQuery } from '../../constants/query'
+import { IUserDigitalItem } from '../../constants/types'
+import HomeLayout from '../../Layout/HomeLayout'
 
 const MyItems: React.FC<{ digitalItem: IDigitalItemsCategory }> = ({
   digitalItem,
 }) => {
   const { address } = useAccount()
-  const [card, setCard] = useState<any[]>([])
+  const [result] = useQuery<{ digitalItems: IUserDigitalItem[] }>({
+    query: userDigitalItemsPageQuery,
+    variables: { owner: address?.toLowerCase(), category: digitalItem.name },
+    pause: !address,
+  })
 
-  const handleGetUserNft = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `query{
-    digitalItems(where:{status:PURCHASED, category:"${digitalItem.name}"}){
-      id
-      shopId
-      price
-      owner
-      erc20Token {
-        id
-        symbol
-        decimals
-      }
-      subcategory
-      category
-      }
-    }`,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data.data.digitalItems)
-      setCard(data.data.digitalItems)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address, digitalItem.name])
-
-  useEffect(() => {
-    handleGetUserNft()
-  }, [handleGetUserNft])
+  const { data, error, fetching } = result
 
   return (
-    <div>
-      <Navigation />
-      <HeaderNav />
-      <div className="website-container">
-        <div className="website-container-right">
-          <SideBar />
-        </div>
-        <div className="website-card-container">
-          {card.map((f, i) => {
-            return <DigitalItemCategoryCard key={i} />
-          })}
-        </div>
+    <HomeLayout>
+      <div className="items-container">
+        {fetching ? (
+          'Loading...'
+        ) : error ? (
+          'something went wrong'
+        ) : !data?.digitalItems.length ? (
+          'No Items Here'
+        ) : (
+          <div className="items-card-container">
+            {data?.digitalItems.map((item, i) => {
+              return <DigitalItemCategoryCard key={i} {...item} />
+            })}
+          </div>
+        )}
       </div>
-      <FooterBottom />
-    </div>
+    </HomeLayout>
   )
 }
 

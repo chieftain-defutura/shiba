@@ -1,21 +1,20 @@
 import React, { useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import {
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
 } from 'wagmi'
-import {
-  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-  RESIDUAL_CONTRACT_ADDRESS,
-} from '../../../utils/contractAddress'
-import residualABI from '../../../utils/abi/resideuABI.json'
-import { useParams } from 'react-router-dom'
-import { useTransactionModal } from '../../../context/TransactionContext'
+
 import './Residual.scss'
+import { RESIDUAL_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
+import residualABI from '../../../utils/abi/resideuABI.json'
+import { useTransactionModal } from '../../../context/TransactionContext'
 
 interface IResidualProps {
   setClickCard: any
+  contractAddress: string
 }
 
 const initialValues = {
@@ -25,7 +24,10 @@ const initialValues = {
   paused: true,
 }
 
-const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
+const Residual: React.FC<IResidualProps> = ({
+  setClickCard,
+  contractAddress,
+}) => {
   const { id } = useParams()
   const { setTransaction } = useTransactionModal()
   const [totalShare, setTotalShare] = useState('')
@@ -37,30 +39,25 @@ const Residual: React.FC<IResidualProps> = ({ setClickCard }) => {
     address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'getBenificiary',
-    args: [DIGITAL_GOODS_NFT_CONTRACT_ADDRESS, id],
+    args: [contractAddress, id],
   })
   const { config } = usePrepareContractWrite({
     address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'setPercent',
-    args: [DIGITAL_GOODS_NFT_CONTRACT_ADDRESS, id, totalShare],
+    args: [contractAddress, id, totalShare],
   })
   const { config: addConfig } = usePrepareContractWrite({
     address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'addBenificiary',
-    args: [DIGITAL_GOODS_NFT_CONTRACT_ADDRESS, id, shareAddress, sharePercent],
+    args: [contractAddress, id, shareAddress, sharePercent],
   })
   const { config: removeConfig } = usePrepareContractWrite({
     address: RESIDUAL_CONTRACT_ADDRESS,
     abi: residualABI,
     functionName: 'removeBenificiary',
-    args: [
-      DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-      id,
-      removeUserIndex,
-      removeUserIndex,
-    ],
+    args: [contractAddress, id, removeUserIndex, removeUserIndex],
   })
 
   const { writeAsync: setPercentAsync } = useContractWrite(config)

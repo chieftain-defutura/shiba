@@ -209,7 +209,12 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
             </div>
           )}
 
-          {clickCard === 'residual' && <Residual setClickCard={setClickCard} />}
+          {clickCard === 'residual' && (
+            <Residual
+              setClickCard={setClickCard}
+              contractAddress={contractData.address}
+            />
+          )}
 
           {clickCard === 'transfer' && (
             <div className="residual-container">
