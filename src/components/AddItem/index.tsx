@@ -45,7 +45,9 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
 
     // if (!res) return []
 
-    return [category]
+    const result = category
+
+    return [result]
 
     // return res.subcategory
   }
