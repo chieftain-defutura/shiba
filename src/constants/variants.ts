@@ -19,3 +19,7 @@ export const modalVaraints = {
     y: '-50%',
   },
 }
+
+export const formatAddress = (address: string) => {
+  return `${address.slice(0, 6)}...${address.slice(address.length - 6)}`
+}

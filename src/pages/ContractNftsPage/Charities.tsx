@@ -1,32 +1,33 @@
 import React from 'react'
 import { useQuery } from 'urql'
 
+import './ContractNftsPage.css'
+import cardImg from '../../assets/img/card-3.png'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import './DomainNamesPage.css'
-import { domainPageQuery } from '../../constants/query'
-import { IDomainNft } from '../../constants/types'
+import { charitiesPageQuery } from '../../constants/query'
+import { ICharityToken } from '../../constants/types'
 import { formatAddress } from '../../constants/variants'
 
-const DomainNamesPage: React.FC = () => {
-  const [result] = useQuery<{ domainTokens: IDomainNft[] }>({
-    query: domainPageQuery,
+const CharitiesPage: React.FC = () => {
+  const [result] = useQuery<{ charityTokens: ICharityToken[] }>({
+    query: charitiesPageQuery,
   })
 
   const { data, fetching, error } = result
 
-  const nftData = data?.domainTokens ?? []
+  const nftData = data?.charityTokens ?? []
 
   return (
     <div>
       <Navigation />
-      <div className="domain-name-container">
-        <div className="domain-name-container-left">
-          <h2 className="heading">Domain Names</h2>
+      <div className="website-container">
+        <div className="website-container-left">
+          <h2 className="heading">Charities</h2>
 
           <div className="check-box-container">
             <div className="checkbox-content">
-              <label htmlFor="shib">.shib</label>
+              <label htmlFor="shib">Human Rights</label>
               <input id="shib" type="checkbox" />
             </div>
           </div>
@@ -39,12 +40,12 @@ const DomainNamesPage: React.FC = () => {
           ) : !nftData.length ? (
             'No Nfts Here'
           ) : (
-            <div className="domain-name-container-right">
+            <div className="website-container-right">
               {nftData.map((f, idx: number) => (
-                <div className="domain-name-card-container" key={idx}>
+                <div className="website-card-container" key={idx}>
                   <div className="card">
                     <div className="card-top">
-                      <h3>{f.domainName}</h3>
+                      <img src={cardImg} alt="" />
                     </div>
                     <div className="card-center">
                       <h3 className="title">Owner</h3>
@@ -54,9 +55,15 @@ const DomainNamesPage: React.FC = () => {
                       <p>Token Id</p>
                       <p>#{f.id}</p>
                       {/* <Link to={`/my-digital-shop/${f}`}>
-                  <button style={{ width: "50px" }}>Get In</button>
-                </Link> */}
+                <button style={{ width: "50px" }}>Get In</button>
+              </Link> */}
                     </div>
+                  </div>
+                  <div style={{ padding: '5px 0' }}>
+                    <p style={{ fontSize: '14px' }}>Domain:</p>
+                    <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                      <b>{f.domainName}</b>
+                    </p>
                   </div>
                 </div>
               ))}
@@ -69,4 +76,4 @@ const DomainNamesPage: React.FC = () => {
   )
 }
 
-export default DomainNamesPage
+export default CharitiesPage
