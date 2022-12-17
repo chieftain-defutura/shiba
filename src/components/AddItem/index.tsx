@@ -25,7 +25,7 @@ interface IAddItem {
   setAddItem: any
 }
 
-const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
+const AddItem: React.FC<IAddItem> = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()

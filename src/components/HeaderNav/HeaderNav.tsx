@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react'
-import './HeaderNav.css'
 import { useBalance } from 'wagmi'
 import { useAccount } from 'wagmi'
+
 import {
   PAW_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   BONE_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
-import { useAppDispatch, useAppSelector } from '../../store/store'
 import {
   updateBoneBalance,
   updateLeashBalance,
@@ -16,11 +15,12 @@ import {
   updateShiBalance,
   updateShibBalance,
 } from '../../store/slices/userSlice'
+import { useAppDispatch } from '../../store/store'
+import './HeaderNav.css'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
   const dispatch = useAppDispatch()
-  // const balances = useAppSelector((store) => store.user)
 
   const { data: pawBalanceData } = useBalance({
     address: address,
@@ -65,7 +65,6 @@ const HeaderNav: React.FC = () => {
           <li>
             <button>My Items: 105</button>
           </li>
-
           <li>
             SHI:
             {new Intl.NumberFormat('en-US', {
@@ -96,7 +95,6 @@ const HeaderNav: React.FC = () => {
               maximumFractionDigits: 2,
             }).format(Number(pawBalanceData?.formatted))}
           </li>
-
           <li>
             <button>Send Crypto</button>
           </li>

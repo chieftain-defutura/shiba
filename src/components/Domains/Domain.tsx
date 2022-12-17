@@ -1,26 +1,28 @@
 import React, { useState } from 'react'
+import { Formik, Form, Field } from 'formik'
+
 import {
   IoIosArrowBack,
   IoIosArrowForward,
   IoIosArrowDown,
 } from 'react-icons/io'
-import { BsArrowLeftCircle } from 'react-icons/bs'
 import Navigation from '../../components/Navigation/Navigation'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import SideBar from '../../components/SideBar/SideBar'
+import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import Residual from '../../pages/ShopSettingsOne/components/Residual'
+import Transfer from '../../components/Transfer'
+import { BsArrowLeftCircle } from 'react-icons/bs'
+import { TokenData } from '../../constants/tokenData'
+
 import cardImgFour from '../../assets/img/card-7.png'
 import cardImgFive from '../../assets/img/card-8.png'
 import cardImgSeven from '../../assets/img/card-10.png'
 import cardImgEighth from '../../assets/img/card-11.png'
 import cardImgNine from '../../assets/img/card-12.png'
 import cardImgTen from '../../assets/img/card-13.png'
-import Residual from '../../pages/ShopSettingsOne/components/Residual'
 import RemoveItem from '../RemoveItem/DigitalRemoveCard'
 import AppearanceSetting from '../../components/AppearanceSetting'
-import Transfer from '../../components/Transfer'
-import { Formik, Form, Field } from 'formik'
-import { TokenData } from '../../constants/tokenData'
 
 const ShopSettingsOne: React.FC = () => {
   const [clickCard, setClickCard] = useState<any>(null)
@@ -74,11 +76,6 @@ const ShopSettingsOne: React.FC = () => {
                 />
               ) : (
                 <div className="arrow-icon-container">
-                  {/* <IoIosArrowBack
-                    className="prev-arrow-icon"
-                    onClick={handleSlidePrev}
-                  /> */}
-
                   <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
@@ -449,8 +446,6 @@ const ShopSettingsOne: React.FC = () => {
                   </div>
                 </div>
               )}
-
-              {/* {onAction && <Auction />} */}
             </div>
           )}
         </div>
