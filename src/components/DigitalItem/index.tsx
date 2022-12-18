@@ -7,23 +7,13 @@ import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import cardImg from '../../assets/img/card-3.png'
+import { IGoodsDigitalItem } from '../../constants/types'
 
-interface IAuctionSaleCard {
-  id: number
-  shopDetail: {
-    id: number
-  }
-  price: number
-  erc20Token: {
-    id: string
-    symbol: string
-    decimals: string
-  }
-  subcategory: string
-  category: string
-}
-
-const DigitalItem: React.FC<IAuctionSaleCard> = ({ erc20Token, price, id }) => {
+const DigitalItem: React.FC<IGoodsDigitalItem> = ({
+  erc20Token,
+  price,
+  id,
+}) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()

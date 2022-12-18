@@ -70,6 +70,57 @@ export type IDigitalItem = {
   category: string
 }
 
+export type IFixedSale = {
+  id: string
+  auctionId: string
+  tokenId: string
+  owner: string
+  price: string
+  erc20Token: {
+    id: string
+    decimals: string
+    symbol: string
+  }
+  erc721TokenAddress: string
+  status: string
+}
+
+export type IGoodsDigitalItem = {
+  id: string
+  shopDetails: {
+    id: string
+  }
+  price: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  subcategory: string
+  category: string
+}
+
+export type IAwaitingDelivery = {
+  id: string
+  owner: string
+  status: string
+  quantity: string
+}
+
+export type IMyItems = {
+  id: string
+  shopId: string
+  price: string
+  owner: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  subcategory: string
+  category: string
+}
+
 export type IUserCollection = {
   id: string
   user: string

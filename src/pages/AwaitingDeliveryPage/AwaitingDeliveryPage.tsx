@@ -1,50 +1,29 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import { useAccount } from 'wagmi'
-import axios from 'axios'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
+import { useQuery } from 'urql'
 import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import './AwaitingDeliveryPage.css'
 import HomeLayout from '../../Layout/HomeLayout'
-import AwaitingDeliveryCard from '../../components/AwaitingDeliveryCard'
+import AwaitingDeliveryCard from '../../components/AwaitingDeliverCard'
+import { IAwaitingDelivery } from '../../constants/types'
+import { awaitingDelivery } from '../../constants/query'
 
 const AwaitingDeliveryPage: React.FC = () => {
+  const { address } = useAccount()
   const [isReceived, setIsReceived] = useState(false)
   const [isComplain, setIsComplain] = useState(false)
 
-  const { address } = useAccount()
-  const [shipment, setShipment] = useState<any[]>([])
-  const handleAwaitingDelivery = useCallback(async () => {
-    try {
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-          query{
-            shipments(where: {owner:"${address}"}){
-              id
-              owner
-              status
-              quantity
-            }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data.data)
-      setShipment(data.data.shipments)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
-
-  useEffect(() => {
-    handleAwaitingDelivery()
-  }, [handleAwaitingDelivery])
+  const [result] = useQuery<{
+    shipments: IAwaitingDelivery[]
+  }>({
+    query: awaitingDelivery,
+    variables: {
+      owner: address,
+    },
+    pause: !address,
+  })
+  const { data } = result
+  console.log(data)
 
   const handleBackBtn = () => {
     if (isReceived) return setIsReceived(false)
@@ -61,10 +40,10 @@ const AwaitingDeliveryPage: React.FC = () => {
                 <img src={ArrowIcon} alt="" onClick={handleBackBtn} />
                 <h2 className="heading">Awaiting Delivery</h2>
               </div>
-              {!shipment.length ? (
+              {!data?.shipments.length ? (
                 <div>No Result</div>
               ) : (
-                shipment.map((f, idx) => (
+                data?.shipments.map((f, idx) => (
                   <div key={idx}>
                     <AwaitingDeliveryCard {...f} />
                   </div>

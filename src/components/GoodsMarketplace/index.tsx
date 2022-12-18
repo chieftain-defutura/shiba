@@ -1,82 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useAccount } from 'wagmi'
-import axios from 'axios'
+import React from 'react'
+import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { Link } from 'react-router-dom'
+import { IGoodsDigitalItem } from '../../constants/types'
+import {
+  goodsDigitalItemsQuery,
+  goodsPhysicalItemsQuery,
+} from '../../constants/query'
 
-const API_URL = 'https://api.thegraph.com/subgraphs/name/arunram2000/dapplink'
+export const GoodsDigital = () => {
+  const [result] = useQuery<{
+    digitalItems: IGoodsDigitalItem[]
+  }>({
+    query: goodsDigitalItemsQuery,
+  })
+  const { data } = result
+  console.log(data)
 
-const GoodsMaretPlace: React.FC = () => {
-  const { address } = useAccount()
-  const [physicalItems, setPhysicalItems] = useState<any[]>([])
-  const [digitalItems, setDigitalItems] = useState<any[]>([])
-
-  const handleGetUserNft = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        API_URL,
-        {
-          query: `
-          query{
-            digitalItems(where:{status:ACTIVE}){
-              id
-              shopDetails{
-                id
-              }
-              price
-              erc20Token {
-                id
-                symbol
-                decimals
-              }
-              subcategory
-              category
-            }
-            physicalItems(where:{status:ACTIVE}){
-              id
-              shopDetails{
-                id
-              }
-              price
-              erc20Token {
-                id
-                symbol
-                decimals
-              }
-              subcategory
-              category
-            }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data.data)
-      setPhysicalItems(data.data.physicalItems)
-      setDigitalItems(data.data.digitalItems)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
-
-  useEffect(() => {
-    handleGetUserNft()
-  }, [handleGetUserNft])
   return (
-    <div className="marketplace-container-right-content">
-      {!physicalItems.length && !digitalItems.length ? (
+    <>
+      {!data?.digitalItems.length ? (
         <div>Loading</div>
       ) : (
-        physicalItems.map((f, idx) => (
+        data?.digitalItems.map((f, idx) => (
           <div key={idx}>
-            <h4>Physical</h4>
+            <h4>Digital</h4>
             <Link
-              to={`/physical-item-details/${f.id}`}
+              to={`/digital-item-details/${f.id}`}
               style={{ textDecoration: 'none' }}
             >
               <DigitalItem {...f} />
@@ -84,18 +34,45 @@ const GoodsMaretPlace: React.FC = () => {
           </div>
         ))
       )}
+    </>
+  )
+}
 
-      {digitalItems.map((f, idx) => (
-        <div key={idx}>
-          <h4>Digital</h4>
-          <Link
-            to={`/digital-item-details/${f.id}`}
-            style={{ textDecoration: 'none' }}
-          >
-            <DigitalItem {...f} />
-          </Link>
-        </div>
-      ))}
+export const GoodsPhysical = () => {
+  const [result] = useQuery<{
+    physicalItems: IGoodsDigitalItem[]
+  }>({
+    query: goodsPhysicalItemsQuery,
+  })
+  const { data } = result
+  console.log(data)
+
+  return (
+    <>
+      {!data?.physicalItems.length ? (
+        <div></div>
+      ) : (
+        data?.physicalItems.map((f, idx) => (
+          <div key={idx}>
+            <h4>physical</h4>
+            <Link
+              to={`/digital-item-details/${f.id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <DigitalItem {...f} />
+            </Link>
+          </div>
+        ))
+      )}
+    </>
+  )
+}
+
+const GoodsMaretPlace: React.FC = () => {
+  return (
+    <div className="marketplace-container-right-content">
+      <GoodsDigital />
+      <GoodsPhysical />
     </div>
   )
 }

@@ -7,19 +7,9 @@ import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
 import './FixedSaleCard.scss'
+import { IFixedSale } from '../../constants/types'
 
-interface IFixedSaleCard {
-  price: any
-  auctionId: number
-  owner: string
-  erc20Token: {
-    id: string
-    decimals: string
-    symbol: string
-  }
-}
-
-const FixedSaleCard: React.FC<IFixedSaleCard> = ({
+const FixedSaleCard: React.FC<IFixedSale> = ({
   erc20Token,
   auctionId,
   price,

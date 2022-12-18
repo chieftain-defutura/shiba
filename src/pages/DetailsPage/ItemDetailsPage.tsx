@@ -37,12 +37,12 @@ const ItemDetailsPage: React.FC = () => {
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
   const slider = useRef<Slider>(null)
-  const [result, reexecuteQuery] = useQuery<{ physicalItem: IPhysicalItem }>({
+  const [result] = useQuery<{ physicalItem: IPhysicalItem }>({
     query: physicalItemQuery,
     variables: { id: itemId },
   })
 
-  const { data, fetching, error } = result
+  const { data } = result
 
   console.log(data)
 

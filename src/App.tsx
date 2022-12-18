@@ -24,7 +24,6 @@ import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
 import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
 import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
 import HaveToSend from './pages/HaveToSendPage'
-import Loading from './components/Loading/Loading'
 
 const App: React.FC = () => {
   return (
