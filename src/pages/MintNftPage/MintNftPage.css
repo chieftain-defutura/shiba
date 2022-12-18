@@ -247,7 +247,7 @@
 .mint-nft-container .mint-nft-container-right .box-2 .content-title .left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  /* gap: 14px; */
 }
 
 .mint-nft-container .mint-nft-container-right .box-2 .content-title .circle {
@@ -300,6 +300,7 @@
   outline: 0;
   padding: 0 16px;
   color: var(--textColorThree);
+  margin-left: -3px;
 }
 
 .mint-nft-container

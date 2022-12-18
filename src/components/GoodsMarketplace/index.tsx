@@ -70,7 +70,7 @@ const GoodsMaretPlace: React.FC = () => {
   return (
     <div className="marketplace-container-right-content">
       {!physicalItems.length && !digitalItems.length ? (
-        <div>No Result</div>
+        <div>Loading</div>
       ) : (
         physicalItems.map((f, idx) => (
           <div key={idx}>

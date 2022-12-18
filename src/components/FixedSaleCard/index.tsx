@@ -94,16 +94,16 @@ const FixedSaleCard: React.FC<IFixedSaleCard> = ({
         </div>
         <div className="cards-bottom">
           <p>Fixed price</p>
-          <button>
+          <button style={{ width: '80%' }}>
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>
 
           {address?.toLowerCase() === owner.toLowerCase() ? (
-            <button onClick={handleRemove} style={{ width: '100%' }}>
+            <button onClick={handleRemove} style={{ width: '80%' }}>
               Remove Sale
             </button>
           ) : (
-            <button onClick={handleSale} style={{ width: '100%' }}>
+            <button onClick={handleSale} style={{ width: '80%' }}>
               buy
             </button>
           )}
