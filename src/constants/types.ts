@@ -119,6 +119,8 @@ export type IMyItems = {
   }
   subcategory: string
   category: string
+}
+
 export type IUserCollection = {
   id: string
   user: string
