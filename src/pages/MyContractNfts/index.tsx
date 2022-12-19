@@ -9,6 +9,7 @@ import SideBar from '../../components/SideBar/SideBar'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import cardImg from '../../assets/img/card-3.png'
+import Loading from '../../components/Loading/Loading'
 
 const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
   contractData,
@@ -32,7 +33,9 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
         </div>
         <div className="website-container-right">
           {isLoading ? (
-            <div>Loading</div>
+            <div>
+              <Loading />
+            </div>
           ) : isError ? (
             <div>Error</div>
           ) : !nftsData.length ? (

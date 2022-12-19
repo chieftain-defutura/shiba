@@ -20,7 +20,7 @@ export const GoodsDigital = () => {
   return (
     <>
       {!data?.digitalItems.length ? (
-        <div>No Result</div>
+        <div>Loading</div>
       ) : (
         data?.digitalItems.map((f, idx) => (
           <div key={idx}>
@@ -50,7 +50,7 @@ export const GoodsPhysical = () => {
   return (
     <>
       {!data?.physicalItems.length ? (
-        <div>No Result</div>
+        <div></div>
       ) : (
         data?.physicalItems.map((f, idx) => (
           <div key={idx}>

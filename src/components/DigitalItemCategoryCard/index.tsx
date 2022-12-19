@@ -1,7 +1,7 @@
 import React from 'react'
 import cardImg from '../../assets/img/card-3.png'
 
-const DigitalItemCategoryCard = () => {
+const DigitalItemCategoryCard: React.FC = () => {
   return (
     <div className="marketplace-card-container">
       <div className="card">

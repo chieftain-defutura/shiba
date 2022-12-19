@@ -3,10 +3,8 @@
     margin-left: 90px;
   }
   .cards-bottom {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center;
     p {
+      margin-left: 10px;
       font-size: 16px;
       color: var(--textColorTwo);
     }

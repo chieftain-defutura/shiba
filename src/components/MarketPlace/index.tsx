@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useAccount, useSigner, erc721ABI, useContractRead } from 'wagmi'
-import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
+import { useParams } from 'react-router-dom'
+
 import { useTransactionModal } from '../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
-
 import {
   MARKETPLACE_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
