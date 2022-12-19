@@ -217,3 +217,22 @@ query{
   }
 }
 `
+export const searchDomainNameQuery = `
+query($name: String!){
+  domainTokens(where:{domainName:$name}){
+    owner {
+      id
+    }
+  }
+  digitalShopTokens(where:{domainName:$name}){
+    owner {
+      id
+    }
+  }
+  physicalShopTokens(where:{domainName:$name}){
+    owner {
+      id
+    }
+  }
+}
+`
