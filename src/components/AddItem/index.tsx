@@ -236,7 +236,7 @@ const AddItem: React.FC<IAddItem> = () => {
                   />
                 </div>
                 <div>
-                  <Field name="price" placeholder="0.00" />
+                  <Field name="price" type="number" placeholder="0.00" />
                   <ErrorMessage
                     name="price"
                     className="errorMsg"

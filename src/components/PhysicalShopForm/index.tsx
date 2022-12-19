@@ -270,7 +270,7 @@ const PhysicalShopForm = () => {
                     </div>
                     <div className="content-right">
                       <Field name="quantity" placeholder="Quantity" />
-                      <Field name="price" placeholder="Price" />
+                      <Field name="price" type="number" placeholder="Price" />
                       <Field as="select" name="currency">
                         <option value="">Select a Currency</option>
                         {TokenData.map((f, index) => {

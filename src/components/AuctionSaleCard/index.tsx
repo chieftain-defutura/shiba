@@ -3,6 +3,7 @@ import { formatEther } from 'ethers/lib/utils.js'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import ReactCountdown, { CountdownRenderProps } from 'react-countdown'
+import Close from '../../assets/icon/close.svg'
 
 import { useTransactionModal } from '../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
@@ -10,6 +11,7 @@ import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
 import Modal from '../Model'
 import { IAuctionNft } from '../../constants/types'
+import Button from '../Button'
 
 const AuctionSaleCard: React.FC<IAuctionNft> = ({
   erc20Token,
@@ -23,7 +25,9 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
   const [open, setOpen] = useState(false)
-  const [placeBid, setPLaceBit] = useState('')
+  const [placeBid, setPlaceBid] = useState('')
+
+  const auctionPrice = Number(formatEther(highestBid ? highestBid : price))
 
   const handleSale = async () => {
     if (!address || !data) return
@@ -167,19 +171,38 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
           <div className="card-price">
             <p>Reserved price</p>
             <button>
-              {formatEther(highestBid ? highestBid : price)} {erc20Token.symbol}
+              {auctionPrice} {erc20Token.symbol}
             </button>
           </div>
           <ReactCountdown date={Number(endTime) * 1000} renderer={renderer} />
 
           <Modal isOpen={open} handleClose={() => setOpen(false)}>
-            <div onClick={() => setOpen(false)}> X</div>
-            <div>
+            <div className="modal-close-icon">
+              <img onClick={() => setOpen(false)} src={Close} alt="" />
+            </div>
+            <div className="modal-reserved">
+              <h3>Reserved price</h3>
+              <p>
+                {auctionPrice} {erc20Token.symbol}
+              </p>
+            </div>
+            <div className="modal-action">
+              <label htmlFor="">Price:</label>
               <input
-                type="text"
-                onChange={(e) => setPLaceBit(e.target.value)}
+                type="number"
+                placeholder="Price"
+                name="price"
+                onChange={(e) => setPlaceBid(e.target.value)}
               />
-              <button onClick={handleSale}>Place Bid</button>
+            </div>
+            <div className="modal-btn">
+              <Button
+                variant="primary"
+                disabled={!placeBid || Number(placeBid) <= auctionPrice}
+                onClick={handleSale}
+              >
+                Place Bid
+              </Button>
             </div>
           </Modal>
         </div>

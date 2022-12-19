@@ -182,6 +182,7 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
               <div className="price-select-container">
                 <div className="left">
                   <input
+                    type="number"
                     placeholder="price"
                     onChange={(e) => setPrice(e.target.value)}
                   />

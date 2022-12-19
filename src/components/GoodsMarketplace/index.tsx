@@ -7,6 +7,7 @@ import {
   goodsDigitalItemsQuery,
   goodsPhysicalItemsQuery,
 } from '../../constants/query'
+import Loading from '../Loading/Loading'
 
 export const GoodsDigital = () => {
   const [result] = useQuery<{
@@ -20,7 +21,7 @@ export const GoodsDigital = () => {
   return (
     <>
       {!data?.digitalItems.length ? (
-        <div>Loading</div>
+        <Loading />
       ) : (
         data?.digitalItems.map((f, idx) => (
           <div key={idx}>

@@ -216,8 +216,6 @@
 }
 
 .marketplace-container-right {
-  /* flex: 5;
-  height: 100vh; */
   position: relative;
 }
 
@@ -233,7 +231,6 @@
 
 .marketplace-container-right .currency-select-container .header {
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
   padding: 0 5px 14px 5px;
   border-bottom: 1px solid var(--textColorOne);
@@ -274,15 +271,8 @@
   grid-column-gap: 0px;
 }
 
-/* .marketplace-container-right .marketplace-card-container {
-  width: 154px;
-  height: 208px;
-} */
-
 .marketplace-container-right .marketplace-card-container .card {
-  /* background-color: var(--bgColorSeven); */
   height: 250px;
-  /* width: 100%; */
   border-radius: 8px;
   gap: 30px;
   margin-left: 0px;
@@ -294,7 +284,6 @@
 
 .marketplace-container-right .card .card-center {
   padding: 7px 10px 10px 10px;
-  /* border-bottom: 1px solid #343741; */
 }
 
 .marketplace-container-right .card .card-center .title {
@@ -315,11 +304,6 @@
   padding: 10px 8px 0;
   border-top: 1px solid #343741;
   width: 155px;
-  /* display: flex; */
-  /* align-items: center; */
-  /* gap: 9px; */
-
-  /* justify-content: space-between; */
 }
 
 .marketplace-container-right .card .card-bottom p {
@@ -344,6 +328,5 @@
   justify-content: center;
   padding: 4px 12px 4px 12px;
   margin: 8px auto;
-
   width: 105%;
 }

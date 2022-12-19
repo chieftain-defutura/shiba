@@ -17,6 +17,7 @@ import {
   updateShibBalance,
 } from '../../store/slices/userSlice'
 import './HeaderNav.css'
+import { Link } from 'react-router-dom'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
@@ -97,7 +98,9 @@ const HeaderNav: React.FC = () => {
             }).format(Number(pawBalanceData?.formatted))}
           </li>
           <li>
-            <button>Send Crypto</button>
+            <Link to="/send-crypto">
+              <button>Send Crypto</button>
+            </Link>
           </li>
         </ul>
       </div>

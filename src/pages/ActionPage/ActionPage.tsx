@@ -8,6 +8,7 @@ import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
 import { auctionPageQuery } from '../../constants/query'
 import { IAuctionNft } from '../../constants/types'
+import Loading from '../../components/Loading/Loading'
 
 const ActionPage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
@@ -113,33 +114,37 @@ const ActionPage: React.FC = () => {
           </div>
         </div>
         <div className="marketplace-container-right">
-          {fetching ? (
-            <div>Loading</div>
-          ) : error ? (
-            <div>something went wrong</div>
-          ) : !data?.auctions.length ? (
-            <div>No Result</div>
-          ) : (
-            <div className="marketplace-container-right-content">
-              {data?.auctions.map((f, idx) => (
-                <div key={idx}>
-                  <AuctionSaleCard {...f} />
-                </div>
-              ))}
-            </div>
-          )}
+          <div>
+            {fetching ? (
+              <div>
+                <Loading />
+              </div>
+            ) : error ? (
+              <div>something went wrong</div>
+            ) : !data?.auctions.length ? (
+              <div>No Result</div>
+            ) : (
+              <div className="marketplace-container-right-content">
+                {data?.auctions.map((f, idx) => (
+                  <div key={idx}>
+                    <AuctionSaleCard {...f} />
+                  </div>
+                ))}
+              </div>
+            )}
 
-          <div className="currency-select-container">
-            <div className="header">
-              <p>{selectedCurrency}</p>
-              <IoIosArrowDown className="arrow-icon" />
-            </div>
-            <div className="body">
-              <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
-              <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
-              <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
-              <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
-              <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
+            <div className="currency-select-container">
+              <div className="header">
+                <p>{selectedCurrency}</p>
+                <IoIosArrowDown className="arrow-icon" />
+              </div>
+              <div className="body">
+                <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
+                <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
+                <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
+                <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
+                <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
+              </div>
             </div>
           </div>
         </div>
