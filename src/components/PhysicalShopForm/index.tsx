@@ -3,7 +3,6 @@ import { Formik, Field, Form } from 'formik'
 import axios from 'axios'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
-import { getEncryptedData } from '../../utils/formatters'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { TokenData } from '../../constants/tokenData'
 import physicalShopABI from '../../utils/abi/physicalShopABI.json'
@@ -109,6 +108,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
       setClickCard(null)
+      console.log(setClickCard)
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)

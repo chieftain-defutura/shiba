@@ -108,27 +108,14 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
 
           {clickCard === 'stock management' && !clickRemoveItem ? (
             <div className="stock-management-container">
-              <BsArrowLeftCircle
-                className="arrow-icon"
-                onClick={() => setClickCard(null)}
-              />
-
               <div className="arrow-icon-container">
-                {/* <IoIosArrowBack
-                    className="prev-arrow-icon"
-                    onClick={handleSlidePrev}
-                  /> */}
-
-                {/* <IoIosArrowForward
-                    className="next-arrow-icon"
-                    onClick={handleSlideNext}
-                  /> */}
+                <BsArrowLeftCircle
+                  className="arrow-icon"
+                  onClick={() => setClickCard(null)}
+                />
               </div>
 
-              <h2
-                className="title"
-                // style={{ marginLeft: '-110px' }}
-              >
+              <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
               {!clickAddItem && (
@@ -174,7 +161,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                       {contractData.pathName === 'my-digital-shop' ? (
                         <AddItem setAddItem={setClickCard} />
                       ) : (
-                        <PhysicalShopForm setClickCard={undefined} />
+                        <PhysicalShopForm setClickCard={setClickCard} />
                       )}
                     </>
                   )}
