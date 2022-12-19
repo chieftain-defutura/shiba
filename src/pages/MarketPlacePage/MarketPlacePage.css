@@ -305,6 +305,14 @@
   border-top: 1px solid #343741;
   width: 155px;
 }
+.card-btn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+}
+.card-shoes p {
+  color: #fff;
+}
 
 .marketplace-container-right .card .card-bottom p {
   font-weight: 400;

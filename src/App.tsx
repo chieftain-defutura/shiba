@@ -56,7 +56,14 @@ const App: React.FC = () => {
             />
             <Route
               path={`/${d}/:id`}
-              element={<ShopSettingsOne contractData={ContractDetails[d]} />}
+              element={
+                <ShopSettingsOne
+                  contractData={ContractDetails[d]}
+                  setShopSetting={function (value: boolean): void {
+                    throw new Error('Function not implemented.')
+                  }}
+                />
+              }
             />
           </Route>
         ))}

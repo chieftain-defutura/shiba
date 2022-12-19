@@ -24,7 +24,13 @@ import PhysicalRemoveItem from '../../components/RemoveItem/PhysicalRemoveCard'
 import DigitalRemoveItem from '../../components/RemoveItem/DigitalRemoveCard'
 import Sell from './components/Sell'
 
-const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
+type IShopSetting = {
+  setShopSetting: React.Dispatch<boolean>
+  contractData: IContractData
+}
+
+const ShopSettingsOne: React.FC<IShopSetting> = ({
+  setShopSetting,
   contractData,
 }) => {
   const [clickCard, setClickCard] = useState<any>(null)
@@ -112,6 +118,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                 <BsArrowLeftCircle
                   className="arrow-icon"
                   onClick={() => setClickCard(null)}
+                  // onClick={() => setShopSetting(true)}
                 />
               </div>
 
@@ -216,12 +223,11 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
 
           {clickCard === 'put on sale' && (
             <div className="sell-container">
-              {!clickAddItem && (
-                <BsArrowLeftCircle
-                  className="arrow-icon"
-                  onClick={() => setClickCard(null)}
-                />
-              )}
+              <BsArrowLeftCircle
+                className="arrow-icon"
+                onClick={() => setClickCard(null)}
+              />
+
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
