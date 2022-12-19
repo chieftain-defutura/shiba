@@ -137,3 +137,20 @@ export type IUserDigitalItem = {
     id: string
   }
 }
+
+export type IAuctionNft = {
+  id: string
+  tokenId: string
+  auctionId: string
+  owner: string
+  highestBid: string
+  price: string
+  endTime: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  erc721TokenAddress: string
+  status: string
+}

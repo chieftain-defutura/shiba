@@ -1,31 +1,23 @@
 import React, { useState } from 'react'
 import { formatEther } from 'ethers/lib/utils.js'
-import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
+import ReactCountdown, { CountdownRenderProps } from 'react-countdown'
+
+import { useTransactionModal } from '../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import cardImg from '../../assets/img/card-3.png'
 import Modal from '../Model'
+import { IAuctionNft } from '../../constants/types'
 
-interface IAuctionSaleCard {
-  price: any
-  auctionId: number
-  owner: string
-  highestBid: string | null
-  erc20Token: {
-    id: string
-    symbol: string
-    decimals: string
-  }
-}
-
-const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
+const AuctionSaleCard: React.FC<IAuctionNft> = ({
   erc20Token,
   auctionId,
   price,
   owner,
   highestBid,
+  endTime,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
@@ -66,8 +58,6 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
         ethers.utils.parseUnits(placeBid, erc20Token.decimals),
       )
       await tx.wait()
-      console.log('added')
-
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
       console.log(error)
@@ -116,6 +106,53 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
       setTransaction({ loading: true, status: 'error' })
     }
   }
+
+  const renderer = ({
+    completed,
+    days,
+    minutes,
+    seconds,
+    hours,
+  }: CountdownRenderProps) => {
+    if (completed) {
+      return (
+        <>
+          <div className="card-auction">
+            <p>Auction Ended.</p>
+          </div>
+          <div className="card-btn">
+            {address?.toLowerCase() === owner.toLowerCase() ? (
+              <>
+                <button onClick={handleFinishAuction}> Finish Auction</button>
+                <button onClick={handleRemoveSale}>Remove Sale</button>
+              </>
+            ) : null}
+          </div>
+        </>
+      )
+    }
+    return (
+      <>
+        <div className="card-auction">
+          <p>Auction ends in</p>
+          <p>
+            {days}d :{hours}h :{minutes}m :{seconds}s
+          </p>
+        </div>
+        <div className="card-btn">
+          {address?.toLowerCase() === owner.toLowerCase() ? (
+            <>
+              <button onClick={handleFinishAuction}> Finish Auction</button>
+              <button onClick={handleRemoveSale}>Remove Sale</button>
+            </>
+          ) : (
+            <button onClick={() => setOpen(true)}>place bid</button>
+          )}
+        </div>
+      </>
+    )
+  }
+
   return (
     <div className="marketplace-card-container">
       <div className="card">
@@ -133,28 +170,16 @@ const AuctionSaleCard: React.FC<IAuctionSaleCard> = ({
               {formatEther(highestBid ? highestBid : price)} {erc20Token.symbol}
             </button>
           </div>
-          <div className="card-auction">
-            <p>Auction ends in 5 days</p>
-          </div>
-          <div className="card-btn">
-            {address?.toLowerCase() === owner.toLowerCase() ? (
-              <>
-                <button onClick={handleFinishAuction}> Finish Auction</button>
-                <button onClick={handleRemoveSale}>Remove Sale</button>
-              </>
-            ) : (
-              <button onClick={() => setOpen(true)}>place bid</button>
-            )}
-          </div>
+          <ReactCountdown date={Number(endTime) * 1000} renderer={renderer} />
 
-          <Modal isOpen={open}>
+          <Modal isOpen={open} handleClose={() => setOpen(false)}>
             <div onClick={() => setOpen(false)}> X</div>
             <div>
               <input
                 type="text"
                 onChange={(e) => setPLaceBit(e.target.value)}
               />
-              <button onClick={handleSale}>Place Bit</button>
+              <button onClick={handleSale}>Place Bid</button>
             </div>
           </Modal>
         </div>

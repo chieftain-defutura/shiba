@@ -41,7 +41,7 @@ const App: React.FC = () => {
           element={<FullOnBlockChainPage />}
         />
         <Route path="charities" element={<Charities />} />
-        <Route path="action" element={<ActionPage />} />
+        <Route path="auction" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
         <Route path="awaiting-delivery" element={<AwaitingDeliveryPage />} />
         <Route path="have-to-send" element={<HaveToSend />} />

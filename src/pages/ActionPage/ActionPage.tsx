@@ -1,25 +1,22 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useAccount } from 'wagmi'
-import axios from 'axios'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
+import React, { useState } from 'react'
+import { IoIosArrowDown } from 'react-icons/io'
+import { useQuery } from 'urql'
+
+import './ActionPage.css'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import { IoIosArrowDown } from 'react-icons/io'
-import './ActionPage.css'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
+import { auctionPageQuery } from '../../constants/query'
+import { IAuctionNft } from '../../constants/types'
 
 const ActionPage: React.FC = () => {
-  const { address } = useAccount()
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
-  const [mintData, setMintData] = useState<any[]>([])
-
-  const { isLoading, isError } = useGetUserNftsQuery({
-    erc721Address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    address: address ?? '',
+  const [result] = useQuery<{ auctions: IAuctionNft[] }>({
+    query: auctionPageQuery,
   })
+
+  const { data, fetching, error } = result
 
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
@@ -28,53 +25,9 @@ const ActionPage: React.FC = () => {
     setClickDropDown(idx)
   }
 
-  const handleGetUserNft = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-          query{
-            auctions(where:{status:ACTIVE}){
-              id
-              tokenId
-              auctionId
-              owner
-              highestBid
-              price
-              erc20Token{
-                id
-                symbol
-                decimals
-              }
-              erc721TokenAddress
-              status
-            }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data)
-      setMintData(data.data.auctions)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
-
-  useEffect(() => {
-    handleGetUserNft()
-  }, [handleGetUserNft])
-
   return (
     <div>
       <Navigation />
-
       <div className="action-container">
         <div className="action-container-left">
           <h2 className="heading">Auction</h2>
@@ -160,21 +113,22 @@ const ActionPage: React.FC = () => {
           </div>
         </div>
         <div className="marketplace-container-right">
-          <div className="marketplace-container-right-content">
-            {isLoading ? (
-              <div>Loading</div>
-            ) : isError ? (
-              <div>Error</div>
-            ) : !mintData.length ? (
-              <div>No Result</div>
-            ) : (
-              mintData.map((f, idx) => (
+          {fetching ? (
+            <div>Loading</div>
+          ) : error ? (
+            <div>something went wrong</div>
+          ) : !data?.auctions.length ? (
+            <div>No Result</div>
+          ) : (
+            <div className="marketplace-container-right-content">
+              {data?.auctions.map((f, idx) => (
                 <div key={idx}>
                   <AuctionSaleCard {...f} />
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
+
           <div className="currency-select-container">
             <div className="header">
               <p>{selectedCurrency}</p>

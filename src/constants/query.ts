@@ -197,3 +197,23 @@ query($owner: String!,$category: String!){
   }
 }
 `
+export const auctionPageQuery = `
+query{
+  auctions(where:{status:ACTIVE}){
+    id
+    tokenId
+    auctionId
+    owner
+    highestBid
+    price
+    endTime
+    erc20Token{
+      id
+      symbol
+      decimals
+    }
+    erc721TokenAddress
+    status
+  }
+}
+`

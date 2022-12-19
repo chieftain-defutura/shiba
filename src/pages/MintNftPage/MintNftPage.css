@@ -1,6 +1,5 @@
 .mint-nft-container {
   display: flex;
-  padding: 0px 130px;
   color: var(--textColorOne);
   /* gap: 150px; */
 }
@@ -248,6 +247,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  cursor: pointer;
 }
 
 .mint-nft-container .mint-nft-container-right .box-2 .content-title .circle {
@@ -363,7 +363,7 @@
   display: flex;
   align-items: center;
   gap: 150px;
-  margin: 98px 0 98px 65px;
+  margin: 30px 0 98px 65px;
 }
 
 .mint-nft-container .mint-nft-container-right .box-3 .box-left .content {
@@ -391,4 +391,10 @@
   .box-right
   button:disabled {
   cursor: no-drop;
+}
+
+.mint-nft-container .mint-nft-container-right .domain-error {
+  padding: 60px 30px 0;
+  margin-left: 45%;
+  height: 80px;
 }

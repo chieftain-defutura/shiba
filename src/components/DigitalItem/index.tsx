@@ -69,7 +69,7 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
         <div className="card-bottom">
-          <p>Reserved price</p>
+          <p>Fixed price</p>
           <button>
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>

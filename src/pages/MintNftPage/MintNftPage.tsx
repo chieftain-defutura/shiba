@@ -4,8 +4,6 @@ import axios from 'axios'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { useContractReads, erc20ABI, useAccount, useSigner } from 'wagmi'
 
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
-import Navigation from '../../components/Navigation/Navigation'
 import {
   DIGITAL_GOOD_SHOP,
   PHYSICAL_GOODS_SHOP,
@@ -15,7 +13,6 @@ import {
   NFT_ART,
 } from '../../constants/mintPageConstatnts'
 import './MintNftPage.css'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   PAW_TOKEN_ADDRESS,
@@ -29,8 +26,9 @@ import {
 } from '../../utils/contractAddress'
 import domainABI from '../../utils/abi/domainABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
-import SideBar from '../../components/SideBar/SideBar'
 import { mintDomainNft, mintNft } from '../../utils/methods'
+import HomeLayout from '../../Layout/HomeLayout'
+import { domainRegex, getDomainNamePrice } from '../../lib/helpers'
 
 interface IContractData {
   title: string
@@ -93,7 +91,6 @@ const MintNftPage: React.FC = () => {
   const { setTransaction, loading } = useTransactionModal()
   const { address } = useAccount()
   const { data: signerData } = useSigner()
-  // const provider = useProvider({ chainId: 5 });
   const [isDropDownClick, setIsDropDownClick] = useState(false)
   const [selectedOption, setSelectedOption] = useState('')
   const [selectedNftType, setSelectedNftType] = useState<
@@ -102,38 +99,23 @@ const MintNftPage: React.FC = () => {
   const [selected, setSelected] = useState('')
   const [NftContractData, setIsNftContractData] =
     useState<IContractData[]>(ContractData)
-  const [inputData, setInputData] = useState('')
-  console.log(inputData)
+  const [domainName, setDomainName] = useState('')
+  const [connectToExistingDomain, setConnectExistingDomain] = useState(false)
 
   const [selectDomain, setSelectDomain] = useState('')
   const [userDomainNfts, setUserDomainNfts] = useState<
     { tokenId: string; name: string }[]
   >([])
 
-  // const { chain } = useNetwork();
-
   const pawAmount = useMemo(() => {
-    if (!inputData.length) return 0
-    const strlength = inputData.length
-    if (strlength >= 2 && strlength <= 3) return 1000000
-    if (strlength >= 4 && strlength <= 5) return 100000
-    if (strlength >= 6 && strlength <= 7) return 10 ** 21 / 10 ** 18
-    if (strlength >= 8 && strlength <= 10) return 10 ** 20 / 10 ** 18
-    if (strlength >= 11 && strlength <= 14) return (5 * 10 ** 19) / 10 ** 18
-    if (strlength >= 15 && strlength <= 17) return (2 * 10 ** 19) / 10 ** 18
-    if (strlength >= 18 && strlength <= 20) return 10 ** 18 / 10 ** 18
-    if (strlength >= 21 && strlength <= 25) return 10 ** 17 / 10 ** 18
-    return 10 ** 16 / 10 ** 18
-  }, [inputData])
+    if (!domainName.length) return 0
+    return getDomainNamePrice(domainName)
+  }, [domainName])
 
   const domainError = useMemo(() => {
-    const regex = new RegExp(
-      '^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:.[a-zA-Z]{2,})+$',
-    )
-    const isValid = regex.test(inputData.concat(selected))
-    console.log(isValid)
+    const isValid = domainRegex().test(domainName.concat(selected))
     return isValid ? null : 'Invalid domain name'
-  }, [inputData, selected])
+  }, [domainName, selected])
 
   const { data } = useContractReads({
     contracts: [
@@ -217,6 +199,12 @@ const MintNftPage: React.FC = () => {
 
     const contractdata = NftContractData.find((f) => f.title === selectedOption)
     setSelectedNftType(contractdata)
+
+    if (selectedOption === UNATTACHED_DOMAIN_NAME)
+      setConnectExistingDomain(false)
+
+    if (selectedOption !== UNATTACHED_DOMAIN_NAME)
+      setConnectExistingDomain(true)
     // eslint-disable-next-line   react-hooks/exhaustive-deps
   }, [selectedOption])
 
@@ -238,15 +226,15 @@ const MintNftPage: React.FC = () => {
     if (!selectedNftType) return
 
     if (selectedNftType.title === UNATTACHED_DOMAIN_NAME) {
-      if (!inputData) return 'error please enter domain name'
+      if (!domainName) return 'please enter a domain name'
 
       return undefined
     }
 
-    if (!selectDomain) return 'error please select a domain'
+    if (!selectDomain) return 'please select a existing domain'
 
     return undefined
-  }, [selectedNftType, selectDomain, inputData])
+  }, [selectedNftType, selectDomain, domainName])
 
   const handleApproveToken = async () => {
     try {
@@ -284,7 +272,7 @@ const MintNftPage: React.FC = () => {
 
       if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
         setTransaction({ loading: true, status: 'pending' })
-        await mintDomainNft(inputData, selected, signerData)
+        await mintDomainNft(domainName, selected, signerData)
         setTransaction({ loading: true, status: 'success' })
         return
       }
@@ -300,182 +288,211 @@ const MintNftPage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
-      <HeaderNav />
-      <div className="mint-nft-container">
-        <div className="mint-nft-container-right">
-          <SideBar />
-        </div>
-        <div className="mint-nft-container-right">
-          <h2 className="heading">Mint NFT</h2>
-          <div className="box-1">
-            <div className="box-left">
-              <p className="title">Please Select NFT token type:</p>
-              <div className="content-container">
-                <div className="content-title">
-                  <p className="title">Total LEASH cost:</p>
-                  <p className="title">Total SHIB cost:</p>
-                </div>
-                <div className="content-input">
-                  <input readOnly value={0.02} />
-                  <input readOnly value={1000000} />
-                </div>
-              </div>
-            </div>
-            <div className="box-right">
-              <div
-                className="custom-drop-down"
-                onClick={() => setIsDropDownClick(!isDropDownClick)}
-              >
-                {selectedOption}
-                <MdKeyboardArrowDown className="arrow-icon" />
-              </div>
-              <div
-                className={
-                  isDropDownClick
-                    ? 'drop-down-content active'
-                    : 'drop-down-content'
-                }
-              >
-                <p
-                  onClick={() => {
-                    setSelectedOption(DIGITAL_GOOD_SHOP)
-                    setIsDropDownClick(false)
-                  }}
-                >
-                  Digital Goods Shop
-                </p>
-                <p
-                  onClick={() => {
-                    setSelectedOption(PHYSICAL_GOODS_SHOP)
-                    setIsDropDownClick(false)
-                  }}
-                >
-                  Physical Goods Shop
-                </p>
-                <p
-                  onClick={() => {
-                    setSelectedOption(WEBSITE)
-                    setIsDropDownClick(false)
-                  }}
-                >
-                  Website
-                </p>
-                <p
-                  onClick={() => {
-                    setSelectedOption(CHARITY)
-                    setIsDropDownClick(false)
-                  }}
-                >
-                  Charity
-                </p>
-                <p
-                  onClick={() => {
-                    setSelectedOption(NFT_ART)
-                    setIsDropDownClick(false)
-                  }}
-                >
-                  ART NFT
-                </p>
-                <p
-                  onClick={() => {
-                    setSelectedOption(UNATTACHED_DOMAIN_NAME)
-                    setIsDropDownClick(false)
-                  }}
-                >
-                  Unattached Domain Name
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="box-2" style={{ marginLeft: '65px' }}>
-            <div className="box-left">
-              <p className="title">Connect to:</p>
-              <div className="content-container">
-                <div className="content-title">
-                  <div className="left">
-                    <div className="circle active"></div>
-                    <p className="title">New Domain Name:</p>
+      <HomeLayout>
+        <div className="mint-nft-container">
+          <div className="mint-nft-container-right">
+            <h2 className="heading">Mint NFT</h2>
+            <div className="box-1">
+              <div className="box-left">
+                <p className="title">Please Select NFT token type:</p>
+                <div className="content-container">
+                  <div className="content-title">
+                    <p className="title">Total LEASH cost:</p>
+                    <p className="title">Total SHIB cost:</p>
                   </div>
-                  <div className="left">
-                    <div className="circle"></div>
-                    <p className="title">Existing Domain Name:</p>
+                  <div className="content-input">
+                    <input readOnly value={0.02} />
+                    <input readOnly value={1000000} />
                   </div>
                 </div>
-                <div className="content-input">
-                  <div className="right">
-                    <input
-                      onChange={(e) => setInputData(e.target.value)}
-                      placeholder="shoesboutique"
-                      value={inputData}
-                    />
-                    <select
-                      className="custom-select-box"
-                      onChange={(e) => setSelected(e.target.value)}
+              </div>
+              <div className="box-right">
+                <div
+                  className="custom-drop-down"
+                  onClick={() => setIsDropDownClick(!isDropDownClick)}
+                >
+                  {selectedOption}
+                  <MdKeyboardArrowDown className="arrow-icon" />
+                </div>
+                <div
+                  className={
+                    isDropDownClick
+                      ? 'drop-down-content active'
+                      : 'drop-down-content'
+                  }
+                >
+                  {ContractData.map((list, index) => (
+                    <p
+                      key={index.toString()}
+                      onClick={() => {
+                        setSelectedOption(list.title)
+                        setIsDropDownClick(false)
+                      }}
                     >
-                      {domainData.map((f, index) => {
-                        return (
-                          <option key={index} value={f}>
-                            {f}
-                          </option>
-                        )
-                      })}
-                    </select>
-                  </div>
-                  {selectedOption === UNATTACHED_DOMAIN_NAME && domainError && (
-                    <p style={{ color: 'red', fontSize: '16px' }}>
-                      {domainError}
+                      {list.title}
                     </p>
-                  )}
-
-                  <div className="right-2">
-                    <select
-                      className="custom-select-box"
-                      onChange={(e) => setSelectDomain(e.target.value)}
-                      style={{ width: '100%' }}
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="box-2" style={{ marginLeft: '65px' }}>
+              <div className="box-left">
+                <p className="title">Connect to:</p>
+                <div className="content-container">
+                  <div className="content-title">
+                    <div
+                      className="left"
+                      onClick={() => setConnectExistingDomain(false)}
+                      style={{
+                        pointerEvents:
+                          selectedOption &&
+                          selectedOption !== UNATTACHED_DOMAIN_NAME
+                            ? 'none'
+                            : 'initial',
+                        opacity:
+                          selectedOption &&
+                          selectedOption !== UNATTACHED_DOMAIN_NAME
+                            ? '0.8'
+                            : '1',
+                      }}
                     >
-                      <option value="">please select</option>
-                      {userDomainNfts.map((f, index) => {
-                        return (
-                          <option key={index} value={f.tokenId}>
-                            {f.name}
-                          </option>
-                        )
-                      })}
-                    </select>
+                      <div
+                        className={
+                          connectToExistingDomain ? 'circle' : 'circle active'
+                        }
+                      ></div>
+                      <p className="title">New Domain Name:</p>
+                    </div>
+                    <div
+                      className="left"
+                      onClick={() => setConnectExistingDomain(true)}
+                      style={{
+                        pointerEvents:
+                          selectedOption === UNATTACHED_DOMAIN_NAME
+                            ? 'none'
+                            : 'initial',
+                        opacity:
+                          selectedOption === UNATTACHED_DOMAIN_NAME
+                            ? '0.8'
+                            : '1',
+                      }}
+                    >
+                      <div
+                        className={
+                          connectToExistingDomain ? 'circle active' : 'circle'
+                        }
+                      ></div>
+                      <p className="title">Existing Domain Name:</p>
+                    </div>
+                  </div>
+                  <div className="content-input">
+                    <div className="right">
+                      <input
+                        onChange={(e) => setDomainName(e.target.value)}
+                        placeholder="shoesboutique"
+                        value={domainName}
+                        style={{
+                          pointerEvents: connectToExistingDomain
+                            ? 'none'
+                            : 'initial',
+                          opacity: connectToExistingDomain ? '0.8' : '1',
+                        }}
+                      />
+                      <select
+                        className="custom-select-box"
+                        onChange={(e) => setSelected(e.target.value)}
+                        style={{
+                          pointerEvents: connectToExistingDomain
+                            ? 'none'
+                            : 'initial',
+                          opacity: connectToExistingDomain ? '0.8' : '1',
+                        }}
+                      >
+                        {domainData.map((f, index) => {
+                          return (
+                            <option key={index} value={f}>
+                              {f}
+                            </option>
+                          )
+                        })}
+                      </select>
+                      {selectedOption &&
+                        (selectedOption === UNATTACHED_DOMAIN_NAME ||
+                          (selectedOption !== UNATTACHED_DOMAIN_NAME &&
+                            !connectToExistingDomain)) &&
+                        domainError && (
+                          <p style={{ color: 'red', fontSize: '16px' }}>
+                            {domainError}
+                          </p>
+                        )}
+                    </div>
+
+                    <div className="right-2">
+                      <select
+                        className="custom-select-box"
+                        onChange={(e) => setSelectDomain(e.target.value)}
+                        style={{
+                          width: '100%',
+                          pointerEvents:
+                            selectedOption === UNATTACHED_DOMAIN_NAME ||
+                            !connectToExistingDomain
+                              ? 'none'
+                              : 'initial',
+                          opacity:
+                            selectedOption === UNATTACHED_DOMAIN_NAME ||
+                            !connectToExistingDomain
+                              ? '0.8'
+                              : '1',
+                        }}
+                      >
+                        <option value="">please select</option>
+                        {userDomainNfts.map((f, index) => {
+                          return (
+                            <option key={index} value={f.tokenId}>
+                              {f.name}
+                            </option>
+                          )
+                        })}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="box-3">
-            <div className="box-left">
-              <div className="content">
-                <p className="title">Total PAW cost:</p>
-                <input value={pawAmount} readOnly />
-              </div>
-            </div>
-
-            <div className="box-right">
-              {errorMessage ? <div>{errorMessage}</div> : ''}
-              {!canShowCreateButton ? (
-                <button onClick={() => handleApproveToken()}>Approve</button>
+            <div className="domain-error">
+              {errorMessage ? (
+                <div style={{ color: 'red' }}>{errorMessage}</div>
               ) : (
-                <button
-                  className="btn-mint"
-                  onClick={() => {
-                    mintButton()
-                  }}
-                  disabled={loading || !!errorMessage}
-                >
-                  Create
-                </button>
+                ''
               )}
             </div>
+            <div className="box-3">
+              <div className="box-left">
+                <div className="content">
+                  <p className="title">Total PAW cost:</p>
+                  <input value={pawAmount} readOnly />
+                </div>
+              </div>
+
+              <div className="box-right">
+                {!canShowCreateButton ? (
+                  <button onClick={() => handleApproveToken()}>Approve</button>
+                ) : (
+                  <button
+                    className="btn-mint"
+                    onClick={() => {
+                      mintButton()
+                    }}
+                    disabled={loading || !!errorMessage}
+                  >
+                    Create
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <FooterBottom />
+      </HomeLayout>
     </div>
   )
 }
