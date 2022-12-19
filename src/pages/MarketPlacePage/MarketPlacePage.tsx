@@ -6,7 +6,7 @@ import './MarketPlacePage.css'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
 
-const MarketPlacePage = () => {
+const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
@@ -223,6 +223,7 @@ const MarketPlacePage = () => {
             </div>
           </div>
         </div>
+
         <div className="marketplace-container-right">
           {isAccordionActive === 1 ? (
             <GoodsMaretPlace />

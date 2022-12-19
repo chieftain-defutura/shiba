@@ -3,11 +3,45 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background: #1e1e2c;
+  color: #fff;
   border-radius: 5px;
   max-width: 560px;
-  padding: 3.2rem;
+  padding: 2rem;
   width: 100%;
+  font-family: 'Oswald';
+}
+.modal-close-icon {
+  color: #fff;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}
+.modal-reserved {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  color: #fff;
+  font-size: 16px;
+}
+.modal-action {
+  display: flex;
+  gap: 10px;
+  color: #fff;
+  font-size: 20px;
+  input {
+    width: 100%;
+  }
+}
+.modal-btn {
+  display: flex;
+  justify-content: center;
+  button {
+    width: 45%;
+    margin-top: 20px;
+  }
 }
 
 .modal_backdrop {

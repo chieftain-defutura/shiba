@@ -7,6 +7,7 @@ import './DomainNamesPage.css'
 import { domainPageQuery } from '../../constants/query'
 import { IDomainNft } from '../../constants/types'
 import { formatAddress } from '../../constants/variants'
+import Loading from '../../components/Loading/Loading'
 
 const DomainNamesPage: React.FC = () => {
   const [result] = useQuery<{ domainTokens: IDomainNft[] }>({
@@ -33,7 +34,7 @@ const DomainNamesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            'loading...'
+            <Loading />
           ) : error ? (
             'something went wrong'
           ) : !nftData.length ? (

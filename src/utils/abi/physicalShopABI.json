@@ -805,7 +805,7 @@
         "type": "uint256"
       }
     ],
-    "name": "getItemIdofShop",
+    "name": "getItemIdOfShop",
     "outputs": [
       {
         "internalType": "uint256[]",

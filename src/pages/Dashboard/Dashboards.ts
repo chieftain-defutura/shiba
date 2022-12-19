@@ -15,7 +15,7 @@ export const DemoDashboard = [
     link: 'mint-nft',
   },
   {
-    title: 'NFT MINT',
+    title: 'CHAT',
     description:
       "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     image: {
@@ -24,7 +24,7 @@ export const DemoDashboard = [
     },
   },
   {
-    title: 'NFT MINT',
+    title: 'DASHIBOARD',
     description:
       "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     image: {
@@ -33,7 +33,7 @@ export const DemoDashboard = [
     },
   },
   {
-    title: 'NFT MINT',
+    title: 'HELP & FAQ',
     description:
       "Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     image: {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Slider from 'react-slick'
 import axios from 'axios'
 import { ethers } from 'ethers'
@@ -19,6 +19,7 @@ import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import { useParams } from 'react-router-dom'
 import { physicalItemQuery } from '../../constants/query'
 import { IPhysicalItem } from '../../constants/types'
+import { getEncryptedData } from '../../utils/formatters'
 
 const settings = {
   dots: false,
@@ -37,14 +38,37 @@ const ItemDetailsPage: React.FC = () => {
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
   const slider = useRef<Slider>(null)
-  const [result, reexecuteQuery] = useQuery<{ physicalItem: IPhysicalItem }>({
+  const [result] = useQuery<{ physicalItem: IPhysicalItem }>({
     query: physicalItemQuery,
     variables: { id: itemId },
+    pause: !itemId,
   })
 
-  const { data, fetching, error } = result
+  const { data } = result
+  const formattedPrice = data
+    ? Number(
+        ethers.utils.formatUnits(
+          data?.physicalItem.price,
+          data?.physicalItem.erc20Token.decimals,
+        ),
+      )
+    : 0
 
   console.log(data)
+
+  const handleGetData = useCallback(async () => {
+    if (!data) return
+    try {
+      const result = await fetch(data.physicalItem.metadata)
+      console.log(await result.json())
+    } catch (error) {
+      console.log(error)
+    }
+  }, [data])
+
+  useEffect(() => {
+    handleGetData()
+  }, [handleGetData])
 
   const handlePlus = () => {
     setQuantity(quantity + 1)
@@ -99,20 +123,21 @@ const ItemDetailsPage: React.FC = () => {
       })
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+      const encryptedHash = getEncryptedData(dataHash)
+
       const contract = new ethers.Contract(
         SHIPMENT_CONTRACT,
         shipmentABI,
         signerData,
       )
 
-      const tx = await contract.createBuyOrder(itemId, quantity, dataHash)
+      const tx = await contract.createBuyOrder(itemId, quantity, encryptedHash)
 
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
+      console.log('------Error: BUY ORDER-------')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
@@ -133,10 +158,12 @@ const ItemDetailsPage: React.FC = () => {
             }}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ isValid, dirty }) => (
               <Form>
                 <div className="categories-details-container-right">
-                  <h2 className="title">shoesboutique.shib</h2>
+                  <h2 className="title">
+                    {data?.physicalItem.shopDetails.domainName}
+                  </h2>
                   <div className="content-box">
                     <div className="content-box-left">
                       {!categoriesShipping ? (
@@ -251,16 +278,27 @@ const ItemDetailsPage: React.FC = () => {
                       </div>
                       <div className="buy-container">
                         <div className="top">
-                          <p>Price: 10000 SHI</p>
-                          <p>Total: 12000 SHI</p>
+                          <p>
+                            Price: {formattedPrice}&nbsp;
+                            {data?.physicalItem.erc20Token.symbol}
+                          </p>
+                          <p>
+                            Total: {quantity * formattedPrice}{' '}
+                            {data?.physicalItem.erc20Token.symbol}
+                          </p>
                         </div>
                         <div>
                           {!categoriesShipping ? (
                             <div onClick={() => setCategoriesShipping(true)}>
-                              Buy
+                              <button>Buy</button>
                             </div>
                           ) : (
-                            <button type="submit">Buy</button>
+                            <button
+                              type="submit"
+                              disabled={!(dirty && isValid)}
+                            >
+                              Buy
+                            </button>
                           )}
                         </div>
                       </div>

@@ -7,9 +7,9 @@
   font-family: var(--oswaldFont);
 }
 
-.website-container-left {
+/* .website-container-left {
   flex: 1;
-}
+} */
 
 .website-container-left .heading {
   font-weight: 700;

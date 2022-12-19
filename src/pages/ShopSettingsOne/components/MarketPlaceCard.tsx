@@ -1,105 +1,42 @@
 import React, { useState } from 'react'
-import { useAccount, useSigner, erc721ABI, useContractRead } from 'wagmi'
-import { useParams } from 'react-router-dom'
+import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
-import { useTransactionModal } from '../../context/TransactionContext'
+import { useParams } from 'react-router-dom'
+import { parseUnits } from 'ethers/lib/utils.js'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 
-import {
-  MARKETPLACE_CONTRACT_ADDRESS,
-  BONE_TOKEN_ADDRESS,
-  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-  LEASH_TOKEN_ADDRESS,
-  PAW_TOKEN_ADDRESS,
-  SHIB_TOKEN_ADDRESS,
-  SHI_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
-import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
-import { parseUnits } from 'ethers/lib/utils.js'
+import { useTransactionModal } from '../../../context/TransactionContext'
+import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
+import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
+import { tokensList } from '../../../constants/contract'
+import { ArrElement } from '../../../constants/types'
+import { getTokenDecimals } from '../../../utils/methods'
 
-interface ITokenData {
-  title: string
-  address: string
-  allowance: number
-  decimal: string
+type IMarketplaceCardProps = {
+  setOnMarketplace: React.Dispatch<boolean>
+  contractAddress: string
+  isApproved: boolean
+  handleApprove: () => Promise<void>
 }
 
-const TokensList = [
-  {
-    title: 'Shi',
-    address: SHI_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Shib',
-    address: SHIB_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Leash',
-    address: LEASH_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Bone',
-    address: BONE_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Paw',
-    address: PAW_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-]
-
-const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
+const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   setOnMarketplace,
+  contractAddress,
+  isApproved,
+  handleApprove,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
-  const [dropDown, setDropDown] = useState<any>(null)
-  const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
+  const [dropDown, setDropDown] = useState(false)
+  const [selectedDropDown, setSelectedDropDown] =
+    useState<ArrElement<typeof tokensList>>()
   const [price, setPrice] = useState('')
 
-  const { data: readData } = useContractRead({
-    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-    abi: erc721ABI,
-    functionName: 'isApprovedForAll',
-    args: [address as any, MARKETPLACE_CONTRACT_ADDRESS],
-  })
-
-  const handleApproveToken = async () => {
-    if (!data) return
-    try {
-      setTransaction({ loading: true, status: 'pending' })
-      const contract = new ethers.Contract(
-        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-        erc721ABI,
-        data,
-      )
-      const tx = await contract.setApprovalForAll(
-        MARKETPLACE_CONTRACT_ADDRESS,
-        true,
-      )
-      await tx?.wait()
-
-      setTransaction({ loading: true, status: 'success' })
-    } catch (error) {
-      console.log(error)
-      setTransaction({ loading: true, status: 'error' })
-    }
-  }
-
   const handlePutOnSale = async () => {
-    if (!address || !data) return
+    if (!address || !data || !selectedDropDown) return
     try {
       setTransaction({ loading: true, status: 'pending' })
       const contract = new ethers.Contract(
@@ -109,15 +46,17 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
       )
       const tx = await contract.fixedSale(
         id,
-        parseUnits(price, selectedDropDown?.decimal).toString(),
-        selectedDropDown?.address,
-        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+        parseUnits(
+          price,
+          await getTokenDecimals(selectedDropDown.address, data),
+        ).toString(),
+        selectedDropDown.address,
+        contractAddress,
       )
       await tx.wait()
-      console.log('added')
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
+      console.log('------Error On Put on sale--------')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
@@ -128,7 +67,7 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
       <BsArrowLeftCircle
         className="arrow-icon"
         onClick={() => {
-          setOnMarketplace(null)
+          setOnMarketplace(false)
         }}
       />
       <p className="title">On Marketplace</p>
@@ -143,6 +82,7 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
             <div className="price-select-container">
               <div className="left">
                 <input
+                  type="number"
                   placeholder="price"
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -153,9 +93,15 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
                   <IoIosArrowDown />
                 </div>
                 <div className={!dropDown ? 'body' : 'body active'}>
-                  {TokensList.map((f, index) => {
+                  {tokensList.map((f, index) => {
                     return (
-                      <p key={index} onClick={() => setSelectedDropDown(f)}>
+                      <p
+                        key={index}
+                        onClick={() => {
+                          setSelectedDropDown(f)
+                          setDropDown(false)
+                        }}
+                      >
                         {f.title}
                       </p>
                     )
@@ -164,10 +110,10 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
               </div>
             </div>
             <div>
-              {!readData ? (
+              {!isApproved ? (
                 <button
                   className="putOnSaleBtn"
-                  onClick={() => handleApproveToken()}
+                  onClick={() => handleApprove()}
                 >
                   Approve
                 </button>
@@ -188,4 +134,4 @@ const MarketPlace: React.FC<{ setOnMarketplace: React.Dispatch<any> }> = ({
   )
 }
 
-export default MarketPlace
+export default MarketPlaceCard

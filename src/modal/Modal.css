@@ -1,4 +1,6 @@
-.wallet_modal, .transaction_modal, .fixed-modal {
+.wallet_modal,
+.transaction_modal,
+.fixed-modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -66,7 +68,7 @@
 }
 .transaction_modal-content .processing_loader svg {
   -webkit-animation: loader 2s ease-in-out infinite;
-          animation: loader 2s ease-in-out infinite;
+  animation: loader 2s ease-in-out infinite;
 }
 @-webkit-keyframes loader {
   from {
@@ -116,5 +118,5 @@
   width: 80px;
   aspect-ratio: 1;
   -o-object-fit: contain;
-     object-fit: contain;
-}/*# sourceMappingURL=Modal.css.map */
+  object-fit: contain;
+} /*# sourceMappingURL=Modal.css.map */

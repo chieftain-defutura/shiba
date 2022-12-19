@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Field, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import * as Yup from 'yup'
 
 import {
   BONE_TOKEN_ADDRESS,
@@ -25,7 +26,7 @@ interface IAddItem {
   setAddItem: any
 }
 
-const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
+const AddItem: React.FC<IAddItem> = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
@@ -104,6 +105,18 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
     }
   }
 
+  const validate = Yup.object({
+    preview: Yup.string().required('This is Required'),
+    fullProduct: Yup.string().required('This is Required'),
+    itemName: Yup.string().required('This is Required'),
+    category: Yup.string().required('This is Required'),
+    subCategory: Yup.string().required('This is Required'),
+    details: Yup.string().required('This is Required'),
+    description: Yup.string().required('This is Required'),
+    price: Yup.string().required('This is Required'),
+    currency: Yup.string().required('This is Required'),
+  })
+
   return (
     <div className="photo-sub-menu-container sub-menu-container">
       <Formik
@@ -119,14 +132,10 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
           currency: '',
         }}
         onSubmit={handleAddItem}
+        validationSchema={validate}
       >
         {({ values, isValid, dirty }) => (
           <Form>
-            {/* <BsArrowLeftCircle
-              className="arrow-icon"
-              style={{ position: 'absolute', top: '40px' }}
-              onClick={() => setAddItem(null)}
-            /> */}
             <p className="title">Photos</p>
             <div className="content">
               <div className="content-left">
@@ -141,50 +150,120 @@ const AddItem: React.FC<IAddItem> = ({ setAddItem }) => {
                 <p>Currency:</p>
               </div>
               <div className="content-right">
-                <Field name="preview" type="url" placeholder="Metadata Link" />
-                <Field
-                  name="fullProduct"
-                  type="url"
-                  placeholder="Metadata Link"
-                />
-                <Field name="itemName" placeholder="Item" type="text" />
-                <Field as="select" name="category">
-                  <option value="">Select a Category</option>
-                  <option value="movies">Movies</option>
-                  <option value="courses">Courses</option>
-                  <option value="books">Books</option>
-                  <option value="music">Music</option>
-                </Field>
+                <div>
+                  <Field
+                    name="preview"
+                    type="url"
+                    placeholder="Metadata Link"
+                  />
+                  <ErrorMessage
+                    name="preview"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="fullProduct"
+                    type="url"
+                    placeholder="Metadata Link"
+                  />
+                  <ErrorMessage
+                    name="fullProduct"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field name="itemName" placeholder="Item" type="text" />
+                  <ErrorMessage
+                    name="itemName"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field as="select" name="category">
+                    <option value="">Select a Category</option>
+                    <option value="movies">Movies</option>
+                    <option value="courses">Courses</option>
+                    <option value="books">Books</option>
+                    <option value="music">Music</option>
+                  </Field>
+                  <ErrorMessage
+                    name="category"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
 
-                <Field as="select" name="subCategory">
-                  <option value="">Select a SubCategory</option>
-                  {getSubcategory(values.category).map((f, index) => {
-                    return (
-                      <option value={f} key={index}>
-                        {f}
-                      </option>
-                    )
-                  })}
-                </Field>
-                <Field name="details" placeholder="Details" type="text" />
-                <Field as="textarea" rows={2} name="description"></Field>
-                <Field name="price" placeholder="0.00" />
-                <Field as="select" name="currency">
-                  <option value="">Select a Category</option>
-                  <option value={LEASH_TOKEN_ADDRESS}>LEASH</option>
-                  <option value={SHIB_TOKEN_ADDRESS}>SHIB</option>
-                  <option value={PAW_TOKEN_ADDRESS}>PAW</option>
-                  <option value={BONE_TOKEN_ADDRESS}>BONE</option>
-                  <option value={SHI_TOKEN_ADDRESS}>SHI</option>
-                </Field>
+                <div>
+                  <Field as="select" name="subCategory">
+                    <option value="">Select a SubCategory</option>
+                    {getSubcategory(values.category).map((f, index) => {
+                      return (
+                        <option value={f} key={index}>
+                          {f}
+                        </option>
+                      )
+                    })}
+                  </Field>
+                  <ErrorMessage
+                    name="subCategory"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field name="details" placeholder="Details" type="text" />
+                  <ErrorMessage
+                    name="details"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field
+                    as="textarea"
+                    rows={2}
+                    name="description"
+                    style={{ width: '100%' }}
+                  ></Field>
+                  <ErrorMessage
+                    name="description"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field name="price" type="number" placeholder="0.00" />
+                  <ErrorMessage
+                    name="price"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+                <div>
+                  <Field as="select" name="currency">
+                    <option value="">Select a Category</option>
+                    <option value={LEASH_TOKEN_ADDRESS}>LEASH</option>
+                    <option value={SHIB_TOKEN_ADDRESS}>SHIB</option>
+                    <option value={PAW_TOKEN_ADDRESS}>PAW</option>
+                    <option value={BONE_TOKEN_ADDRESS}>BONE</option>
+                    <option value={SHI_TOKEN_ADDRESS}>SHI</option>
+                  </Field>
+                  <ErrorMessage
+                    name="currency"
+                    className="errorMsg"
+                    component="div"
+                  />
+                </div>
+
                 <div className="btn-cont">
-                  {/* <Button variant="primary" >
-                    Submit Listing and Put on Sale
-                  </Button> */}
                   <Button
                     variant="primary"
                     type="button"
-                    disabled={!(dirty && isValid)}
+                    // disabled={!(dirty && isValid)}
                   >
                     Submit Listing and Put on Sale
                   </Button>

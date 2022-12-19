@@ -13,7 +13,7 @@ const AwaitingDeliveryPage: React.FC = () => {
   const [isReceived, setIsReceived] = useState(false)
   const [isComplain, setIsComplain] = useState(false)
 
-  const [result, reexecuteQuery] = useQuery<{
+  const [result] = useQuery<{
     shipments: IAwaitingDelivery[]
   }>({
     query: awaitingDelivery,
@@ -22,7 +22,7 @@ const AwaitingDeliveryPage: React.FC = () => {
     },
     pause: !address,
   })
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(data)
 
   const handleBackBtn = () => {

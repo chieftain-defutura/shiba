@@ -50,6 +50,7 @@ export const physicalItemQuery = `
 query($id: String!){
   physicalItem(id:$id){
     id
+    metadata
     shopDetails{
       id
       domainId
@@ -74,6 +75,7 @@ export const DigitalItemQuery = `
 query($id: String!){
   digitalItem(id:$id){
     id
+    metadata
     shopDetails{
       id
       domainId
@@ -191,6 +193,45 @@ query($owner: String!,$category: String!){
     fullproduct
     metadata
     category
+    owner {
+      id
+    }
+  }
+}
+`
+export const auctionPageQuery = `
+query{
+  auctions(where:{status:ACTIVE}){
+    id
+    tokenId
+    auctionId
+    owner
+    highestBid
+    price
+    endTime
+    erc20Token{
+      id
+      symbol
+      decimals
+    }
+    erc721TokenAddress
+    status
+  }
+}
+`
+export const searchDomainNameQuery = `
+query($name: String!){
+  domainTokens(where:{domainName:$name}){
+    owner {
+      id
+    }
+  }
+  digitalShopTokens(where:{domainName:$name}){
+    owner {
+      id
+    }
+  }
+  physicalShopTokens(where:{domainName:$name}){
     owner {
       id
     }

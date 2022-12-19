@@ -10,6 +10,7 @@ import { IWebsiteToken } from '../../constants/types'
 import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { WEBSITE_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import Loading from '../../components/Loading/Loading'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
   const { data } = useGetNftsByIdQuery({
@@ -91,7 +92,7 @@ const WebsitesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            'loading...'
+            <Loading />
           ) : error ? (
             'something went wrong'
           ) : !nftData.length ? (

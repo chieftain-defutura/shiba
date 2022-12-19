@@ -24,6 +24,7 @@ import ItemDetailsPage from './pages/DetailsPage/ItemDetailsPage'
 import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
 import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
 import HaveToSend from './pages/HaveToSendPage'
+import SendCryptoPage from './pages/SendCryptoPage/SendCryptoPage'
 
 const App: React.FC = () => {
   return (
@@ -41,10 +42,11 @@ const App: React.FC = () => {
           element={<FullOnBlockChainPage />}
         />
         <Route path="charities" element={<Charities />} />
-        <Route path="action" element={<ActionPage />} />
+        <Route path="auction" element={<ActionPage />} />
         <Route path="sell" element={<SellPage />} />
         <Route path="awaiting-delivery" element={<AwaitingDeliveryPage />} />
         <Route path="have-to-send" element={<HaveToSend />} />
+        <Route path="send-crypto" element={<SendCryptoPage />} />
 
         {Object.keys(ContractDetails).map((d) => (
           <Route key={d} path={`/${d}`}>

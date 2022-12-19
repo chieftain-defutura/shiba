@@ -1,7 +1,10 @@
 import React from 'react'
-import cardImg from '../../assets/img/card-3.png'
+import { formatUnits } from 'ethers/lib/utils.js'
 
-const DigitalItemCategoryCard: React.FC = () => {
+import cardImg from '../assets/img/card-3.png'
+import { IGoodsPhysicalItem } from '../constants/types'
+
+const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({ erc20Token, price }) => {
   return (
     <div className="marketplace-card-container">
       <div className="card">
@@ -12,13 +15,16 @@ const DigitalItemCategoryCard: React.FC = () => {
           <h3 className="title">The Holy Grail</h3>
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
-        <div className="cards-bottom">
+        <div className="card-bottom">
           <p>Fixed price</p>
-          <button>price</button>
+          <button>
+            {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
+          </button>
+          <button>Buy</button>
         </div>
       </div>
     </div>
   )
 }
 
-export default DigitalItemCategoryCard
+export default PhysicalItem

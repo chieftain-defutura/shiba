@@ -32,6 +32,7 @@ export type IFullOnBlockchainArtToken = {
 
 export type IPhysicalItem = {
   id: string
+  metadata: string
   erc20Token: {
     id: string
     symbol: string
@@ -52,6 +53,7 @@ export type IPhysicalItem = {
 
 export type IDigitalItem = {
   id: string
+  metadata: string
   erc20Token: {
     id: string
     symbol: string
@@ -100,6 +102,22 @@ export type IGoodsDigitalItem = {
   category: string
 }
 
+export type IGoodsPhysicalItem = {
+  id: string
+  price: string
+  quantity: string
+  shopDetails: {
+    id: string
+  }
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  subcategory: string
+  category: string
+}
+
 export type IAwaitingDelivery = {
   id: string
   owner: string
@@ -137,3 +155,24 @@ export type IUserDigitalItem = {
     id: string
   }
 }
+
+export type IAuctionNft = {
+  id: string
+  tokenId: string
+  auctionId: string
+  owner: string
+  highestBid: string
+  price: string
+  endTime: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  erc721TokenAddress: string
+  status: string
+}
+
+export type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never

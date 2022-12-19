@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import './HeaderNav.css'
 import { useBalance } from 'wagmi'
 import { useAccount } from 'wagmi'
+
 import {
   PAW_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
@@ -16,6 +16,8 @@ import {
   updateShiBalance,
   updateShibBalance,
 } from '../../store/slices/userSlice'
+import './HeaderNav.css'
+import { Link } from 'react-router-dom'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
@@ -65,7 +67,6 @@ const HeaderNav: React.FC = () => {
           <li>
             <button>My Items: 105</button>
           </li>
-
           <li>
             SHI:
             {new Intl.NumberFormat('en-US', {
@@ -96,9 +97,10 @@ const HeaderNav: React.FC = () => {
               maximumFractionDigits: 2,
             }).format(Number(pawBalanceData?.formatted))}
           </li>
-
           <li>
-            <button>Send Crypto</button>
+            <Link to="/send-crypto">
+              <button>Send Crypto</button>
+            </Link>
           </li>
         </ul>
       </div>

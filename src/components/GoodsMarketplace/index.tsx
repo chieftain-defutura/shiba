@@ -2,25 +2,27 @@ import React from 'react'
 import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { Link } from 'react-router-dom'
-import { IGoodsDigitalItem } from '../../constants/types'
+import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
 import {
   goodsDigitalItemsQuery,
   goodsPhysicalItemsQuery,
 } from '../../constants/query'
+import Loading from '../Loading/Loading'
+import PhysicalItem from '../PhysicalItem'
 
 export const GoodsDigital = () => {
-  const [result, reexecuteQuery] = useQuery<{
+  const [result] = useQuery<{
     digitalItems: IGoodsDigitalItem[]
   }>({
     query: goodsDigitalItemsQuery,
   })
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(data)
 
   return (
     <>
       {!data?.digitalItems.length ? (
-        <div>No Result</div>
+        <Loading />
       ) : (
         data?.digitalItems.map((f, idx) => (
           <div key={idx}>
@@ -39,27 +41,27 @@ export const GoodsDigital = () => {
 }
 
 export const GoodsPhysical = () => {
-  const [result, reexecuteQuery] = useQuery<{
-    physicalItems: IGoodsDigitalItem[]
+  const [result] = useQuery<{
+    physicalItems: IGoodsPhysicalItem[]
   }>({
     query: goodsPhysicalItemsQuery,
   })
-  const { data, fetching, error } = result
+  const { data } = result
   console.log(data)
 
   return (
     <>
       {!data?.physicalItems.length ? (
-        <div>No Result</div>
+        <div></div>
       ) : (
         data?.physicalItems.map((f, idx) => (
           <div key={idx}>
             <h4>physical</h4>
             <Link
-              to={`/digital-item-details/${f.id}`}
+              to={`/physical-item-details/${f.id}`}
               style={{ textDecoration: 'none' }}
             >
-              <DigitalItem {...f} />
+              <PhysicalItem {...f} />
             </Link>
           </div>
         ))
