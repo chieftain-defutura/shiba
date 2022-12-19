@@ -80,8 +80,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
-  const slide = 1
-
+  console.log(clickCard, clickRemoveItem)
   return (
     <>
       <h2 className="heading">shoesboutique.shib</h2>
@@ -148,10 +147,17 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
 
       {clickCard === 'stock management' && !clickRemoveItem ? (
         <div className="stock-management-container">
-          <BsArrowLeftCircle
-            className="arrow-icon"
-            onClick={() => setClickCard(null)}
-          />
+          {clickAddItem ? (
+            <BsArrowLeftCircle
+              className="arrow-icon"
+              onClick={() => setClickAddItem(null)}
+            />
+          ) : (
+            <BsArrowLeftCircle
+              className="arrow-icon"
+              onClick={() => setClickCard(null)}
+            />
+          )}
 
           <div className="arrow-icon-container">
             {/* <IoIosArrowBack
@@ -205,7 +211,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
           )}
           <div>
             <div>
-              {clickAddItem === 'Add New Item in Shop' && slide === 1 && (
+              {clickAddItem === 'Add New Item in Shop' && (
                 <>
                   {contractData.pathName === 'my-digital-shop' ? (
                     <AddItem setAddItem={setClickCard} />
@@ -219,9 +225,11 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
         </div>
       ) : (
         <>
-          {contractData.pathName === 'my-goods-shop'
-            ? clickRemoveItem && <PhysicalRemoveItem />
-            : clickRemoveItem && <DigitalRemoveItem />}
+          {contractData.pathName === 'my-goods-shop' ? (
+            <PhysicalRemoveItem />
+          ) : (
+            <DigitalRemoveItem />
+          )}
         </>
       )}
 
