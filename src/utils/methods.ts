@@ -41,6 +41,7 @@ export const mintNft = async (
   data: any,
 ) => {
   const nftContract = new ethers.Contract(erc721Address, nftABI, data)
+  console.log(nftContract)
   const tx = await nftContract.mintNft(domainTokenId)
   await tx.wait()
 }
