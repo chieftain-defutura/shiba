@@ -2,12 +2,13 @@ import React from 'react'
 import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { Link } from 'react-router-dom'
-import { IGoodsDigitalItem } from '../../constants/types'
+import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
 import {
   goodsDigitalItemsQuery,
   goodsPhysicalItemsQuery,
 } from '../../constants/query'
 import Loading from '../Loading/Loading'
+import PhysicalItem from '../PhysicalItem'
 
 export const GoodsDigital = () => {
   const [result] = useQuery<{
@@ -41,7 +42,7 @@ export const GoodsDigital = () => {
 
 export const GoodsPhysical = () => {
   const [result] = useQuery<{
-    physicalItems: IGoodsDigitalItem[]
+    physicalItems: IGoodsPhysicalItem[]
   }>({
     query: goodsPhysicalItemsQuery,
   })
@@ -57,10 +58,10 @@ export const GoodsPhysical = () => {
           <div key={idx}>
             <h4>physical</h4>
             <Link
-              to={`/digital-item-details/${f.id}`}
+              to={`/physical-item-details/${f.id}`}
               style={{ textDecoration: 'none' }}
             >
-              <DigitalItem {...f} />
+              <PhysicalItem {...f} />
             </Link>
           </div>
         ))

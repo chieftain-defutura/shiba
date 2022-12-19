@@ -73,7 +73,14 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
           <button>
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>
-          <button onClick={handleBuy}>Buy</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              handleBuy()
+            }}
+          >
+            Buy
+          </button>
         </div>
       </div>
     </div>

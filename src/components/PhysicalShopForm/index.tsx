@@ -96,7 +96,7 @@ const PhysicalShopForm = () => {
         id,
         dataHash,
         values.quantity,
-        parseUnits(values.price, '18'),
+        parseUnits(values.price.toString(), '18'),
         values.currency,
         values.category,
         values.subCategory,
@@ -106,7 +106,7 @@ const PhysicalShopForm = () => {
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
+      console.log('-----Error: Add Item------')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }

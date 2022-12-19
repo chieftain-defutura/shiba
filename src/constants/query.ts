@@ -50,6 +50,7 @@ export const physicalItemQuery = `
 query($id: String!){
   physicalItem(id:$id){
     id
+    metadata
     shopDetails{
       id
       domainId
@@ -74,6 +75,7 @@ export const DigitalItemQuery = `
 query($id: String!){
   digitalItem(id:$id){
     id
+    metadata
     shopDetails{
       id
       domainId

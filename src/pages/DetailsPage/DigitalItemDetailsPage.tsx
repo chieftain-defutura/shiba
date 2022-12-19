@@ -4,6 +4,7 @@ import { ethers } from 'ethers'
 import { useQuery } from 'urql'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
+
 import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
@@ -89,7 +90,9 @@ const DigitalItemsDetailsPage: React.FC = () => {
       <HomeLayout>
         <div className="music-details-container">
           <div className="music-details-container-right">
-            <h2 className="title">digitalboutique.shib</h2>
+            <h2 className="title">
+              {data?.digitalItem.shopDetails.domainName}
+            </h2>
             <div className="content-box">
               <div className="content-box-left">
                 <div className="slider">
@@ -145,7 +148,16 @@ const DigitalItemsDetailsPage: React.FC = () => {
                 </div> */}
                 <div className="buy-container">
                   <div className="top">
-                    <p>Price: 10000 SHI</p>
+                    <p>
+                      Price:{' '}
+                      {data
+                        ? ethers.utils.formatUnits(
+                            data?.digitalItem.price,
+                            data?.digitalItem.erc20Token.decimals,
+                          )
+                        : 0}{' '}
+                      {data?.digitalItem.erc20Token.symbol}
+                    </p>
                   </div>
                   <button onClick={handleBuy}>Buy</button>
                 </div>
