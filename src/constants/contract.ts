@@ -1,8 +1,13 @@
 import {
+  BONE_TOKEN_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  PAW_TOKEN_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+  SHI_TOKEN_ADDRESS,
   WEBSITE_NFT_CONTRACT_ADDRESS,
 } from '../utils/contractAddress'
 
@@ -93,4 +98,32 @@ export const DigitalItemsCategory: IDigitalItemsCategory[] = [
   { path: 'my-music', name: 'music' },
   { path: 'my-books', name: 'books' },
   { path: 'my-courses', name: 'courses' },
+]
+
+export const tokensList = [
+  {
+    title: 'SHI',
+    address: SHI_TOKEN_ADDRESS,
+    decimal: '18',
+  },
+  {
+    title: 'SHIB',
+    address: SHIB_TOKEN_ADDRESS,
+    decimal: '18',
+  },
+  {
+    title: 'LEASH',
+    address: LEASH_TOKEN_ADDRESS,
+    decimal: '18',
+  },
+  {
+    title: 'BONE',
+    address: BONE_TOKEN_ADDRESS,
+    decimal: '18',
+  },
+  {
+    title: 'PAW',
+    address: PAW_TOKEN_ADDRESS,
+    decimal: '18',
+  },
 ]
