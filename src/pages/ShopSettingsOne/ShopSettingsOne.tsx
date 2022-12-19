@@ -12,20 +12,17 @@ import cardImgFour from '../../assets/img/card-7.png'
 import cardImgFive from '../../assets/img/card-8.png'
 import cardImgSeven from '../../assets/img/card-10.png'
 import cardImgEighth from '../../assets/img/card-11.png'
-import cardImgNine from '../../assets/img/card-12.png'
-import cardImgTen from '../../assets/img/card-13.png'
 import './ShopSetting.css'
 import Residual from './components/Residual'
 import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
 import Transfer from '../../components/Transfer'
-import MarketPlace from '../../components/MarketPlace'
-import Auction from '../../components/Auction'
 import FinalizeToken from './components/FinalizeToken'
 import { IContractData } from '../../constants/contract'
 import PhysicalShopForm from '../../components/PhysicalShopForm'
 import PhysicalRemoveItem from '../../components/RemoveItem/PhysicalRemoveCard'
 import DigitalRemoveItem from '../../components/RemoveItem/DigitalRemoveCard'
+import Sell from './components/Sell'
 
 const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   contractData,
@@ -33,8 +30,6 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
-  const [onMarketPlace, setOnMarketPlace] = useState<any>(null)
-  const [onAction, setOnAction] = useState<any>(null)
   const slide = 1
 
   return (
@@ -240,53 +235,10 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                   onClick={() => setClickCard(null)}
                 />
               )}
-
               <h2 className="title">
                 {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
               </h2>
-
-              {!onMarketPlace && !onAction && (
-                <div className="put-on-sale-sub-menu-container">
-                  <div className="card">
-                    <div className="card-left">
-                      <img src={cardImgNine} alt="card" />
-                    </div>
-                    <div className="card-right">
-                      <p className="card-title">On MarketPlace</p>
-                      <p className="desc">
-                        Lorem Ipsum has been the industry standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
-                      </p>
-                      <button onClick={() => setOnMarketPlace(true)}>
-                        Demo
-                      </button>
-                    </div>
-                  </div>
-                  <div className="card">
-                    <div className="card-left">
-                      <img src={cardImgTen} alt="card" />
-                    </div>
-                    <div className="card-right">
-                      <p className="card-title">On Auction</p>
-                      <p className="desc">
-                        Lorem Ipsum has been the industry standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
-                      </p>
-                      <button onClick={() => setOnAction(true)}>Demo</button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {onMarketPlace && (
-                <MarketPlace setOnMarketplace={setOnMarketPlace} />
-              )}
-
-              {onAction && <Auction setOnAction={setOnAction} />}
+              <Sell contractAddress={contractData.address} />
             </div>
           )}
         </div>

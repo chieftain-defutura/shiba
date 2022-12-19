@@ -1,140 +1,43 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import {
-  useAccount,
-  useSigner,
-  usePrepareContractWrite,
-  useContractWrite,
-  erc721ABI,
-  useContractRead,
-} from 'wagmi'
+import React, { useState } from 'react'
+import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { useTransactionModal } from '../../context/TransactionContext'
+import { useTransactionModal } from '../../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
-import {
-  MARKETPLACE_CONTRACT_ADDRESS,
-  BONE_TOKEN_ADDRESS,
-  LEASH_TOKEN_ADDRESS,
-  PAW_TOKEN_ADDRESS,
-  SHIB_TOKEN_ADDRESS,
-  SHI_TOKEN_ADDRESS,
-  DOMAIN_NFT_CONTRACT_ADDRESS,
-  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
-import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
-import { getUserMarketPlaceAllowance } from '../../utils/methods'
 import { parseUnits } from 'ethers/lib/utils.js'
 
-interface ITokenData {
-  title: string
-  address: string
-  allowance: number
-  decimal: string
+import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
+import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
+import { ArrElement } from '../../../constants/types'
+import { tokensList } from '../../../constants/contract'
+import { getTokenDecimals } from '../../../utils/methods'
+
+type IAuctionCardProps = {
+  setOnAction: React.Dispatch<boolean>
+  contractAddress: string
+  isApproved: boolean
+  handleApprove: () => Promise<void>
 }
 
-const TokensList = [
-  {
-    title: 'Shi',
-    address: SHI_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Shib',
-    address: SHIB_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Leash',
-    address: LEASH_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Bone',
-    address: BONE_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-  {
-    title: 'Paw',
-    address: PAW_TOKEN_ADDRESS,
-    allowance: 0,
-    decimal: '18',
-  },
-]
-
-const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
+const AuctionCard: React.FC<IAuctionCardProps> = ({
   setOnAction,
+  contractAddress,
+  isApproved,
+  handleApprove,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
-  const [dropDown, setDropDown] = useState<any>(null)
-  const [tokenData, setTokenData] = useState<ITokenData[]>(TokensList)
-  const [selectedDropDown, setSelectedDropDown] = useState<ITokenData>()
+  const [dropDown, setDropDown] = useState(false)
+  const [selectedDropDown, setSelectedDropDown] =
+    useState<ArrElement<typeof tokensList>>()
   const [price, setPrice] = useState('')
   const [days, setDays] = useState('')
-  const { data: readData } = useContractRead({
-    address: DOMAIN_NFT_CONTRACT_ADDRESS,
-    abi: erc721ABI,
-    functionName: 'isApprovedForAll',
-    args: [address as any, MARKETPLACE_CONTRACT_ADDRESS],
-  })
-
-  const { config: tokenApprove } = usePrepareContractWrite({
-    address: DOMAIN_NFT_CONTRACT_ADDRESS,
-    abi: erc721ABI,
-    functionName: 'setApprovalForAll',
-    args: [MARKETPLACE_CONTRACT_ADDRESS, true],
-  })
-  const tokenContract = useContractWrite(tokenApprove)
-
-  const handleGetUserAllowance = useCallback(async () => {
-    try {
-      if (!address || !data) return
-
-      const result = await Promise.all(
-        TokensList.map(async (token) => {
-          const allowance = await getUserMarketPlaceAllowance(
-            token.address,
-            data,
-            address,
-          )
-          return {
-            ...token,
-            allowance,
-          }
-        }),
-      )
-
-      setTokenData([...result])
-      console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address, data])
-  useEffect(() => {
-    handleGetUserAllowance()
-  }, [handleGetUserAllowance])
-
-  const handleApproveToken = async () => {
-    try {
-      setTransaction({ loading: true, status: 'pending' })
-      const data = await tokenContract.writeAsync?.()
-      await data?.wait()
-      setTransaction({ loading: true, status: 'success' })
-    } catch (error) {
-      console.log(error)
-      setTransaction({ loading: true, status: 'error' })
-    }
-  }
 
   const handlePutOnSale = async () => {
-    if (!address || !data) return
+    if (!address || !data || !selectedDropDown) return
     try {
       setTransaction({ loading: true, status: 'pending' })
       const contract = new ethers.Contract(
@@ -142,19 +45,20 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
         auctionMarketplaceABI,
         data,
       )
-      console.log(id)
       const tx = await contract.createSaleAuction(
         id,
-        parseUnits(price, selectedDropDown?.decimal).toString(),
+        parseUnits(
+          price,
+          await getTokenDecimals(selectedDropDown.address, data),
+        ).toString(),
         selectedDropDown?.address,
         Number(days),
-        DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+        contractAddress,
       )
       await tx.wait()
-      console.log('added')
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
-      console.log('Error sending File to IPFS:')
+      console.log('------Error On Put on Auction--------')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
@@ -166,11 +70,11 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
         <BsArrowLeftCircle
           className="arrow-icon"
           onClick={() => {
-            setOnAction(null)
+            setOnAction(false)
           }}
         />
 
-        <p className="title">On Marketplace</p>
+        <p className="title">On Auction</p>
         <div className="on-marketplace-sub-container">
           <div className="content">
             <div className="content-left">
@@ -197,9 +101,15 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
                     <IoIosArrowDown />
                   </div>
                   <div className={!dropDown ? 'body' : 'body active'}>
-                    {tokenData.map((f, index) => {
+                    {tokensList.map((f, index) => {
                       return (
-                        <p key={index} onClick={() => setSelectedDropDown(f)}>
+                        <p
+                          key={index}
+                          onClick={() => {
+                            setSelectedDropDown(f)
+                            setDropDown(false)
+                          }}
+                        >
                           {f.title}
                         </p>
                       )
@@ -221,10 +131,10 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
                   gap: '10px',
                 }}
               >
-                {!readData ? (
+                {!isApproved ? (
                   <button
                     className="putOnSaleBtn"
-                    onClick={() => handleApproveToken()}
+                    onClick={() => handleApprove()}
                   >
                     Approve
                   </button>
@@ -255,4 +165,4 @@ const Auction: React.FC<{ setOnAction: React.Dispatch<any> }> = ({
   )
 }
 
-export default Auction
+export default AuctionCard

@@ -154,3 +154,7 @@ export type IAuctionNft = {
   erc721TokenAddress: string
   status: string
 }
+
+export type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never
