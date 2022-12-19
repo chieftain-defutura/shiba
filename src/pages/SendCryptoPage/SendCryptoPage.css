@@ -16,10 +16,11 @@
   line-height: 30px;
   text-align: center;
   font-family: var(--montserratFont);
+  margin-bottom: 50px;
 }
 
 .send-crypto-container .send-container {
-  margin-top: 52px;
+  margin-top: 20px;
   display: flex;
   /* align-items: center; */
   gap: 20px;
@@ -141,12 +142,16 @@
   color: var(--textColorOne);
 }
 
+.send-crypto-container .send-crypto-container-right .send-btn:disabled {
+  cursor: no-drop;
+}
+
 .send-crypto-container .domain-details-cont {
   width: 421px;
   height: 221px;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
-  margin-top: 95px;
+  margin-top: 60px;
   padding: 20px 16px;
   display: flex;
   gap: 12px;

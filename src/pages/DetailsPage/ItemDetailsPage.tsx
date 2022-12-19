@@ -19,6 +19,7 @@ import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import { useParams } from 'react-router-dom'
 import { physicalItemQuery } from '../../constants/query'
 import { IPhysicalItem } from '../../constants/types'
+import { getEncryptedData } from '../../utils/formatters'
 
 const settings = {
   dots: false,
@@ -99,14 +100,15 @@ const ItemDetailsPage: React.FC = () => {
       })
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+      const encryptedHash = getEncryptedData(dataHash)
+
       const contract = new ethers.Contract(
         SHIPMENT_CONTRACT,
         shipmentABI,
         signerData,
       )
 
-      const tx = await contract.createBuyOrder(itemId, quantity, dataHash)
+      const tx = await contract.createBuyOrder(itemId, quantity, encryptedHash)
 
       await tx.wait()
       console.log('added')
