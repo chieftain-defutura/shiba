@@ -108,10 +108,17 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
 
           {clickCard === 'stock management' && !clickRemoveItem ? (
             <div className="stock-management-container">
-              <BsArrowLeftCircle
-                className="arrow-icon"
-                onClick={() => setClickCard(null)}
-              />
+              {clickAddItem ? (
+                <BsArrowLeftCircle
+                  className="arrow-icon"
+                  onClick={() => setClickAddItem(null)}
+                />
+              ) : (
+                <BsArrowLeftCircle
+                  className="arrow-icon"
+                  onClick={() => setClickCard(null)}
+                />
+              )}
 
               <div className="arrow-icon-container">
                 {/* <IoIosArrowBack
