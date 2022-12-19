@@ -32,6 +32,7 @@ export type IFullOnBlockchainArtToken = {
 
 export type IPhysicalItem = {
   id: string
+  metadata: string
   erc20Token: {
     id: string
     symbol: string
@@ -52,6 +53,7 @@ export type IPhysicalItem = {
 
 export type IDigitalItem = {
   id: string
+  metadata: string
   erc20Token: {
     id: string
     symbol: string
@@ -91,6 +93,22 @@ export type IGoodsDigitalItem = {
     id: string
   }
   price: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  subcategory: string
+  category: string
+}
+
+export type IGoodsPhysicalItem = {
+  id: string
+  price: string
+  quantity: string
+  shopDetails: {
+    id: string
+  }
   erc20Token: {
     id: string
     symbol: string

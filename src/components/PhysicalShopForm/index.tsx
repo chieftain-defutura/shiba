@@ -110,7 +110,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
       setClickCard(null)
       console.log(setClickCard)
     } catch (error) {
-      console.log('Error sending File to IPFS:')
+      console.log('-----Error: Add Item------')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }

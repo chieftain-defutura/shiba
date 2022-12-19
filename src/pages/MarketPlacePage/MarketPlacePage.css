@@ -309,9 +309,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-items: center;
-}
-.card-shoes p {
-  color: #fff;
+  margin-left: -10px;
 }
 
 .marketplace-container-right .card .card-bottom p {

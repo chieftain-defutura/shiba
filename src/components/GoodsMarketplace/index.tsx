@@ -2,12 +2,13 @@ import React from 'react'
 import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { Link } from 'react-router-dom'
-import { IGoodsDigitalItem } from '../../constants/types'
+import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
 import {
   goodsDigitalItemsQuery,
   goodsPhysicalItemsQuery,
 } from '../../constants/query'
 import Loading from '../Loading/Loading'
+import PhysicalItem from '../PhysicallItem/PhysicalItem'
 
 export const GoodsDigital = () => {
   const [result] = useQuery<{
@@ -45,7 +46,7 @@ export const GoodsDigital = () => {
 
 export const GoodsPhysical = () => {
   const [result] = useQuery<{
-    physicalItems: IGoodsDigitalItem[]
+    physicalItems: IGoodsPhysicalItem[]
   }>({
     query: goodsPhysicalItemsQuery,
   })
@@ -57,19 +58,17 @@ export const GoodsPhysical = () => {
       {!data?.physicalItems.length ? (
         <div></div>
       ) : (
-        <div className="marketplace-container-right-content">
-          {data?.physicalItems.map((f, idx) => (
-            <div key={idx}>
-              <h4>physical</h4>
-              <Link
-                to={`/digital-item-details/${f.id}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <DigitalItem {...f} />
-              </Link>
-            </div>
-          ))}
-        </div>
+        data?.physicalItems.map((f, idx) => (
+          <div key={idx}>
+            <h4>physical</h4>
+            <Link
+              to={`/physical-item-details/${f.id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <PhysicalItem {...f} />
+            </Link>
+          </div>
+        ))
       )}
     </>
   )
