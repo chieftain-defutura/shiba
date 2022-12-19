@@ -14,7 +14,7 @@ const alchemyApiSlice = createApi({
         return {
           url: `/getNFTMetadata`,
           params: {
-            refreshCache: false,
+            refreshCache: true,
             tokenType: 'ERC721',
             tokenId,
             contractAddress,

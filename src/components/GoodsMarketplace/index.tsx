@@ -15,25 +15,29 @@ export const GoodsDigital = () => {
   }>({
     query: goodsDigitalItemsQuery,
   })
-  const { data } = result
+  const { data, fetching } = result
   console.log(data)
 
   return (
     <>
-      {!data?.digitalItems.length ? (
+      {fetching ? (
         <Loading />
+      ) : !data?.digitalItems.length ? (
+        <div>No Nfts Here for sale</div>
       ) : (
-        data?.digitalItems.map((f, idx) => (
-          <div key={idx}>
-            <h4>Digital</h4>
-            <Link
-              to={`/digital-item-details/${f.id}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <DigitalItem {...f} />
-            </Link>
-          </div>
-        ))
+        <div className="marketplace-container-right-content">
+          {data?.digitalItems.map((f, idx) => (
+            <div key={idx}>
+              <h4>Digital</h4>
+              <Link
+                to={`/digital-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <DigitalItem {...f} />
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </>
   )
@@ -53,17 +57,19 @@ export const GoodsPhysical = () => {
       {!data?.physicalItems.length ? (
         <div></div>
       ) : (
-        data?.physicalItems.map((f, idx) => (
-          <div key={idx}>
-            <h4>physical</h4>
-            <Link
-              to={`/digital-item-details/${f.id}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <DigitalItem {...f} />
-            </Link>
-          </div>
-        ))
+        <div className="marketplace-container-right-content">
+          {data?.physicalItems.map((f, idx) => (
+            <div key={idx}>
+              <h4>physical</h4>
+              <Link
+                to={`/digital-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <DigitalItem {...f} />
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </>
   )
@@ -71,10 +77,10 @@ export const GoodsPhysical = () => {
 
 const GoodsMaretPlace: React.FC = () => {
   return (
-    <div className="marketplace-container-right-content">
+    <>
       <GoodsDigital />
       <GoodsPhysical />
-    </div>
+    </>
   )
 }
 

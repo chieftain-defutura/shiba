@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
@@ -28,6 +28,8 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
+  const location = useLocation()
+  const navigate = useNavigate()
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
   const [dropDown, setDropDown] = useState(false)
@@ -55,6 +57,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
       )
       await tx.wait()
       setTransaction({ loading: true, status: 'success' })
+      navigate(`/${location.pathname.split('/')[1]}`)
     } catch (error) {
       console.log('------Error On Put on sale--------')
       console.log(error)

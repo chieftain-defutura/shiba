@@ -543,9 +543,7 @@ select {
 .brief-description-sub-menu-container .content-right {
   gap: 50px;
 }
-.content-left p {
-  margin-top: 10px;
-}
+
 .errorMsg {
   color: red;
   font-size: 12px;
@@ -679,7 +677,7 @@ select {
 .on-marketplace-container .on-marketplace-sub-container .content-left {
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 20px;
 }
 
 .on-marketplace-container .on-marketplace-sub-container .content-left p {
@@ -694,7 +692,7 @@ select {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 52px;
+  gap: 28px;
 }
 
 .on-marketplace-container .on-marketplace-sub-container .content-right select {

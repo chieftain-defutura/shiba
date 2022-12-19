@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { IoIosArrowDown } from 'react-icons/io'
@@ -28,6 +28,9 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
+  const location = useLocation()
+  const navigate = useNavigate()
+
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
   const [dropDown, setDropDown] = useState(false)
@@ -57,6 +60,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
       )
       await tx.wait()
       setTransaction({ loading: true, status: 'success' })
+      navigate(`/${location.pathname.split('/')[1]}`)
     } catch (error) {
       console.log('------Error On Put on Auction--------')
       console.log(error)
@@ -116,6 +120,8 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                     })}
                   </div>
                 </div>
+              </div>
+              <div>
                 <select onChange={(e) => setDays(e.target.value)}>
                   <option value="">select an option</option>
                   <option value="1">1</option>
@@ -124,39 +130,37 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                   <option value="custom">Custom</option>
                 </select>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  gap: '10px',
-                }}
-              >
-                {!isApproved ? (
-                  <button
-                    className="putOnSaleBtn"
-                    onClick={() => handleApprove()}
-                  >
-                    Approve
-                  </button>
-                ) : (
-                  <button
-                    className="putOnSaleBtn"
-                    disabled={!price || !selectedDropDown || !days}
-                    onClick={handlePutOnSale}
-                  >
-                    Put On Sale
-                  </button>
-                )}
+              <div>
                 {days === 'custom' && (
                   <input
                     style={{
                       width: '100%',
+                      height: '30px',
+                      fontSize: '16px',
+                      fontFamily: 'Oswald',
                     }}
                     onChange={(e) => setDays(e.target.value)}
                     type="text"
+                    placeholder="Enter your custom days"
                   />
                 )}
               </div>
+              {!isApproved ? (
+                <button
+                  className="putOnSaleBtn"
+                  onClick={() => handleApprove()}
+                >
+                  Approve
+                </button>
+              ) : (
+                <button
+                  className="putOnSaleBtn"
+                  disabled={!price || !selectedDropDown || !days}
+                  onClick={handlePutOnSale}
+                >
+                  Put On Sale
+                </button>
+              )}
             </div>
           </div>
         </div>

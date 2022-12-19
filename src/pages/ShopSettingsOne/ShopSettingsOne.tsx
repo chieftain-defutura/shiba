@@ -174,7 +174,7 @@ const ShopSettingsOne: React.FC<{ contractData: IContractData }> = ({
                       {contractData.pathName === 'my-digital-shop' ? (
                         <AddItem setAddItem={setClickCard} />
                       ) : (
-                        <PhysicalShopForm />
+                        <PhysicalShopForm setClickCard={undefined} />
                       )}
                     </>
                   )}
