@@ -301,9 +301,15 @@
 }
 
 .marketplace-container-right .card .card-bottom {
-  padding: 10px 8px 0;
+  padding: 0px 8px 0;
   border-top: 1px solid #343741;
   width: 155px;
+}
+.card-btn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  margin-left: -10px;
 }
 
 .marketplace-container-right .card .card-bottom p {

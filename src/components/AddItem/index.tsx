@@ -134,7 +134,7 @@ const AddItem: React.FC<IAddItem> = () => {
         onSubmit={handleAddItem}
         validationSchema={validate}
       >
-        {({ values, isValid, dirty }) => (
+        {({ values }) => (
           <Form>
             <p className="title">Photos</p>
             <div className="content">

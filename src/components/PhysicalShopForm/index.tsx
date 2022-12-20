@@ -3,7 +3,6 @@ import { Formik, Field, Form } from 'formik'
 import axios from 'axios'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
-import { getEncryptedData } from '../../utils/formatters'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { TokenData } from '../../constants/tokenData'
 import physicalShopABI from '../../utils/abi/physicalShopABI.json'
@@ -12,7 +11,11 @@ import { parseUnits } from 'ethers/lib/utils.js'
 import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import { useParams } from 'react-router-dom'
 
-const PhysicalShopForm = () => {
+interface IPhysicalShopForm {
+  setClickCard: any
+}
+
+const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
   const { id } = useParams()
   const { address } = useAccount()
   const { data } = useSigner()
@@ -54,8 +57,7 @@ const PhysicalShopForm = () => {
 
   const handleAddItem = async (values: any) => {
     if (!address || !data) return
-    const encryptedFullProductLink = getEncryptedData(values.fullProduct)
-    console.log(encryptedFullProductLink)
+
     try {
       setTransaction({ loading: true, status: 'pending' })
       const resData = await axios({
@@ -105,6 +107,8 @@ const PhysicalShopForm = () => {
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
+      setClickCard(null)
+      console.log(setClickCard)
     } catch (error) {
       console.log('-----Error: Add Item------')
       console.log(error)

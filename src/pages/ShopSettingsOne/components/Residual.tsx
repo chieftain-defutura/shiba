@@ -202,21 +202,22 @@ const Residual: React.FC<IResidualProps> = ({
                 <div>
                   {/* <h4>Add Residual Getter</h4> */}
                   <div className="add-getter-cont">
-                    <label>
-                      Add Residual Getter
+                    <label>Add Residual Getter </label>
+                    <div className="residual-input">
                       <input
                         className="address"
                         placeholder="Address"
                         value={shareAddress}
                         onChange={({ target }) => setShareAddress(target.value)}
                       />
-                    </label>
-                    <input
-                      className="share"
-                      placeholder="Share"
-                      value={sharePercent}
-                      onChange={({ target }) => setSharePercent(target.value)}
-                    />
+
+                      <input
+                        className="share"
+                        placeholder="Share"
+                        value={sharePercent}
+                        onChange={({ target }) => setSharePercent(target.value)}
+                      />
+                    </div>
                   </div>
                   <p className="residualPara">
                     Available Shares {100 - Number(formattedData?.filledShare)}

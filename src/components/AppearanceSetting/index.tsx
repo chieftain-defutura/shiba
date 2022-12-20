@@ -26,7 +26,6 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
   const { setTransaction } = useTransactionModal()
   const [inputData, setInputData] = useState(null)
 
-  console.log(inputData)
   const handleGetMetadata = useCallback(async () => {
     if (!id) return
 
@@ -77,6 +76,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
           'Content-Type': 'application/json',
         },
       })
+
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
@@ -89,6 +89,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
       await tx.wait()
       console.log('updated')
       setTransaction({ loading: true, status: 'success' })
+      setClickCard(null)
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)

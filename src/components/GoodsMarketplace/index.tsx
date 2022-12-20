@@ -8,7 +8,7 @@ import {
   goodsPhysicalItemsQuery,
 } from '../../constants/query'
 import Loading from '../Loading/Loading'
-import PhysicalItem from '../PhysicalItem'
+import PhysicalItem from '../PhysicallItem/PhysicalItem'
 
 export const GoodsDigital = () => {
   const [result] = useQuery<{
@@ -16,25 +16,29 @@ export const GoodsDigital = () => {
   }>({
     query: goodsDigitalItemsQuery,
   })
-  const { data } = result
+  const { data, fetching } = result
   console.log(data)
 
   return (
     <>
-      {!data?.digitalItems.length ? (
+      {fetching ? (
         <Loading />
+      ) : !data?.digitalItems.length ? (
+        <div>No Nfts Here for sale</div>
       ) : (
-        data?.digitalItems.map((f, idx) => (
-          <div key={idx}>
-            <h4>Digital</h4>
-            <Link
-              to={`/digital-item-details/${f.id}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <DigitalItem {...f} />
-            </Link>
-          </div>
-        ))
+        <div className="marketplace-container-right-content">
+          {data?.digitalItems.map((f, idx) => (
+            <div key={idx}>
+              <h4>Digital</h4>
+              <Link
+                to={`/digital-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <DigitalItem {...f} />
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </>
   )
@@ -72,10 +76,10 @@ export const GoodsPhysical = () => {
 
 const GoodsMaretPlace: React.FC = () => {
   return (
-    <div className="marketplace-container-right-content">
+    <>
       <GoodsDigital />
       <GoodsPhysical />
-    </div>
+    </>
   )
 }
 
