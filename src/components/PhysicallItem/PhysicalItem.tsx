@@ -5,7 +5,11 @@ import cardImg from '../../assets/img/card-3.png'
 import { IGoodsPhysicalItem } from '../../constants/types'
 import '../PhysicallItem/PhysicallItem.scss'
 
-const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({ erc20Token, price }) => {
+const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({
+  erc20Token,
+  price,
+  quantity,
+}) => {
   return (
     <div className="physicall-item-card-container">
       <div className="card">
@@ -25,7 +29,7 @@ const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({ erc20Token, price }) => {
           </div>
           <div className="card-shoes">
             <p>Name: Shoes1</p>
-            <p>Price: 10400 SHI</p>
+            <p>Quantity: {quantity}</p>
           </div>
           <div className="card-overlay">
             <button

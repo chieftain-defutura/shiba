@@ -280,31 +280,21 @@ const MintNftPage: React.FC = () => {
       console.log(selectedNftType)
 
       if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
-        setTransaction({
-          loading: true,
-          status: 'pending',
-          message: PENDING_MESSAGE,
-        })
+        setTransaction({ loading: true, status: 'pending' })
         await mintDomainNft(domainName, selected, signerData)
-        setTransaction({
-          loading: true,
-          status: 'success',
-          message: SUCCESS_MESSAGE,
-        })
+        setTransaction({ loading: true, status: 'success' })
+        setTimeout(() => {
+          window.location.reload()
+        }, 3000)
         return
       }
 
-      setTransaction({
-        loading: true,
-        status: 'pending',
-        message: PENDING_MESSAGE,
-      })
+      setTransaction({ loading: true, status: 'pending' })
       await mintNft(selectDomain, selectedNftType.contractAddress, signerData)
-      setTransaction({
-        loading: true,
-        status: 'success',
-        message: SUCCESS_MESSAGE,
-      })
+      setTransaction({ loading: true, status: 'success' })
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000)
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })

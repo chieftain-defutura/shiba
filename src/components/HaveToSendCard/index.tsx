@@ -60,6 +60,7 @@ const HaveToSendCard: React.FC<IHaveToSendProps> = ({
           </button>
         </td>
       </tr>
+      <tr className="spacer"></tr>
     </>
   )
 }
