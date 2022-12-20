@@ -21,6 +21,7 @@ export interface IContractData {
   sell: boolean
   finalizeToken: boolean
   transfer: boolean
+  query: string
 }
 
 export interface IContractDetails {
@@ -43,6 +44,17 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    query: `
+      query($id:String!) {
+        digitalShopToken(id:$id){
+          id
+          domainName
+          owner {
+            id
+          }
+        }
+      }
+    `,
   },
   'my-goods-shop': {
     address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -54,6 +66,17 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    query: `
+      query($id:String!) {
+        physicalShopToken(id:$id){
+          id
+          domainName
+          owner {
+            id
+          }
+        }
+      }
+    `,
   },
   'my-domains': {
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
@@ -65,6 +88,17 @@ export const ContractDetails: IContractDetails = {
     sell: false,
     finalizeToken: true,
     transfer: true,
+    query: `
+      query($id:String!) {
+        domainToken(id:$id){
+          id
+          domainName
+          owner {
+            id
+          }
+        }
+      }
+    `,
   },
   'my-charities': {
     address: CHARITIES_NFT_CONTRACT_ADDRESS,
@@ -76,6 +110,17 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    query: `
+      query($id:String!) {
+        charityToken(id:$id){
+          id
+          domainName
+          owner {
+            id
+          }
+        }
+      }
+    `,
   },
   'my-websites': {
     address: WEBSITE_NFT_CONTRACT_ADDRESS,
@@ -87,6 +132,17 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    query: `
+      query($id:String!) {
+        websiteToken(id:$id){
+          id
+          domainName
+          owner {
+            id
+          }
+        }
+      }
+    `,
   },
 }
 

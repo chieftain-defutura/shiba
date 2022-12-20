@@ -128,6 +128,9 @@
   color: var(--textColorTwo);
   margin: 0;
 }
+.good-shop-quantity p {
+  font-size: 14px;
+}
 
 .website-container-right .card .card-bottom button {
   border: 1px solid var(--textColorTwo);

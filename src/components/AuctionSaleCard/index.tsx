@@ -143,7 +143,7 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
             {days}d :{hours}h :{minutes}m :{seconds}s
           </p>
         </div>
-        <div className="card-btn">
+        <div className="card-btns">
           {address?.toLowerCase() === owner.toLowerCase() ? (
             <>
               <button onClick={handleFinishAuction}> Finish Auction</button>

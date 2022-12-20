@@ -543,7 +543,9 @@ select {
 .brief-description-sub-menu-container .content-right {
   gap: 50px;
 }
-
+.content-left p {
+  margin-top: 5px;
+}
 .errorMsg {
   color: red;
   font-size: 12px;
