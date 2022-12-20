@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Formik, Field, Form } from 'formik'
+import { Formik, Field, Form, ErrorMessage } from 'formik'
 import axios from 'axios'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
@@ -10,6 +10,7 @@ import { useTransactionModal } from '../../context/TransactionContext'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import { useParams } from 'react-router-dom'
+import * as Yup from 'yup'
 
 interface IPhysicalShopForm {
   setClickCard: any
@@ -86,8 +87,8 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
         },
       })
       const JsonHash = resData.data.IpfsHash
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+      console.log(JsonHash)
+
       const contract = new ethers.Contract(
         PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
         physicalShopABI,
@@ -96,7 +97,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
 
       const tx = await contract.addItem(
         id,
-        dataHash,
+        JsonHash,
         values.quantity,
         parseUnits(values.price.toString(), '18'),
         values.currency,
@@ -115,6 +116,12 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
       setTransaction({ loading: true, status: 'error' })
     }
   }
+
+  const validate = Yup.object({
+    quantity: Yup.string().required('This is Required'),
+    price: Yup.string().required('This is Required'),
+    currency: Yup.string().required('This is Required'),
+  })
   return (
     <div>
       <div>
@@ -141,6 +148,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
             deliveredIn: '',
           }}
           onSubmit={handleAddItem}
+          validationSchema={validate}
         >
           {({ values }) => (
             <Form>
@@ -273,20 +281,41 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                       <p>Delivered In:</p>
                     </div>
                     <div className="content-right">
-                      <Field name="quantity" placeholder="Quantity" />
-                      <Field name="price" type="number" placeholder="Price" />
-                      <Field as="select" name="currency">
-                        <option value="">Select a Currency</option>
-                        {TokenData.map((f, index) => {
-                          return (
-                            <>
-                              <option value={f.tokenAddress} key={index}>
-                                {f.tokenName}
-                              </option>
-                            </>
-                          )
-                        })}
-                      </Field>
+                      <div>
+                        <Field name="quantity" placeholder="Quantity" />
+                        <ErrorMessage
+                          name="quantity"
+                          className="errorMsg"
+                          component="div"
+                        />
+                      </div>
+                      <div>
+                        <Field name="price" type="number" placeholder="Price" />
+                        <ErrorMessage
+                          name="price"
+                          className="errorMsg"
+                          component="div"
+                        />
+                      </div>
+                      <div>
+                        <Field as="select" name="currency">
+                          <option value="">Select a Currency</option>
+                          {TokenData.map((f, index) => {
+                            return (
+                              <>
+                                <option value={f.tokenAddress} key={index}>
+                                  {f.tokenName}
+                                </option>
+                              </>
+                            )
+                          })}
+                        </Field>
+                        <ErrorMessage
+                          name="currency"
+                          className="errorMsg"
+                          component="div"
+                        />
+                      </div>
                       <Field
                         name="shipmentArea"
                         placeholder="Insert Shipment Areas (Ex. USA, Germany, Asia or Worldwide)"

@@ -28,6 +28,7 @@ import PhysicalRemoveItem from '../../components/RemoveItem/PhysicalRemoveCard'
 import DigitalRemoveItem from '../../components/RemoveItem/DigitalRemoveCard'
 import Sell from './components/Sell'
 import Loading from '../../components/Loading/Loading'
+import { IoIosArrowBack } from 'react-icons/io'
 
 type IShopSetting = {
   setShopSetting: React.Dispatch<boolean>
@@ -151,7 +152,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
       {clickCard === 'stock management' && !clickRemoveItem ? (
         <div className="stock-management-container">
           {clickAddItem ? (
-            <BsArrowLeftCircle
+            <IoIosArrowBack
               className="arrow-icon"
               onClick={() => setClickAddItem(null)}
             />

@@ -97,9 +97,9 @@ const FullOnBlockchainPage: React.FC = () => {
           {fetching ? (
             <Loading />
           ) : error ? (
-            'something went wrong'
+            <div style={{ textAlign: 'center' }}>something went wrong</div>
           ) : !nftData.length ? (
-            'No Nfts Here'
+            <div style={{ textAlign: 'center' }}>No Nfts Here</div>
           ) : (
             <div className="website-container-right">
               {nftData.map((f, idx: number) => (

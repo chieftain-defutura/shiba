@@ -120,9 +120,9 @@ const ActionPage: React.FC = () => {
                 <Loading />
               </div>
             ) : error ? (
-              <div>something went wrong</div>
+              <div style={{ textAlign: 'center' }}>something went wrong</div>
             ) : !data?.auctions.length ? (
-              <div>No Result</div>
+              <div style={{ textAlign: 'center' }}>No Result</div>
             ) : (
               <div className="marketplace-container-right-content">
                 {data?.auctions.map((f, idx) => (

@@ -5,7 +5,7 @@ const Loading: React.FC = () => {
   return (
     <div className="center">
       <div className="ring"></div>
-      <span>loadig...</span>
+      <span>loading...</span>
     </div>
   )
 }

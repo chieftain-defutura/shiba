@@ -33,7 +33,10 @@ const DigitalCard: React.FC<ICard> = ({
   const handleRemoveItem = async () => {
     if (!address || !data) return
     try {
-      setTransaction({ loading: true, status: 'pending' })
+      setTransaction({
+        loading: true,
+        status: 'pending',
+      })
       const contract = new ethers.Contract(
         DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,

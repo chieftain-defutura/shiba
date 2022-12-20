@@ -21,15 +21,17 @@ export const GoodsDigital = () => {
 
   return (
     <>
+      <div style={{ fontSize: '20px', textAlign: 'center' }}>
+        <h2>Digital</h2>
+      </div>
       {fetching ? (
         <Loading />
       ) : !data?.digitalItems.length ? (
-        <div>No Nfts Here for sale</div>
+        <div style={{ textAlign: 'center' }}>No Nfts Here for sale</div>
       ) : (
         <div className="marketplace-container-right-content">
           {data?.digitalItems.map((f, idx) => (
             <div key={idx}>
-              <h4>Digital</h4>
               <Link
                 to={`/digital-item-details/${f.id}`}
                 style={{ textDecoration: 'none' }}
@@ -55,20 +57,26 @@ export const GoodsPhysical = () => {
 
   return (
     <>
-      {!data?.physicalItems.length ? (
-        <div></div>
+      <div style={{ fontSize: '20px', textAlign: 'center' }}>
+        <h2>physical</h2>
+      </div>
+      {!data ? (
+        <Loading />
+      ) : !data?.physicalItems.length ? (
+        <div style={{ textAlign: 'center' }}>No Nfts Here for sale</div>
       ) : (
-        data?.physicalItems.map((f, idx) => (
-          <div key={idx}>
-            <h4>physical</h4>
-            <Link
-              to={`/physical-item-details/${f.id}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <PhysicalItem {...f} />
-            </Link>
-          </div>
-        ))
+        <div className="marketplace-container-right-content">
+          {data?.physicalItems.map((f, idx) => (
+            <div key={idx}>
+              <Link
+                to={`/physical-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <PhysicalItem {...f} />
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </>
   )
