@@ -275,9 +275,15 @@ const ShopPage: React.FC = () => {
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Category: Book</p>
-                    <p>id: {idx}</p>
+                    <p>Token Id:</p>
+                    <p>{idx}</p>
                   </div>
+                </div>
+                <div style={{ padding: '5px 0' }}>
+                  <p style={{ fontSize: '14px' }}>Domain:</p>
+                  <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                    <b>{}</b>
+                  </p>
                 </div>
               </div>
             ))}
@@ -293,12 +299,18 @@ const ShopPage: React.FC = () => {
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Category: Music</p>
-                    <p>id: {idx}</p>
+                    <p>Token Id:</p>
+                    <p>{idx}</p>
                     {/* <Link to={`/my-digital-shop/${f}`}>
                     <button style={{ width: "50px" }}>Get In</button>
                   </Link> */}
                   </div>
+                </div>
+                <div style={{ padding: '5px 0' }}>
+                  <p style={{ fontSize: '14px' }}>Domain:</p>
+                  <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                    <b>{}</b>
+                  </p>
                 </div>
               </div>
             ))}
