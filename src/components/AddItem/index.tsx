@@ -75,6 +75,7 @@ const AddItem: React.FC<IAddItem> = () => {
           'Content-Type': 'application/json',
         },
       })
+
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
       console.log(dataHash)
@@ -134,7 +135,7 @@ const AddItem: React.FC<IAddItem> = () => {
         onSubmit={handleAddItem}
         validationSchema={validate}
       >
-        {({ values }) => (
+        {({ values, isValid, dirty }) => (
           <Form>
             <p className="title">Photos</p>
             <div className="content">
