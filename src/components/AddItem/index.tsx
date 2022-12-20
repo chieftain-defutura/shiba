@@ -91,7 +91,7 @@ const AddItem: React.FC<IAddItem> = () => {
         values.subCategory,
         encryptedFullProductLink,
         JsonHash,
-        parseUnits(values.price, '18'),
+        parseUnits(values.price.toString(), '18'),
         values.currency,
       )
 
@@ -139,7 +139,7 @@ const AddItem: React.FC<IAddItem> = () => {
           <Form>
             <p className="title">Photos</p>
             <div className="content">
-              <div className="content-left">
+              <div className="content-lefts">
                 <p>preview:</p>
                 <p>Full Product:</p>
                 <p>Item Name:</p>

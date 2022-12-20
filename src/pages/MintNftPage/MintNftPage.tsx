@@ -29,6 +29,7 @@ import { useTransactionModal } from '../../context/TransactionContext'
 import { mintDomainNft, mintNft } from '../../utils/methods'
 import HomeLayout from '../../Layout/HomeLayout'
 import { domainRegex, getDomainNamePrice } from '../../lib/helpers'
+import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../utils/messaging'
 
 interface IContractData {
   title: string
@@ -240,7 +241,11 @@ const MintNftPage: React.FC = () => {
     try {
       if (!selectedNftType?.tokenAddress || !signerData) return
 
-      setTransaction({ loading: true, status: 'pending' })
+      setTransaction({
+        loading: true,
+        status: 'pending',
+        message: PENDING_MESSAGE,
+      })
       const nftContract = new ethers.Contract(
         selectedNftType.tokenAddress,
         erc20ABI,
@@ -258,7 +263,11 @@ const MintNftPage: React.FC = () => {
           : undefined,
       )
 
-      setTransaction({ loading: true, status: 'success' })
+      setTransaction({
+        loading: true,
+        status: 'success',
+        message: SUCCESS_MESSAGE,
+      })
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
@@ -271,15 +280,31 @@ const MintNftPage: React.FC = () => {
       console.log(selectedNftType)
 
       if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
-        setTransaction({ loading: true, status: 'pending' })
+        setTransaction({
+          loading: true,
+          status: 'pending',
+          message: PENDING_MESSAGE,
+        })
         await mintDomainNft(domainName, selected, signerData)
-        setTransaction({ loading: true, status: 'success' })
+        setTransaction({
+          loading: true,
+          status: 'success',
+          message: SUCCESS_MESSAGE,
+        })
         return
       }
 
-      setTransaction({ loading: true, status: 'pending' })
+      setTransaction({
+        loading: true,
+        status: 'pending',
+        message: PENDING_MESSAGE,
+      })
       await mintNft(selectDomain, selectedNftType.contractAddress, signerData)
-      setTransaction({ loading: true, status: 'success' })
+      setTransaction({
+        loading: true,
+        status: 'success',
+        message: SUCCESS_MESSAGE,
+      })
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })

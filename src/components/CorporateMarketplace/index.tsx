@@ -3,6 +3,7 @@ import { useQuery } from 'urql'
 import FixedSaleCard from '../FixedSaleCard'
 import { IFixedSale } from '../../constants/types'
 import { fixedSaleQuery } from '../../constants/query'
+import Loading from '../Loading/Loading'
 
 const CorporateMarketplace: React.FC = () => {
   const [result] = useQuery<{
@@ -14,19 +15,21 @@ const CorporateMarketplace: React.FC = () => {
   console.log(data)
 
   return (
-    <div className="marketplace-container-right-content">
+    <div>
       {fetching ? (
-        <div>Loading</div>
+        <Loading />
       ) : error ? (
-        <div>Error</div>
+        <div style={{ textAlign: 'center' }}>Error</div>
       ) : !data?.fixedSales.length ? (
-        <div>No Result</div>
+        <div style={{ textAlign: 'center' }}>No Result</div>
       ) : (
-        data?.fixedSales.map((f, idx) => (
-          <div key={idx}>
-            <FixedSaleCard {...f} />
-          </div>
-        ))
+        <div className="marketplace-container-right-content">
+          {data?.fixedSales.map((f, idx) => (
+            <div key={idx}>
+              <FixedSaleCard {...f} />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )

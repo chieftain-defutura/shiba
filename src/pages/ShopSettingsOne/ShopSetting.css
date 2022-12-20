@@ -543,8 +543,32 @@ select {
 .brief-description-sub-menu-container .content-right {
   gap: 50px;
 }
-.content-left p {
-  margin-top: 5px;
+.content-lefts p {
+  margin-right: 10px;
+}
+.content-lefts p:nth-child(2) {
+  margin-top: 24px;
+}
+.content-lefts p:nth-child(3) {
+  margin-top: 20px;
+}
+.content-lefts p:nth-child(4) {
+  margin-top: 20px;
+}
+.content-lefts p:nth-child(5) {
+  margin-top: 24px;
+}
+.content-lefts p:nth-child(6) {
+  margin-top: 24px;
+}
+.content-lefts p:nth-child(7) {
+  margin-top: 24px;
+}
+.content-lefts p:nth-child(8) {
+  margin-top: 30px;
+}
+.content-lefts p:nth-child(9) {
+  margin-top: 26px;
 }
 .errorMsg {
   color: red;

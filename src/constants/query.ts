@@ -148,13 +148,27 @@ query{
     category
   }}`
 
-export const awaitingDelivery = `
+export const haveToSendQuery = `
   query($owner: String!){
-    shipments(owner:$owner){
+    shipments(where:{owner:$owner,status:"PREPARING"}){
       id
       owner
       status
       quantity
+      deliveryHash
+    }
+  }
+  `
+
+export const awaitingDeliveryQuery = `
+  query($buyer: String!){
+    shipments(where:{buyer:$buyer,status:"DISPATCHED"}){
+      id
+      owner
+      buyer
+      status
+      quantity
+      deliveryHash
     }
   }
   `

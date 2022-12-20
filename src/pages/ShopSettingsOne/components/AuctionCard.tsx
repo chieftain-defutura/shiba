@@ -12,6 +12,7 @@ import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json
 import { ArrElement } from '../../../constants/types'
 import { tokensList } from '../../../constants/contract'
 import { getTokenDecimals } from '../../../utils/methods'
+import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
 
 type IAuctionCardProps = {
   setOnAction: React.Dispatch<boolean>
@@ -42,7 +43,11 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
   const handlePutOnSale = async () => {
     if (!address || !data || !selectedDropDown) return
     try {
-      setTransaction({ loading: true, status: 'pending' })
+      setTransaction({
+        loading: true,
+        status: 'pending',
+        message: PENDING_MESSAGE,
+      })
       const contract = new ethers.Contract(
         MARKETPLACE_CONTRACT_ADDRESS,
         auctionMarketplaceABI,
@@ -59,7 +64,11 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
         contractAddress,
       )
       await tx.wait()
-      setTransaction({ loading: true, status: 'success' })
+      setTransaction({
+        loading: true,
+        status: 'success',
+        message: SUCCESS_MESSAGE,
+      })
       navigate(`/${location.pathname.split('/')[1]}`)
     } catch (error) {
       console.log('------Error On Put on Auction--------')
