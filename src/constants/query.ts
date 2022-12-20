@@ -118,6 +118,7 @@ export const goodsDigitalItemsQuery = `
 query{
   digitalItems(where:{status:ACTIVE}){
     id
+    metadata
     shopDetails{
       id
     }

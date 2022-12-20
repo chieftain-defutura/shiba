@@ -89,6 +89,7 @@ export type IFixedSale = {
 
 export type IGoodsDigitalItem = {
   id: string
+  metadata: string
   shopDetails: {
     id: string
   }
