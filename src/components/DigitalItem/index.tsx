@@ -68,14 +68,9 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
           <h3 className="title">The Holy Grail</h3>
           <h4 className="sub-title">Pixart Motion</h4>
         </div>
-        {/* <div className="card-bottom">
+        <div className="card-bottom">
           <p>Fixed price</p>
-          <button>
-            {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
-          </button>
 
-          <button onClick={handleBuy}>Buy</button>
-          <p>Fixed price</p>
           <button>
             {formatUnits(price, erc20Token.decimals)} {erc20Token.symbol}
           </button>
@@ -87,7 +82,7 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
           >
             Buy
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   )
