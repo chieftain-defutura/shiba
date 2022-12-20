@@ -136,6 +136,7 @@ export const goodsPhysicalItemsQuery = `
 query{
   physicalItems(where:{status:ACTIVE}){
     id
+    quantity
     shopDetails{
       id
     }

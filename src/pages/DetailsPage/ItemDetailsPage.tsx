@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
 import axios from 'axios'
 import { ethers } from 'ethers'
@@ -20,6 +20,8 @@ import { useParams } from 'react-router-dom'
 import { physicalItemQuery } from '../../constants/query'
 import { IPhysicalItem } from '../../constants/types'
 import { getEncryptedData } from '../../utils/formatters'
+import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
+import Skeleton from 'react-loading-skeleton'
 
 const settings = {
   dots: false,
@@ -43,8 +45,8 @@ const ItemDetailsPage: React.FC = () => {
     variables: { id: itemId },
     pause: !itemId,
   })
-
   const { data } = result
+
   const formattedPrice = data
     ? Number(
         ethers.utils.formatUnits(
@@ -56,22 +58,6 @@ const ItemDetailsPage: React.FC = () => {
 
   console.log(data)
 
-  const handleGetData = useCallback(async () => {
-    if (!data)
-      try {
-        const result = await axios.get(
-          `${process.env.REACT_APP_PINATA_GATEWAY_URL}/ipfs/QmPVF5XTdxgDTHcGFs7h928c5LU5BEn2h1JrRUkouQYyFm`,
-        )
-        console.log(result.data)
-      } catch (error) {
-        console.log(error)
-      }
-  }, [data])
-
-  useEffect(() => {
-    handleGetData()
-  }, [handleGetData])
-
   const handlePlus = () => {
     setQuantity(quantity + 1)
   }
@@ -82,7 +68,7 @@ const ItemDetailsPage: React.FC = () => {
     }
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, actions: any) => {
     if (!address || !signerData || !data) return
 
     try {
@@ -133,10 +119,11 @@ const ItemDetailsPage: React.FC = () => {
       )
 
       const tx = await contract.createBuyOrder(itemId, quantity, encryptedHash)
-
       await tx.wait()
-      console.log('added')
+
       setTransaction({ loading: true, status: 'success' })
+      setCategoriesShipping(false)
+      actions.resetForm()
     } catch (error) {
       console.log('------Error: BUY ORDER-------')
       console.log(error)
@@ -178,12 +165,14 @@ const ItemDetailsPage: React.FC = () => {
                             </div>
                           </Slider>
                           <button
+                            type="button"
                             className="prev-btn slider-btn"
                             onClick={() => slider.current?.slickPrev()}
                           >
                             <img src={leftArrowIcon} alt="arrow" />
                           </button>
                           <button
+                            type="button"
                             className="next-btn slider-btn"
                             onClick={() => slider.current?.slickNext()}
                           >
@@ -249,21 +238,11 @@ const ItemDetailsPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="content-box-right">
-                      <div className="product-details">
-                        <p>Item Name: Shoes1</p>
-                        <p>Available Sizes: 34, 39, 40</p>
-                        <p>Available Colours: Red, Black</p>
-                        <p>Fabric Type: 100% Cotton</p>
-                        <p>Item Condition: New</p>
-                        <p>Manufacturer: Canada</p>
-                        <p>Brand: SuperBrand</p>
-                        <br />
-                        <p>Refund Possible: Yes</p>
-                        <p>Department: Women</p>
-                        <p>Shipment Area: Worldwide</p>
-                        <p>Shipment Fee: 2000 SHI</p>
-                        <p>Delivered In: 15-20 Working Days</p>
-                      </div>
+                      {!data ? (
+                        <Skeleton count={10} />
+                      ) : (
+                        <ProductDetails metadata={data.physicalItem.metadata} />
+                      )}
                       <br />
                       <div className="quantity-container">
                         <p>Quantity:</p>
@@ -311,6 +290,40 @@ const ItemDetailsPage: React.FC = () => {
           </Formik>
         </div>
       </HomeLayout>
+    </div>
+  )
+}
+
+const ProductDetails: React.FC<{ metadata: string }> = ({ metadata }) => {
+  const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
+    hash: metadata,
+  })
+  console.log(ipfsData)
+
+  return (
+    <div className="product-details">
+      {/* <p>Item Name: Shoes1</p>
+  <p>Available Sizes: 34, 39, 40</p>
+  <p>Available Colours: Red, Black</p>
+  <p>Fabric Type: 100% Cotton</p>
+  <p>Item Condition: New</p>
+  <p>Manufacturer: Canada</p>
+  <p>Brand: SuperBrand</p>
+  <p>Refund Possible: Yes</p>
+  <p>Department: Women</p>
+  <p>Shipment Area: Worldwide</p>
+  <p>Shipment Fee: 2000 SHI</p>
+  <p>Delivered In: 15-20 Working Days</p> */}
+      {isLoading && <Skeleton count={10} />}
+      {ipfsData &&
+        Object.entries(ipfsData).map((value, index) => (
+          <p key={index.toString()}>
+            <span style={{ textTransform: 'capitalize' }}>
+              {value[0].replace(/([a-z](?=[A-Z]))/g, '$1 ')}
+            </span>
+            : {value[1]}
+          </p>
+        ))}
     </div>
   )
 }

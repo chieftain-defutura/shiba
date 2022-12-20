@@ -9,6 +9,7 @@ import { formatUnits } from 'ethers/lib/utils.js'
 
 interface ICard {
   id: number
+  quantity: string
   shopDetails: {
     id: number
   }
@@ -25,6 +26,7 @@ const PhysicalCard: React.FC<ICard> = ({
   shopDetails: { id: shopId },
   erc20Token,
   price,
+  quantity,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
@@ -70,9 +72,10 @@ const PhysicalCard: React.FC<ICard> = ({
           <button onClick={handleRemoveItem}>Remove Shop</button>
         </div>
       </div>
-      {/* <div className="remove-card-bottom">
+      <div className="remove-card-bottom">
         <p>Name: shoes winter</p>
-      </div> */}
+        <p>Quantity: {quantity}</p>
+      </div>
     </div>
   )
 }
