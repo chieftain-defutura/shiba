@@ -6,6 +6,7 @@ import cardImgNine from '../../../assets/img/card-12.png'
 import cardImgTen from '../../../assets/img/card-13.png'
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
+import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
 import AuctionCard from './AuctionCard'
 import MarketPlaceCard from './MarketPlaceCard'
 
@@ -40,7 +41,11 @@ const Sell: React.FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const handleApprove = async () => {
     if (!signerData) return
     try {
-      setTransaction({ loading: true, status: 'pending' })
+      setTransaction({
+        loading: true,
+        status: 'pending',
+        message: PENDING_MESSAGE,
+      })
       const tokenContract = new ethers.Contract(
         contractAddress,
         erc721ABI,
@@ -52,7 +57,11 @@ const Sell: React.FC<{ contractAddress: string }> = ({ contractAddress }) => {
       )
       await tx.wait()
       setIsApproved(true)
-      setTransaction({ loading: true, status: 'success' })
+      setTransaction({
+        loading: true,
+        status: 'success',
+        message: SUCCESS_MESSAGE,
+      })
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })

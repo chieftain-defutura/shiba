@@ -8,7 +8,6 @@
 
   .card {
     .card-shoes {
-      margin-top: 5px;
       p {
         color: #fff;
       }
@@ -17,10 +16,10 @@
   .card-overlay {
     background: rgba(0, 0, 0, 0.82);
     border-radius: 8px;
-    width: 17.5%;
+    width: 88%;
     height: 66%;
     position: absolute;
-    top: 40%;
+    top: 20%;
     left: 0;
     z-index: 2;
     transition: 0.2s ease-in-out;
@@ -28,9 +27,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    opacity: 0;
 
     &:hover {
       top: 0;
+      opacity: 9;
     }
   }
 }
