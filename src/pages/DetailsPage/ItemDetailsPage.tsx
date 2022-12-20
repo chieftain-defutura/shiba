@@ -57,13 +57,15 @@ const ItemDetailsPage: React.FC = () => {
   console.log(data)
 
   const handleGetData = useCallback(async () => {
-    if (!data) return
-    try {
-      const result = await fetch(data.physicalItem.metadata)
-      console.log(await result.json())
-    } catch (error) {
-      console.log(error)
-    }
+    if (!data)
+      try {
+        const result = await axios.get(
+          `${process.env.REACT_APP_PINATA_GATEWAY_URL}/ipfs/QmPVF5XTdxgDTHcGFs7h928c5LU5BEn2h1JrRUkouQYyFm`,
+        )
+        console.log(result.data)
+      } catch (error) {
+        console.log(error)
+      }
   }, [data])
 
   useEffect(() => {
@@ -122,8 +124,7 @@ const ItemDetailsPage: React.FC = () => {
         },
       })
       const JsonHash = resData.data.IpfsHash
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      const encryptedHash = getEncryptedData(dataHash)
+      const encryptedHash = getEncryptedData(JsonHash)
 
       const contract = new ethers.Contract(
         SHIPMENT_CONTRACT,

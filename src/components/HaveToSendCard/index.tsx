@@ -1,40 +1,37 @@
 import React from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
+
 import { useTransactionModal } from '../../context/TransactionContext'
 import shipmentABI from '../../utils/abi/shipmentABI.json'
 import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
+import { IHaveToSend } from '../../constants/types'
 
-interface IHaveToSendCard {
-  id: string
+interface IHaveToSendProps {
+  data: IHaveToSend
+  setSelectedShipment: React.Dispatch<
+    React.SetStateAction<IHaveToSend | undefined>
+  >
 }
 
-const HaveToSendCard: React.FC<IHaveToSendCard> = ({ id }) => {
+const HaveToSendCard: React.FC<IHaveToSendProps> = ({
+  data,
+  setSelectedShipment,
+}) => {
   const { address } = useAccount()
-  const { data } = useSigner()
+  const { data: signerData } = useSigner()
   const { setTransaction } = useTransactionModal()
 
-  const handleStartShipment = async () => {
-    if (!address || !data) return
-    try {
-      setTransaction({ loading: true, status: 'pending' })
-      const contract = new ethers.Contract(SHIPMENT_CONTRACT, shipmentABI, data)
-      const tx = await contract.startShipment(id)
-      await tx.wait()
-
-      setTransaction({ loading: true, status: 'success' })
-    } catch (error) {
-      console.log(error)
-      setTransaction({ loading: true, status: 'error' })
-    }
-  }
-
   const handleCancelOrder = async () => {
-    if (!address || !data) return
+    if (!address || !signerData) return
     try {
       setTransaction({ loading: true, status: 'pending' })
-      const contract = new ethers.Contract(SHIPMENT_CONTRACT, shipmentABI, data)
-      const tx = await contract.cancelBuyOrder(id)
+      const contract = new ethers.Contract(
+        SHIPMENT_CONTRACT,
+        shipmentABI,
+        signerData,
+      )
+      const tx = await contract.cancelBuyOrder(data.id)
       await tx.wait()
 
       setTransaction({ loading: true, status: 'success' })
@@ -50,10 +47,12 @@ const HaveToSendCard: React.FC<IHaveToSendCard> = ({ id }) => {
           <p>Shoes1</p>
         </td>
         <td>
-          <p>1</p>
+          <p>{data.quantity}</p>
         </td>
         <td>
-          <button onClick={handleStartShipment}>Start Shipment</button>
+          <button onClick={() => setSelectedShipment(data)}>
+            Start Shipment
+          </button>
         </td>
         <td>
           <button className="cancel-btn" onClick={handleCancelOrder}>
@@ -61,7 +60,6 @@ const HaveToSendCard: React.FC<IHaveToSendCard> = ({ id }) => {
           </button>
         </td>
       </tr>
-      <tr className="spacer"></tr>
     </>
   )
 }

@@ -118,11 +118,21 @@ export type IGoodsPhysicalItem = {
   category: string
 }
 
-export type IAwaitingDelivery = {
+export type IHaveToSend = {
   id: string
   owner: string
   status: string
   quantity: string
+  deliveryHash: string
+}
+
+export type IAwaitingDelivery = {
+  id: string
+  owner: string
+  status: string
+  buyer: string
+  quantity: string
+  deliveryHash: string
 }
 
 export type IMyItems = {
@@ -176,3 +186,13 @@ export type IAuctionNft = {
 export type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[]
   ? ElementType
   : never
+
+export type IIpfsShipmentDetails = {
+  name: string
+  phone: number
+  address: string
+  city: string
+  state: string
+  zipCode: string
+  country: string
+}
