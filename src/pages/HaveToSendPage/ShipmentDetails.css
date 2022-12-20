@@ -1,0 +1,126 @@
+.shipping-details-container {
+  padding: 20px 122px;
+  display: flex;
+  gap: 67px;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+}
+
+.shipping-details-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.shipping-details-header .heading {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.shipping-details-header img {
+  cursor: pointer;
+}
+
+.shipping-details-container-right {
+  flex: 5;
+}
+
+.shipping-details-container-right .content-box {
+  width: 86%;
+  margin-left: auto;
+}
+
+.shipping-details-container-right .shipping-form-container {
+  width: 603px;
+  height: 331px;
+  margin: 54px 0 0px 74px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shipping-details-container-right .shipping-form-container .sent-btn {
+  background: var(--textColorTwo);
+  border: 1px solid var(--textColorTwo);
+  box-shadow: 0px 0px 24px rgba(253, 230, 63, 0.4);
+  border-radius: 999px;
+  width: 244px;
+  height: 38px;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.shipping-details-container-right .shipping-form-container .shipping-form {
+  width: 603px;
+  height: 331px;
+  background-color: var(--bgColorTwo);
+  border-radius: 5px;
+  padding: 15px 62px;
+  margin-top: 54px;
+  margin-bottom: 39px;
+}
+
+.shipping-details-container-right .shipping-form-container .title {
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 37px;
+  text-align: center;
+  margin-bottom: 31px;
+}
+
+.shipping-details-container-right
+  .shipping-form-container
+  .form-container-shipping {
+  display: flex;
+}
+
+.shipping-details-container-right
+  .shipping-form-container
+  .form-container-shipping
+  .left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.shipping-details-container-right
+  .shipping-form-container
+  .form-container-shipping
+  .left
+  p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.shipping-details-container-right
+  .shipping-form-container
+  .form-container-shipping
+  .right {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.shipping-details-container-right
+  .shipping-form-container
+  .form-container-shipping
+  .right
+  input {
+  width: 100%;
+  height: 21px;
+  outline: 0;
+  padding: 2px 8px;
+}

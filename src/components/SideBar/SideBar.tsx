@@ -59,44 +59,48 @@ const SideBar: React.FC = () => {
       },
     ],
   })
+
+  const getMyCollectionCount = (category: string) => {
+    if (!data) return '0'
+
+    const collection = data.userCollections.find(
+      (item) => item.category === category,
+    )
+    if (!collection) return '0'
+
+    return collection.totalItems
+  }
+
   return (
     <div>
       <div className="sidebar-container">
         <div className="box">
           <h2 className="heading">My Items</h2>
           <div className="content-cont">
-            {data?.userCollections.map((item) => (
-              <div className="content" key={item.id}>
-                <Link to={`/my-${item.category}`}>
-                  <p className="name">My {item.category}</p>
-                  <p className="number">{item.totalItems}</p>
-                </Link>
-              </div>
-            ))}
-            {/* <div className="content">
+            <div className="content">
               <Link to="/my-movies">
                 <p className="name">My Movies</p>
-                <p className="number">0</p>
+                <p className="number">{getMyCollectionCount('movies')}</p>
               </Link>
             </div>
             <div className="content">
               <Link to="/my-music">
                 <p className="name">My Music</p>
-                <p className="number">0</p>
+                <p className="number">{getMyCollectionCount('music')}</p>
               </Link>
             </div>
             <div className="content">
               <Link to="/my-books">
                 <p className="name">My Books</p>
-                <p className="number">0</p>
+                <p className="number">{getMyCollectionCount('books')}</p>
               </Link>
             </div>
             <div className="content">
               <Link to="/my-courses">
                 <p className="name">My Courses</p>
-                <p className="number">0</p>
+                <p className="number">{getMyCollectionCount('courses')}</p>
               </Link>
-            </div> */}
+            </div>
           </div>
         </div>
         <div className="box">

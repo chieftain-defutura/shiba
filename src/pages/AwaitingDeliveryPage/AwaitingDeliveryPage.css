@@ -119,14 +119,21 @@
   color: #000000;
 }
 
-.awaiting-delivery-container-right .received-container .received-bottom,
-.complain-container .complain-bottom {
+.awaiting-delivery-container-right .received-container form,
+.complain-container form {
   height: 25%;
-  padding: 14px 15px;
+  padding: 15px 15px 25px;
+}
+
+.awaiting-delivery-container-right .received-container form .received-bottom,
+.complain-container form .complain-bottom {
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
+  width: 100%;
+  gap: 15px;
 }
+
 .awaiting-delivery-container-right .received-container .received-bottom input,
 .complain-container .complain-bottom input {
   height: 100%;
@@ -154,4 +161,8 @@
 
 .awaiting-delivery-container-right .complain-container .complain-bottom button {
   background-color: var(--bgColorFour);
+}
+
+.awaiting-delivery-input-error {
+  color: red;
 }

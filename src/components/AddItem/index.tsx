@@ -90,7 +90,7 @@ const AddItem: React.FC<IAddItem> = () => {
         values.subCategory,
         encryptedFullProductLink,
         JsonHash,
-        parseUnits(values.price, '18'.toString()),
+        parseUnits(values.price.toString(), '18'),
         values.currency,
       )
 
