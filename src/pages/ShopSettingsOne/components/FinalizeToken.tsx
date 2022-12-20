@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
+
 import { useTransactionModal } from '../../../context/TransactionContext'
 import {
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -10,7 +11,7 @@ import {
 import residualABI from '../../../utils/abi/resideuABI.json'
 import cardImgSix from '../../../assets/img/card-9.png'
 
-const FinalizeToken = () => {
+const FinalizeToken: React.FC = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()

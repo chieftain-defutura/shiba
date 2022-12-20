@@ -3,9 +3,9 @@ import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 
 import { useTransactionModal } from '../../context/TransactionContext'
-import shipmentABI from '../../utils/abi/shipmentABI.json'
 import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import { IHaveToSend } from '../../constants/types'
+import shipmentABI from '../../utils/abi/shipmentABI.json'
 
 interface IHaveToSendProps {
   data: IHaveToSend

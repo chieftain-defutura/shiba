@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react'
-import { useBalance } from 'wagmi'
-import { useAccount } from 'wagmi'
+import { useBalance, useAccount } from 'wagmi'
+import { Link } from 'react-router-dom'
 
 import {
   PAW_TOKEN_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   BONE_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
 import { useAppDispatch } from '../../store/store'
 import {
@@ -17,7 +18,6 @@ import {
   updateShibBalance,
 } from '../../store/slices/userSlice'
 import './HeaderNav.css'
-import { Link } from 'react-router-dom'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
@@ -33,7 +33,7 @@ const HeaderNav: React.FC = () => {
   })
   const { data: shibBalanceData } = useBalance({
     address: address,
-    token: SHI_TOKEN_ADDRESS,
+    token: SHIB_TOKEN_ADDRESS,
   })
   const { data: leashBalanceData } = useBalance({
     address: address,
@@ -41,7 +41,7 @@ const HeaderNav: React.FC = () => {
   })
   const { data: shiBalanceData } = useBalance({
     address: address,
-    token: '0x84b17f5f0Aa6fe08dBf8a5357E366Dd2A9665467',
+    token: SHI_TOKEN_ADDRESS,
   })
 
   useMemo(() => {

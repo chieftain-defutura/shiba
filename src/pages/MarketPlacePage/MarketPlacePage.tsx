@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import { IoIosArrowDown } from 'react-icons/io'
+
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import { IoIosArrowDown } from 'react-icons/io'
-import './MarketPlacePage.css'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
+import './MarketPlacePage.css'
 
 const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)

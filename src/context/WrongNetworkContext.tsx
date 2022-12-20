@@ -5,8 +5,9 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import WrongNetworkModal from '../modal/WrongNetworkModal'
 import { useNetwork } from 'wagmi'
+
+import WrongNetworkModal from '../modal/WrongNetworkModal'
 
 interface IWrongNetworkContext {
   wrongNetwork: boolean

@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
+import axios from 'axios'
+
 import {
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
-import axios from 'axios'
 import { IoIosArrowDown } from 'react-icons/io'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -261,9 +262,8 @@ const ShopPage: React.FC = () => {
 
         <div className="website-container-right">
           {loading && 'loading...'}
-          {/* {!digitalNftData.length || (physicalNftData.length && 'noResult')} */}
-
-          {!openDigital &&
+          {!digitalNftData || (physicalNftData && 'No Result')}
+          {openDigital &&
             digitalNftData.map((f, idx) => (
               <div className="website-card-container" key={idx}>
                 <div className="card">
@@ -287,7 +287,7 @@ const ShopPage: React.FC = () => {
                 </div>
               </div>
             ))}
-          {!openPhysical &&
+          {openPhysical &&
             physicalNftData.map((f, idx) => (
               <div className="website-card-container" key={idx}>
                 <div className="card">

@@ -1,8 +1,8 @@
 import React from 'react'
 import { formatUnits } from 'ethers/lib/utils.js'
 
-import cardImg from '../../assets/img/card-3.png'
 import { IGoodsPhysicalItem } from '../../constants/types'
+import cardImg from '../../assets/img/card-3.png'
 import '../PhysicallItem/PhysicallItem.scss'
 
 const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({ erc20Token, price }) => {

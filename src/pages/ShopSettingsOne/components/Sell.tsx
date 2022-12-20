@@ -2,13 +2,14 @@ import { ethers } from 'ethers'
 import React, { useCallback, useEffect, useState } from 'react'
 import { erc721ABI, useAccount, useSigner } from 'wagmi'
 
-import cardImgNine from '../../../assets/img/card-12.png'
-import cardImgTen from '../../../assets/img/card-13.png'
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
 import AuctionCard from './AuctionCard'
 import MarketPlaceCard from './MarketPlaceCard'
+
+import cardImgNine from '../../../assets/img/card-12.png'
+import cardImgTen from '../../../assets/img/card-13.png'
 
 const Sell: React.FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [onMarketPlace, setOnMarketPlace] = useState(false)

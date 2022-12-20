@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react'
+
 import { AnimatePresence, motion } from 'framer-motion'
+
 import './Modal.scss'
 
 const backdropVariants = {

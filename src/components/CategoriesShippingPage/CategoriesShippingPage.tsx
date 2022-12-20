@@ -1,5 +1,6 @@
-import { Formik, Form, Field } from 'formik'
 import React, { useState } from 'react'
+import { Formik, Form, Field } from 'formik'
+
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMinus } from 'react-icons/bi'
 import './CategoriesShippingPage.css'

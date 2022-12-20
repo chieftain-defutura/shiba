@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
-import axios from 'axios'
-import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
+import { useParams } from 'react-router-dom'
+import { ethers } from 'ethers'
+import * as Yup from 'yup'
+import axios from 'axios'
+
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { TokenData } from '../../constants/tokenData'
 import physicalShopABI from '../../utils/abi/physicalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import { useParams } from 'react-router-dom'
-import * as Yup from 'yup'
 
 interface IPhysicalShopForm {
   setClickCard: any
@@ -127,6 +128,11 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
       <div>
         <Formik
           initialValues={{
+            logo: '',
+            mainPhoto: '',
+            photoOne: '',
+            photoTwo: '',
+            photoThree: '',
             itemName: '',
             category: '',
             subCategory: '',
@@ -154,6 +160,43 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
             <Form>
               {slide === 1 && (
                 <div className="item-info-sub-menu-container sub-menu-container">
+                  <IoIosArrowForward
+                    className="next-arrow-icon"
+                    onClick={handleSlideNext}
+                  />
+                  <p className="title">Photo</p>
+                  <div className="content">
+                    <div className="content-left">
+                      <p>Logo:</p>
+                      <p>Main Photo:</p>
+                      <p>Photo:</p>
+                      <p>Photo:</p>
+                      <p>Photo:</p>
+                    </div>
+                    <div className="content-right">
+                      <Field placeholder="Logo" name="logo" type="text" />
+                      <Field
+                        placeholder="Main Photo"
+                        name="mainPhoto"
+                        type="text"
+                      />
+                      <Field placeholder="Photo" name="photoOne" type="text" />
+                      <Field placeholder="Photo" name="photoTwo" type="text" />
+                      <Field
+                        placeholder="Photo"
+                        name="photoThree"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+              {slide === 2 && (
+                <div className="item-info-sub-menu-container sub-menu-container">
+                  <IoIosArrowBack
+                    className="prev-arrow-icon"
+                    onClick={handleSlidePrev}
+                  />
                   <IoIosArrowForward
                     className="next-arrow-icon"
                     onClick={handleSlideNext}
@@ -218,7 +261,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                   </div>
                 </div>
               )}
-              {slide === 2 && (
+              {slide === 3 && (
                 <div className="description-sub-menu-container sub-menu-container">
                   <IoIosArrowBack
                     className="prev-arrow-icon"
@@ -264,7 +307,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                   </div>
                 </div>
               )}
-              {slide === 3 && (
+              {slide === 4 && (
                 <div className="quantity-price-shipment-sub-menu-container sub-menu-container">
                   <IoIosArrowBack
                     className="prev-arrow-icon"

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
 
-import './ContractNftsPage.css'
-import cardImg from '../../assets/img/card-3.png'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { fullOnBlockchainPageQuery } from '../../constants/query'
@@ -11,6 +9,9 @@ import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { ART_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import Loading from '../../components/Loading/Loading'
+
+import cardImg from '../../assets/img/card-3.png'
+import './ContractNftsPage.css'
 
 const Card: React.FC<IFullOnBlockchainArtToken> = ({
   owner,

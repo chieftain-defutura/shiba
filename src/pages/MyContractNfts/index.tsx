@@ -8,8 +8,8 @@ import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import SideBar from '../../components/SideBar/SideBar'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
-import cardImg from '../../assets/img/card-3.png'
 import Loading from '../../components/Loading/Loading'
+import cardImg from '../../assets/img/card-3.png'
 
 const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
   contractData,

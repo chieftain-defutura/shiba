@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
-import { formatEther } from 'ethers/lib/utils.js'
 
+import { formatEther } from 'ethers/lib/utils.js'
 import erc20ABI from '../utils/abi/erc20ABI.json'
 import nftABI from '../utils/abi/websiteABI.json'
 import domainNftABI from '../utils/abi/domainABI.json'

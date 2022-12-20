@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { IAwaitingDelivery } from '../../constants/types'
 import { IAwaitingStatus } from '../../pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
+
 interface IAwaitingDeliveryCard {
   data: IAwaitingDelivery
   setState: React.Dispatch<IAwaitingStatus>

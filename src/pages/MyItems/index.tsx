@@ -2,12 +2,13 @@ import React from 'react'
 import { useAccount } from 'wagmi'
 import { useQuery } from 'urql'
 
-import './ItemsPage.scss'
 import DigitalItemCategoryCard from '../../components/DigitalItemCategoryCard.tsx'
 import { IDigitalItemsCategory } from '../../constants/contract'
 import { userDigitalItemsPageQuery } from '../../constants/query'
 import { IUserDigitalItem } from '../../constants/types'
 import HomeLayout from '../../Layout/HomeLayout'
+import './ItemsPage.scss'
+import Loading from '../../components/Loading/Loading'
 
 const MyItems: React.FC<{ digitalItem: IDigitalItemsCategory }> = ({
   digitalItem,
@@ -25,11 +26,17 @@ const MyItems: React.FC<{ digitalItem: IDigitalItemsCategory }> = ({
     <HomeLayout>
       <div className="items-container">
         {fetching ? (
-          'Loading...'
+          <div>
+            <Loading />
+          </div>
         ) : error ? (
-          'something went wrong'
+          <div style={{ textAlign: 'center', color: '#fff' }}>
+            something went wrong
+          </div>
         ) : !data?.digitalItems.length ? (
-          'No Items Here'
+          <div style={{ textAlign: 'center', color: '#fff' }}>
+            No Items Here
+          </div>
         ) : (
           <div className="items-card-container">
             {data?.digitalItems.map((item, i) => {

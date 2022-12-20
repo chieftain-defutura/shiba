@@ -1,13 +1,14 @@
 import React from 'react'
-import { formatUnits } from 'ethers/lib/utils.js'
-import { useTransactionModal } from '../../context/TransactionContext'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
+
+import { formatUnits } from 'ethers/lib/utils.js'
+import { useTransactionModal } from '../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
+import { IFixedSale } from '../../constants/types'
 import cardImg from '../../assets/img/card-3.png'
 import './FixedSaleCard.scss'
-import { IFixedSale } from '../../constants/types'
 
 const FixedSaleCard: React.FC<IFixedSale> = ({
   erc20Token,

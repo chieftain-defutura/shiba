@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
+
 import TransactionModal from '../modal/TransactionModal'
 import useUpdateEffect from '../hooks/useUpdateEffect'
 

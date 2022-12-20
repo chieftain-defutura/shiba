@@ -9,7 +9,6 @@ import DomainNamesPage from './pages/DomainNamesPage/DomainNamesPage'
 import WebsitesPage from './pages/ContractNftsPage/WebsitesPage'
 import FullOnBlockChainPage from './pages/ContractNftsPage/FullOnBlockchain'
 import Charities from './pages/ContractNftsPage/Charities'
-
 import MarketPlacePage from './pages/MarketPlacePage/MarketPlacePage'
 import ActionPage from './pages/ActionPage/ActionPage'
 import ShopSettingsOne from './pages/ShopSettingsOne/ShopSettingsOne'

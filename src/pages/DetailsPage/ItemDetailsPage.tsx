@@ -7,19 +7,20 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMinus } from 'react-icons/bi'
 import { useAccount, useSigner, erc20ABI } from 'wagmi'
 import { Formik, Form, Field } from 'formik'
-import { useTransactionModal } from '../../context/TransactionContext'
-import shipmentABI from '../../utils/abi/shipmentABI.json'
-
-import slideImg from '../../assets/img/card-22.png'
-import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
-import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
-import HomeLayout from '../../Layout/HomeLayout'
-import './ItemDetailsPage.css'
-import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import { useParams } from 'react-router-dom'
+
+import { useTransactionModal } from '../../context/TransactionContext'
+import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import { physicalItemQuery } from '../../constants/query'
 import { IPhysicalItem } from '../../constants/types'
 import { getEncryptedData } from '../../utils/formatters'
+import shipmentABI from '../../utils/abi/shipmentABI.json'
+import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
+import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
+import HomeLayout from '../../Layout/HomeLayout'
+
+import slideImg from '../../assets/img/card-22.png'
+import './ItemDetailsPage.css'
 
 const settings = {
   dots: false,

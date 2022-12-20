@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import Navigation from '../../components/Navigation/Navigation'
 import SideBar from '../../components/SideBar/SideBar'
-import './Dashboard.css'
-import { DemoDashboard } from './Dashboards'
-import { Link } from 'react-router-dom'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import { DemoDashboard } from './Dashboards'
+import './Dashboard.css'
 
 const Dashboard: React.FC = () => {
   return (

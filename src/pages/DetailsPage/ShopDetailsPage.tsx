@@ -2,6 +2,10 @@ import React, { useRef, useState, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Slider from 'react-slick'
+
+import HomeLayout from '../../Layout/HomeLayout'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
+
 import slideImg from '../../assets/img/slider-1.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
@@ -14,8 +18,6 @@ import questionIcon from '../../assets/img/question-icon.png'
 import videoIcon from '../../assets/img/video-icon.png'
 import closeIcon from '../../assets/img/close-icon.png'
 import './ShopDetailsPage.css'
-import HomeLayout from '../../Layout/HomeLayout'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
 
 const settings = {
   dots: false,

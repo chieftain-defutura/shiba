@@ -4,13 +4,14 @@ import { useQuery } from 'urql'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { websitePageQuery } from '../../constants/query'
-import cardImg from '../../assets/img/card-3.png'
-import './ContractNftsPage.css'
 import { IWebsiteToken } from '../../constants/types'
 import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { WEBSITE_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import Loading from '../../components/Loading/Loading'
+
+import cardImg from '../../assets/img/card-3.png'
+import './ContractNftsPage.css'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
   const { data } = useGetNftsByIdQuery({
