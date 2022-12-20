@@ -77,8 +77,8 @@ const AddItem: React.FC<IAddItem> = () => {
       })
 
       const JsonHash = resData.data.IpfsHash
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+      console.log(JsonHash)
+
       const contract = new ethers.Contract(
         DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
         digitalShopABI,
@@ -90,7 +90,7 @@ const AddItem: React.FC<IAddItem> = () => {
         values.category,
         values.subCategory,
         encryptedFullProductLink,
-        dataHash,
+        JsonHash,
         parseUnits(values.price, '18'),
         values.currency,
       )

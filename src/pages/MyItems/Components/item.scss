@@ -1,0 +1,51 @@
+.item-container {
+  .item-card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    .movies-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      position: relative;
+      .movies-card-top {
+        width: auto;
+        video {
+          width: 320px;
+          border-radius: 20px;
+        }
+      }
+      .icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 45%;
+      }
+      .details {
+        h3 {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .music-item-card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    .music-card {
+      display: flex;
+      flex-direction: column;
+      .icon {
+        width: fit-content;
+        background-color: rgb(54, 53, 53);
+        padding: 50px;
+        img {
+          border-radius: 50%;
+          background-color: #fff;
+          padding: 20px;
+        }
+      }
+      .details {
+        margin-top: 20px;
+        color: #fff;
+      }
+    }
+  }
+}

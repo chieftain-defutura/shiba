@@ -86,8 +86,8 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
         },
       })
       const JsonHash = resData.data.IpfsHash
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+      console.log(JsonHash)
+
       const contract = new ethers.Contract(
         PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
         physicalShopABI,
@@ -96,7 +96,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
 
       const tx = await contract.addItem(
         id,
-        dataHash,
+        JsonHash,
         values.quantity,
         parseUnits(values.price.toString(), '18'),
         values.currency,
