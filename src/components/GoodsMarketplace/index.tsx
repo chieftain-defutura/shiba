@@ -56,15 +56,15 @@ export const GoodsPhysical = () => {
   }>({
     query: goodsPhysicalItemsQuery,
   })
-  const { data } = result
+  const { data, fetching } = result
   console.log(data)
 
   return (
-    <>
+    <div style={{ height: '50%' }}>
       <div style={{ fontSize: '20px', textAlign: 'center' }}>
         <h2>physical</h2>
       </div>
-      {!data ? (
+      {fetching ? (
         <Loading />
       ) : !data?.physicalItems.length ? (
         <div style={{ textAlign: 'center', marginTop: '60px' }}>
@@ -84,7 +84,7 @@ export const GoodsPhysical = () => {
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
 

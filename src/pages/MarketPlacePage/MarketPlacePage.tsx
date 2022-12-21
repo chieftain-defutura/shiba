@@ -11,6 +11,14 @@ const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
+  const [active, setActive] = useState(false)
+
+  function closeItem() {
+    setActive(true)
+  }
+  function openItem() {
+    setActive(false)
+  }
 
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
@@ -218,7 +226,7 @@ const MarketPlacePage: React.FC = () => {
           <div className="currency-container">
             <p className="title">Currency</p>
             <div className="currency-content">
-              <div className="currency-select-cont">
+              <div className="currency-select-cont" onClick={openItem}>
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
@@ -231,12 +239,12 @@ const MarketPlacePage: React.FC = () => {
           ) : (
             <CorporateMarketplace />
           )}
-          <div className="currency-select-container">
+          <div className="currency-select-container" onClick={closeItem}>
             <div className="header">
               <p>{selectedCurrency}</p>
               <IoIosArrowDown className="arrow-icon" />
             </div>
-            <div className="body">
+            <div className="bod">
               <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
               <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
               <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>

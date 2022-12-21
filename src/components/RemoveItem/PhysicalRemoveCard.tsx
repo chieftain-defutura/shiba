@@ -44,7 +44,6 @@ const PhysicalRemoveItem: React.FC = () => {
           },
         },
       )
-      console.log(data)
 
       setRemovePhysicalItems(data.data.physicalItems)
     } catch (error) {

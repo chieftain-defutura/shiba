@@ -53,7 +53,8 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
                       </Link>
                     </div>
                   </div>
-                  {contractData.pathName === 'my-goods-shop' && (
+                  {contractData.pathName ===
+                    'stock-management-remove-item-container' && (
                     <div className="good-shop-quantity">
                       <p>Name: shoes winter</p>
                       <p>Quantity: 100</p>
