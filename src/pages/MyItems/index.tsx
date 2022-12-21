@@ -2,7 +2,6 @@ import React from 'react'
 import { useAccount } from 'wagmi'
 import { useQuery } from 'urql'
 
-import DigitalItemCategoryCard from '../../components/DigitalItemCategoryCard.tsx'
 import { IDigitalItemsCategory } from '../../constants/contract'
 import { userDigitalItemsPageQuery } from '../../constants/query'
 import { IUserDigitalItem } from '../../constants/types'

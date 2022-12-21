@@ -1,7 +1,7 @@
 .header-nav-container {
   display: flex;
   justify-content: flex-end;
-  padding: 23px 130px;
+  padding: 23px 10px;
   color: var(--textColorOne);
   font-family: var(--montserratFont);
 }

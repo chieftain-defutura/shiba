@@ -3,9 +3,7 @@ import { useAccount } from 'wagmi'
 import { IContractData } from '../../constants/contract'
 import { Link } from 'react-router-dom'
 
-import Navigation from '../../components/Navigation/Navigation'
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
-import SideBar from '../../components/SideBar/SideBar'
+import HomeLayout from '../../Layout/HomeLayout'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import { useGetUserNftsQuery } from '../../store/slices/moralisApiSlice'
 import Loading from '../../components/Loading/Loading'
@@ -25,22 +23,15 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
 
   return (
     <div>
-      <Navigation />
-      <HeaderNav />
-      <div className="website-container">
-        <div className="website-container-right">
-          <SideBar />
-        </div>
-        <div>
-          {isLoading ? (
-            <div>
-              <Loading />
-            </div>
-          ) : isError ? (
-            <div style={{ textAlign: 'center' }}>Error</div>
-          ) : !nftsData.length ? (
-            <div style={{ textAlign: 'center' }}>No Result</div>
-          ) : (
+      <HomeLayout>
+        {isLoading ? (
+          <Loading />
+        ) : isError ? (
+          <div style={{ textAlign: 'center', color: '#fff' }}>Error</div>
+        ) : !nftsData.length ? (
+          <div style={{ textAlign: 'center', color: '#fff' }}>No Result</div>
+        ) : (
+          <div className="website-container">
             <div className="website-container-right">
               {nftsData.map((f, idx) => (
                 <div className="website-card-container" key={idx}>
@@ -72,9 +63,9 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
                 </div>
               ))}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        )}
+      </HomeLayout>
       <FooterBottom />
     </div>
   )

@@ -62,7 +62,7 @@ const ShopPage: React.FC = () => {
   return (
     <div>
       <Navigation />
-      <div className="website-container">
+      <div className="website-container" style={{ paddingTop: '51px' }}>
         <div className="website-container-left">
           <h2 className="heading">Shop</h2>
 
