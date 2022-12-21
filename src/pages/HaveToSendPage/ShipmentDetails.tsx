@@ -23,11 +23,10 @@ const ShippingDetailsPage: React.FC<IShippingDetailsPage> = ({
   setSelectedShipment,
   id,
 }) => {
-  const hash = getDecryptedData(deliveryHash)
   const { isLoading, data } = useGetIpfsDataQuery({
-    hash: 'QmSb7YdLVksTjXhYaRPCMafM6vcPAbw7tfuf9EPYFahDMW',
+    hash: getDecryptedData(deliveryHash),
   })
-  console.log(hash)
+  console.log(data)
   const { address } = useAccount()
   const { data: signerData } = useSigner()
   const { setTransaction } = useTransactionModal()

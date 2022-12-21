@@ -1,6 +1,6 @@
 .website-container {
   color: var(--textColorOne);
-  padding: 5px 100px;
+  padding: 51px 100px;
   display: grid;
   grid-template-columns: 1.1fr 4fr;
   gap: 60px;

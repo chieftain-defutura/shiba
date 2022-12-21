@@ -21,10 +21,11 @@ const PhysicalRemoveItem: React.FC = () => {
           query{
             physicalItems(where:{ status: ACTIVE,shopDetails: "${id}"}){
               id
+              quantity
               shopDetails{
                 id
               }
-                  price
+              price
               owner
               erc20Token {
                 id
@@ -54,6 +55,7 @@ const PhysicalRemoveItem: React.FC = () => {
   useEffect(() => {
     handleRemovePhysicalItems()
   }, [handleRemovePhysicalItems])
+
   return (
     <div className="stock-management-remove-item-container">
       <div className="remove-item-cards-container">

@@ -1,18 +1,18 @@
 import React from 'react'
-import { Provider as ReduxProvider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
-import { WagmiConfig } from 'wagmi'
 import { BrowserRouter } from 'react-router-dom'
+import { WagmiConfig } from 'wagmi'
+import { Provider as ReduxProvider } from 'react-redux'
+import { createClient, Provider as UrqlProvider } from 'urql'
 
+import './index.css'
+import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { client } from './utils/Connector/Connector'
 import Provider from './store/provider'
-
-import App from './App'
 import store from './store/store'
-import './index.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-import { createClient, Provider as UrqlProvider } from 'urql'
 import { SUB_GRAPH_API_URL } from './constants/api'
 
 const urqlClient = createClient({
