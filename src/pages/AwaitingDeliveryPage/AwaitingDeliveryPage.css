@@ -62,6 +62,10 @@
   text-align: center;
 }
 
+.awaiting-delivery-container-right .content-box table .body-tr button:disabled {
+  cursor: no-drop;
+}
+
 .awaiting-delivery-container-right .content-box table td {
   padding: 8px 9px;
 }

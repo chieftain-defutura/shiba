@@ -164,7 +164,7 @@ export const haveToSendQuery = `
 
 export const awaitingDeliveryQuery = `
   query($buyer: String!){
-    shipments(where:{buyer:$buyer,status:"DISPATCHED"}){
+    shipments(where:{buyer:$buyer}){
       id
       owner
       buyer
