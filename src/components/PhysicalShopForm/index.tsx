@@ -66,6 +66,11 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
         method: 'post',
         url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
         data: {
+          logo: values.logo,
+          mainPhoto: values.mainPhoto,
+          photoOne: values.photoOne,
+          photoTwo: values.photoTwo,
+          photoThree: values.photoThree,
           itemName: values.itemName,
           size: values.size,
           colour: values.colour,
@@ -104,6 +109,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
         values.currency,
         values.category,
         values.subCategory,
+        values.itemName,
       )
 
       await tx.wait()

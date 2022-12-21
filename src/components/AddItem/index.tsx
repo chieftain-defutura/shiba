@@ -93,6 +93,7 @@ const AddItem: React.FC<IAddItem> = () => {
         JsonHash,
         parseUnits(values.price.toString(), '18'),
         values.currency,
+        values.itemName,
       )
 
       await tx.wait()
