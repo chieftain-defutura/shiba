@@ -1,4 +1,5 @@
 import React from 'react'
+
 import cardImg from '../../assets/img/card-3.png'
 
 const DigitalItemCategoryCard: React.FC = () => {

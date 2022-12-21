@@ -1,9 +1,9 @@
 import React from 'react'
+
 import { Link } from 'react-router-dom'
 import { useQuery } from 'urql'
-
-import './SideBar.css'
 import { useAccount, useContractReads } from 'wagmi'
+
 import {
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -14,6 +14,7 @@ import {
 import shopAbi from '../../utils/abi/physicalShopABI.json'
 import { userCollectionsQuery } from '../../constants/query'
 import { IUserCollection } from '../../constants/types'
+import './SideBar.css'
 
 const SideBar: React.FC = () => {
   const { address } = useAccount()

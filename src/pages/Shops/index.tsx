@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
+import axios from 'axios'
+
 import {
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
-import axios from 'axios'
 import { IoIosArrowDown } from 'react-icons/io'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -61,7 +62,7 @@ const ShopPage: React.FC = () => {
   return (
     <div>
       <Navigation />
-      <div className="website-container">
+      <div className="website-container" style={{ paddingTop: '51px' }}>
         <div className="website-container-left">
           <h2 className="heading">Shop</h2>
 
@@ -261,9 +262,8 @@ const ShopPage: React.FC = () => {
 
         <div className="website-container-right">
           {loading && 'loading...'}
-          {/* {!digitalNftData.length || (physicalNftData.length && 'noResult')} */}
-
-          {!openDigital &&
+          {!digitalNftData || (physicalNftData && 'No Result')}
+          {openDigital &&
             digitalNftData.map((f, idx) => (
               <div className="website-card-container" key={idx}>
                 <div className="card">
@@ -275,13 +275,19 @@ const ShopPage: React.FC = () => {
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Category: Book</p>
-                    <p>id: {idx}</p>
+                    <p>Token Id:</p>
+                    <p>{idx}</p>
                   </div>
+                </div>
+                <div style={{ padding: '5px 0' }}>
+                  <p style={{ fontSize: '14px' }}>Domain:</p>
+                  <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                    <b>{}</b>
+                  </p>
                 </div>
               </div>
             ))}
-          {!openPhysical &&
+          {openPhysical &&
             physicalNftData.map((f, idx) => (
               <div className="website-card-container" key={idx}>
                 <div className="card">
@@ -293,12 +299,18 @@ const ShopPage: React.FC = () => {
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Category: Music</p>
-                    <p>id: {idx}</p>
+                    <p>Token Id:</p>
+                    <p>{idx}</p>
                     {/* <Link to={`/my-digital-shop/${f}`}>
                     <button style={{ width: "50px" }}>Get In</button>
                   </Link> */}
                   </div>
+                </div>
+                <div style={{ padding: '5px 0' }}>
+                  <p style={{ fontSize: '14px' }}>Domain:</p>
+                  <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                    <b>{}</b>
+                  </p>
                 </div>
               </div>
             ))}

@@ -1,6 +1,5 @@
 .dashBoard-container {
   display: flex;
-  padding: 0px 130px;
   color: var(--textColorOne);
 }
 .dashBoard-container .dashBoard-container-right {

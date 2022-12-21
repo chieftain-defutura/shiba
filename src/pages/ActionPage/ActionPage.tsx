@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 
-import './ActionPage.css'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
 import { auctionPageQuery } from '../../constants/query'
 import { IAuctionNft } from '../../constants/types'
 import Loading from '../../components/Loading/Loading'
+import './ActionPage.css'
 
 const ActionPage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState(null)

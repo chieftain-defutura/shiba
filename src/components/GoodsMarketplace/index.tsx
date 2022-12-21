@@ -1,7 +1,9 @@
 import React from 'react'
-import { useQuery } from 'urql'
-import DigitalItem from '../DigitalItem'
+
 import { Link } from 'react-router-dom'
+import { useQuery } from 'urql'
+
+import DigitalItem from '../DigitalItem'
 import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
 import {
   goodsDigitalItemsQuery,
@@ -20,14 +22,16 @@ export const GoodsDigital = () => {
   console.log(data)
 
   return (
-    <>
+    <div style={{ height: '50%' }}>
       <div style={{ fontSize: '20px', textAlign: 'center' }}>
         <h2>Digital</h2>
       </div>
       {fetching ? (
         <Loading />
       ) : !data?.digitalItems.length ? (
-        <div style={{ textAlign: 'center' }}>No Nfts Here for sale</div>
+        <div style={{ textAlign: 'center', marginTop: '60px' }}>
+          No Nfts Here for sale
+        </div>
       ) : (
         <div className="marketplace-container-right-content">
           {data?.digitalItems.map((f, idx) => (
@@ -42,7 +46,7 @@ export const GoodsDigital = () => {
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
 
@@ -63,7 +67,9 @@ export const GoodsPhysical = () => {
       {!data ? (
         <Loading />
       ) : !data?.physicalItems.length ? (
-        <div style={{ textAlign: 'center' }}>No Nfts Here for sale</div>
+        <div style={{ textAlign: 'center', marginTop: '60px' }}>
+          No Nfts Here for sale
+        </div>
       ) : (
         <div className="marketplace-container-right-content">
           {data?.physicalItems.map((f, idx) => (

@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react'
+
 import '../Button/Button.scss'
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {

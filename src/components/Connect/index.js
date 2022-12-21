@@ -1,7 +1,9 @@
 import React from 'react'
 import { useConnect } from 'wagmi'
+
 import Button from '../Button'
 import './Connect.css'
+
 export function Connector() {
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()

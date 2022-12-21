@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useQuery } from 'urql'
 
-import './AwaitingDeliveryPage.css'
+import { awaitingDeliveryQuery } from '../../constants/query'
+import { IAwaitingDelivery } from '../../constants/types'
 import HomeLayout from '../../Layout/HomeLayout'
 import AwaitingDeliveryCard from '../../components/AwaitingDeliverCard'
-import { IAwaitingDelivery } from '../../constants/types'
-import { awaitingDeliveryQuery } from '../../constants/query'
 import Loading from '../../components/Loading/Loading'
 import Received from './components/Received'
 import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import Complaint from './components/Complaint'
+import './AwaitingDeliveryPage.css'
 
 export interface IAwaitingStatus {
   data: IAwaitingDelivery
@@ -48,7 +48,9 @@ const AwaitingDeliveryPage: React.FC = () => {
                   {fetching ? (
                     <Loading />
                   ) : !data?.shipments.length ? (
-                    <div>No Result</div>
+                    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                      No Result
+                    </div>
                   ) : (
                     <table cellSpacing={0} cellPadding={0}>
                       <thead>

@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi'
 import { SUB_GRAPH_API_URL } from '../../constants/api'
 import Card from './PhysicalCard'
 
-const PhysicalRemoveItem = () => {
+const PhysicalRemoveItem: React.FC = () => {
   const { id } = useParams()
   const { address } = useAccount()
   const [removePhysicalItems, setRemovePhysicalItems] = useState<any[]>([])

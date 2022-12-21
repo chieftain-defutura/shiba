@@ -44,7 +44,6 @@ const DigitalRemoveItem: React.FC = () => {
         },
       )
       setRemoveDigitalItems(data.data.digitalItems)
-      // console.log(data)
     } catch (error) {
       console.log(error)
     }

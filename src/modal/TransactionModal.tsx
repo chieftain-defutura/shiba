@@ -1,12 +1,9 @@
 import React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import './Modal.scss'
 import Backdrop from './BackDrop'
 import { modalVaraints } from '../constants/variants'
-// import ErrorIcon from "/assets/icon/error.svg";
-// import SuccessIcon from "assets/icon/success.svg";
-// import ProcessIcon from "assets/icon/process.svg";
+import './Modal.scss'
 
 interface ITransactionModal {
   modal: boolean

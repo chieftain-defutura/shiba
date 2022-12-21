@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { useQuery } from 'urql'
 import { useAccount } from 'wagmi'
+
 import { IHaveToSend } from '../../constants/types'
 import { haveToSendQuery } from '../../constants/query'
-import './HaveToSend.css'
 import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import HomeLayout from '../../Layout/HomeLayout'
 import HaveToSendCard from '../../components/HaveToSendCard'
 import Loading from '../../components/Loading/Loading'
 import ShipmentDetails from './ShipmentDetails'
+import './HaveToSend.css'
 
-const HaveToSend = () => {
+const HaveToSend: React.FC = () => {
   const { address } = useAccount()
   const [selectedShipment, setSelectedShipment] = useState<IHaveToSend>()
 
@@ -51,7 +52,9 @@ const HaveToSend = () => {
                   <tbody>
                     {!data?.shipments.length ? (
                       <tr>
-                        <td colSpan={2}>No Result</td>
+                        <td style={{ textAlign: 'center' }} colSpan={2}>
+                          No Result
+                        </td>
                       </tr>
                     ) : (
                       data.shipments.map((f, idx) => (

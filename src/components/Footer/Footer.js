@@ -1,4 +1,5 @@
 import React from 'react'
+
 import logo from '../../assets/img/logo.png'
 import descordIcon from '../../assets/img/descord-icon.png'
 import twitterIcon from '../../assets/img/twitter-icon.png'

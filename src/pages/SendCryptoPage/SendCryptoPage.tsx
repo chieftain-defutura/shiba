@@ -6,7 +6,6 @@ import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { useQuery } from 'urql'
 
-import './SendCryptoPage.css'
 import upVoteIcon from '../../assets/img/up-vote-icon.png'
 import downVoteIcon from '../../assets/img/down-vote-icon.png'
 import HomeLayout from '../../Layout/HomeLayout'
@@ -18,6 +17,7 @@ import useDebounce from '../../hooks/useDebounce'
 import { searchDomainNameQuery } from '../../constants/query'
 import { formatAddress } from '../../constants/variants'
 import { domainRegex } from '../../lib/helpers'
+import './SendCryptoPage.css'
 
 type IOwner = {
   id: string

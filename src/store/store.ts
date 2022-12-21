@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux'
+
 import alchemyApiSlice from './slices/alchemyApiSlice'
 import ipfsApiSlice from './slices/ipfsApiSlice'
-
 import moralisApi from './slices/moralisApiSlice'
 import userSlice from './slices/userSlice'
 

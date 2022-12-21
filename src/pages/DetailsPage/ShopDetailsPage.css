@@ -2,12 +2,13 @@
   padding: 20px 122px;
   display: flex;
   gap: 138px;
-  color: var(--textColorOne);
   font-family: var(--oswaldFont);
 }
 
 .shoesboutique-container-right {
   flex: 5;
+  color: var(--textColorOne);
+  font-family: var(--oswaldFont);
 }
 
 .shoesboutique-container-right .title {

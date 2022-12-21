@@ -1,22 +1,26 @@
 import React from 'react'
-import { formatUnits } from 'ethers/lib/utils.js'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 
+import { formatUnits } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import cardImg from '../../assets/img/card-3.png'
 import { IGoodsDigitalItem } from '../../constants/types'
+import cardImg from '../../assets/img/card-3.png'
+// import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 
 const DigitalItem: React.FC<IGoodsDigitalItem> = ({
   erc20Token,
   price,
   id,
+  metadata,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
+  // const { data: IPFSdata ,isLoading} = useGetIpfsDataQuery({ hash: metadata })
+  // console.log(IPFSdata)
 
   const handleBuy = async () => {
     if (!address || !data) return

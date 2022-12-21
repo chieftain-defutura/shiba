@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import Slider from 'react-slick'
+
 import banner from '../../assets/img/banner.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
