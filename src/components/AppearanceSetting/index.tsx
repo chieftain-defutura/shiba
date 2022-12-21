@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Formik, Field, Form } from 'formik'
 import { useSigner, useAccount } from 'wagmi'
 import { ethers } from 'ethers'
 import axios from 'axios'
-
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
+
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
+import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 
 interface IAppearanceSetting {
   setClickCard: any
@@ -19,39 +20,15 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
   setClickCard,
   contractAddress,
 }) => {
-  const { id } = useParams()
-  const { data } = useSigner()
+  const { id } = useParams() as { id: string }
+  const { data: signerData } = useSigner()
   const { address } = useAccount()
   const [slide, setSlide] = useState(1)
   const { setTransaction } = useTransactionModal()
-  const [inputData, setInputData] = useState()
-  console.log(inputData)
-
-  const handleGetMetadata = useCallback(async () => {
-    if (!id) return
-
-    try {
-      const { data } = await axios.get(
-        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTMetadata`,
-        {
-          params: {
-            refreshCache: false,
-            tokenType: 'ERC721',
-            tokenId: id,
-            contractAddress,
-          },
-        },
-      )
-      console.log(data)
-      setInputData(data.metadata)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [contractAddress, id])
-
-  useEffect(() => {
-    handleGetMetadata()
-  }, [handleGetMetadata])
+  const { data, isLoading } = useGetNftsByIdQuery({
+    tokenId: id,
+    contractAddress,
+  })
 
   const handleSlidePrev = () => {
     if (slide > 1) {
@@ -64,7 +41,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
   }
 
   const handleAppearanceSetting = async (values: any) => {
-    if (!address || !data) return
+    if (!address || !signerData) return
     try {
       setTransaction({ loading: true, status: 'pending' })
       const resData = await axios({
@@ -79,24 +56,30 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
       })
 
       const JsonHash = resData.data.IpfsHash
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      // console.log(dataHash)
+      console.log(JsonHash)
       const contract = new ethers.Contract(
         contractAddress,
         digitalShopABI,
-        data,
+        signerData,
       )
-      const tx = await contract.setBaseURI(id, dataHash)
+      const tx = await contract.setBaseURI(id, JsonHash)
       await tx.wait()
       console.log('updated')
       setTransaction({ loading: true, status: 'success' })
-      setClickCard()
+      setClickCard(null)
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
   }
+
+  if (isLoading)
+    return (
+      <div>
+        <p>Fetching your settings...</p>
+      </div>
+    )
 
   return (
     <>
@@ -110,7 +93,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
               top: '40px',
               cursor: 'pointer',
             }}
-            onClick={() => setClickCard()}
+            onClick={() => setClickCard(null)}
           />
         ) : (
           <IoIosArrowBack
@@ -121,7 +104,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
       </div>
       <Formik
         initialValues={
-          inputData || {
+          data?.metadata || {
             logo: '',
             mainPhoto: '',
             videoOne: '',

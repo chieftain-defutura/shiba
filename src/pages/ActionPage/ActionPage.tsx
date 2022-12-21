@@ -13,6 +13,7 @@ import './ActionPage.css'
 const ActionPage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
+  const [open, setOpen] = useState(false)
   const [result] = useQuery<{ auctions: IAuctionNft[] }>({
     query: auctionPageQuery,
   })
@@ -87,7 +88,10 @@ const ActionPage: React.FC = () => {
           <div className="currency-container">
             <p className="title">Currency</p>
             <div className="currency-content">
-              <div className="currency-select-cont">
+              <div
+                className="currency-select-cont"
+                onClick={() => setOpen(!open)}
+              >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
@@ -132,20 +136,21 @@ const ActionPage: React.FC = () => {
                 ))}
               </div>
             )}
-
-            <div className="currency-select-container">
-              <div className="header">
-                <p>{selectedCurrency}</p>
-                <IoIosArrowDown className="arrow-icon" />
+            {open && (
+              <div className="currency-select-container">
+                <div className="header">
+                  <p>{selectedCurrency}</p>
+                  <IoIosArrowDown className="arrow-icon" />
+                </div>
+                <div className="body">
+                  <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
+                  <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
+                  <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
+                  <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
+                  <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
+                </div>
               </div>
-              <div className="body">
-                <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
-                <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
-                <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
-                <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
-                <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

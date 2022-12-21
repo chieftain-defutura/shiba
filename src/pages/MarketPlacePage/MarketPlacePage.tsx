@@ -11,14 +11,8 @@ const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
-  const [active, setActive] = useState(false)
-
-  function closeItem() {
-    setActive(true)
-  }
-  function openItem() {
-    setActive(false)
-  }
+  const [dropDown, setDropDown] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
@@ -226,7 +220,10 @@ const MarketPlacePage: React.FC = () => {
           <div className="currency-container">
             <p className="title">Currency</p>
             <div className="currency-content">
-              <div className="currency-select-cont" onClick={openItem}>
+              <div
+                className="currency-select-cont"
+                onClick={() => setOpen(!open)}
+              >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
@@ -239,19 +236,30 @@ const MarketPlacePage: React.FC = () => {
           ) : (
             <CorporateMarketplace />
           )}
-          <div className="currency-select-container" onClick={closeItem}>
-            <div className="header">
-              <p>{selectedCurrency}</p>
-              <IoIosArrowDown className="arrow-icon" />
+          {open && (
+            <div
+              className={
+                !dropDown
+                  ? ' currency-select-container'
+                  : 'currency-select-container active'
+              }
+            >
+              <div className="header" onClick={() => setDropDown(true)}>
+                <p>{selectedCurrency}</p>
+                <IoIosArrowDown className="arrow-icon" />
+              </div>
+              <div
+                className={!dropDown ? 'body' : 'body active'}
+                onClick={() => setDropDown(false)}
+              >
+                <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
+                <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
+                <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
+                <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
+                <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
+              </div>
             </div>
-            <div className="bod">
-              <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
-              <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
-              <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
-              <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
-              <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <FooterBottom />
