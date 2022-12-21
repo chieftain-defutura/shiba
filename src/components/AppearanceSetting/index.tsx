@@ -24,7 +24,8 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
   const { address } = useAccount()
   const [slide, setSlide] = useState(1)
   const { setTransaction } = useTransactionModal()
-  const [inputData, setInputData] = useState(null)
+  const [inputData, setInputData] = useState()
+  console.log(inputData)
 
   const handleGetMetadata = useCallback(async () => {
     if (!id) return
@@ -79,7 +80,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
 
       const JsonHash = resData.data.IpfsHash
       const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+      // console.log(dataHash)
       const contract = new ethers.Contract(
         contractAddress,
         digitalShopABI,
@@ -89,7 +90,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
       await tx.wait()
       console.log('updated')
       setTransaction({ loading: true, status: 'success' })
-      setClickCard(null)
+      setClickCard()
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)
@@ -109,7 +110,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
               top: '40px',
               cursor: 'pointer',
             }}
-            onClick={() => setClickCard(null)}
+            onClick={() => setClickCard()}
           />
         ) : (
           <IoIosArrowBack

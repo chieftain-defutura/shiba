@@ -4,10 +4,8 @@ import { useQuery } from 'urql'
 import { useParams } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 
-import Navigation from '../../components/Navigation/Navigation'
+import HomeLayout from '../../Layout/HomeLayout'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
-import SideBar from '../../components/SideBar/SideBar'
 import Residual from './components/Residual'
 import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
@@ -47,33 +45,30 @@ const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
 
   return (
     <div>
-      <Navigation />
-      <HeaderNav />
-      <div className="shop-setting-one-container">
-        <div className="shop-setting-one-container-left">
-          <SideBar />
+      <HomeLayout>
+        <div className="shop-setting-one-container">
+          <div className="shop-setting-one-container-right">
+            {fetching ? (
+              <Loading />
+            ) : error ? (
+              <div>
+                <p>Something went wrong</p>
+              </div>
+            ) : data[Object.keys(data)[0]] === null ? (
+              <div>
+                <h3 style={{ color: 'red' }}>Access your Token </h3>
+              </div>
+            ) : data[Object.keys(data)[0]].owner.id.toLowerCase() !==
+              address?.toLowerCase() ? (
+              <div>
+                <h3 style={{ color: 'red' }}>Access your Token </h3>
+              </div>
+            ) : (
+              <Settings contractData={contractData} />
+            )}
+          </div>
         </div>
-        <div className="shop-setting-one-container-right">
-          {fetching ? (
-            <Loading />
-          ) : error ? (
-            <div>
-              <p>Something went wrong</p>
-            </div>
-          ) : data[Object.keys(data)[0]] === null ? (
-            <div>
-              <h3 style={{ color: 'red' }}>Access your Token </h3>
-            </div>
-          ) : data[Object.keys(data)[0]].owner.id.toLowerCase() !==
-            address?.toLowerCase() ? (
-            <div>
-              <h3 style={{ color: 'red' }}>Access your Token </h3>
-            </div>
-          ) : (
-            <Settings contractData={contractData} />
-          )}
-        </div>
-      </div>
+      </HomeLayout>
       <FooterBottom />
     </div>
   )

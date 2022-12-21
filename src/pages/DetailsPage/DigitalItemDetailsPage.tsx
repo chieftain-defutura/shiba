@@ -149,13 +149,13 @@ const DigitalItemsDetailsPage: React.FC = () => {
                 <div className="buy-container">
                   <div className="top">
                     <p>
-                      Price:{' '}
+                      Price:
                       {data
                         ? ethers.utils.formatUnits(
                             data?.digitalItem.price,
                             data?.digitalItem.erc20Token.decimals,
                           )
-                        : 0}{' '}
+                        : 0}
                       {data?.digitalItem.erc20Token.symbol}
                     </p>
                   </div>
