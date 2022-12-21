@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { IAwaitingDelivery } from '../../constants/types'
 import { IAwaitingStatus } from '../../pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
+
 interface IAwaitingDeliveryCard {
   data: IAwaitingDelivery
   setState: React.Dispatch<IAwaitingStatus>
@@ -20,22 +22,27 @@ const AwaitingDeliveryCard: React.FC<IAwaitingDeliveryCard> = ({
           <p>{data.quantity}</p>
         </td>
         <td>
-          <p>Shipped/Pending</p>
+          <p>{data.status === 'PREPARING' ? 'Preparing' : 'Shipped/Pending'}</p>
         </td>
         <td>
-          <button onClick={() => setState({ data, status: 'RECEIVED' })}>
+          <button
+            disabled={data.status === 'PREPARING'}
+            onClick={() => setState({ data, status: 'RECEIVED' })}
+          >
             Received
           </button>
         </td>
         <td>
           <button
             className="complaint-btn"
+            disabled={data.status === 'PREPARING'}
             onClick={() => setState({ data, status: 'COMPLAINT' })}
           >
             Complaint
           </button>
         </td>
       </tr>
+      <tr className="spacer"></tr>
     </>
   )
 }

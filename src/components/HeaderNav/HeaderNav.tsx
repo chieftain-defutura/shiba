@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
-import { useBalance } from 'wagmi'
-import { useAccount } from 'wagmi'
+import { useBalance, useAccount } from 'wagmi'
+import { Link } from 'react-router-dom'
 
 import {
   PAW_TOKEN_ADDRESS,
@@ -18,7 +18,6 @@ import {
   updateShibBalance,
 } from '../../store/slices/userSlice'
 import './HeaderNav.css'
-import { Link } from 'react-router-dom'
 
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()

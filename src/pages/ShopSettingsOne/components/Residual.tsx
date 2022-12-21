@@ -7,10 +7,10 @@ import {
   usePrepareContractWrite,
 } from 'wagmi'
 
-import './Residual.scss'
 import { RESIDUAL_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
 import residualABI from '../../../utils/abi/resideuABI.json'
 import { useTransactionModal } from '../../../context/TransactionContext'
+import './Residual.scss'
 
 interface IResidualProps {
   setClickCard: any

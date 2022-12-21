@@ -1,11 +1,12 @@
 import React from 'react'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
+
 import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import cardImg from '../../assets/img/card-3.png'
 import { formatUnits } from 'ethers/lib/utils.js'
+import cardImg from '../../assets/img/card-3.png'
 
 interface ICard {
   id: number

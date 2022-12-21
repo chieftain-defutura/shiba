@@ -1,8 +1,8 @@
 import React from 'react'
 import { formatUnits } from 'ethers/lib/utils.js'
 
-import cardImg from '../../assets/img/card-3.png'
 import { IGoodsPhysicalItem } from '../../constants/types'
+import cardImg from '../../assets/img/card-3.png'
 import '../PhysicallItem/PhysicallItem.scss'
 
 const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({
@@ -28,8 +28,8 @@ const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({
             </button>
           </div>
           <div className="card-shoes">
-            <p>Name: Shoes1</p>
-            <p>Quantity: {quantity}</p>
+            <p style={{ color: '#fff' }}>Name: Shoes1</p>
+            <p style={{ color: '#fff' }}>Quantity: {quantity}</p>
           </div>
           <div className="card-overlay">
             <button

@@ -28,8 +28,8 @@ import domainABI from '../../utils/abi/domainABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { mintDomainNft, mintNft } from '../../utils/methods'
 import HomeLayout from '../../Layout/HomeLayout'
-import { domainRegex, getDomainNamePrice } from '../../lib/helpers'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../utils/messaging'
+import { domainRegex, getDomainNamePrice } from '../../lib/helpers'
 
 interface IContractData {
   title: string

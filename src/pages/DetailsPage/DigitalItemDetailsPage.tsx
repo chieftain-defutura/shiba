@@ -12,9 +12,9 @@ import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import HomeLayout from '../../Layout/HomeLayout'
-import './DigitalItemDetailsPage.css'
 import { IDigitalItem } from '../../constants/types'
 import { DigitalItemQuery } from '../../constants/query'
+import './DigitalItemDetailsPage.css'
 
 const settings = {
   dots: false,

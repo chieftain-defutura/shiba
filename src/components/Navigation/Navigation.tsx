@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useAccount } from 'wagmi'
+import { Link, NavLink } from 'react-router-dom'
+
 import { Connector } from '../Connect'
 import Modal from '../Model'
 import logo from '../../assets/img/logo.png'
 import searchIcon from '../../assets/img/search-icon.png'
 import './Navigation.css'
-import { Link, NavLink } from 'react-router-dom'
-// import Link from "next/link";
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   const { address } = useAccount()
   const [open, setOpen] = useState(false)
   return (

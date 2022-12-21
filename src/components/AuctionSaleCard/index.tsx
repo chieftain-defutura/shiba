@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import { formatEther } from 'ethers/lib/utils.js'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import ReactCountdown, { CountdownRenderProps } from 'react-countdown'
-import Close from '../../assets/icon/close.svg'
 
+import { formatEther } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
-import cardImg from '../../assets/img/card-3.png'
-import Modal from '../Model'
 import { IAuctionNft } from '../../constants/types'
 import Button from '../Button'
+import Modal from '../Model'
+
+import cardImg from '../../assets/img/card-3.png'
+import Close from '../../assets/icon/close.svg'
 
 const AuctionSaleCard: React.FC<IAuctionNft> = ({
   erc20Token,

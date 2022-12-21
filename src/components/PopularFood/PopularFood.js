@@ -1,4 +1,5 @@
 import React from 'react'
+
 import SliderCard from '../SliderCard/SliderCard'
 import './PopularFood.css'
 

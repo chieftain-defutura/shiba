@@ -1,10 +1,11 @@
 import React, { useRef } from 'react'
+import Slider from 'react-slick'
+
 import cardOne from '../../assets/img/card-1.png'
 import avatarOne from '../../assets/img/avatar-1.png'
 import ethIcon from '../../assets/img/eth-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
-import Slider from 'react-slick'
 import './SliderCard.css'
 
 const settings = {

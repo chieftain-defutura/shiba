@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery } from 'urql'
+
 import FixedSaleCard from '../FixedSaleCard'
 import { IFixedSale } from '../../constants/types'
 import { fixedSaleQuery } from '../../constants/query'

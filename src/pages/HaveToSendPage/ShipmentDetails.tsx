@@ -2,14 +2,15 @@ import React from 'react'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
 
-import './ShipmentDetails.css'
-import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
 import { IHaveToSend } from '../../constants/types'
 import { getDecryptedData } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
 import shipmentABI from '../../utils/abi/shipmentABI.json'
+
+import ArrowIcon from '../../assets/img/left-arrow-icon-2.png'
+import './ShipmentDetails.css'
 
 interface IShippingDetailsPage extends IHaveToSend {
   setSelectedShipment: React.Dispatch<
@@ -25,7 +26,6 @@ const ShippingDetailsPage: React.FC<IShippingDetailsPage> = ({
   const { isLoading, data } = useGetIpfsDataQuery({
     hash: getDecryptedData(deliveryHash),
   })
-  console.log(data)
   const { address } = useAccount()
   const { data: signerData } = useSigner()
   const { setTransaction } = useTransactionModal()

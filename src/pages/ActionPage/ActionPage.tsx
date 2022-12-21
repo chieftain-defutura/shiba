@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 
-import './ActionPage.css'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
@@ -11,6 +10,7 @@ import { IAuctionNft } from '../../constants/types'
 import Loading from '../../components/Loading/Loading'
 import axios from 'axios'
 import { SUB_GRAPH_API_URL } from '../../constants/api'
+import './ActionPage.css'
 
 export type IRecentlyListed = {
   id: string
