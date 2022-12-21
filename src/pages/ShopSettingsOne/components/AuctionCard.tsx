@@ -134,7 +134,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                 <select onChange={(e) => setDays(e.target.value)}>
                   <option value="">select an option</option>
                   <option value="1">1</option>
-                  <option value="5">3</option>
+                  <option value="3">3</option>
                   <option value="7">7</option>
                   <option value="custom">Custom</option>
                 </select>

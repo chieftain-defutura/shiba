@@ -1,6 +1,32 @@
 import React, { useRef } from 'react'
 import Music from '../../../assets/icon/Music.svg'
 import { IUserDigitalItem } from '../../../constants/types'
+import { getDecryptedData } from '../../../utils/formatters'
+
+interface ICoursesCard {
+  fullproduct: string
+  category: string
+}
+export const CoursesCard: React.FC<ICoursesCard> = ({
+  fullproduct,
+  category,
+}) => {
+  const musicRef = useRef<HTMLAudioElement>(null)
+
+  return (
+    <div className="music-card">
+      <div className="music-card-top">
+        <audio ref={musicRef} src={getDecryptedData(fullproduct)}></audio>
+      </div>
+      <div className="icon" onClick={() => musicRef.current!.play()}>
+        <img src={Music} alt="card" />
+      </div>
+      <div className="details">
+        <h3>Name: {category}</h3>
+      </div>
+    </div>
+  )
+}
 
 interface IMyMusic {
   fetching: boolean
@@ -8,34 +34,25 @@ interface IMyMusic {
   data?: { digitalItems: IUserDigitalItem[] } | undefined
 }
 const MyMusic: React.FC<IMyMusic> = ({ fetching, error, data }) => {
-  const musicRef = useRef<HTMLAudioElement>(null)
   return (
     <div className="item-container">
       {fetching ? (
         'Loading...'
       ) : error ? (
         'something went wrong'
+      ) : !data?.digitalItems.length ? (
+        'No Items Here'
       ) : (
-        //   ) : !data?.digitalItems.length ? (
-        //     'No Items Here'
-        //   ) : (
         <div className="music-item-card-container">
-          <div className="music-card">
-            <audio
-              ref={musicRef}
-              src="http://commondatastorage.googleapis.com/codeskulptor-demos/pyman_assets/theygotcha.ogg"
-            ></audio>
-            <div className="icon" onClick={() => musicRef.current?.play()}>
-              <img src={Music} alt="card" />
-            </div>
-            <div className="details">
-              <h3>Name:</h3>
-            </div>
-          </div>
-
-          {/* {data?.digitalItems.map((item, i) => {
-            return <DigitalItemCategoryCard key={i} {...item} />
-          })} */}
+          {data?.digitalItems.map((item, i) => {
+            return (
+              <CoursesCard
+                key={i}
+                fullproduct={item.fullproduct}
+                category={item.category}
+              />
+            )
+          })}
         </div>
       )}
     </div>

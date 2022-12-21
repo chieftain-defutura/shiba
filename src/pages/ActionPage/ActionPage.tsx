@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 
@@ -8,18 +8,59 @@ import AuctionSaleCard from '../../components/AuctionSaleCard'
 import { auctionPageQuery } from '../../constants/query'
 import { IAuctionNft } from '../../constants/types'
 import Loading from '../../components/Loading/Loading'
+import axios from 'axios'
+import { SUB_GRAPH_API_URL } from '../../constants/api'
 import './ActionPage.css'
+
+export type IRecentlyListed = {
+  id: string
+  price: string
+  owner: string
+  startTime: string
+  endTime: string
+}
 
 const ActionPage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
   const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
-  const [open, setOpen] = useState(false)
+  const [recentlyListed, setRecentlyListed] = useState<IRecentlyListed[]>([])
   const [result] = useQuery<{ auctions: IAuctionNft[] }>({
     query: auctionPageQuery,
   })
-
   const { data, fetching, error } = result
 
+  const handleSortBy = useCallback(async () => {
+    try {
+      const { data } = await axios.post(
+        SUB_GRAPH_API_URL,
+        {
+          query: `query{
+          auctions(orderBy:startTime,orderDirection:desc, where:{status:ACTIVE}){
+            id
+            price
+            owner
+            startTime
+            endTime
+            
+          }
+        }`,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      console.log(data.data.auctions)
+      setRecentlyListed(data.data.auctions)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    handleSortBy()
+  }, [handleSortBy])
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
       return setClickDropDown(null)
@@ -88,10 +129,7 @@ const ActionPage: React.FC = () => {
           <div className="currency-container">
             <p className="title">Currency</p>
             <div className="currency-content">
-              <div
-                className="currency-select-cont"
-                onClick={() => setOpen(!open)}
-              >
+              <div className="currency-select-cont">
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
@@ -136,21 +174,20 @@ const ActionPage: React.FC = () => {
                 ))}
               </div>
             )}
-            {open && (
-              <div className="currency-select-container">
-                <div className="header">
-                  <p>{selectedCurrency}</p>
-                  <IoIosArrowDown className="arrow-icon" />
-                </div>
-                <div className="body">
-                  <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
-                  <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
-                  <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
-                  <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
-                  <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
-                </div>
+
+            <div className="currency-select-container">
+              <div className="header">
+                <p>{selectedCurrency}</p>
+                <IoIosArrowDown className="arrow-icon" />
               </div>
-            )}
+              <div className="body">
+                <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
+                <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
+                <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
+                <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
+                <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
