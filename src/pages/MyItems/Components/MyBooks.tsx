@@ -1,7 +1,5 @@
 import React from 'react'
-import DigitalItemCategoryCard from '../../../components/DigitalItemCategoryCard'
 import { IUserDigitalItem } from '../../../constants/types'
-import videoBg from '../../../assets/img/video-bg.png'
 import dapplingPdf from '../../../assets/pdf/dappling .pdf'
 import Book from '../../../assets/icon/Book-mark.svg'
 interface IMyBook {

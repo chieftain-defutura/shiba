@@ -18,7 +18,7 @@ export const CoursesCard: React.FC<ICoursesCard> = ({
       <div className="movies-card-top">
         <video ref={videoRef} src={getDecryptedData(fullproduct)}></video>
       </div>
-      <div className="icon" onClick={() => videoRef.current!.play()}>
+      <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
       </div>
       <div className="details">

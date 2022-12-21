@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import Music from '../../../assets/icon/Music.svg'
-import DigitalItemCategoryCard from '../../../components/DigitalItemCategoryCard'
 import { IUserDigitalItem } from '../../../constants/types'
 
 interface IMyMusic {
@@ -26,7 +25,7 @@ const MyMusic: React.FC<IMyMusic> = ({ fetching, error, data }) => {
               ref={musicRef}
               src="http://commondatastorage.googleapis.com/codeskulptor-demos/pyman_assets/theygotcha.ogg"
             ></audio>
-            <div className="icon" onClick={() => musicRef.current!.play()}>
+            <div className="icon" onClick={() => musicRef.current?.play()}>
               <img src={Music} alt="card" />
             </div>
             <div className="details">

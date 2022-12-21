@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { IUserDigitalItem } from '../../../constants/types'
 import PlayBtn from '../../../assets/icon/play-btn.svg'
 import './item.scss'
@@ -19,7 +19,7 @@ export const MoviesCard: React.FC<IMoviesCard> = ({
       <div className="movies-card-top">
         <video ref={videoRef} src={getDecryptedData(fullproduct)}></video>
       </div>
-      <div className="icon" onClick={() => videoRef.current!.play()}>
+      <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
       </div>
       <div className="details">
