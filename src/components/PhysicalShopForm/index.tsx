@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
@@ -12,6 +12,8 @@ import physicalShopABI from '../../utils/abi/physicalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import { fetchCarityList } from '../../store/slices/generalSlice'
 
 interface IPhysicalShopForm {
   setClickCard: any
@@ -23,6 +25,14 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
   const { data } = useSigner()
   const [slide, setSlide] = useState(1)
   const { setTransaction } = useTransactionModal()
+  const dispatch = useAppDispatch()
+  const charityList = useAppSelector((store) => store.general.charityList)
+  const isFetched = useAppSelector((store) => store.general.isFetched)
+
+  useEffect(() => {
+    if (!data || isFetched) return
+    dispatch(fetchCarityList({ data }))
+  }, [data, isFetched, dispatch])
 
   const categoryList = [
     {
@@ -110,6 +120,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
         values.category,
         values.subCategory,
         values.itemName,
+        '0xe05f949AB280414F4e3279fF3BE1e39774e4B4f3',
       )
 
       await tx.wait()
@@ -128,7 +139,9 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
     quantity: Yup.string().required('This is Required'),
     price: Yup.string().required('This is Required'),
     currency: Yup.string().required('This is Required'),
+    charityAddress: Yup.string().required('This is Required'),
   })
+
   return (
     <div>
       <div>
@@ -158,6 +171,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
             shipmentArea: '',
             shipmentFee: '',
             deliveredIn: '',
+            charityAddress: '',
           }}
           onSubmit={handleAddItem}
           validationSchema={validate}
@@ -328,6 +342,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                       <p>Shipment Area:</p>
                       <p>Shipment Fee:</p>
                       <p>Delivered In:</p>
+                      <p>Select a Charity Address:</p>
                     </div>
                     <div className="content-right">
                       <div>
@@ -351,11 +366,9 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                           <option value="">Select a Currency</option>
                           {TokenData.map((f, index) => {
                             return (
-                              <>
-                                <option value={f.tokenAddress} key={index}>
-                                  {f.tokenName}
-                                </option>
-                              </>
+                              <option value={f.tokenAddress} key={index}>
+                                {f.tokenName}
+                              </option>
                             )
                           })}
                         </Field>
@@ -374,6 +387,23 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                         name="deliveredIn"
                         placeholder="Ex. 10-20 Working days"
                       />
+                      <div>
+                        <Field as="select" name="charityAddress">
+                          <option value="">Select a Charity Address</option>
+                          {charityList.map((list, index) => {
+                            return (
+                              <option value={list} key={index}>
+                                {list}
+                              </option>
+                            )
+                          })}
+                        </Field>
+                        <ErrorMessage
+                          name="charityAddress"
+                          className="errorMsg"
+                          component="div"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="btn-cont">

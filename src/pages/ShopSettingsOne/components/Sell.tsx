@@ -10,6 +10,8 @@ import MarketPlaceCard from './MarketPlaceCard'
 
 import cardImgNine from '../../../assets/img/card-12.png'
 import cardImgTen from '../../../assets/img/card-13.png'
+import { useAppDispatch, useAppSelector } from '../../../store/store'
+import { fetchCarityList } from '../../../store/slices/generalSlice'
 
 const Sell: React.FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [onMarketPlace, setOnMarketPlace] = useState(false)
@@ -18,6 +20,8 @@ const Sell: React.FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const { data: signerData } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
+  const dispatch = useAppDispatch()
+  const isFetched = useAppSelector((store) => store.general.isFetched)
 
   const handleGetIsApproved = useCallback(async () => {
     if (!signerData || !address) return
@@ -35,9 +39,15 @@ const Sell: React.FC<{ contractAddress: string }> = ({ contractAddress }) => {
     )
   }, [signerData, address, contractAddress])
 
+  const handleCharityList = useCallback(async () => {
+    if (!signerData || isFetched) return
+    dispatch(fetchCarityList({ data: signerData }))
+  }, [signerData, isFetched, dispatch])
+
   useEffect(() => {
     handleGetIsApproved()
-  }, [handleGetIsApproved])
+    handleCharityList()
+  }, [handleGetIsApproved, handleCharityList])
 
   const handleApprove = async () => {
     if (!signerData) return

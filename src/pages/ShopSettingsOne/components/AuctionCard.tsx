@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
@@ -13,6 +13,8 @@ import { ArrElement } from '../../../constants/types'
 import { tokensList } from '../../../constants/contract'
 import { getTokenDecimals } from '../../../utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
+import { useAppSelector } from '../../../store/store'
+import { formatAddress } from '../../../constants/variants'
 
 type IAuctionCardProps = {
   setOnAction: React.Dispatch<boolean>
@@ -31,7 +33,8 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
   const { address } = useAccount()
   const location = useLocation()
   const navigate = useNavigate()
-
+  const [charityAddress, setCharityAddress] = useState('')
+  const charityList = useAppSelector((store) => store.general.charityList)
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
   const [dropDown, setDropDown] = useState(false)
@@ -39,6 +42,10 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
     useState<ArrElement<typeof tokensList>>()
   const [price, setPrice] = useState('')
   const [days, setDays] = useState('')
+
+  useEffect(() => {
+    if (charityList.length) setCharityAddress(charityList[0])
+  }, [charityList])
 
   const handlePutOnSale = async () => {
     if (!address || !data || !selectedDropDown) return
@@ -62,6 +69,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
         selectedDropDown?.address,
         Number(days),
         contractAddress,
+        charityAddress,
       )
       await tx.wait()
       setTransaction({
@@ -95,7 +103,13 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
               <p>Price</p>
             </div>
             <div className="content-right">
-              <select></select>
+              <select>
+                {charityList.map((list) => (
+                  <option key={list} value={list}>
+                    {formatAddress(list)}
+                  </option>
+                ))}
+              </select>
               <div className="price-select-container">
                 <div className="left">
                   <input
