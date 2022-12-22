@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 
@@ -258,38 +258,23 @@ export default ActionPage
 const accordionData = [
   {
     title: 'Domain Names',
-    labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
-    ],
+    labels: [{ label: '.shib' }],
   },
   {
     title: 'Physical Goods Shop',
     labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
+      { label: 'Accessories' },
+      { label: 'Clothing ' },
+      { label: 'Food' },
     ],
   },
   {
     title: 'Digital Goods Shop',
     labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
+      { label: 'Movies' },
+      { label: 'Courses' },
+      { label: 'Books' },
+      { label: 'Music' },
     ],
   },
   {

@@ -6,7 +6,11 @@ import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
-import { ArrElement, IGoodsDigitalItem } from '../../constants/types'
+import {
+  ArrElement,
+  IdigitalItemSearch,
+  IGoodsDigitalItem,
+} from '../../constants/types'
 import { tokensList } from '../../constants/contract'
 import './MarketPlacePage.css'
 
@@ -31,13 +35,60 @@ const getCurrencyQuery = () => {
   }`
 }
 
+const getGoodsDigitalQuery = (category: string) => {
+  return `query{
+    digitalItemSearch(text:"${category}", where:{status:ACTIVE}) {
+      id
+      category
+    }
+
+  }`
+}
+
+const getGoodsPhysicalQuery = (category: string) => {
+  return `query{
+    physicalItemSearch(text:"${category}", where:{status:ACTIVE}){
+      id
+      category
+    }
+  }`
+}
+
+const getGoodsDomainName = (domain: string) => {
+  return `query{
+    domainTokens(domain_contains:"${domain}"){
+      id
+      domainName
+    }
+  }`
+}
 const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
-  const [graphQuery, setGraphQuery] = useState()
+  const [goodsCheckboxs, setGoodsCheckBox] = useState<string[]>([])
+  const [goodsQuery, setgoodsQuery] = useState<string | undefined>(undefined)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
   const [open, setOpen] = useState(false)
+
+  const handleChange = ({ target: { value } }: { target: any }) => {
+    if (goodsCheckboxs.includes(value)) {
+      setGoodsCheckBox((f) => f.filter((e) => e !== value))
+    } else {
+      setGoodsCheckBox((f) => f.concat(value))
+    }
+  }
+
+  useMemo(() => {
+    if (!goodsCheckboxs) return isAccordionActive
+    return setgoodsQuery(getGoodsDigitalQuery(goodsCheckboxs.join('|')))
+  }, [goodsCheckboxs])
+
+  // const [result] = useQuery<{ digitalItemSearch: IdigitalItemSearch  }>({
+  //   query: goodsQuery,
+  // })
+  // const { data, fetching, error } = result
+  // console.log(data)
 
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
@@ -45,19 +96,6 @@ const MarketPlacePage: React.FC = () => {
     }
     setClickDropDown(idx)
   }
-
-  // useMemo(() => {
-  //   if (!selectedDropDown?.address) return
-  //   return setGraphQuery(
-  //     getCurrencyQuery(selectedDropDown?.address.toLowerCase()),
-  //   )
-  // }, [selectedDropDown?.address])
-
-  // const [result] = useQuery<{ auctions: IGoodsDigitalItem[] }>({
-  //   query: graphQuery,
-  // })
-  // const { data, fetching, error } = result
-  // console.log(data)
 
   const handleAccordionActive = (idx: any) => {
     if (isAccordionActive === idx) {
@@ -114,7 +152,12 @@ const MarketPlacePage: React.FC = () => {
                       {item.labels.map((label, index) => (
                         <div className="checkbox-content" key={index}>
                           <label htmlFor="Human Rights">{label.label}</label>
-                          <input id="Human Rights" type="checkbox" />
+                          <input
+                            id="Human Rights"
+                            type="checkbox"
+                            value={label.label}
+                            onChange={handleChange}
+                          />
                         </div>
                       ))}
                     </div>
@@ -306,38 +349,23 @@ export default MarketPlacePage
 const accordionData = [
   {
     title: 'Domain Names',
+    labels: [{ label: '.shib' }],
+  },
+  {
+    title: 'Physical Goods',
     labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
+      { label: 'Accessories' },
+      { label: 'Clothing ' },
+      { label: 'Food' },
     ],
   },
   {
     title: 'Digital Goods',
     labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
-    ],
-  },
-  {
-    title: 'Physical Goods',
-    labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
+      { label: 'Movies' },
+      { label: 'Courses' },
+      { label: 'Books' },
+      { label: 'Music' },
     ],
   },
   {
