@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
@@ -12,6 +12,7 @@ import physicalShopABI from '../../utils/abi/physicalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import { getPhysicalShopCategory } from '../../utils/methods'
 
 interface IPhysicalShopForm {
   setClickCard: any
@@ -23,28 +24,26 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
   const { data } = useSigner()
   const [slide, setSlide] = useState(1)
   const { setTransaction } = useTransactionModal()
+  const [categoryList, setCategoryList] = useState<
+    { name: string; subCategory: string[] }[]
+  >([])
 
-  const categoryList = [
-    {
-      name: 'clothing',
-      subcategory: ['gloves', 'skirt', 'belt', 'others'],
-    },
-    {
-      name: 'accessories',
-      subcategory: ['bags', 'Jewellery', 'others'],
-    },
-    {
-      name: 'food',
-      subcategory: ['fast_food', 'sushi', 'restaurants', 'vegan', 'others'],
-    },
-  ]
+  const getCategory = useCallback(async () => {
+    if (!data) return
+    const result = await getPhysicalShopCategory(data)
+    setCategoryList(result)
+  }, [data])
+
+  useEffect(() => {
+    getCategory()
+  }, [getCategory])
 
   const getSubcategory = (category: string) => {
     const res = categoryList.find((f) => f.name === category)
 
     if (!res) return []
 
-    return res.subcategory
+    return res.subCategory
   }
 
   const handleSlidePrev = () => {
@@ -85,6 +84,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
           shipmentArea: values.shipmentArea,
           shipmentFee: values.shipmentFee,
           deliveredIn: values.deliveredIn,
+          charitiesAddress: values.charitiesAddress,
         },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
@@ -158,6 +158,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
             shipmentArea: '',
             shipmentFee: '',
             deliveredIn: '',
+            charitiesAddress: '',
           }}
           onSubmit={handleAddItem}
           validationSchema={validate}
@@ -328,6 +329,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                       <p>Shipment Area:</p>
                       <p>Shipment Fee:</p>
                       <p>Delivered In:</p>
+                      <p>Select Charity Organisation From List:</p>
                     </div>
                     <div className="content-right">
                       <div>
@@ -374,6 +376,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
                         name="deliveredIn"
                         placeholder="Ex. 10-20 Working days"
                       />
+                      <Field as="select" name="charitiesAddress"></Field>
                     </div>
                   </div>
                   <div className="btn-cont">

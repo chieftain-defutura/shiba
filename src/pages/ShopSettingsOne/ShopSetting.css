@@ -46,7 +46,6 @@
   text-align: center;
   gap: 10px;
   cursor: pointer;
-  margin-left: 10px;
 }
 
 .shop-setting-one-container-right .cards-container .card p {
@@ -351,7 +350,7 @@ select {
   padding: 4px 50px;
   border: 0;
   outline: 0;
-  margin-top: 36px;
+  /* margin-top: 36px; */
   margin-left: 100px;
   font-weight: 700;
   font-size: 18px;
