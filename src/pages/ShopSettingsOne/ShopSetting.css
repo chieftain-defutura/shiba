@@ -90,6 +90,12 @@
   padding: 40px 27px 27px 50px;
   position: relative;
 }
+.stock-management-container svg {
+  margin-top: 22px;
+}
+.arrow-icon-container svg {
+  margin-top: 15px;
+}
 
 .stock-management-container .arrow-icon,
 .residual-container .arrow-icon,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import { IoIosArrowBack } from 'react-icons/io'
 import cardImgSeven from '../../assets/img/card-10.png'
@@ -9,18 +9,35 @@ import DigitalRemoveItem from '../RemoveItem/DigitalRemoveCard'
 import PhysicalRemoveItem from '../RemoveItem/PhysicalRemoveCard'
 import { IContractData } from '../../constants/contract'
 
-type IStockManagement = {
+export type IStockManagement = {
   contractData: IContractData
+  clickCard: string
+  setClickCard: React.Dispatch<React.SetStateAction<string | null>>
+  clickAddItem: boolean
+  setClickAddItem: React.Dispatch<boolean>
+  clickRemoveItem: boolean
+  setClickRemoveItem: React.Dispatch<boolean>
 }
 
-const StockManagement: React.FC<IStockManagement> = ({ contractData }) => {
-  const [clickCard, setClickCard] = useState<any>(null)
-  const [clickAddItem, setClickAddItem] = useState<any>(null)
-  const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
-
+const StockManagement: React.FC<IStockManagement> = ({
+  contractData,
+  clickCard,
+  setClickCard,
+  clickAddItem,
+  setClickAddItem,
+  clickRemoveItem,
+  setClickRemoveItem,
+}) => {
   return (
     <div>
-      {clickCard === 'stock management' && (
+      {contractData.stockManagement === true && (
+        <div className="card" onClick={() => setClickCard('stock management')}>
+          {/* <img src={cardImgOne} alt="card" className="card-img-1" /> */}
+          <p>Stock Management</p>
+        </div>
+      )}
+
+      {clickCard && (
         <>
           <div className="stock-management-container">
             {clickAddItem ? (

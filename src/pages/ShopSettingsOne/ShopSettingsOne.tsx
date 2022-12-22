@@ -28,7 +28,6 @@ import cardImgFive from '../../assets/img/card-8.png'
 import cardImgSeven from '../../assets/img/card-10.png'
 import cardImgEighth from '../../assets/img/card-11.png'
 import './ShopSetting.css'
-import StockManagement from '../../components/StockManagement/StockManagement'
 
 type IShopSetting = {
   setShopSetting: React.Dispatch<boolean>
@@ -146,7 +145,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
         </div>
       )}
 
-      {/* {clickCard === 'stock management' && (
+      {clickCard === 'stock management' && (
         <>
           <div className="stock-management-container">
             {clickAddItem ? (
@@ -225,8 +224,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
             </>
           )}
         </>
-      )} */}
-      <StockManagement contractData={contractData} />
+      )}
 
       {clickCard === 'appearance settings' && (
         <div
