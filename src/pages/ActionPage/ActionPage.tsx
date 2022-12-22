@@ -63,7 +63,7 @@ const ActionPage: React.FC = () => {
 
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
-
+  console.log(dropDown)
   useMemo(() => {
     if (isValue === 'high-to-low')
       return setGraphQuery(getQuery('price', 'desc'))

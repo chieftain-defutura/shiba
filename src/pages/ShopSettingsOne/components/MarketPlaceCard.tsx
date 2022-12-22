@@ -87,6 +87,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
     <div className="on-marketplace-container">
       <BsArrowLeftCircle
         className="arrow-icon"
+        style={{ marginTop: '15px' }}
         onClick={() => {
           setOnMarketplace(false)
         }}

@@ -90,7 +90,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
             style={{
               fontSize: '27px',
               position: 'absolute',
-              top: '40px',
+              top: '30px',
               cursor: 'pointer',
             }}
             onClick={() => setClickCard(null)}
@@ -127,6 +127,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
                 <IoIosArrowForward
                   className="next-arrow-icon"
                   onClick={handleSlideNext}
+                  style={{ marginTop: '12px' }}
                 />
 
                 <div className="content">
@@ -175,7 +176,9 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
                 <IoIosArrowForward
                   className="next-arrow-icon"
                   onClick={handleSlideNext}
+                  style={{ marginTop: '12px' }}
                 />
+
                 <div className="content">
                   <div className="content-left">
                     <p>Brief Description:</p>

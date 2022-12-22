@@ -21,6 +21,7 @@ export interface IContractData {
   sell: boolean
   finalizeToken: boolean
   transfer: boolean
+  showDetails?: boolean
   query: string
 }
 
@@ -44,6 +45,7 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    showDetails: true,
     query: `
       query($id:String!) {
         digitalShopToken(id:$id){
@@ -66,6 +68,7 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    showDetails: true,
     query: `
       query($id:String!) {
         physicalShopToken(id:$id){

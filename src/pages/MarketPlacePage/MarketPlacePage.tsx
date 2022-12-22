@@ -1,39 +1,34 @@
 import React, { useState, useMemo } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
-import { useQuery } from 'urql'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
-import {
-  ArrElement,
-  IdigitalItemSearch,
-  IGoodsDigitalItem,
-} from '../../constants/types'
+import { ArrElement } from '../../constants/types'
 import { tokensList } from '../../constants/contract'
 import './MarketPlacePage.css'
 
-const getCurrencyQuery = () => {
-  return `query{
-    digitalItems(where:{status:ACTIVE}){
-      id
-      metadata
-      shopDetails{
-        id
-      }
-      price
-      erc20Token{
-        id
-        symbol
-        decimals
-      }
-      subcategory
-      category
-    }
+// const getCurrencyQuery = () => {
+//   return `query{
+//     digitalItems(where:{status:ACTIVE}){
+//       id
+//       metadata
+//       shopDetails{
+//         id
+//       }
+//       price
+//       erc20Token{
+//         id
+//         symbol
+//         decimals
+//       }
+//       subcategory
+//       category
+//     }
 
-  }`
-}
+//   }`
+// }
 
 const getGoodsDigitalQuery = (category: string) => {
   return `query{
@@ -45,23 +40,23 @@ const getGoodsDigitalQuery = (category: string) => {
   }`
 }
 
-const getGoodsPhysicalQuery = (category: string) => {
-  return `query{
-    physicalItemSearch(text:"${category}", where:{status:ACTIVE}){
-      id
-      category
-    }
-  }`
-}
+// const getGoodsPhysicalQuery = (category: string) => {
+//   return `query{
+//     physicalItemSearch(text:"${category}", where:{status:ACTIVE}){
+//       id
+//       category
+//     }
+//   }`
+// }
 
-const getGoodsDomainName = (domain: string) => {
-  return `query{
-    domainTokens(domain_contains:"${domain}"){
-      id
-      domainName
-    }
-  }`
-}
+// const getGoodsDomainName = (domain: string) => {
+//   return `query{
+//     domainTokens(domain_contains:"${domain}"){
+//       id
+//       domainName
+//     }
+//   }`
+// }
 const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
@@ -71,6 +66,7 @@ const MarketPlacePage: React.FC = () => {
     useState<ArrElement<typeof tokensList>>()
   const [open, setOpen] = useState(false)
 
+  console.log(goodsQuery)
   const handleChange = ({ target: { value } }: { target: any }) => {
     if (goodsCheckboxs.includes(value)) {
       setGoodsCheckBox((f) => f.filter((e) => e !== value))
@@ -82,7 +78,7 @@ const MarketPlacePage: React.FC = () => {
   useMemo(() => {
     if (!goodsCheckboxs) return isAccordionActive
     return setgoodsQuery(getGoodsDigitalQuery(goodsCheckboxs.join('|')))
-  }, [goodsCheckboxs])
+  }, [goodsCheckboxs, isAccordionActive])
 
   // const [result] = useQuery<{ digitalItemSearch: IdigitalItemSearch  }>({
   //   query: goodsQuery,

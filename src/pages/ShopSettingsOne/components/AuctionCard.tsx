@@ -90,6 +90,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
       <div className="on-marketplace-container">
         <BsArrowLeftCircle
           className="arrow-icon"
+          style={{ marginTop: '15px' }}
           onClick={() => {
             setOnAction(false)
           }}

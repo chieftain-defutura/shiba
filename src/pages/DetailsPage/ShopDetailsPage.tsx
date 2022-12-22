@@ -1,10 +1,8 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import Slider from 'react-slick'
 
 import HomeLayout from '../../Layout/HomeLayout'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
 
 import slideImg from '../../assets/img/slider-1.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
@@ -18,6 +16,8 @@ import questionIcon from '../../assets/img/question-icon.png'
 import videoIcon from '../../assets/img/video-icon.png'
 import closeIcon from '../../assets/img/close-icon.png'
 import './ShopDetailsPage.css'
+import { useQuery } from 'urql'
+import Loading from '../../components/Loading/Loading'
 
 const settings = {
   dots: false,
@@ -28,72 +28,47 @@ const settings = {
   slidesToScroll: 1,
 }
 
-const ShopDetailsPage: React.FC = () => {
+const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
   const { shopId } = useParams()
   const slider = useRef<Slider>(null)
   const [upVoteClick, setUpVoteClick] = useState(false)
   const [downVoteClick, setDownVoteClick] = useState(false)
+  const [result] = useQuery({
+    query,
+    variables: { id: shopId },
+    pause: !shopId,
+  })
 
-  const handleGetUserNft = useCallback(async () => {
-    try {
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-          query{
-            physicalItem(id:"${shopId}"){
-              id
-              shopDetails{
-                id
-              }
-              price
-              owner {
-                id
-              }
-              erc20Token {
-                id
-                symbol
-                decimals
-              }
-              subcategory
-              category
-            }
-          }
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data.data)
-      // setPhysicalDetails(data.data.digitalItems)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [shopId])
+  const { data, fetching } = result
+  console.log(data)
 
-  useEffect(() => {
-    handleGetUserNft()
-  }, [handleGetUserNft])
+  if (fetching) return <Loading />
+
+  if (data[Object.keys(data)[0]] === null)
+    return (
+      <div>
+        <p>There is no shop with Token Id</p>
+      </div>
+    )
+
+  const shopData = data[Object.keys(data)[0]]
 
   return (
     <div>
       <HomeLayout>
         <div className="shoesboutique-container-right">
           <h2 className="title">
-            shoesboutique.shib
+            {shopData?.domainName}
             {upVoteClick && (
               <div className="vote-detail">
                 <img src={upVoteIcon} alt="up vote" />
-                1044
+                {shopData ? shopData.upVote : 0}
               </div>
             )}
             {downVoteClick && (
               <div className="vote-detail">
                 <img src={downVoteIcon} alt="down vote" />
-                88
+                {shopData ? shopData.downVote : 0}
               </div>
             )}
           </h2>
@@ -204,7 +179,7 @@ const ShopDetailsPage: React.FC = () => {
                   }}
                 >
                   <img src={upVoteIcon} alt="up vote" />
-                  1044
+                  {shopData ? shopData.upVote : 0}
                 </button>
                 <button>
                   <img
@@ -215,7 +190,7 @@ const ShopDetailsPage: React.FC = () => {
                       setUpVoteClick(false)
                     }}
                   />
-                  88
+                  {shopData ? shopData.downVote : 0}
                 </button>
               </div>
             </div>

@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { IUserDigitalItem } from '../../../constants/types'
 import PlayBtn from '../../../assets/icon/play-btn.svg'
 import { getDecryptedData } from '../../../utils/formatters'
+import Loading from '../../../components/Loading/Loading'
 
 interface ICoursesCard {
   fullproduct: string
@@ -38,11 +39,13 @@ const MyCourses: React.FC<IMyCourses> = ({ fetching, error, data }) => {
   return (
     <div className="item-container">
       {fetching ? (
-        'Loading...'
+        <Loading />
       ) : error ? (
-        'something went wrong'
+        <div style={{ color: '#fff', textAlign: 'center' }}>
+          something went wrong
+        </div>
       ) : !data?.digitalItems.length ? (
-        'No Items Here'
+        <div style={{ color: '#fff', textAlign: 'center' }}>No Items Here</div>
       ) : (
         <div className="item-card-container">
           {data?.digitalItems.map((item, i) => {

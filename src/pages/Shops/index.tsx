@@ -1,63 +1,26 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useAccount } from 'wagmi'
-import axios from 'axios'
-
-import {
-  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
-  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
+import React, { useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
+import { useQuery } from 'urql'
+
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import cardImg from '../../assets/img/card-3.png'
+import { shopPageQuery } from '../../constants/query'
+import Loading from '../../components/Loading/Loading'
 
 const ShopPage: React.FC = () => {
-  const { address } = useAccount()
   const [openDigital, setOpenDigital] = useState(false)
   const [openPhysical, setOpenPhysical] = useState(false)
   const [openClothing, setOpenClothing] = useState(false)
   const [openAccessories, setOpenAccessories] = useState(false)
   const [openFood, setOpenFood] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [digitalNftData, setDigitalNftData] = useState([])
-  const [physicalNftData, setPhysicalNftData] = useState([])
-  console.log(digitalNftData)
 
-  const handleDigitalNftData = useCallback(async () => {
-    try {
-      if (!address) return
-      setLoading(true)
+  const [result] = useQuery<{
+    digitalShopTokens: any[]
+    physicalShopTokens: any[]
+  }>({ query: shopPageQuery })
 
-      const { data } = await axios.get(
-        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${DIGITAL_GOODS_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
-
-        {
-          headers: {
-            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
-          },
-        },
-      )
-      const { data: physicalData } = await axios.get(
-        `https://eth-goerli.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTsForCollection?contractAddress=${PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS}&withMetadata=true`,
-
-        {
-          headers: {
-            'X-API-KEY': process.env.REACT_APP_ALCHEMY_API_KEY,
-          },
-        },
-      )
-      setLoading(false)
-      console.log(data)
-      setDigitalNftData(data.nfts.map((r: any) => r))
-      setPhysicalNftData(physicalData.nfts.map((r: any) => r))
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address])
-
-  useEffect(() => {
-    handleDigitalNftData()
-  }, [handleDigitalNftData])
+  const { data, fetching } = result
 
   return (
     <div>
@@ -260,11 +223,11 @@ const ShopPage: React.FC = () => {
           )}
         </div>
 
-        <div className="website-container-right">
-          {loading && 'loading...'}
-          {!digitalNftData || (physicalNftData && 'No Result')}
-          {openDigital &&
-            digitalNftData.map((f, idx) => (
+        {fetching ? (
+          <Loading />
+        ) : (
+          <div className="website-container-right">
+            {data?.digitalShopTokens.map((f, idx) => (
               <div className="website-card-container" key={idx}>
                 <div className="card">
                   <div className="card-top">
@@ -275,20 +238,19 @@ const ShopPage: React.FC = () => {
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Token Id:</p>
-                    <p>{idx}</p>
+                    <p>Digital Shop Id:</p>
+                    <p>#{idx}</p>
                   </div>
                 </div>
                 <div style={{ padding: '5px 0' }}>
                   <p style={{ fontSize: '14px' }}>Domain:</p>
                   <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-                    <b>{}</b>
+                    <b>{f.domainName}</b>
                   </p>
                 </div>
               </div>
             ))}
-          {openPhysical &&
-            physicalNftData.map((f, idx) => (
+            {data?.physicalShopTokens.map((f, idx) => (
               <div className="website-card-container" key={idx}>
                 <div className="card">
                   <div className="card-top">
@@ -299,22 +261,20 @@ const ShopPage: React.FC = () => {
                     <h4 className="sub-title">Pixart Motion</h4>
                   </div>
                   <div className="card-bottom">
-                    <p>Token Id:</p>
-                    <p>{idx}</p>
-                    {/* <Link to={`/my-digital-shop/${f}`}>
-                    <button style={{ width: "50px" }}>Get In</button>
-                  </Link> */}
+                    <p>Physical Shop Id:</p>
+                    <p>#{idx}</p>
                   </div>
                 </div>
                 <div style={{ padding: '5px 0' }}>
                   <p style={{ fontSize: '14px' }}>Domain:</p>
                   <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-                    <b>{}</b>
+                    <b>{f.domainName}</b>
                   </p>
                 </div>
               </div>
             ))}
-        </div>
+          </div>
+        )}
       </div>
       <FooterBottom />
     </div>

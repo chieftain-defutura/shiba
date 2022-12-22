@@ -270,3 +270,79 @@ query($name: String!){
   }
 }
 `
+export const physicalShopTokenByIdQuery = `
+query($id: String!){
+  physicalShopToken(id:$id){
+    id
+    domainName
+    tokenUri
+    upVote
+    downVote
+    owner {
+      id
+    }    
+  }
+}
+`
+
+export const digitalShopTokenByIdQuery = `
+query($id: String!){
+  digitalShopToken(id:$id){
+    id
+    domainName
+    tokenUri
+    upVote
+    downVote
+    owner {
+      id
+    }    
+  }
+}
+`
+
+export const digitalShopTokensQuery = `
+query{
+  digitalShopTokens{
+    id
+    domainName
+    tokenUri
+    owner {
+      id
+    }    
+  }
+}
+`
+
+export const physicalShopTokensQuery = `
+query{
+  physicalShopTokens{
+    id
+    domainName
+    tokenUri
+    owner {
+      id
+    }    
+  }
+}
+`
+
+export const shopPageQuery = `
+query{
+  physicalShopTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
+    id
+    domainName
+    tokenUri
+    owner {
+      id
+    }    
+  }
+  digitalShopTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
+    id
+    domainName
+    tokenUri
+    owner {
+      id
+    }    
+  }
+}
+`

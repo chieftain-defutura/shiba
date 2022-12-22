@@ -80,7 +80,6 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
-  console.log(clickCard, clickRemoveItem)
   return (
     <>
       <h2 className="heading">shoesboutique.shib</h2>
@@ -145,85 +144,83 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
         </div>
       )}
 
-      {clickCard === 'stock management' && !clickRemoveItem ? (
-        <div className="stock-management-container">
-          {clickAddItem ? (
-            <IoIosArrowBack
-              className="arrow-icon"
-              onClick={() => setClickAddItem(null)}
-            />
-          ) : (
-            <BsArrowLeftCircle
-              className="arrow-icon"
-              onClick={() => setClickCard(null)}
-            />
-          )}
-          <div className="arrow-icon-container">
-            {/* <IoIosArrowBack
-            className="prev-arrow-icon"
-            onClick={handleSlidePrev}
-          /> */}
-
-            {/* <IoIosArrowForward
-            className="next-arrow-icon"
-            onClick={handleSlideNext}
-          /> */}
-          </div>
-          <h2 className="title">
-            {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-          </h2>
-          {!clickAddItem && (
-            <div className="stock-management-cards">
-              <div className="stock-management-card">
-                <img src={cardImgSeven} alt="card" />
-                <div className="card-content" style={{ padding: '0 10px' }}>
-                  <p className="title">Add new item in shop</p>
-                  <p className="desc">
-                    Lorem Ipsum has been the industry standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book.
-                  </p>
-                  <button
-                    onClick={() => setClickAddItem('Add New Item in Shop')}
-                  >
-                    Demo
-                  </button>
-                </div>
-              </div>
-              <div className="stock-management-card">
-                <img src={cardImgEighth} alt="card" />
-                <div className="card-content" style={{ padding: '0 10px' }}>
-                  <p className="title">Remove Item From Shop</p>
-                  <p className="desc">
-                    Lorem Ipsum has been the industry standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book.
-                  </p>
-                  <button onClick={() => setClickRemoveItem(true)}>Demo</button>
-                </div>
-              </div>
-            </div>
-          )}
-          <div>
-            <div>
-              {clickAddItem === 'Add New Item in Shop' && (
-                <>
-                  {contractData.pathName === 'my-digital-shop' ? (
-                    <AddItem setAddItem={setClickCard} />
-                  ) : (
-                    <PhysicalShopForm setClickCard={setClickCard} />
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      ) : (
+      {clickCard === 'stock management' && (
         <>
-          {contractData.pathName === 'my-goods-shop' ? (
-            <PhysicalRemoveItem />
-          ) : (
-            <DigitalRemoveItem />
+          <div className="stock-management-container">
+            {clickAddItem ? (
+              <IoIosArrowBack
+                className="arrow-icon"
+                onClick={() => setClickAddItem(false)}
+              />
+            ) : clickRemoveItem ? (
+              <BsArrowLeftCircle
+                className="arrow-icon"
+                onClick={() => setClickRemoveItem(false)}
+              />
+            ) : (
+              <BsArrowLeftCircle
+                className="arrow-icon"
+                onClick={() => setClickCard(null)}
+              />
+            )}
+
+            {!clickRemoveItem && <h2 className="title">{clickCard}</h2>}
+
+            {!clickAddItem && !clickRemoveItem && (
+              <>
+                <div className="stock-management-cards">
+                  <div className="stock-management-card">
+                    <img src={cardImgSeven} alt="card" />
+                    <div className="card-content" style={{ padding: '0 10px' }}>
+                      <p className="title">Add new item in shop</p>
+                      <p className="desc">
+                        Lorem Ipsum has been the industry standard dummy text
+                        ever since the 1500s, when an unknown printer took a
+                        galley of type and scrambled it to make a type specimen
+                        book.
+                      </p>
+                      <button onClick={() => setClickAddItem(true)}>
+                        Demo
+                      </button>
+                    </div>
+                  </div>
+                  <div className="stock-management-card">
+                    <img src={cardImgEighth} alt="card" />
+                    <div className="card-content" style={{ padding: '0 10px' }}>
+                      <p className="title">Remove Item From Shop</p>
+                      <p className="desc">
+                        Lorem Ipsum has been the industry standard dummy text
+                        ever since the 1500s, when an unknown printer took a
+                        galley of type and scrambled it to make a type specimen
+                        book.
+                      </p>
+                      <button onClick={() => setClickRemoveItem(true)}>
+                        Demo
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {clickAddItem && (
+              <div>
+                {contractData.pathName === 'my-digital-shop' ? (
+                  <AddItem setAddItem={setClickAddItem} />
+                ) : (
+                  <PhysicalShopForm setClickCard={setClickAddItem} />
+                )}
+              </div>
+            )}
+          </div>
+          {clickRemoveItem && (
+            <>
+              {contractData.pathName === 'my-goods-shop' ? (
+                <PhysicalRemoveItem />
+              ) : (
+                <DigitalRemoveItem />
+              )}
+            </>
           )}
         </>
       )}
@@ -232,7 +229,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
         <div
           className="appearance-settings-container"
           id="appearance-settings-container"
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '40px' }}
         >
           <h2 className="title">
             {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
@@ -257,6 +254,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
             <BsArrowLeftCircle
               className="arrow-icon"
               onClick={() => setClickCard(null)}
+              style={{ marginTop: '15px' }}
             />
           )}
           <h2 className="title">
@@ -268,21 +266,10 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
       )}
 
       {clickCard === 'put on sale' && (
-        <div
-          className="sell-container"
-          style={{ marginTop: '0px', width: '110%' }}
-        >
-          {!clickAddItem && (
-            <BsArrowLeftCircle
-              className="arrow-icon"
-              onClick={() => setClickCard(null)}
-            />
-          )}
-          <h2 className="title">
-            {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-          </h2>
-          <Sell contractAddress={contractData.address} />
-        </div>
+        <Sell
+          contractAddress={contractData.address}
+          setClickCard={setClickCard}
+        />
       )}
     </>
   )

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import Music from '../../../assets/icon/Music.svg'
+import Loading from '../../../components/Loading/Loading'
 import { IUserDigitalItem } from '../../../constants/types'
 import { getDecryptedData } from '../../../utils/formatters'
 
@@ -18,7 +19,7 @@ export const CoursesCard: React.FC<ICoursesCard> = ({
       <div className="music-card-top">
         <audio ref={musicRef} src={getDecryptedData(fullproduct)}></audio>
       </div>
-      <div className="icon" onClick={() => musicRef.current!.play()}>
+      <div className="icon" onClick={() => musicRef.current?.play()}>
         <img src={Music} alt="card" />
       </div>
       <div className="details">
@@ -37,11 +38,13 @@ const MyMusic: React.FC<IMyMusic> = ({ fetching, error, data }) => {
   return (
     <div className="item-container">
       {fetching ? (
-        'Loading...'
+        <Loading />
       ) : error ? (
-        'something went wrong'
+        <div style={{ color: '#fff', textAlign: 'center' }}>
+          something went wrong
+        </div>
       ) : !data?.digitalItems.length ? (
-        'No Items Here'
+        <div style={{ color: '#fff', textAlign: 'center' }}>No Items Here</div>
       ) : (
         <div className="music-item-card-container">
           {data?.digitalItems.map((item, i) => {
