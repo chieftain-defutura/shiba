@@ -1,40 +1,38 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
-import { useQuery } from 'urql'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
-import { ArrElement, IGoodsDigitalItem } from '../../constants/types'
+import { ArrElement } from '../../constants/types'
 import { tokensList } from '../../constants/contract'
 import './MarketPlacePage.css'
 
-const getCurrencyQuery = () => {
-  return `query{
-    digitalItems(where:{status:ACTIVE}){
-      id
-      metadata
-      shopDetails{
-        id
-      }
-      price
-      erc20Token{
-        id
-        symbol
-        decimals
-      }
-      subcategory
-      category
-    }
+// const getCurrencyQuery = () => {
+//   return `query{
+//     digitalItems(where:{status:ACTIVE}){
+//       id
+//       metadata
+//       shopDetails{
+//         id
+//       }
+//       price
+//       erc20Token{
+//         id
+//         symbol
+//         decimals
+//       }
+//       subcategory
+//       category
+//     }
 
-  }`
-}
+//   }`
+// }
 
 const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
-  const [graphQuery, setGraphQuery] = useState()
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
   const [open, setOpen] = useState(false)

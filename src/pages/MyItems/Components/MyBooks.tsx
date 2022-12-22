@@ -17,7 +17,7 @@ export const BookCard: React.FC<IBookCard> = ({ fullproduct, category }) => {
         <a
           href={getDecryptedData(fullproduct)}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noreferrer noopener"
         >
           <img src={Book} alt="card" />
         </a>
