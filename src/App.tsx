@@ -24,6 +24,10 @@ import AwaitingDeliveryPage from './pages/AwaitingDeliveryPage/AwaitingDeliveryP
 import DigitalItemsDetailsPage from './pages/DetailsPage/DigitalItemDetailsPage'
 import HaveToSend from './pages/HaveToSendPage'
 import SendCryptoPage from './pages/SendCryptoPage/SendCryptoPage'
+import {
+  digitalShopTokenByIdQuery,
+  physicalShopTokenByIdQuery,
+} from './constants/query'
 
 const App: React.FC = () => {
   return (
@@ -73,7 +77,16 @@ const App: React.FC = () => {
           </Route>
         ))}
 
-        <Route path="/shop-details/:shopId" element={<ShopDetailsPage />} />
+        <Route path="/shop">
+          <Route
+            path="digital/:shopId"
+            element={<ShopDetailsPage query={digitalShopTokenByIdQuery} />}
+          />
+          <Route
+            path="goods/:shopId"
+            element={<ShopDetailsPage query={physicalShopTokenByIdQuery} />}
+          />
+        </Route>
         <Route
           path="/physical-item-details/:itemId"
           element={<ItemDetailsPage />}
