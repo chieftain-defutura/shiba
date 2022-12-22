@@ -90,7 +90,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
             style={{
               fontSize: '27px',
               position: 'absolute',
-              top: '40px',
+              top: '30px',
               cursor: 'pointer',
             }}
             onClick={() => setClickCard(null)}

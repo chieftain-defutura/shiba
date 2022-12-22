@@ -219,7 +219,7 @@
 .action-container-left .sort-container .radio-btn-cont {
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: 14px;
 }
@@ -230,6 +230,9 @@
   line-height: 21px;
   cursor: pointer;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
 }
 
 .action-container-left .sort-container .radio-btn-cont input[type='radio'] {

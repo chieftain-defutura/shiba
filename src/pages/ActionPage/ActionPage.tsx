@@ -1,66 +1,92 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 
+import { ArrElement } from '../../constants/types'
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import AuctionSaleCard from '../../components/AuctionSaleCard'
 import { auctionPageQuery } from '../../constants/query'
 import { IAuctionNft } from '../../constants/types'
 import Loading from '../../components/Loading/Loading'
-import axios from 'axios'
-import { SUB_GRAPH_API_URL } from '../../constants/api'
+import { tokensList } from '../../constants/contract'
 import './ActionPage.css'
 
-export type IRecentlyListed = {
-  id: string
-  price: string
-  owner: string
-  startTime: string
-  endTime: string
+const getQuery = (orderBy: string, orderDirection: string) => {
+  return `query{
+    auctions(orderBy:${orderBy},orderDirection:${orderDirection}, where:{status:ACTIVE}){
+      id
+      tokenId
+      auctionId
+      owner
+      highestBid
+      price
+      endTime
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+      erc721TokenAddress
+      status
+    }
+  }
+  `
+}
+
+const getCurrencyQuery = (erc20Token: string) => {
+  return `query{
+    auctions(where:{status:ACTIVE,erc20Token:"${erc20Token}"}){
+      id
+      tokenId
+      auctionId
+      owner
+      highestBid
+      price
+      endTime
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+      erc721TokenAddress
+      status
+    }
+  }`
 }
 
 const ActionPage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
-  const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
-  const [recentlyListed, setRecentlyListed] = useState<IRecentlyListed[]>([])
+  const [isValue, setIsValue] = useState('')
+  const [dropDown, setDropDown] = useState(false)
+  const [graphQuery, setGraphQuery] = useState(auctionPageQuery)
+
+  const [selectedDropDown, setSelectedDropDown] =
+    useState<ArrElement<typeof tokensList>>()
+
+  useMemo(() => {
+    if (isValue === 'high-to-low')
+      return setGraphQuery(getQuery('price', 'desc'))
+    if (isValue === 'recently-listed')
+      return setGraphQuery(getQuery('startTime', 'desc'))
+    if (isValue === 'recently-listed')
+      return setGraphQuery(getQuery('endTime', 'desc'))
+    return auctionPageQuery
+  }, [isValue])
+
+  useMemo(() => {
+    if (!selectedDropDown?.address) return auctionPageQuery
+    return setGraphQuery(
+      getCurrencyQuery(selectedDropDown?.address.toLowerCase()),
+    )
+  }, [selectedDropDown?.address])
+
   const [result] = useQuery<{ auctions: IAuctionNft[] }>({
-    query: auctionPageQuery,
+    query: graphQuery,
   })
   const { data, fetching, error } = result
+  console.log(data)
 
-  const handleSortBy = useCallback(async () => {
-    try {
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `query{
-          auctions(orderBy:startTime,orderDirection:desc, where:{status:ACTIVE}){
-            id
-            price
-            owner
-            startTime
-            endTime
-            
-          }
-        }`,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      console.log(data.data.auctions)
-      setRecentlyListed(data.data.auctions)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
-
-  useEffect(() => {
-    handleSortBy()
-  }, [handleSortBy])
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
       return setClickDropDown(null)
@@ -134,23 +160,46 @@ const ActionPage: React.FC = () => {
               </div>
             </div>
           </div>
+
           <div className="sort-container">
             <p className="title">Sort By</p>
             <div className="sort-content">
               <div className="radio-btn-cont">
-                <label htmlFor="high-to-low">High To Low</label>
-                <input id="high-to-low" name="high-to-low" type="radio" />
-                <span></span>
-              </div>
-              <div className="radio-btn-cont">
-                <label htmlFor="Recently-listed">Recently listed</label>
-                <input id="Recently-listed" type="radio" />
-                <span></span>
-              </div>
-              <div className="radio-btn-cont">
-                <label htmlFor="Ending-soon">Ending soon</label>
-                <input id="Ending-soon" type="radio" />
-                <span></span>
+                <label htmlFor="high-to-low">
+                  High To Low
+                  <input
+                    id="high-to-low"
+                    name="sort"
+                    type="radio"
+                    value="high-to-low"
+                    onChange={(e) => setIsValue(e.target.value)}
+                  />
+                  <span></span>
+                </label>
+
+                <label htmlFor="Recently-listed">
+                  Recently listed
+                  <input
+                    id="Recently-listed"
+                    name="sort"
+                    type="radio"
+                    value="recently-listed"
+                    onChange={(e) => setIsValue(e.target.value)}
+                  />
+                  <span></span>
+                </label>
+
+                <label htmlFor="Ending-soon">
+                  Ending soon
+                  <input
+                    id="Ending-soon"
+                    name="sort"
+                    type="radio"
+                    value="ending-soon"
+                    onChange={(e) => setIsValue(e.target.value)}
+                  />
+                  <span></span>
+                </label>
               </div>
             </div>
           </div>
@@ -177,15 +226,23 @@ const ActionPage: React.FC = () => {
 
             <div className="currency-select-container">
               <div className="header">
-                <p>{selectedCurrency}</p>
+                <p>{selectedDropDown?.title}</p>
                 <IoIosArrowDown className="arrow-icon" />
               </div>
               <div className="body">
-                <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
-                <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
-                <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
-                <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
-                <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
+                {tokensList.map((f, index) => {
+                  return (
+                    <p
+                      key={index}
+                      onClick={() => {
+                        setSelectedDropDown(f)
+                        setDropDown(false)
+                      }}
+                    >
+                      {f.title}
+                    </p>
+                  )
+                })}
               </div>
             </div>
           </div>

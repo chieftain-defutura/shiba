@@ -174,6 +174,7 @@ export type IAuctionNft = {
   owner: string
   highestBid: string
   price: string
+  startTime: string
   endTime: string
   erc20Token: {
     id: string

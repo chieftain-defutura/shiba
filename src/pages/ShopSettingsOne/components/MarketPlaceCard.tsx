@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -13,6 +13,8 @@ import { tokensList } from '../../../constants/contract'
 import { ArrElement } from '../../../constants/types'
 import { getTokenDecimals } from '../../../utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
+import { formatAddress } from '../../../constants/variants'
+import { useAppSelector } from '../../../store/store'
 
 type IMarketplaceCardProps = {
   setOnMarketplace: React.Dispatch<boolean>
@@ -37,6 +39,12 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
   const [price, setPrice] = useState('')
+  const [charityAddress, setCharityAddress] = useState('')
+  const charityList = useAppSelector((store) => store.general.charityList)
+
+  useEffect(() => {
+    if (charityList.length) setCharityAddress(charityList[0])
+  }, [charityList])
 
   const handlePutOnSale = async () => {
     if (!address || !data || !selectedDropDown) return
@@ -59,6 +67,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
         ).toString(),
         selectedDropDown.address,
         contractAddress,
+        charityAddress,
       )
       await tx.wait()
       setTransaction({
@@ -78,6 +87,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
     <div className="on-marketplace-container">
       <BsArrowLeftCircle
         className="arrow-icon"
+        style={{ marginTop: '15px' }}
         onClick={() => {
           setOnMarketplace(false)
         }}
@@ -90,7 +100,13 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
             <p>Price</p>
           </div>
           <div className="content-right">
-            <select></select>
+            <select>
+              {charityList.map((list) => (
+                <option key={list} value={list}>
+                  {formatAddress(list)}
+                </option>
+              ))}
+            </select>
             <div className="price-select-container">
               <div className="left">
                 <input

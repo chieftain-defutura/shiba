@@ -1,17 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
+import { useQuery } from 'urql'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
+import { ArrElement, IGoodsDigitalItem } from '../../constants/types'
+import { tokensList } from '../../constants/contract'
 import './MarketPlacePage.css'
+
+const getCurrencyQuery = () => {
+  return `query{
+    digitalItems(where:{status:ACTIVE}){
+      id
+      metadata
+      shopDetails{
+        id
+      }
+      price
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+      subcategory
+      category
+    }
+
+  }`
+}
 
 const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState(null)
-  const [selectedCurrency, setSelectedCurrency] = useState('Select Currency')
-  const [dropDown, setDropDown] = useState(false)
+  const [graphQuery, setGraphQuery] = useState()
+  const [selectedDropDown, setSelectedDropDown] =
+    useState<ArrElement<typeof tokensList>>()
   const [open, setOpen] = useState(false)
 
   const handleDropDown = (idx: any) => {
@@ -20,6 +45,19 @@ const MarketPlacePage: React.FC = () => {
     }
     setClickDropDown(idx)
   }
+
+  // useMemo(() => {
+  //   if (!selectedDropDown?.address) return
+  //   return setGraphQuery(
+  //     getCurrencyQuery(selectedDropDown?.address.toLowerCase()),
+  //   )
+  // }, [selectedDropDown?.address])
+
+  // const [result] = useQuery<{ auctions: IGoodsDigitalItem[] }>({
+  //   query: graphQuery,
+  // })
+  // const { data, fetching, error } = result
+  // console.log(data)
 
   const handleAccordionActive = (idx: any) => {
     if (isAccordionActive === idx) {
@@ -236,30 +274,26 @@ const MarketPlacePage: React.FC = () => {
           ) : (
             <CorporateMarketplace />
           )}
-          {open && (
-            <div
-              className={
-                !dropDown
-                  ? ' currency-select-container'
-                  : 'currency-select-container active'
-              }
-            >
-              <div className="header" onClick={() => setDropDown(true)}>
-                <p>{selectedCurrency}</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              <div
-                className={!dropDown ? 'body' : 'body active'}
-                onClick={() => setDropDown(false)}
-              >
-                <p onClick={() => setSelectedCurrency('SHI')}>SHI</p>
-                <p onClick={() => setSelectedCurrency('LEASH')}>LEASH</p>
-                <p onClick={() => setSelectedCurrency('SHIB')}>SHIB</p>
-                <p onClick={() => setSelectedCurrency('BONE')}>BONE</p>
-                <p onClick={() => setSelectedCurrency('PAW')}>PAW</p>
-              </div>
+          <div className="currency-select-container">
+            <div className="header">
+              <p>{selectedDropDown?.title}</p>
+              <IoIosArrowDown className="arrow-icon" />
             </div>
-          )}
+            <div className="body">
+              {tokensList.map((f, index) => {
+                return (
+                  <p
+                    key={index}
+                    onClick={() => {
+                      setSelectedDropDown(f)
+                    }}
+                  >
+                    {f.title}
+                  </p>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
       <FooterBottom />

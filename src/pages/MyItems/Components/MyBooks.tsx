@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { IUserDigitalItem } from '../../../constants/types'
 import Book from '../../../assets/icon/Book-mark.svg'
 import { getDecryptedData } from '../../../utils/formatters'
+import Loading from '../../../components/Loading/Loading'
 
 interface IBookCard {
   fullproduct: string
@@ -37,9 +38,13 @@ const MyBooks: React.FC<IMyBook> = ({ fetching, error, data }) => {
   return (
     <div className="item-container">
       {fetching ? (
-        'Loading...'
+        <Loading />
       ) : error ? (
-        'something went wrong'
+        <div style={{ color: '#fff', textAlign: 'center' }}>
+          something went wrong
+        </div>
+      ) : !data?.digitalItems.length ? (
+        <div style={{ color: '#fff', textAlign: 'center' }}>No Items Here</div>
       ) : (
         <div className="music-item-card-container">
           {data?.digitalItems.map((item, i) => {

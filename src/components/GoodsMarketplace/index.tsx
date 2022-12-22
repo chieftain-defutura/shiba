@@ -6,67 +6,49 @@ import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
 import {
-  goodsDigitalItemsQuery,
-  goodsPhysicalItemsQuery,
+  // goodsDigitalItemsQuery,
+  goodsItemsQuery,
+  // goodsPhysicalItemsQuery,
 } from '../../constants/query'
 import Loading from '../Loading/Loading'
 import PhysicalItem from '../PhysicallItem/PhysicalItem'
 
-export const GoodsDigital = () => {
-  const [result] = useQuery<{
-    digitalItems: IGoodsDigitalItem[]
-  }>({
-    query: goodsDigitalItemsQuery,
-  })
-  const { data, fetching } = result
-  console.log(data)
+interface IGoodsDigital {
+  data: IGoodsDigitalItem[] | undefined
+}
 
+export const GoodsDigital: React.FC<IGoodsDigital> = ({ data }) => {
   return (
-    <div style={{ height: '50%' }}>
-      <div style={{ fontSize: '20px', textAlign: 'center' }}>
-        <h2>Digital</h2>
-      </div>
-      {fetching ? (
-        <Loading />
-      ) : !data?.digitalItems.length ? (
-        <div style={{ textAlign: 'center', marginTop: '60px' }}>
-          No Nfts Here for sale
+    <>
+      {data?.map((f, idx) => (
+        <div key={idx}>
+          <Link
+            to={`/digital-item-details/${f.id}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <DigitalItem {...f} />
+          </Link>
         </div>
-      ) : (
-        <div className="marketplace-container-right-content">
-          {data?.digitalItems.map((f, idx) => (
-            <div key={idx}>
-              <Link
-                to={`/digital-item-details/${f.id}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <DigitalItem {...f} />
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+      ))}
+    </>
   )
 }
 
-export const GoodsPhysical = () => {
-  const [result] = useQuery<{
-    physicalItems: IGoodsPhysicalItem[]
-  }>({
-    query: goodsPhysicalItemsQuery,
-  })
-  const { data, fetching } = result
-  console.log(data)
+interface IGoodsPhysical {
+  data:
+    | {
+        physicalItems: IGoodsPhysicalItem[]
+        digitalItems: IGoodsDigitalItem[]
+      }
+    | undefined
+}
 
+export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
   return (
-    <div style={{ height: '50%' }}>
-      <div style={{ fontSize: '20px', textAlign: 'center' }}>
-        <h2>physical</h2>
-      </div>
-      {fetching ? (
+    <>
+      {!data ? (
         <Loading />
-      ) : !data?.physicalItems.length ? (
+      ) : !data?.digitalItems.length && !data?.physicalItems.length ? (
         <div style={{ textAlign: 'center', marginTop: '60px' }}>
           No Nfts Here for sale
         </div>
@@ -82,17 +64,36 @@ export const GoodsPhysical = () => {
               </Link>
             </div>
           ))}
+
+          {data?.digitalItems.map((f, idx) => (
+            <div key={idx}>
+              <Link
+                to={`/digital-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <DigitalItem {...f} />
+              </Link>
+            </div>
+          ))}
         </div>
       )}
-    </div>
+    </>
   )
 }
 
 const GoodsMaretPlace: React.FC = () => {
+  const [result] = useQuery<{
+    physicalItems: IGoodsPhysicalItem[]
+    digitalItems: IGoodsDigitalItem[]
+  }>({
+    query: goodsItemsQuery,
+  })
+  const { data, fetching } = result
+  console.log(data)
   return (
     <>
-      <GoodsDigital />
-      <GoodsPhysical />
+      {/* <GoodsDigital data={data?.digitalItems} /> */}
+      <GoodsPhysical data={data} />
     </>
   )
 }

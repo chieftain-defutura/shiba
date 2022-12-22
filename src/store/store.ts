@@ -2,14 +2,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux'
 
 import alchemyApiSlice from './slices/alchemyApiSlice'
+import generalSlice from './slices/generalSlice'
 import ipfsApiSlice from './slices/ipfsApiSlice'
 import moralisApi from './slices/moralisApiSlice'
 import userSlice from './slices/userSlice'
 
 const store = configureStore({
   reducer: {
-    [moralisApi.reducerPath]: moralisApi.reducer,
     user: userSlice.reducer,
+    general: generalSlice.reducer,
+    [moralisApi.reducerPath]: moralisApi.reducer,
     [alchemyApiSlice.reducerPath]: alchemyApiSlice.reducer,
     [ipfsApiSlice.reducerPath]: ipfsApiSlice.reducer,
   },

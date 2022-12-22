@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
-import { ethers } from 'ethers'
-import * as Yup from 'yup'
 import axios from 'axios'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import * as Yup from 'yup'
+import { parseUnits } from 'ethers/lib/utils.js'
+import { ethers } from 'ethers'
 
 import {
   BONE_TOKEN_ADDRESS,
@@ -19,9 +19,10 @@ import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { getEncryptedData } from '../../utils/formatters'
 import Button from '../Button'
-import { parseUnits } from 'ethers/lib/utils.js'
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 import { getDigitalShopCategory } from '../../utils/methods'
+import { useAppDispatch, useAppSelector } from '../../store/store'
+import { fetchCarityList } from '../../store/slices/generalSlice'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 interface IAddItem {
   setAddItem: any
@@ -31,12 +32,18 @@ const AddItem: React.FC<IAddItem> = () => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
-  const navigate = useNavigate()
   const { setTransaction } = useTransactionModal()
   const [slide, setSlide] = useState(1)
   const [categoryList, setCategoryList] = useState<
     { name: string; subCategory: string[] }[]
   >([])
+  const dispatch = useAppDispatch()
+  const isFetched = useAppSelector((store) => store.general.isFetched)
+
+  useEffect(() => {
+    if (!data || isFetched) return
+    dispatch(fetchCarityList({ data }))
+  }, [data, isFetched, dispatch])
 
   const getCategory = useCallback(async () => {
     if (!data) return
@@ -107,12 +114,12 @@ const AddItem: React.FC<IAddItem> = () => {
         parseUnits(values.price.toString(), '18'),
         values.currency,
         values.itemName,
+        '0xe05f949AB280414F4e3279fF3BE1e39774e4B4f3',
       )
 
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
-      navigate('/')
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)
@@ -131,6 +138,7 @@ const AddItem: React.FC<IAddItem> = () => {
     description: Yup.string().required('This is Required'),
     price: Yup.string().required('This is Required'),
     currency: Yup.string().required('This is Required'),
+    charityAddress: Yup.string().required('This is Required'),
   })
 
   return (
@@ -151,7 +159,7 @@ const AddItem: React.FC<IAddItem> = () => {
           description: '',
           price: '',
           currency: '',
-          charitiesAddress: '',
+          charityAddress: '',
         }}
         onSubmit={handleAddItem}
         validationSchema={validate}

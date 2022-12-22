@@ -71,8 +71,8 @@ const Residual: React.FC<IResidualProps> = ({
     console.log(newData)
     const shareHoldersList: { address: string; sharePercent: any }[] = []
 
-    newData?.shareHolders.forEach((address: string, i: number) => {
-      newData?.sharePercent.forEach((sharePercent: any, j: number) => {
+    newData[3].forEach((address: string, i: number) => {
+      newData[4].forEach((sharePercent: any, j: number) => {
         if (i === j) {
           shareHoldersList.push({
             address,
@@ -83,10 +83,10 @@ const Residual: React.FC<IResidualProps> = ({
     })
 
     return {
-      totalPercent: newData.totalPercent.toString(),
-      filledShare: newData.filledshare.toString(),
+      totalPercent: newData[0].toString(),
+      filledShare: newData[1].toString(),
       shareHolders: shareHoldersList.filter((f) => parseInt(f.address) !== 0),
-      paused: newData.paused,
+      paused: newData[2],
     }
   }, [data])
 
@@ -131,7 +131,7 @@ const Residual: React.FC<IResidualProps> = ({
   }
 
   return (
-    <div className="residual-container" style={{ marginTop: '0' }}>
+    <div className="residual-container" style={{ marginTop: '40px' }}>
       <BsArrowLeftCircle
         className="arrow-icon"
         style={{ position: 'absolute', top: '40px' }}

@@ -6,8 +6,10 @@ import nftABI from '../utils/abi/websiteABI.json'
 import domainNftABI from '../utils/abi/domainABI.json'
 import DigitalShopABI from '../utils/abi/digitalShopABI.json'
 import PhysicalShopABI from '../utils/abi/physicalShopABI.json'
+import CharityABI from '../utils/abi/charityABI.json'
 
 import {
+  CHARITY_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
   MARKETPLACE_CONTRACT_ADDRESS,
@@ -104,4 +106,15 @@ export const getPhysicalShopCategory = async (data: ethers.Signer) => {
   )
 
   return result
+}
+
+export const getCharityList: (
+  data: ethers.Signer,
+) => Promise<string[]> = async (data: ethers.Signer) => {
+  const charityContract = new ethers.Contract(
+    CHARITY_CONTRACT_ADDRESS,
+    CharityABI,
+    data,
+  )
+  return await charityContract.getCharityList()
 }

@@ -80,7 +80,6 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
-  console.log(clickCard, clickRemoveItem, clickAddItem)
   return (
     <>
       <h2 className="heading">shoesboutique.shib</h2>
@@ -230,7 +229,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
         <div
           className="appearance-settings-container"
           id="appearance-settings-container"
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '40px' }}
         >
           <h2 className="title">
             {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
@@ -255,6 +254,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
             <BsArrowLeftCircle
               className="arrow-icon"
               onClick={() => setClickCard(null)}
+              style={{ marginTop: '15px' }}
             />
           )}
           <h2 className="title">
@@ -266,21 +266,10 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
       )}
 
       {clickCard === 'put on sale' && (
-        <div
-          className="sell-container"
-          style={{ marginTop: '0px', width: '110%' }}
-        >
-          {!clickAddItem && (
-            <BsArrowLeftCircle
-              className="arrow-icon"
-              onClick={() => setClickCard(null)}
-            />
-          )}
-          <h2 className="title">
-            {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-          </h2>
-          <Sell contractAddress={contractData.address} />
-        </div>
+        <Sell
+          contractAddress={contractData.address}
+          setClickCard={setClickCard}
+        />
       )}
     </>
   )
