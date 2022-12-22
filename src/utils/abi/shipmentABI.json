@@ -2,44 +2,13 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "cancelBuyOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_itemId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_quantity",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_deliveryHash",
-        "type": "string"
-      }
-    ],
-    "name": "createBuyOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "contract IShop",
         "name": "_shop",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IResidual",
+        "name": "_residual",
         "type": "address"
       }
     ],
@@ -84,42 +53,6 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_review",
-        "type": "string"
-      }
-    ],
-    "name": "orderComplaint",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "_review",
-        "type": "string"
-      }
-    ],
-    "name": "orderReceived",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -146,7 +79,30 @@
         "type": "uint256"
       }
     ],
-    "name": "startShipment",
+    "name": "cancelBuyOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_itemId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_deliveryHash",
+        "type": "string"
+      }
+    ],
+    "name": "createBuyOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -205,6 +161,24 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_review",
+        "type": "string"
+      }
+    ],
+    "name": "orderComplaint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -221,6 +195,37 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_review",
+        "type": "string"
+      }
+    ],
+    "name": "orderReceived",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "residual",
+    "outputs": [
+      {
+        "internalType": "contract IResidual",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -250,6 +255,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "startShipment",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
