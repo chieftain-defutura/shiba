@@ -1,6 +1,6 @@
 .shop-setting-one-container {
   display: flex;
-  padding: 0px 130px;
+  padding: 0px 100px;
   color: var(--textColorOne);
   gap: 150px;
 }
@@ -14,7 +14,8 @@
 .shop-setting-one-container .shop-setting-one-container-right {
   flex: 6;
   font-family: var(--oswaldFont);
-  padding: 30px;
+  /* padding: 30px; */
+  margin-top: 25px;
 }
 
 .shop-setting-one-container-right .heading {
@@ -45,6 +46,7 @@
   text-align: center;
   gap: 10px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .shop-setting-one-container-right .cards-container .card p {
@@ -84,8 +86,9 @@
   width: 100%;
   background-color: var(--bgColorTwo);
   border-radius: 10px;
-  margin-top: 10px;
-  padding: 27px;
+  margin-top: 40px;
+  /* padding: 27px; */
+  padding: 40px 27px 27px 50px;
   position: relative;
 }
 
@@ -122,10 +125,10 @@
 
 .stock-management-container .stock-management-card {
   width: 100%;
-  height: 176px;
+  /* height: 176px; */
   border: 0.5px solid var(--textColorOne);
   border-radius: 3px;
-  padding: 22px;
+  /* padding: 22px; */
   display: flex;
   align-items: center;
   font-family: var(--montserratFont);
@@ -349,7 +352,7 @@ select {
   border: 0;
   outline: 0;
   margin-top: 36px;
-  margin-left: 160px;
+  margin-left: 100px;
   font-weight: 700;
   font-size: 18px;
   line-height: 30px;
@@ -533,7 +536,7 @@ select {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 150px;
+  margin-left: 100px;
 }
 
 .brief-description-sub-menu-container .content-left {

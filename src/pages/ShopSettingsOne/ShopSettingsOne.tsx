@@ -4,10 +4,8 @@ import { useQuery } from 'urql'
 import { useParams } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 
-import Navigation from '../../components/Navigation/Navigation'
+import HomeLayout from '../../Layout/HomeLayout'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import HeaderNav from '../../components/HeaderNav/HeaderNav'
-import SideBar from '../../components/SideBar/SideBar'
 import Residual from './components/Residual'
 import AddItem from '../../components/AddItem'
 import AppearanceSetting from '../../components/AppearanceSetting'
@@ -47,33 +45,30 @@ const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
 
   return (
     <div>
-      <Navigation />
-      <HeaderNav />
-      <div className="shop-setting-one-container">
-        <div className="shop-setting-one-container-left">
-          <SideBar />
+      <HomeLayout>
+        <div className="shop-setting-one-container">
+          <div className="shop-setting-one-container-right">
+            {fetching ? (
+              <Loading />
+            ) : error ? (
+              <div>
+                <p>Something went wrong</p>
+              </div>
+            ) : data[Object.keys(data)[0]] === null ? (
+              <div>
+                <h3 style={{ color: 'red' }}>Access your Token </h3>
+              </div>
+            ) : data[Object.keys(data)[0]].owner.id.toLowerCase() !==
+              address?.toLowerCase() ? (
+              <div>
+                <h3 style={{ color: 'red' }}>Access your Token </h3>
+              </div>
+            ) : (
+              <Settings contractData={contractData} />
+            )}
+          </div>
         </div>
-        <div className="shop-setting-one-container-right">
-          {fetching ? (
-            <Loading />
-          ) : error ? (
-            <div>
-              <p>Something went wrong</p>
-            </div>
-          ) : data[Object.keys(data)[0]] === null ? (
-            <div>
-              <h3 style={{ color: 'red' }}>Access your Token </h3>
-            </div>
-          ) : data[Object.keys(data)[0]].owner.id.toLowerCase() !==
-            address?.toLowerCase() ? (
-            <div>
-              <h3 style={{ color: 'red' }}>Access your Token </h3>
-            </div>
-          ) : (
-            <Settings contractData={contractData} />
-          )}
-        </div>
-      </div>
+      </HomeLayout>
       <FooterBottom />
     </div>
   )
@@ -163,7 +158,6 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
               onClick={() => setClickCard(null)}
             />
           )}
-
           <div className="arrow-icon-container">
             {/* <IoIosArrowBack
             className="prev-arrow-icon"
@@ -175,18 +169,14 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
             onClick={handleSlideNext}
           /> */}
           </div>
-
-          <h2
-            className="title"
-            // style={{ marginLeft: '-110px' }}
-          >
+          <h2 className="title">
             {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
           </h2>
           {!clickAddItem && (
             <div className="stock-management-cards">
               <div className="stock-management-card">
                 <img src={cardImgSeven} alt="card" />
-                <div className="card-content">
+                <div className="card-content" style={{ padding: '0 10px' }}>
                   <p className="title">Add new item in shop</p>
                   <p className="desc">
                     Lorem Ipsum has been the industry standard dummy text ever
@@ -202,7 +192,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
               </div>
               <div className="stock-management-card">
                 <img src={cardImgEighth} alt="card" />
-                <div className="card-content">
+                <div className="card-content" style={{ padding: '0 10px' }}>
                   <p className="title">Remove Item From Shop</p>
                   <p className="desc">
                     Lorem Ipsum has been the industry standard dummy text ever
@@ -242,6 +232,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
         <div
           className="appearance-settings-container"
           id="appearance-settings-container"
+          style={{ marginTop: '10px' }}
         >
           <h2 className="title">
             {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
@@ -277,7 +268,10 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
       )}
 
       {clickCard === 'put on sale' && (
-        <div className="sell-container">
+        <div
+          className="sell-container"
+          style={{ marginTop: '0px', width: '110%' }}
+        >
           {!clickAddItem && (
             <BsArrowLeftCircle
               className="arrow-icon"

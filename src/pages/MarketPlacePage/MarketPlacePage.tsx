@@ -37,6 +37,7 @@ const MarketPlacePage: React.FC = () => {
   const [graphQuery, setGraphQuery] = useState()
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
+  const [open, setOpen] = useState(false)
 
   const handleDropDown = (idx: any) => {
     if (clickDropDown === idx) {
@@ -257,7 +258,10 @@ const MarketPlacePage: React.FC = () => {
           <div className="currency-container">
             <p className="title">Currency</p>
             <div className="currency-content">
-              <div className="currency-select-cont">
+              <div
+                className="currency-select-cont"
+                onClick={() => setOpen(!open)}
+              >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
