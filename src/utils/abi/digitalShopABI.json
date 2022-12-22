@@ -10,6 +10,11 @@
         "internalType": "contract IERC20",
         "name": "_SHIBToken",
         "type": "address"
+      },
+      {
+        "internalType": "contract IResidual",
+        "name": "_residual",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -71,6 +76,12 @@
         "internalType": "string",
         "name": "itemName",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "charityAddress",
+        "type": "address"
       }
     ],
     "name": "AddItem",
@@ -355,6 +366,11 @@
         "internalType": "string",
         "name": "_itemName",
         "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_charityAddress",
+        "type": "address"
       }
     ],
     "name": "addItem",
@@ -475,6 +491,19 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "charityPercent",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -614,6 +643,11 @@
             "internalType": "enum DigitalGoods.saleStatus",
             "name": "status",
             "type": "uint8"
+          },
+          {
+            "internalType": "address",
+            "name": "charityAddress",
+            "type": "address"
           }
         ],
         "internalType": "struct DigitalGoods.Item",
@@ -731,6 +765,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -796,6 +843,19 @@
     "name": "removeSubCategory",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "residual",
+    "outputs": [
+      {
+        "internalType": "contract IResidual",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1072,6 +1132,19 @@
       }
     ],
     "name": "transferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_charityPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateCharityPercent",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
