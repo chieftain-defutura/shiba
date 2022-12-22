@@ -354,10 +354,10 @@ const AddItem: React.FC<IAddItem> = () => {
                     <div>
                       <Field as="select" name="charityAddress">
                         <option value="">Select a Charity Address</option>
-                        {charityList.map((list, index) => {
+                        {charityList.map((f, index) => {
                           return (
-                            <option value={list} key={index}>
-                              {list}
+                            <option value={f} key={index}>
+                              {f}
                             </option>
                           )
                         })}

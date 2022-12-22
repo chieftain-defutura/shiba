@@ -181,12 +181,12 @@ const SideBar: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="select-container">
+        {/* <div className="select-container">
           <select>
             <option>SORT BY DATE</option>
             <option>Websites</option>
           </select>
-        </div>
+        </div> */}
       </div>
     </div>
   )
