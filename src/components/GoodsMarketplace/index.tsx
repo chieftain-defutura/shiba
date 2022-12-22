@@ -88,7 +88,7 @@ const GoodsMaretPlace: React.FC = () => {
   }>({
     query: goodsItemsQuery,
   })
-  const { data, fetching } = result
+  const { data } = result
   console.log(data)
   return (
     <>

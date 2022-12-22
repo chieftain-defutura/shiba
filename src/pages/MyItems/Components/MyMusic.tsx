@@ -19,7 +19,7 @@ export const CoursesCard: React.FC<ICoursesCard> = ({
       <div className="music-card-top">
         <audio ref={musicRef} src={getDecryptedData(fullproduct)}></audio>
       </div>
-      <div className="icon" onClick={() => musicRef.current!.play()}>
+      <div className="icon" onClick={() => musicRef.current?.play()}>
         <img src={Music} alt="card" />
       </div>
       <div className="details">

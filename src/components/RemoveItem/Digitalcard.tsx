@@ -7,7 +7,6 @@ import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { formatUnits } from 'ethers/lib/utils.js'
 import cardImg from '../../assets/img/card-3.png'
-import { BsArrowLeftCircle } from 'react-icons/bs'
 
 interface ICard {
   id: number

@@ -39,6 +39,7 @@ const AddItem: React.FC<IAddItem> = () => {
   >([])
   const dispatch = useAppDispatch()
   const isFetched = useAppSelector((store) => store.general.isFetched)
+  const charityList = useAppSelector((store) => store.general.charityList)
 
   useEffect(() => {
     if (!data || isFetched) return
@@ -350,7 +351,23 @@ const AddItem: React.FC<IAddItem> = () => {
                         component="div"
                       />
                     </div>
-                    <Field as="select" name="charitiesAddress"></Field>
+                    <div>
+                      <Field as="select" name="charityAddress">
+                        <option value="">Select a Charity Address</option>
+                        {charityList.map((list, index) => {
+                          return (
+                            <option value={list} key={index}>
+                              {list}
+                            </option>
+                          )
+                        })}
+                      </Field>
+                      <ErrorMessage
+                        name="charityAddress"
+                        className="errorMsg"
+                        component="div"
+                      />
+                    </div>
                     <div className="btn-cont">
                       <Button
                         variant="primary"

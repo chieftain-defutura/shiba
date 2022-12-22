@@ -13,8 +13,12 @@ export const BookCard: React.FC<IBookCard> = ({ fullproduct, category }) => {
 
   return (
     <div className="music-card">
-      <div className="icon" onClick={() => bookRef.current!.play()}>
-        <a href={getDecryptedData(fullproduct)} target="_blank">
+      <div className="icon" onClick={() => bookRef.current?.play()}>
+        <a
+          href={getDecryptedData(fullproduct)}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           <img src={Book} alt="card" />
         </a>
       </div>
