@@ -19,7 +19,9 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
   auctionId,
   price,
   owner,
+  id,
   highestBid,
+  startTime,
   endTime,
 }) => {
   const { data } = useSigner()

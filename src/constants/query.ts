@@ -114,7 +114,7 @@ query {
 }
 }`
 
-export const goodsDigitalItemsQuery = `
+export const goodsItemsQuery = `
 query{
   digitalItems(where:{status:ACTIVE}){
     id
@@ -130,10 +130,7 @@ query{
     }
     subcategory
     category
-  }}`
-
-export const goodsPhysicalItemsQuery = `
-query{
+  }
   physicalItems(where:{status:ACTIVE}){
     id
     quantity
@@ -148,7 +145,26 @@ query{
     }
     subcategory
     category
-  }}`
+  }
+}`
+
+// export const goodsPhysicalItemsQuery = `
+// query{
+//   physicalItems(where:{status:ACTIVE}){
+//     id
+//     quantity
+//     shopDetails{
+//       id
+//     }
+//     price
+//     erc20Token {
+//       id
+//       symbol
+//       decimals
+//     }
+//     subcategory
+//     category
+//   }}`
 
 export const haveToSendQuery = `
   query($owner: String!){
