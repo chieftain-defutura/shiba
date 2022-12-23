@@ -31,7 +31,7 @@ const DigitalCard: React.FC<ICard> = ({
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
   //arrow
-  const [slide, setSlide] = useState(true)
+  const [slide] = useState(true)
 
   const handleRemoveItem = async () => {
     if (!address || !data) return

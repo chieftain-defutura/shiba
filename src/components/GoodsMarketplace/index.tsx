@@ -13,26 +13,26 @@ import {
 import Loading from '../Loading/Loading'
 import PhysicalItem from '../PhysicallItem/PhysicalItem'
 
-interface IGoodsDigital {
-  data: IGoodsDigitalItem[] | undefined
-}
+// interface IGoodsDigital {
+//   data: IGoodsDigitalItem[] | undefined
+// }
 
-export const GoodsDigital: React.FC<IGoodsDigital> = ({ data }) => {
-  return (
-    <>
-      {data?.map((f, idx) => (
-        <div key={idx}>
-          <Link
-            to={`/digital-item-details/${f.id}`}
-            style={{ textDecoration: 'none' }}
-          >
-            <DigitalItem {...f} />
-          </Link>
-        </div>
-      ))}
-    </>
-  )
-}
+// export const GoodsDigital: React.FC<IGoodsDigital> = ({ data }) => {
+//   return (
+//     <>
+//       {data?.map((f, idx) => (
+//         <div key={idx}>
+//           <Link
+//             to={`/digital-item-details/${f.id}`}
+//             style={{ textDecoration: 'none' }}
+//           >
+//             <DigitalItem {...f} />
+//           </Link>
+//         </div>
+//       ))}
+//     </>
+//   )
+// }
 
 interface IGoodsPhysical {
   data:
@@ -64,7 +64,6 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
               </Link>
             </div>
           ))}
-
           {data?.digitalItems.map((f, idx) => (
             <div key={idx}>
               <Link
@@ -86,7 +85,7 @@ const GoodsMaretPlace: React.FC = () => {
     physicalItems: IGoodsPhysicalItem[]
     digitalItems: IGoodsDigitalItem[]
   }>({
-    query: goodsItemsQuery,
+    query: goodsItemsQuery ? goodsItemsQuery : goodsItemsQuery,
   })
   const { data } = result
   console.log(data)

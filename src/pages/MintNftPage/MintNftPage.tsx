@@ -11,7 +11,7 @@ import {
   CHARITY,
   UNATTACHED_DOMAIN_NAME,
   NFT_ART,
-} from '../../constants/mintPageConstatnts'
+} from '../../constants'
 import './MintNftPage.css'
 import {
   DOMAIN_NFT_CONTRACT_ADDRESS,

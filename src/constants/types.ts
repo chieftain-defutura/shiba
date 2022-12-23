@@ -167,6 +167,11 @@ export type IUserDigitalItem = {
   }
 }
 
+export type IdigitalItemSearch = {
+  id: string
+  category: string
+}
+
 export type IAuctionNft = {
   id: string
   tokenId: string

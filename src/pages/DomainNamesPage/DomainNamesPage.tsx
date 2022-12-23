@@ -27,8 +27,10 @@ const DomainNamesPage: React.FC = () => {
 
           <div className="check-box-container">
             <div className="checkbox-content">
-              <label htmlFor="shib">.shib</label>
-              <input id="shib" type="checkbox" />
+              <label htmlFor="shib">
+                .shib
+                <input id="shib" type="checkbox" />
+              </label>
             </div>
           </div>
         </div>

@@ -63,7 +63,7 @@ const ActionPage: React.FC = () => {
 
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
-
+  console.log(dropDown)
   useMemo(() => {
     if (isValue === 'high-to-low')
       return setGraphQuery(getQuery('price', 'desc'))
@@ -258,38 +258,23 @@ export default ActionPage
 const accordionData = [
   {
     title: 'Domain Names',
-    labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
-    ],
+    labels: [{ label: '.shib' }],
   },
   {
     title: 'Physical Goods Shop',
     labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
+      { label: 'Accessories' },
+      { label: 'Clothing ' },
+      { label: 'Food' },
     ],
   },
   {
     title: 'Digital Goods Shop',
     labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
+      { label: 'Movies' },
+      { label: 'Courses' },
+      { label: 'Books' },
+      { label: 'Music' },
     ],
   },
   {
