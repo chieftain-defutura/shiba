@@ -9,7 +9,7 @@ import {
   SHI_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
-import { useAppDispatch } from '../../store/store'
+import { useAppDispatch, useAppSelector } from '../../store/store'
 import {
   updateBoneBalance,
   updateLeashBalance,
@@ -22,6 +22,7 @@ import './HeaderNav.css'
 const HeaderNav: React.FC = () => {
   const { address } = useAccount()
   const dispatch = useAppDispatch()
+  const user = useAppSelector((store) => store.user)
 
   const { data: pawBalanceData } = useBalance({
     address: address,
@@ -71,31 +72,31 @@ const HeaderNav: React.FC = () => {
             SHI:
             {new Intl.NumberFormat('en-US', {
               maximumFractionDigits: 2,
-            }).format(Number(shiBalanceData?.formatted))}
+            }).format(user.shiBalance)}
           </li>
           <li>
             LEASH:
             {new Intl.NumberFormat('en-US', {
               maximumFractionDigits: 2,
-            }).format(Number(leashBalanceData?.formatted))}
+            }).format(user.leashBalance)}
           </li>
           <li>
             SHIB:
             {new Intl.NumberFormat('en-US', {
               maximumFractionDigits: 2,
-            }).format(Number(shibBalanceData?.formatted))}
+            }).format(user.shibBalance)}
           </li>
           <li>
             BONE:
             {new Intl.NumberFormat('en-US', {
               maximumFractionDigits: 2,
-            }).format(Number(boneBalanceData?.formatted))}
+            }).format(user.boneBalance)}
           </li>
           <li>
             PAW:
             {new Intl.NumberFormat('en-US', {
               maximumFractionDigits: 2,
-            }).format(Number(pawBalanceData?.formatted))}
+            }).format(user.pawBalance)}
           </li>
           <li>
             <Link to="/send-crypto">

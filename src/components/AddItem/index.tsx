@@ -46,7 +46,7 @@ const initialState = {
   charityAddress: '',
 }
 const AddItem: React.FC<IAddItem> = () => {
-  const { id } = useParams()
+  const { id } = useParams() as { id: string }
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -93,7 +93,7 @@ const AddItem: React.FC<IAddItem> = () => {
 
   const handleAddItem = async (values: typeof initialState) => {
     if (!address || !data) return
-    const encryptedFullProductLink = getEncryptedData(values.fullProduct)
+    const encryptedFullProductLink = getEncryptedData(values.fullProduct, [id])
     console.log(encryptedFullProductLink)
 
     try {
