@@ -259,12 +259,13 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                       {ipfsData &&
                         Object.entries(ipfsData)
                           .slice(5)
-                          .map((value, index) => (
+                          .map((value: any, index) => (
                             <p key={index.toString()}>
                               <span style={{ textTransform: 'capitalize' }}>
                                 {value[0].replace(/([a-z](?=[A-Z]))/g, '$1 ')}
                               </span>
-                              : {value[1]}
+                              &nbsp;
+                              <span>{value[1]}</span>
                             </p>
                           ))}
                     </div>
