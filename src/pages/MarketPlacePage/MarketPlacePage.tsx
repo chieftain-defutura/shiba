@@ -5,9 +5,11 @@ import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import CorporateMarketplace from '../../components/CorporateMarketplace'
 import GoodsMaretPlace from '../../components/GoodsMarketplace'
-import { ArrElement } from '../../constants/types'
+import { ArrElement, IdigitalItemSearch } from '../../constants/types'
 import { tokensList } from '../../constants/contract'
+import { useQuery } from 'urql'
 import './MarketPlacePage.css'
+import { type } from '@testing-library/user-event/dist/type'
 
 // const getCurrencyQuery = () => {
 //   return `query{
@@ -30,67 +32,69 @@ import './MarketPlacePage.css'
 //   }`
 // }
 
-const getGoodsDigitalQuery = (category: string) => {
-  return `query{
-    digitalItemSearch(text:"${category}", where:{status:ACTIVE}) {
-      id
-      category
-    }
+const getGoodsDigitalQuery = `query($category: [String!]!){
+  digitalItems( where:{status:ACTIVE, category_in:$category}){
+    id
+    category
+  }
+}`
 
-  }`
-}
+const getGoodsPhysicalQuery = `query($category: [String!]!){
+  physicalItems( where:{status:ACTIVE, category_in:$category}){
+    id
+    category
+  }
+}`
 
-// const getGoodsPhysicalQuery = (category: string) => {
-//   return `query{
-//     physicalItemSearch(text:"${category}", where:{status:ACTIVE}){
-//       id
-//       category
-//     }
-//   }`
-// }
-
-// const getGoodsDomainName = (domain: string) => {
-//   return `query{
-//     domainTokens(domain_contains:"${domain}"){
-//       id
-//       domainName
-//     }
-//   }`
-// }
 const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
-  const [clickDropDown, setClickDropDown] = useState(null)
+  const [clickDropDown, setClickDropDown] = useState<string | null>(null)
   const [goodsCheckboxs, setGoodsCheckBox] = useState<string[]>([])
-  const [goodsQuery, setgoodsQuery] = useState<string | undefined>(undefined)
+  const [goodsDigitalQuery, setgoodsDigitalQuery] = useState<any>(undefined)
+  const [goodsPhysicalQuery, setgoodsPhysicalQuery] = useState<any>(undefined)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
-  const [open, setOpen] = useState(false)
 
-  console.log(goodsQuery)
+  console.log(clickDropDown)
+  const [open, setOpen] = useState(false)
+  const [goodsDigitalResult] = useQuery({
+    query: getGoodsDigitalQuery,
+    variables: { category: goodsCheckboxs },
+    pause: !goodsCheckboxs.length,
+  })
+  const { data: goodsDigitalData } = goodsDigitalResult
+  console.log(goodsDigitalData)
+
+  const [goodsPhysicalResult] = useQuery({
+    query: getGoodsPhysicalQuery,
+    variables: { category: goodsCheckboxs },
+    pause: !goodsCheckboxs.length,
+  })
+  const { data: goodsPhysicalData } = goodsPhysicalResult
+  console.log(goodsPhysicalData)
+
   const handleChange = ({ target: { value } }: { target: any }) => {
     if (goodsCheckboxs.includes(value)) {
       setGoodsCheckBox((f) => f.filter((e) => e !== value))
     } else {
-      setGoodsCheckBox((f) => f.concat(value))
+      setGoodsCheckBox((f) => f.concat(value.toLowerCase()))
     }
   }
 
   useMemo(() => {
-    if (!goodsCheckboxs) return isAccordionActive
-    return setgoodsQuery(getGoodsDigitalQuery(goodsCheckboxs.join('|')))
-  }, [goodsCheckboxs, isAccordionActive])
+    // if (!goodsCheckboxs) return isAccordionActive
+    if (clickDropDown === 'Physical Goods ')
+      return setgoodsPhysicalQuery(getGoodsPhysicalQuery)
 
-  // const [result] = useQuery<{ digitalItemSearch: IdigitalItemSearch  }>({
-  //   query: goodsQuery,
-  // })
-  // const { data, fetching, error } = result
-  // console.log(data)
+    if (clickDropDown === 'Digital Goods')
+      return setgoodsDigitalQuery(getGoodsDigitalQuery)
+  }, [getGoodsPhysicalQuery, getGoodsDigitalQuery])
 
-  const handleDropDown = (idx: any) => {
-    if (clickDropDown === idx) {
+  const handleDropDown = (item: any) => {
+    if (clickDropDown === item.title) {
       return setClickDropDown(null)
     }
-    setClickDropDown(idx)
+    setClickDropDown(item.title)
   }
 
   const handleAccordionActive = (idx: any) => {
@@ -127,19 +131,21 @@ const MarketPlacePage: React.FC = () => {
               >
                 <div
                   className={
-                    clickDropDown === idx
+                    clickDropDown === item.title
                       ? 'drop-down-header active'
                       : 'drop-down-header'
                   }
-                  onClick={() => isAccordionActive === 1 && handleDropDown(idx)}
+                  onClick={() =>
+                    isAccordionActive === 1 && handleDropDown(item)
+                  }
                 >
                   <p>{item?.title}</p>
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-                {clickDropDown === idx && (
+                {clickDropDown === item.title && (
                   <div
                     className={
-                      clickDropDown === idx
+                      clickDropDown === item.title
                         ? 'drop-down-body active'
                         : 'drop-down-body'
                     }
@@ -181,19 +187,22 @@ const MarketPlacePage: React.FC = () => {
             >
               <div
                 className={
-                  clickDropDown === 6
+                  clickDropDown === 'Physical Goods Shop'
                     ? 'drop-down-header active'
                     : 'drop-down-header'
                 }
-                onClick={() => isAccordionActive === 2 && handleDropDown(6)}
+                onClick={() =>
+                  isAccordionActive === 2 &&
+                  handleDropDown('Physical Goods Shop')
+                }
               >
                 <p>Physical Goods Shop</p>
                 <IoIosArrowDown className="arrow-icon" />
               </div>
-              {clickDropDown === 6 && (
+              {clickDropDown === 'Physical Goods Shop' && (
                 <div
                   className={
-                    clickDropDown === 6
+                    clickDropDown === 'Physical Goods Shop'
                       ? 'drop-down-body active'
                       : 'drop-down-body'
                   }
@@ -216,19 +225,22 @@ const MarketPlacePage: React.FC = () => {
             >
               <div
                 className={
-                  clickDropDown === 7
+                  clickDropDown === 'Digital Goods Shop'
                     ? 'drop-down-header active'
                     : 'drop-down-header'
                 }
-                onClick={() => isAccordionActive === 2 && handleDropDown(7)}
+                onClick={() =>
+                  isAccordionActive === 2 &&
+                  handleDropDown('Digital Goods Shop')
+                }
               >
                 <p>Digital Goods Shop</p>
                 <IoIosArrowDown className="arrow-icon" />
               </div>
-              {clickDropDown === 7 && (
+              {clickDropDown === 'Digital Goods Shop' && (
                 <div
                   className={
-                    clickDropDown === 7
+                    clickDropDown === 'Digital Goods Shop'
                       ? 'drop-down-body active'
                       : 'drop-down-body'
                   }
@@ -251,19 +263,22 @@ const MarketPlacePage: React.FC = () => {
             >
               <div
                 className={
-                  clickDropDown === 8
+                  clickDropDown === 'Charity Organisation'
                     ? 'drop-down-header active'
                     : 'drop-down-header'
                 }
-                onClick={() => isAccordionActive === 2 && handleDropDown(8)}
+                onClick={() =>
+                  isAccordionActive === 2 &&
+                  handleDropDown('Charity Organisations')
+                }
               >
                 <p>Charity Organisation</p>
                 <IoIosArrowDown className="arrow-icon" />
               </div>
-              {clickDropDown === 8 && (
+              {clickDropDown === 'Charity Organisation' && (
                 <div
                   className={
-                    clickDropDown === 8
+                    clickDropDown === 'Charity Organisation'
                       ? 'drop-down-body active'
                       : 'drop-down-body'
                   }
@@ -309,7 +324,10 @@ const MarketPlacePage: React.FC = () => {
 
         <div className="marketplace-container-right">
           {isAccordionActive === 1 ? (
-            <GoodsMaretPlace />
+            <GoodsMaretPlace
+              digitalData={goodsDigitalData}
+              physicalData={goodsPhysicalData}
+            />
           ) : (
             <CorporateMarketplace />
           )}
@@ -343,15 +361,15 @@ const MarketPlacePage: React.FC = () => {
 export default MarketPlacePage
 
 const accordionData = [
-  {
-    title: 'Domain Names',
-    labels: [{ label: '.shib' }],
-  },
+  // {
+  //   title: 'Domain Names',
+  //   labels: [{ label: '.shib' }],
+  // },
   {
     title: 'Physical Goods',
     labels: [
       { label: 'Accessories' },
-      { label: 'Clothing ' },
+      { label: 'Clothing' },
       { label: 'Food' },
     ],
   },
@@ -364,40 +382,40 @@ const accordionData = [
       { label: 'Music' },
     ],
   },
-  {
-    title: 'Websites',
-    labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
-    ],
-  },
-  {
-    title: 'Full On Blockchain NFT',
-    labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
-    ],
-  },
-  {
-    title: 'Charites',
-    labels: [
-      { label: 'Human Rights' },
-      { label: 'Education' },
-      { label: 'Religion' },
-      { label: 'Animals' },
-      { label: 'Enviorment' },
-      { label: 'Health' },
-      { label: 'Sport' },
-    ],
-  },
+  // {
+  //   title: 'Websites',
+  //   labels: [
+  //     { label: 'Human Rights' },
+  //     { label: 'Education' },
+  //     { label: 'Religion' },
+  //     { label: 'Animals' },
+  //     { label: 'Enviorment' },
+  //     { label: 'Health' },
+  //     { label: 'Sport' },
+  //   ],
+  // },
+  // {
+  //   title: 'Full On Blockchain NFT',
+  //   labels: [
+  //     { label: 'Human Rights' },
+  //     { label: 'Education' },
+  //     { label: 'Religion' },
+  //     { label: 'Animals' },
+  //     { label: 'Enviorment' },
+  //     { label: 'Health' },
+  //     { label: 'Sport' },
+  //   ],
+  // },
+  // {
+  //   title: 'Charites',
+  //   labels: [
+  //     { label: 'Human Rights' },
+  //     { label: 'Education' },
+  //     { label: 'Religion' },
+  //     { label: 'Animals' },
+  //     { label: 'Enviorment' },
+  //     { label: 'Health' },
+  //     { label: 'Sport' },
+  //   ],
+  // },
 ]

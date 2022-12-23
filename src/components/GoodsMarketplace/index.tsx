@@ -5,34 +5,9 @@ import { useQuery } from 'urql'
 
 import DigitalItem from '../DigitalItem'
 import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
-import {
-  // goodsDigitalItemsQuery,
-  goodsItemsQuery,
-  // goodsPhysicalItemsQuery,
-} from '../../constants/query'
+import { goodsItemsQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
 import PhysicalItem from '../PhysicallItem/PhysicalItem'
-
-// interface IGoodsDigital {
-//   data: IGoodsDigitalItem[] | undefined
-// }
-
-// export const GoodsDigital: React.FC<IGoodsDigital> = ({ data }) => {
-//   return (
-//     <>
-//       {data?.map((f, idx) => (
-//         <div key={idx}>
-//           <Link
-//             to={`/digital-item-details/${f.id}`}
-//             style={{ textDecoration: 'none' }}
-//           >
-//             <DigitalItem {...f} />
-//           </Link>
-//         </div>
-//       ))}
-//     </>
-//   )
-// }
 
 interface IGoodsPhysical {
   data:
@@ -41,9 +16,16 @@ interface IGoodsPhysical {
         digitalItems: IGoodsDigitalItem[]
       }
     | undefined
+
+  digitalData: IGoodsDigitalItem[]
+  physicalData: IGoodsPhysicalItem[]
 }
 
-export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
+export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
+  data,
+  digitalData,
+  physicalData,
+}) => {
   return (
     <>
       {!data ? (
@@ -54,6 +36,16 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
         </div>
       ) : (
         <div className="marketplace-container-right-content">
+          {/* {physicalData.map((f, idx) => (
+            <div key={idx}>
+              <Link
+                to={`/physical-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <PhysicalItem {...f} />
+              </Link>
+            </div>
+          ))} */}
           {data?.physicalItems.map((f, idx) => (
             <div key={idx}>
               <Link
@@ -64,6 +56,16 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
               </Link>
             </div>
           ))}
+          {/* {digitalData.map((f, idx) => (
+            <div key={idx}>
+              <Link
+                to={`/digital-item-details/${f.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <DigitalItem {...f} />
+              </Link>
+            </div>
+          ))} */}
           {data?.digitalItems.map((f, idx) => (
             <div key={idx}>
               <Link
@@ -80,19 +82,30 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
   )
 }
 
-const GoodsMaretPlace: React.FC = () => {
+interface IGoodsMarketPlace {
+  digitalData: IGoodsDigitalItem[]
+  physicalData: IGoodsPhysicalItem[]
+}
+
+const GoodsMaretPlace: React.FC<IGoodsMarketPlace> = ({
+  digitalData,
+  physicalData,
+}) => {
   const [result] = useQuery<{
     physicalItems: IGoodsPhysicalItem[]
     digitalItems: IGoodsDigitalItem[]
   }>({
-    query: goodsItemsQuery ? goodsItemsQuery : goodsItemsQuery,
+    query: goodsItemsQuery,
   })
   const { data } = result
-  console.log(data)
   return (
     <>
       {/* <GoodsDigital data={data?.digitalItems} /> */}
-      <GoodsPhysical data={data} />
+      <GoodsPhysical
+        data={data}
+        digitalData={digitalData}
+        physicalData={physicalData}
+      />
     </>
   )
 }
