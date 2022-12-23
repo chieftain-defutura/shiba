@@ -11,6 +11,20 @@ import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 
+const initialState = {
+  logo: '',
+  mainPhoto: '',
+  videoOne: '',
+  videoTwo: '',
+  videoThree: '',
+  shopName: '',
+  description: '',
+  contacts: '',
+  website: '',
+  twitter: '',
+  instagram: '',
+}
+
 interface IAppearanceSetting {
   setClickCard: any
   contractAddress: string
@@ -40,7 +54,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
     setSlide(slide + 1)
   }
 
-  const handleAppearanceSetting = async (values: any) => {
+  const handleAppearanceSetting = async (values: typeof initialState) => {
     if (!address || !signerData) return
     try {
       setTransaction({ loading: true, status: 'pending' })
@@ -103,20 +117,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
         )}
       </div>
       <Formik
-        initialValues={
-          data?.metadata || {
-            logo: '',
-            mainPhoto: '',
-            videoOne: '',
-            videoTwo: '',
-            videoThree: '',
-            description: '',
-            contacts: '',
-            website: '',
-            twitter: '',
-            instagram: '',
-          }
-        }
+        initialValues={data?.metadata || initialState}
         enableReinitialize
         onSubmit={handleAppearanceSetting}
       >
@@ -181,11 +182,22 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
 
                 <div className="content">
                   <div className="content-left">
+                    <p>Shop Name:</p>
                     <p>Brief Description:</p>
-                    <p>Contracts:</p>
+                    <p style={{ marginTop: '8.2rem' }}>Contracts:</p>
                   </div>
                   <div className="content-right">
-                    <Field as="textarea" rows={13} name="description"></Field>
+                    <Field
+                      type="text"
+                      name="shopName"
+                      placeholder="shop name"
+                    />
+                    <Field
+                      as="textarea"
+                      rows={8}
+                      name="description"
+                      placeholder="Brief Description"
+                    ></Field>
                     <Field
                       name="contacts"
                       type="number"

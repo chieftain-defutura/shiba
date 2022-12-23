@@ -209,3 +209,10 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+.slider-item img {
+  width: 99.9%;
+}
+.sliderImg-camera img {
+  width: 40%;
+  margin: 50px auto;
+}

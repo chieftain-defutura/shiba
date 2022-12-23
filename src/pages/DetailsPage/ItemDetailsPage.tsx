@@ -12,6 +12,7 @@ import shipmentABI from '../../utils/abi/shipmentABI.json'
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
+import cameraImg from '../../assets/icon/Camera.svg'
 import HomeLayout from '../../Layout/HomeLayout'
 import './ItemDetailsPage.css'
 import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
@@ -22,6 +23,7 @@ import { getEncryptedData } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 import Skeleton from 'react-loading-skeleton'
 import Loading from '../../components/Loading/Loading'
+import closeIcon from '../../assets/img/close-icon.png'
 
 const settings = {
   dots: false,
@@ -68,10 +70,12 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   const [quantity, setQuantity] = useState(1)
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
+  const [errorImg, setErrorImg] = useState(false)
+  const [downVoteClick, setDownVoteClick] = useState(true)
+
   const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
     hash: metadata,
   })
-  console.log(ipfsData)
 
   const formattedPrice = Number(
     ethers.utils.formatUnits(price, erc20Token.decimals),
@@ -155,10 +159,43 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                       <div className="slider">
                         <Slider {...settings} ref={slider}>
                           <div className="slider-item">
-                            <img src={slideImg} alt="slider" />
+                            {errorImg ? (
+                              <div className="sliderImg-camera">
+                                <img src={cameraImg} alt="camera" />
+                              </div>
+                            ) : (
+                              <img
+                                src={slideImg}
+                                alt="slider"
+                                onError={() => setErrorImg(true)}
+                              />
+                            )}
                           </div>
                           <div className="slider-item">
-                            <img src={slideImg} alt="slider" />
+                            {errorImg ? (
+                              <div className="sliderImg-camera">
+                                <img src={cameraImg} alt="camera" />
+                              </div>
+                            ) : (
+                              <img
+                                src={slideImg}
+                                alt="slider"
+                                onError={() => setErrorImg(true)}
+                              />
+                            )}
+                          </div>
+                          <div className="slider-item">
+                            {errorImg ? (
+                              <div className="sliderImg-camera">
+                                <img src={cameraImg} alt="camera" />
+                              </div>
+                            ) : (
+                              <img
+                                src={slideImg}
+                                alt="slider"
+                                onError={() => setErrorImg(true)}
+                              />
+                            )}
                           </div>
                         </Slider>
                         <button
@@ -178,56 +215,75 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                       </div>
                     ) : (
                       <div className="shipping-form-container">
-                        <h2 className="title">Shipping form</h2>
-                        <div className="form-container">
-                          <div className="left">
-                            <p>Name:</p>
-                            <p>Phone:</p>
-                            <p>Address:</p>
-                            <p>City:</p>
-                            <p>State:</p>
-                            <p>Postal zip code:</p>
-                            <p>Country:</p>
+                        <div>
+                          <div>
+                            <h2 className="title">Shipping form</h2>
+                            <div className="shipping-form">
+                              <img
+                                src={closeIcon}
+                                alt="close"
+                                className="close-icon"
+                                onClick={() => setCategoriesShipping(false)}
+                              />
+                            </div>
                           </div>
-                          <div className="right">
-                            <Field
-                              name="name"
-                              type="text"
-                              placeholder="Enter your name"
-                            />
-                            <Field
-                              name="phone"
-                              type="number"
-                              placeholder="Enter your number"
-                            />
-                            <Field
-                              name="address"
-                              type="text"
-                              placeholder="Enter your address"
-                            />
-                            <Field name="city" type="text" placeholder="City" />
-                            <Field
-                              name="state"
-                              type="text"
-                              placeholder="State"
-                            />
-                            <Field
-                              name="zipCode"
-                              type="text"
-                              placeholder="Zip code"
-                            />
-                            <Field
-                              name="country"
-                              type="text"
-                              placeholder="country"
-                            />
+                          <div className="form-container">
+                            <div className="left">
+                              <p>Name:</p>
+                              <p>Phone:</p>
+                              <p>Address:</p>
+                              <p>City:</p>
+                              <p>State:</p>
+                              <p>Postal zip code:</p>
+                              <p>Country:</p>
+                            </div>
+                            <div className="right">
+                              <Field
+                                name="name"
+                                type="text"
+                                placeholder="Enter your name"
+                              />
+                              <Field
+                                name="phone"
+                                type="number"
+                                placeholder="Enter your number"
+                              />
+                              <Field
+                                name="address"
+                                type="text"
+                                placeholder="Enter your address"
+                              />
+                              <Field
+                                name="city"
+                                type="text"
+                                placeholder="City"
+                              />
+                              <Field
+                                name="state"
+                                type="text"
+                                placeholder="State"
+                              />
+                              <Field
+                                name="zipCode"
+                                type="text"
+                                placeholder="Zip code"
+                              />
+                              <Field
+                                name="country"
+                                type="text"
+                                placeholder="country"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                     )}
                     <div className="description-cont">
-                      <h3>Product Description:</h3>
-                      <p>Product Details:</p>
+                      <h3>
+                        Product Description: {ipfsData?.productDescription}
+                      </h3>
+
+                      <p>Product Details: {ipfsData?.productDetails}</p>
                     </div>
                   </div>
                   <div className="content-box-right">
@@ -241,8 +297,7 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                               <span style={{ textTransform: 'capitalize' }}>
                                 {value[0].replace(/([a-z](?=[A-Z]))/g, '$1 ')}
                               </span>
-                              &nbsp;
-                              <span>{value[1]}</span>
+                              &nbsp;:&nbsp;<span>{value[1]}</span>
                             </p>
                           ))}
                     </div>

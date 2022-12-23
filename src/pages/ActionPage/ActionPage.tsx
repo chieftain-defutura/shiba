@@ -60,6 +60,7 @@ const ActionPage: React.FC = () => {
   const [isValue, setIsValue] = useState('')
   const [dropDown, setDropDown] = useState(false)
   const [graphQuery, setGraphQuery] = useState(auctionPageQuery)
+  const [open, setOpen] = useState(false)
 
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
@@ -155,7 +156,10 @@ const ActionPage: React.FC = () => {
           <div className="currency-container">
             <p className="title">Currency</p>
             <div className="currency-content">
-              <div className="currency-select-cont">
+              <div
+                className="currency-select-cont"
+                onClick={() => setOpen(!open)}
+              >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
@@ -223,28 +227,31 @@ const ActionPage: React.FC = () => {
                 ))}
               </div>
             )}
+            {open && (
+              <div className="currency-select-container">
+                <div className="header">
+                  <p>{selectedDropDown?.title}</p>
 
-            <div className="currency-select-container">
-              <div className="header">
-                <p>{selectedDropDown?.title}</p>
-                <IoIosArrowDown className="arrow-icon" />
+                  <IoIosArrowDown className="arrow-icon" />
+                </div>
+
+                <div className="body">
+                  {tokensList.map((f, index) => {
+                    return (
+                      <p
+                        key={index}
+                        onClick={() => {
+                          setSelectedDropDown(f)
+                          setDropDown(false)
+                        }}
+                      >
+                        {f.title}
+                      </p>
+                    )
+                  })}
+                </div>
               </div>
-              <div className="body">
-                {tokensList.map((f, index) => {
-                  return (
-                    <p
-                      key={index}
-                      onClick={() => {
-                        setSelectedDropDown(f)
-                        setDropDown(false)
-                      }}
-                    >
-                      {f.title}
-                    </p>
-                  )
-                })}
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
