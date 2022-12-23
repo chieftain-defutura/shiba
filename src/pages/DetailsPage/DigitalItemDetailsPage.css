@@ -87,6 +87,10 @@
   margin-top: 12px;
 }
 
+.music-details-container-right .content-box-right {
+  width: 100%;
+}
+
 .music-details-container-right .content-box-right .product-details {
   height: 280px;
   position: relative;

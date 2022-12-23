@@ -14,6 +14,7 @@ import store from './store/store'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import { SUB_GRAPH_API_URL } from './constants/api'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 const urqlClient = createClient({
   url: SUB_GRAPH_API_URL,
@@ -28,7 +29,9 @@ root.render(
         <ReduxProvider store={store}>
           <UrqlProvider value={urqlClient}>
             <Provider>
-              <App />
+              <SkeletonTheme baseColor="#343741" highlightColor="#272a34">
+                <App />
+              </SkeletonTheme>
             </Provider>
           </UrqlProvider>
         </ReduxProvider>

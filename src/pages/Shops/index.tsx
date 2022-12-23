@@ -7,6 +7,18 @@ import FooterBottom from '../../components/FooterBottom/FooterBottom'
 import cardImg from '../../assets/img/card-3.png'
 import { shopPageQuery } from '../../constants/query'
 import Loading from '../../components/Loading/Loading'
+import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
+import Skeleton from 'react-loading-skeleton'
+import { formatAddress } from '../../constants/variants'
+
+interface IShopToken {
+  id: string
+  domainName: string
+  tokenUri: string | null
+  owner: {
+    id: string
+  }
+}
 
 const ShopPage: React.FC = () => {
   const [openDigital, setOpenDigital] = useState(false)
@@ -16,8 +28,8 @@ const ShopPage: React.FC = () => {
   const [openFood, setOpenFood] = useState(false)
 
   const [result] = useQuery<{
-    digitalShopTokens: any[]
-    physicalShopTokens: any[]
+    digitalShopTokens: IShopToken[]
+    physicalShopTokens: IShopToken[]
   }>({ query: shopPageQuery })
 
   const { data, fetching } = result
@@ -228,55 +240,62 @@ const ShopPage: React.FC = () => {
         ) : (
           <div className="website-container-right">
             {data?.digitalShopTokens.map((f, idx) => (
-              <div className="website-card-container" key={idx}>
-                <div className="card">
-                  <div className="card-top">
-                    <img src={cardImg} alt="card" />
-                  </div>
-                  <div className="card-center">
-                    <h3 className="title">The Holy Grail</h3>
-                    <h4 className="sub-title">Pixart Motion</h4>
-                  </div>
-                  <div className="card-bottom">
-                    <p>Digital Shop Id:</p>
-                    <p>#{idx}</p>
-                  </div>
-                </div>
-                <div style={{ padding: '5px 0' }}>
-                  <p style={{ fontSize: '14px' }}>Domain:</p>
-                  <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-                    <b>{f.domainName}</b>
-                  </p>
-                </div>
-              </div>
+              <ShopCard key={idx} {...f} type={'Digital'} />
             ))}
             {data?.physicalShopTokens.map((f, idx) => (
-              <div className="website-card-container" key={idx}>
-                <div className="card">
-                  <div className="card-top">
-                    <img src={cardImg} alt="card" />
-                  </div>
-                  <div className="card-center">
-                    <h3 className="title">The Holy Grail</h3>
-                    <h4 className="sub-title">Pixart Motion</h4>
-                  </div>
-                  <div className="card-bottom">
-                    <p>Physical Shop Id:</p>
-                    <p>#{idx}</p>
-                  </div>
-                </div>
-                <div style={{ padding: '5px 0' }}>
-                  <p style={{ fontSize: '14px' }}>Domain:</p>
-                  <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-                    <b>{f.domainName}</b>
-                  </p>
-                </div>
-              </div>
+              <ShopCard key={idx} {...f} type={'Physical'} />
             ))}
           </div>
         )}
       </div>
       <FooterBottom />
+    </div>
+  )
+}
+
+const ShopCard: React.FC<{ type: string } & IShopToken> = ({
+  id,
+  domainName,
+  type,
+  tokenUri,
+  owner,
+}) => {
+  const { data, isLoading } = useGetIpfsDataQuery({ hash: tokenUri ?? '' })
+  const [imageError, setImageError] = useState(false)
+  console.log(id, isLoading, data)
+  return (
+    <div className="website-card-container">
+      <div className="card">
+        <div className="card-top">
+          {isLoading ? (
+            <Skeleton height={'100%'} />
+          ) : !data || imageError ? (
+            <img src={cardImg} alt="card" />
+          ) : (
+            <img
+              src={data?.logo}
+              alt="card"
+              onError={() => setImageError(true)}
+            />
+          )}
+        </div>
+        <div className="card-center">
+          <h3 className="title">
+            {!data || !data?.shopName ? 'unnamed' : data.shopName}
+          </h3>
+          <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+        </div>
+        <div className="card-bottom">
+          <p>{type} Shop Id:</p>
+          <p>#{id}</p>
+        </div>
+      </div>
+      <div style={{ padding: '5px 0' }}>
+        <p style={{ fontSize: '14px' }}>Domain:</p>
+        <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+          <b>{domainName}</b>
+        </p>
+      </div>
     </div>
   )
 }
