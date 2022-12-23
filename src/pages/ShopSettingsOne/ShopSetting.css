@@ -10,7 +10,12 @@
   font-family: var(--oswaldFont);
   margin-bottom: 40px;
 }
-
+.removeItem {
+  display: flex;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+}
 .shop-setting-one-container .shop-setting-one-container-right {
   flex: 6;
   font-family: var(--oswaldFont);

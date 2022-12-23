@@ -28,6 +28,7 @@
 .shipping-queue-container-right .content-box {
   width: 86%;
   margin-left: auto;
+  padding-top: 50px;
 }
 
 .shipping-queue-container-right .content-box table {
