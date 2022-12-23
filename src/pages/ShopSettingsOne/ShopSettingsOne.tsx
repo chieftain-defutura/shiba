@@ -64,7 +64,10 @@ const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
                 <h3 style={{ color: 'red' }}>Access your Token </h3>
               </div>
             ) : (
-              <Settings contractData={contractData} />
+              <Settings
+                contractData={contractData}
+                tokenData={data[Object.keys(data)[0]]}
+              />
             )}
           </div>
         </div>
@@ -74,18 +77,19 @@ const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
   )
 }
 
-const Settings: React.FC<{ contractData: IContractData }> = ({
+const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   contractData,
+  tokenData,
 }) => {
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState<any>(null)
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
   return (
     <>
-      {/* <h2 className="heading">shoesboutique.shib</h2> */}
+      {/* <h2 className="heading">{tokenData.domainName}</h2> */}
       {!clickCard && (
         <div>
-          <h2 className="heading">shoesboutique.shib</h2>
+          <h2 className="heading">{tokenData.domainName}</h2>
 
           <div className="cards-container">
             {contractData.file === true && (
@@ -150,7 +154,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
 
       {clickCard === 'stock management' && !clickRemoveItem && (
         <>
-          <h2 className="heading">shoesboutique.shib</h2>
+          <h2 className="heading">{tokenData.domainName}</h2>
 
           <div className="stock-management-container">
             {clickAddItem ? (
@@ -233,7 +237,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
               }}
               onClick={() => setClickRemoveItem(false)}
             />
-            <h2 className="heading">shoesboutique.shib</h2>
+            <h2 className="heading">{tokenData.domainName}</h2>
           </div>
           {contractData.pathName === 'my-goods-shop' ? (
             <PhysicalRemoveItem />
@@ -245,7 +249,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
 
       {clickCard === 'appearance settings' && (
         <div>
-          <h2 className="heading">shoesboutique.shib</h2>
+          <h2 className="heading">{tokenData.domainName}</h2>
 
           <div
             className="appearance-settings-container"
@@ -266,7 +270,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
       {clickCard === 'residual' && (
         <div className="residual-head">
           <div>
-            <h2 className="heading">shoesboutique.shib</h2>
+            <h2 className="heading">{tokenData.domainName}</h2>
           </div>
 
           <div>
@@ -280,7 +284,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
 
       {clickCard === 'transfer' && (
         <div>
-          <h2 className="heading">shoesboutique.shib</h2>
+          <h2 className="heading">{tokenData.domainName}</h2>
           <div className="residual-container">
             {!clickAddItem && (
               <BsArrowLeftCircle
@@ -300,7 +304,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
 
       {clickCard === 'put on sale' && (
         <div>
-          <h2 className="heading">shoesboutique.shib</h2>
+          <h2 className="heading">{tokenData.domainName}</h2>
           <Sell
             contractAddress={contractData.address}
             setClickCard={setClickCard}
