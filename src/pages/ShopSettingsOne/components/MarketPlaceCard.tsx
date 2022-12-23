@@ -86,14 +86,14 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   }
 
   const validate = Yup.object({
-    selectCharity: Yup.string().required('This is Required'),
+    charityAddress: Yup.string().required('This is Required'),
     price: Yup.string().required('This is Required'),
   })
 
   return (
     <Formik
       initialValues={{
-        selectCharity: '',
+        charityAddress: '',
         price: '',
         tokenAddress: '',
       }}
@@ -120,18 +120,20 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                   <p>Price</p>
                 </div>
                 <div className="content-right">
-                  <Field as="select" name="selectCharity">
-                    {charityList.map((list) => (
-                      <option key={list} value={list}>
-                        {formatAddress(list)}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="selectCharity"
-                    className="errorMsg"
-                    component="div"
-                  />
+                  <div>
+                    <Field as="select" name="charityAddress">
+                      {charityList.map((list) => (
+                        <option key={list} value={list}>
+                          {formatAddress(list)}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="charityAddress"
+                      className="errorMsg"
+                      component="div"
+                    />
+                  </div>
                   <div className="price-select-container">
                     <div className="left">
                       <Field

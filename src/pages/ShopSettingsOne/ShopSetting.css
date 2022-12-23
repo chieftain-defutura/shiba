@@ -773,7 +773,7 @@ button:disabled {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  /* gap: 72px; */
 }
 
 .on-marketplace-container
