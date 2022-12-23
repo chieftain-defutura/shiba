@@ -121,6 +121,7 @@ export type IGoodsPhysicalItem = {
 
 export type IHaveToSend = {
   id: string
+  itemId: string
   owner: string
   status: string
   quantity: string
@@ -163,6 +164,9 @@ export type IUserDigitalItem = {
   metadata: string
   category: string
   owner: {
+    id: string
+  }
+  shopDetails: {
     id: string
   }
 }

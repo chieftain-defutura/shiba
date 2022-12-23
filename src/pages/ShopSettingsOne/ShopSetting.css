@@ -10,7 +10,12 @@
   font-family: var(--oswaldFont);
   margin-bottom: 40px;
 }
-
+.removeItem {
+  display: flex;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+}
 .shop-setting-one-container .shop-setting-one-container-right {
   flex: 6;
   font-family: var(--oswaldFont);
@@ -544,12 +549,12 @@ select {
   margin-left: 100px;
 }
 
-.brief-description-sub-menu-container .content-left {
+/* .brief-description-sub-menu-container .content-left {
   gap: 228px;
-}
+} */
 
 .brief-description-sub-menu-container .content-right {
-  gap: 50px;
+  gap: 30px;
 }
 .content-lefts p {
   margin-right: 10px;
@@ -768,7 +773,7 @@ button:disabled {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  /* gap: 72px; */
 }
 
 .on-marketplace-container

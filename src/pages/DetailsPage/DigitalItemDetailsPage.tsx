@@ -4,6 +4,7 @@ import { ethers } from 'ethers'
 import { useQuery } from 'urql'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton'
 
 import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
@@ -15,6 +16,8 @@ import HomeLayout from '../../Layout/HomeLayout'
 import { IDigitalItem } from '../../constants/types'
 import { DigitalItemQuery } from '../../constants/query'
 import './DigitalItemDetailsPage.css'
+import Loading from '../../components/Loading/Loading'
+import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 
 const settings = {
   dots: false,
@@ -27,27 +30,53 @@ const settings = {
 
 const DigitalItemsDetailsPage: React.FC = () => {
   const { itemId } = useParams()
-  const { data: signerData } = useSigner()
-  const { address } = useAccount()
-  const slider = useRef<Slider>(null)
   const [result] = useQuery<{ digitalItem: IDigitalItem }>({
     query: DigitalItemQuery,
     variables: { id: itemId },
   })
 
-  const { data } = result
+  const { data, fetching } = result
   console.log(result)
-  // const NFT_METADATA_API = `https://eth-goerli.g.alchemy.com/nft/v2/:${process.env.REACT_APP_ALCHEMY_API_KEY}/getNFTMetadata?contractAddress=${}&tokenId=${id}&tokenType=ERC721&refreshCache=false`
 
+  return (
+    <HomeLayout>
+      {fetching ? (
+        <Loading />
+      ) : !data ? (
+        <div>
+          <p style={{ textTransform: 'uppercase' }}>
+            There is no item with this id
+          </p>
+        </div>
+      ) : (
+        <ProductDetails {...data.digitalItem} />
+      )}
+    </HomeLayout>
+  )
+}
+
+const ProductDetails: React.FC<IDigitalItem> = ({
+  erc20Token,
+  shopDetails,
+  metadata,
+  price,
+}) => {
+  const { itemId } = useParams()
+  const { data: signerData } = useSigner()
+  const { address } = useAccount()
+  const slider = useRef<Slider>(null)
   const { setTransaction } = useTransactionModal()
-
+  const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
+    hash: metadata,
+  })
+  console.log(ipfsData)
   const handleBuy = async () => {
-    if (!address || !data || !signerData) return
+    if (!address || !signerData) return
 
     try {
       setTransaction({ loading: true, status: 'pending' })
       const erc20Contract = new ethers.Contract(
-        data.digitalItem.erc20Token.id,
+        erc20Token.id,
         erc20ABI,
         signerData,
       )
@@ -86,55 +115,49 @@ const DigitalItemsDetailsPage: React.FC = () => {
   }
 
   return (
-    <div>
-      <HomeLayout>
-        <div className="music-details-container">
-          <div className="music-details-container-right">
-            <h2 className="title">
-              {data?.digitalItem.shopDetails.domainName}
-            </h2>
-            <div className="content-box">
-              <div className="content-box-left">
-                <div className="slider">
-                  <Slider {...settings} ref={slider}>
-                    <div className="slider-item">
-                      <img src={slideImg} alt="slider" />
-                    </div>
-                    <div className="slider-item">
-                      <img src={slideImg} alt="slider" />
-                    </div>
-                  </Slider>
-                  <button
-                    className="prev-btn slider-btn"
-                    onClick={() => slider.current?.slickPrev()}
-                  >
-                    <img src={leftArrowIcon} alt="arrow" />
-                  </button>
-                  <button
-                    className="next-btn slider-btn"
-                    onClick={() => slider.current?.slickNext()}
-                  >
-                    <img src={rightArrowIcon} alt="arrow" />
-                  </button>
+    <div className="music-details-container">
+      <div className="music-details-container-right">
+        <h2 className="title">{shopDetails.domainName}</h2>
+        <div className="content-box">
+          <div className="content-box-left">
+            <div className="slider">
+              <Slider {...settings} ref={slider}>
+                <div className="slider-item">
+                  <img src={slideImg} alt="slider" />
                 </div>
-                <div className="description-cont">
-                  <h3>Product Description:</h3>
-                  <p>Product Details:</p>
+                <div className="slider-item">
+                  <img src={slideImg} alt="slider" />
                 </div>
-              </div>
-              <div className="content-box-right">
-                <div className="product-details">
-                  <p>Name: MusicName</p>
-                  <br />
-                  <p>
-                    Details: First and foremost, Ashley McDonald is a country
-                    storyteller. And like many a great storyteller, she takes...{' '}
-                    <span>more</span>
-                  </p>
-                  <button className="preview-btn">Preview</button>
-                </div>
-                <br />
-                {/* <div className="quantity-container">
+              </Slider>
+              <button
+                className="prev-btn slider-btn"
+                onClick={() => slider.current?.slickPrev()}
+              >
+                <img src={leftArrowIcon} alt="arrow" />
+              </button>
+              <button
+                className="next-btn slider-btn"
+                onClick={() => slider.current?.slickNext()}
+              >
+                <img src={rightArrowIcon} alt="arrow" />
+              </button>
+            </div>
+            <div className="description-cont">
+              <h3>
+                Product Description:{' '}
+                {isLoading ? <Skeleton /> : ipfsData?.description}
+              </h3>
+            </div>
+          </div>
+          <div className="content-box-right">
+            <div className="product-details">
+              <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
+              <br />
+              <p>Details: {isLoading ? <Skeleton /> : ipfsData?.details}</p>
+              <button className="preview-btn">Preview</button>
+            </div>
+            <br />
+            {/* <div className="quantity-container">
                   <p>Quantity:</p>
                   <div className="quantity-box">
                     <button onClick={handleMinus}>
@@ -146,26 +169,19 @@ const DigitalItemsDetailsPage: React.FC = () => {
                     </button>
                   </div>
                 </div> */}
-                <div className="buy-container">
-                  <div className="top">
-                    <p>
-                      Price:
-                      {data
-                        ? ethers.utils.formatUnits(
-                            data?.digitalItem.price,
-                            data?.digitalItem.erc20Token.decimals,
-                          )
-                        : 0}
-                      {data?.digitalItem.erc20Token.symbol}
-                    </p>
-                  </div>
-                  <button onClick={handleBuy}>Buy</button>
-                </div>
+            <div className="buy-container">
+              <div className="top">
+                <p>
+                  Price:
+                  {ethers.utils.formatUnits(price, erc20Token.decimals)}
+                  {erc20Token.symbol}
+                </p>
               </div>
+              <button onClick={handleBuy}>Buy</button>
             </div>
           </div>
         </div>
-      </HomeLayout>
+      </div>
     </div>
   )
 }

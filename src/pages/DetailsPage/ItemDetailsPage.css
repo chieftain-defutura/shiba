@@ -22,7 +22,7 @@
 
 .categories-details-container-right .content-box {
   width: 90%;
-  height: 455px;
+  height: 485px;
   border: 1px solid #828282;
   border-radius: 10px;
   margin: 0 auto;
@@ -72,7 +72,7 @@
 }
 
 .categories-details-container-right .content-box-left .description-cont {
-  margin-top: 18px;
+  margin-top: 35px;
 }
 
 .categories-details-container-right .content-box-left .description-cont h3 {
@@ -193,7 +193,12 @@
   background-color: var(--bgColorTwo);
   padding: 15px 62px;
 }
-
+.shipping-form {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -20px;
+  cursor: pointer;
+}
 .categories-shipping-container-right .shipping-form-container .form-container {
   margin-top: 31px;
   display: flex;

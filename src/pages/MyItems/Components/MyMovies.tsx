@@ -5,20 +5,20 @@ import './item.scss'
 import { getDecryptedData } from '../../../utils/formatters'
 import Loading from '../../../components/Loading/Loading'
 
-interface IMoviesCard {
-  fullproduct: string
-  category: string
-}
-export const MoviesCard: React.FC<IMoviesCard> = ({
+export const MoviesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
+  shopDetails,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   return (
     <div className="movies-card">
       <div className="movies-card-top">
-        <video ref={videoRef} src={getDecryptedData(fullproduct)}></video>
+        <video
+          ref={videoRef}
+          src={getDecryptedData(fullproduct, [shopDetails.id])}
+        ></video>
       </div>
       <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
@@ -49,13 +49,7 @@ const MyMovies: React.FC<IMyMovies> = ({ fetching, error, data }) => {
       ) : (
         <div className="item-card-container">
           {data?.digitalItems.map((item, i) => {
-            return (
-              <MoviesCard
-                key={i}
-                fullproduct={item.fullproduct}
-                category={item.category}
-              />
-            )
+            return <MoviesCard key={i} {...item} />
           })}
         </div>
       )}

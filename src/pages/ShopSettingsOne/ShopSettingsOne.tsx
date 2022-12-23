@@ -82,70 +82,76 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
   const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
   return (
     <>
-      <h2 className="heading">shoesboutique.shib</h2>
+      {/* <h2 className="heading">shoesboutique.shib</h2> */}
       {!clickCard && (
-        <div className="cards-container">
-          {contractData.file === true && (
-            <div
-              className="card"
-              onClick={() => setClickCard('Shipment Address and Details')}
-            >
-              <img src={fileImg} alt="card" className="card-img-1" />
-              <p>File</p>
-            </div>
-          )}
+        <div>
+          <h2 className="heading">shoesboutique.shib</h2>
 
-          {contractData.stockManagement === true && (
-            <div
-              className="card"
-              onClick={() => setClickCard('stock management')}
-            >
-              <img src={cardImgOne} alt="card" className="card-img-1" />
-              <p>Stock Management</p>
-            </div>
-          )}
+          <div className="cards-container">
+            {contractData.file === true && (
+              <div
+                className="card"
+                onClick={() => setClickCard('Shipment Address and Details')}
+              >
+                <img src={fileImg} alt="card" className="card-img-1" />
+                <p>File</p>
+              </div>
+            )}
 
-          {contractData.appearanceSetting === true && (
-            <div
-              className="card"
-              onClick={() => setClickCard('appearance settings')}
-            >
-              <img src={cardImgTwo} alt="card" className="card-img-2" />
-              <p>Appearance Settings</p>
-            </div>
-          )}
+            {contractData.stockManagement === true && (
+              <div
+                className="card"
+                onClick={() => setClickCard('stock management')}
+              >
+                <img src={cardImgOne} alt="card" className="card-img-1" />
+                <p>Stock Management</p>
+              </div>
+            )}
 
-          {contractData.residual === true && (
-            <div className="card" onClick={() => setClickCard('residual')}>
-              <img src={cardImgThree} alt="card" className="card-img-3" />
-              <p>Residual</p>
-            </div>
-          )}
+            {contractData.appearanceSetting === true && (
+              <div
+                className="card"
+                onClick={() => setClickCard('appearance settings')}
+              >
+                <img src={cardImgTwo} alt="card" className="card-img-2" />
+                <p>Appearance Settings</p>
+              </div>
+            )}
 
-          {contractData.transfer === true && (
-            <div className="card" onClick={() => setClickCard('transfer')}>
-              <img src={cardImgFour} alt="card" className="card-img-4" />
-              <p>Transfer</p>
-            </div>
-          )}
+            {contractData.residual === true && (
+              <div className="card" onClick={() => setClickCard('residual')}>
+                <img src={cardImgThree} alt="card" className="card-img-3" />
+                <p>Residual</p>
+              </div>
+            )}
 
-          {contractData.sell === true && (
-            <div className="card" onClick={() => setClickCard('put on sale')}>
-              <img src={cardImgFive} alt="card" className="card-img-5" />
-              <p>Sell</p>
-            </div>
-          )}
+            {contractData.transfer === true && (
+              <div className="card" onClick={() => setClickCard('transfer')}>
+                <img src={cardImgFour} alt="card" className="card-img-4" />
+                <p>Transfer</p>
+              </div>
+            )}
 
-          {contractData.finalizeToken === true && (
-            <div className="card">
-              <FinalizeToken />
-            </div>
-          )}
+            {contractData.sell === true && (
+              <div className="card" onClick={() => setClickCard('put on sale')}>
+                <img src={cardImgFive} alt="card" className="card-img-5" />
+                <p>Sell</p>
+              </div>
+            )}
+
+            {contractData.finalizeToken === true && (
+              <div className="card">
+                <FinalizeToken />
+              </div>
+            )}
+          </div>
         </div>
       )}
 
-      {clickCard === 'stock management' && (
+      {clickCard === 'stock management' && !clickRemoveItem && (
         <>
+          <h2 className="heading">shoesboutique.shib</h2>
+
           <div className="stock-management-container">
             {clickAddItem ? (
               <IoIosArrowBack
@@ -213,63 +219,93 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
               </div>
             )}
           </div>
-          {clickRemoveItem && (
-            <>
-              {contractData.pathName === 'my-goods-shop' ? (
-                <PhysicalRemoveItem />
-              ) : (
-                <DigitalRemoveItem />
-              )}
-            </>
+        </>
+      )}
+
+      {clickCard === 'stock management' && clickRemoveItem && (
+        <>
+          <div className="removeItem">
+            <BsArrowLeftCircle
+              className="arrow-icon"
+              style={{
+                fontSize: '30px',
+                cursor: 'pointer',
+              }}
+              onClick={() => setClickRemoveItem(false)}
+            />
+            <h2 className="heading">shoesboutique.shib</h2>
+          </div>
+          {contractData.pathName === 'my-goods-shop' ? (
+            <PhysicalRemoveItem />
+          ) : (
+            <DigitalRemoveItem />
           )}
         </>
       )}
 
       {clickCard === 'appearance settings' && (
-        <div
-          className="appearance-settings-container"
-          id="appearance-settings-container"
-          style={{ marginTop: '40px' }}
-        >
-          <h2 className="title">
-            {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-          </h2>
-          <AppearanceSetting
-            setClickCard={setClickCard}
-            contractAddress={contractData.address}
-          />
+        <div>
+          <h2 className="heading">shoesboutique.shib</h2>
+
+          <div
+            className="appearance-settings-container"
+            id="appearance-settings-container"
+            style={{ marginTop: '40px' }}
+          >
+            <h2 className="title">
+              {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
+            </h2>
+            <AppearanceSetting
+              setClickCard={setClickCard}
+              contractAddress={contractData.address}
+            />
+          </div>
         </div>
       )}
 
       {clickCard === 'residual' && (
-        <Residual
-          setClickCard={setClickCard}
-          contractAddress={contractData.address}
-        />
+        <div className="residual-head">
+          <div>
+            <h2 className="heading">shoesboutique.shib</h2>
+          </div>
+
+          <div>
+            <Residual
+              setClickCard={setClickCard}
+              contractAddress={contractData.address}
+            />
+          </div>
+        </div>
       )}
 
       {clickCard === 'transfer' && (
-        <div className="residual-container">
-          {!clickAddItem && (
-            <BsArrowLeftCircle
-              className="arrow-icon"
-              onClick={() => setClickCard(null)}
-              style={{ marginTop: '15px' }}
-            />
-          )}
-          <h2 className="title">
-            {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-          </h2>
+        <div>
+          <h2 className="heading">shoesboutique.shib</h2>
+          <div className="residual-container">
+            {!clickAddItem && (
+              <BsArrowLeftCircle
+                className="arrow-icon"
+                onClick={() => setClickCard(null)}
+                style={{ marginTop: '15px' }}
+              />
+            )}
+            <h2 className="title">
+              {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
+            </h2>
 
-          <Transfer />
+            <Transfer />
+          </div>
         </div>
       )}
 
       {clickCard === 'put on sale' && (
-        <Sell
-          contractAddress={contractData.address}
-          setClickCard={setClickCard}
-        />
+        <div>
+          <h2 className="heading">shoesboutique.shib</h2>
+          <Sell
+            contractAddress={contractData.address}
+            setClickCard={setClickCard}
+          />
+        </div>
       )}
     </>
   )

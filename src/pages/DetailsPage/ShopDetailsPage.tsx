@@ -126,7 +126,7 @@ const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
                   <div>
                     <p>
                       0x002...02: No receive, nothing!!! You say 5 day delivery
-                      but passed 5 months!{' '}
+                      but passed 5 months!
                     </p>
                     <p>0x003...03: oh another scammer</p>
                     <p>
@@ -145,7 +145,7 @@ const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
                 </div>
               )}
               <div className="description-cont">
-                <h3>Brief Description:</h3>
+                <h3>Brief Description: </h3>
                 <p>
                   Contacts: any info shop want to share Ex phone number,
                   address, etc.

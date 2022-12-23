@@ -6,7 +6,7 @@ const userSlice = createSlice({
     shiBalance: 0,
     pawBalance: 0,
     leashBalance: 0,
-    shib: 0,
+    shibBalance: 0,
     boneBalance: 0,
   },
   reducers: {

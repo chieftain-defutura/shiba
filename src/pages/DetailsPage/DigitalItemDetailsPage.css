@@ -87,6 +87,10 @@
   margin-top: 12px;
 }
 
+.music-details-container-right .content-box-right {
+  width: 100%;
+}
+
 .music-details-container-right .content-box-right .product-details {
   height: 280px;
   position: relative;
@@ -204,4 +208,11 @@
   font-family: var(--oswaldFont);
   text-transform: uppercase;
   cursor: pointer;
+}
+.slider-item img {
+  width: 99.9%;
+}
+.sliderImg-camera img {
+  width: 40%;
+  margin: 50px auto;
 }

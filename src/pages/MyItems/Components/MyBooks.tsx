@@ -4,18 +4,18 @@ import Book from '../../../assets/icon/Book-mark.svg'
 import { getDecryptedData } from '../../../utils/formatters'
 import Loading from '../../../components/Loading/Loading'
 
-interface IBookCard {
-  fullproduct: string
-  category: string
-}
-export const BookCard: React.FC<IBookCard> = ({ fullproduct, category }) => {
+export const BookCard: React.FC<IUserDigitalItem> = ({
+  fullproduct,
+  category,
+  shopDetails,
+}) => {
   const bookRef = useRef<HTMLAudioElement>(null)
 
   return (
     <div className="music-card">
       <div className="icon" onClick={() => bookRef.current?.play()}>
         <a
-          href={getDecryptedData(fullproduct)}
+          href={getDecryptedData(fullproduct, [shopDetails.id])}
           target="_blank"
           rel="noreferrer noopener"
         >
@@ -52,13 +52,7 @@ const MyBooks: React.FC<IMyBook> = ({ fetching, error, data }) => {
       ) : (
         <div className="music-item-card-container">
           {data?.digitalItems.map((item, i) => {
-            return (
-              <BookCard
-                key={i}
-                fullproduct={item.fullproduct}
-                category={item.category}
-              />
-            )
+            return <BookCard key={i} {...item} />
           })}
         </div>
       )}

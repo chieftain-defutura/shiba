@@ -2,16 +2,22 @@ import CryptoJs from 'crypto-js'
 
 const CIPHER_SECRET_KEY = process.env.REACT_APP_CIPHER_SECRET_KEY
 
-export const getEncryptedData = (data: string) => {
+export const getEncryptedData = (data: string, ref: string[]) => {
   if (!CIPHER_SECRET_KEY) throw new Error('Invalid Secret Key')
 
-  return CryptoJs.AES.encrypt(data, CIPHER_SECRET_KEY).toString()
+  return CryptoJs.AES.encrypt(
+    data,
+    CIPHER_SECRET_KEY.concat(ref.join('')),
+  ).toString()
 }
 
-export const getDecryptedData = (data: string) => {
+export const getDecryptedData = (data: string, ref: string[]) => {
   if (!CIPHER_SECRET_KEY) throw new Error('Invalid Secret Key')
 
-  const bytes = CryptoJs.AES.decrypt(data, CIPHER_SECRET_KEY)
+  const bytes = CryptoJs.AES.decrypt(
+    data,
+    CIPHER_SECRET_KEY.concat(ref.join('')),
+  )
   const decryptedData = bytes.toString(CryptoJs.enc.Utf8)
 
   if (!decryptedData) return 'INVALID CIPHER TEXT'

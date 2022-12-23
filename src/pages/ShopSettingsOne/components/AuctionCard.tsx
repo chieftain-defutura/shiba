@@ -5,6 +5,8 @@ import { ethers } from 'ethers'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import { parseUnits } from 'ethers/lib/utils.js'
+import * as Yup from 'yup'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
@@ -85,110 +87,155 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
     }
   }
 
+  const validate = Yup.object({
+    charityAddress: Yup.string().required('This is Required'),
+    price: Yup.string().required('This is Required'),
+  })
+
   return (
     <>
-      <div className="on-marketplace-container">
-        <BsArrowLeftCircle
-          className="arrow-icon"
-          style={{ marginTop: '15px' }}
-          onClick={() => {
-            setOnAction(false)
-          }}
-        />
+      <Formik
+        initialValues={{
+          charityAddress: '',
+          price: '',
+          tokenAddress: '',
+          selectOption: '',
+        }}
+        onSubmit={(values) => {
+          console.log(values)
+        }}
+        validationSchema={validate}
+      >
+        {() => (
+          <Form>
+            <div className="on-marketplace-container">
+              <BsArrowLeftCircle
+                className="arrow-icon"
+                style={{ marginTop: '15px' }}
+                onClick={() => {
+                  setOnAction(false)
+                }}
+              />
 
-        <p className="title">On Auction</p>
-        <div className="on-marketplace-sub-container">
-          <div className="content">
-            <div className="content-left">
-              <p>Select Charity Organisation From List</p>
-              <p>Price</p>
-            </div>
-            <div className="content-right">
-              <select>
-                {charityList.map((list) => (
-                  <option key={list} value={list}>
-                    {formatAddress(list)}
-                  </option>
-                ))}
-              </select>
-              <div className="price-select-container">
-                <div className="left">
-                  <input
-                    type="number"
-                    placeholder="price"
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-
-                <div className={!dropDown ? ' right' : 'right active'}>
-                  <div
-                    className="header"
-                    onClick={() => setDropDown(!dropDown)}
-                  >
-                    <p>{selectedDropDown?.title}</p>
-                    <IoIosArrowDown />
+              <p className="title">On Auction</p>
+              <div className="on-marketplace-sub-container">
+                <div className="content">
+                  <div className="content-left">
+                    <p>Select Charity Organisation From List:</p>
+                    <p>Price:</p>
+                    <p style={{ marginTop: '12px' }}>Select Option:</p>
                   </div>
-                  <div className={!dropDown ? 'body' : 'body active'}>
-                    {tokensList.map((f, index) => {
-                      return (
-                        <p
-                          key={index}
-                          onClick={() => {
-                            setSelectedDropDown(f)
-                            setDropDown(false)
-                          }}
+                  <div className="content-right">
+                    <div>
+                      <Field as="select" name="charityAddress">
+                        {charityList.map((list) => (
+                          <option key={list} value={list}>
+                            {formatAddress(list)}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage
+                        className="errorMsg"
+                        component="div"
+                        name="charityAddress"
+                      />
+                    </div>
+                    <div className="price-select-container">
+                      <div className="left">
+                        <Field
+                          type="number"
+                          placeholder="price"
+                          name="price"
+                          // onChange={(e) => setPrice(e.target.value)}
+                        />
+                        <ErrorMessage
+                          name="price"
+                          className="errorMsg"
+                          component="div"
+                        />
+                      </div>
+
+                      <div className={!dropDown ? ' right' : 'right active'}>
+                        <div
+                          className="header"
+                          onClick={() => setDropDown(!dropDown)}
                         >
-                          {f.title}
-                        </p>
-                      )
-                    })}
+                          <p>{selectedDropDown?.title}</p>
+                          <IoIosArrowDown />
+                        </div>
+                        <div className={!dropDown ? 'body' : 'body active'}>
+                          {tokensList.map((f, index) => {
+                            return (
+                              <p
+                                key={index}
+                                onClick={() => {
+                                  setSelectedDropDown(f)
+                                  setDropDown(false)
+                                }}
+                              >
+                                {f.title}
+                              </p>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <Field
+                        as="select"
+                        name="selectOption"
+                        //  onChange={(e) => setDays(e.target.value)}
+                      >
+                        <option value="">select an option</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="7">7</option>
+                        <option value="custom">Custom</option>
+                      </Field>
+                      <ErrorMessage
+                        name="selectOption"
+                        className="errorMsg"
+                        component="div"
+                      />
+                    </div>
+                    <div>
+                      {days === 'custom' && (
+                        <Field
+                          style={{
+                            width: '100%',
+                            height: '30px',
+                            fontSize: '16px',
+                            fontFamily: 'Oswald',
+                          }}
+                          // onChange={(e) => setDays(e.target.value)}
+                          type="text"
+                          placeholder="Enter your custom days"
+                        />
+                      )}
+                    </div>
+                    {!isApproved ? (
+                      <button
+                        className="putOnSaleBtn"
+                        onClick={() => handleApprove()}
+                      >
+                        Approve
+                      </button>
+                    ) : (
+                      <button
+                        className="putOnSaleBtn"
+                        // disabled={!price || !selectedDropDown || !days}
+                        onClick={handlePutOnSale}
+                      >
+                        Put On Sale
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
-              <div>
-                <select onChange={(e) => setDays(e.target.value)}>
-                  <option value="">select an option</option>
-                  <option value="1">1</option>
-                  <option value="3">3</option>
-                  <option value="7">7</option>
-                  <option value="custom">Custom</option>
-                </select>
-              </div>
-              <div>
-                {days === 'custom' && (
-                  <input
-                    style={{
-                      width: '100%',
-                      height: '30px',
-                      fontSize: '16px',
-                      fontFamily: 'Oswald',
-                    }}
-                    onChange={(e) => setDays(e.target.value)}
-                    type="text"
-                    placeholder="Enter your custom days"
-                  />
-                )}
-              </div>
-              {!isApproved ? (
-                <button
-                  className="putOnSaleBtn"
-                  onClick={() => handleApprove()}
-                >
-                  Approve
-                </button>
-              ) : (
-                <button
-                  className="putOnSaleBtn"
-                  disabled={!price || !selectedDropDown || !days}
-                  onClick={handlePutOnSale}
-                >
-                  Put On Sale
-                </button>
-              )}
             </div>
-          </div>
-        </div>
-      </div>
+          </Form>
+        )}
+      </Formik>
     </>
   )
 }

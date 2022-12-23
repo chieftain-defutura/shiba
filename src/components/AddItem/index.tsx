@@ -28,8 +28,25 @@ interface IAddItem {
   setAddItem: any
 }
 
+const initialState = {
+  logo: '',
+  mainPhoto: '',
+  photoOne: '',
+  photoTwo: '',
+  photoThree: '',
+  preview: '',
+  fullProduct: '',
+  itemName: '',
+  category: '',
+  subCategory: '',
+  details: '',
+  description: '',
+  price: '',
+  currency: '',
+  charityAddress: '',
+}
 const AddItem: React.FC<IAddItem> = () => {
-  const { id } = useParams()
+  const { id } = useParams() as { id: string }
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -74,9 +91,9 @@ const AddItem: React.FC<IAddItem> = () => {
     return res.subCategory
   }
 
-  const handleAddItem = async (values: any) => {
+  const handleAddItem = async (values: typeof initialState) => {
     if (!address || !data) return
-    const encryptedFullProductLink = getEncryptedData(values.fullProduct)
+    const encryptedFullProductLink = getEncryptedData(values.fullProduct, [id])
     console.log(encryptedFullProductLink)
 
     try {
@@ -89,6 +106,11 @@ const AddItem: React.FC<IAddItem> = () => {
           itemName: values.itemName,
           details: values.details,
           description: values.description,
+          logo: values.logo,
+          mainPhoto: values.mainPhoto,
+          photoOne: values.photoOne,
+          photoTwo: values.photoTwo,
+          photoThree: values.photoThree,
         },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
@@ -115,7 +137,7 @@ const AddItem: React.FC<IAddItem> = () => {
         parseUnits(values.price.toString(), '18'),
         values.currency,
         values.itemName,
-        '0xe05f949AB280414F4e3279fF3BE1e39774e4B4f3',
+        values.charityAddress,
       )
 
       await tx.wait()
@@ -145,23 +167,7 @@ const AddItem: React.FC<IAddItem> = () => {
   return (
     <div className="photo-sub-menu-container sub-menu-container">
       <Formik
-        initialValues={{
-          logo: '',
-          mainPhoto: '',
-          photoOne: '',
-          photoTwo: '',
-          photoThree: '',
-          preview: '',
-          fullProduct: '',
-          itemName: '',
-          category: '',
-          subCategory: '',
-          details: '',
-          description: '',
-          price: '',
-          currency: '',
-          charityAddress: '',
-        }}
+        initialValues={initialState}
         onSubmit={handleAddItem}
         validationSchema={validate}
       >

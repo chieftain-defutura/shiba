@@ -132,6 +132,7 @@ const Residual: React.FC<IResidualProps> = ({
 
   return (
     <div className="residual-container" style={{ marginTop: '40px' }}>
+      <div></div>
       <BsArrowLeftCircle
         className="arrow-icon"
         style={{ position: 'absolute', top: '40px' }}

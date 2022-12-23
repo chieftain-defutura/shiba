@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
+import * as Yup from 'yup'
 
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
@@ -15,6 +16,7 @@ import { getTokenDecimals } from '../../../utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
 import { formatAddress } from '../../../constants/variants'
 import { useAppSelector } from '../../../store/store'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 
 type IMarketplaceCardProps = {
   setOnMarketplace: React.Dispatch<boolean>
@@ -83,82 +85,119 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
     }
   }
 
+  const validate = Yup.object({
+    charityAddress: Yup.string().required('This is Required'),
+    price: Yup.string().required('This is Required'),
+  })
+
   return (
-    <div className="on-marketplace-container">
-      <BsArrowLeftCircle
-        className="arrow-icon"
-        style={{ marginTop: '15px' }}
-        onClick={() => {
-          setOnMarketplace(false)
-        }}
-      />
-      <p className="title">On Marketplace</p>
-      <div className="on-marketplace-sub-container">
-        <div className="content">
-          <div className="content-left">
-            <p>Select Charity Organisation From List</p>
-            <p>Price</p>
-          </div>
-          <div className="content-right">
-            <select>
-              {charityList.map((list) => (
-                <option key={list} value={list}>
-                  {formatAddress(list)}
-                </option>
-              ))}
-            </select>
-            <div className="price-select-container">
-              <div className="left">
-                <input
-                  type="number"
-                  placeholder="price"
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-              <div className={!dropDown ? ' right' : 'right active'}>
-                <div className="header" onClick={() => setDropDown(!dropDown)}>
-                  <p>{selectedDropDown?.title}</p>
-                  <IoIosArrowDown />
+    <Formik
+      initialValues={{
+        charityAddress: '',
+        price: '',
+        tokenAddress: '',
+      }}
+      onSubmit={(values) => {
+        console.log(values)
+      }}
+      validationSchema={validate}
+    >
+      {() => (
+        <Form>
+          <div className="on-marketplace-container">
+            <BsArrowLeftCircle
+              className="arrow-icon"
+              style={{ marginTop: '15px' }}
+              onClick={() => {
+                setOnMarketplace(false)
+              }}
+            />
+            <p className="title">On Marketplace</p>
+            <div className="on-marketplace-sub-container">
+              <div className="content">
+                <div className="content-left">
+                  <p>Select Charity Organisation From List</p>
+                  <p>Price</p>
                 </div>
-                <div className={!dropDown ? 'body' : 'body active'}>
-                  {tokensList.map((f, index) => {
-                    return (
-                      <p
-                        key={index}
-                        onClick={() => {
-                          setSelectedDropDown(f)
-                          setDropDown(false)
-                        }}
+                <div className="content-right">
+                  <div>
+                    <Field as="select" name="charityAddress">
+                      {charityList.map((list) => (
+                        <option key={list} value={list}>
+                          {formatAddress(list)}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="charityAddress"
+                      className="errorMsg"
+                      component="div"
+                    />
+                  </div>
+                  <div className="price-select-container">
+                    <div className="left">
+                      <Field
+                        type="number"
+                        placeholder="price"
+                        name="price"
+                        // onChange={(e) => setPrice(e.target.value)}
+                      />
+                      <ErrorMessage
+                        name="price"
+                        className="errorMsg"
+                        component="div"
+                      />
+                    </div>
+                    <div className={!dropDown ? ' right' : 'right active'}>
+                      <div
+                        className="header"
+                        onClick={() => setDropDown(!dropDown)}
                       >
-                        {f.title}
-                      </p>
-                    )
-                  })}
+                        <p>{selectedDropDown?.title}</p>
+                        <IoIosArrowDown />
+                      </div>
+                      <div className={!dropDown ? 'body' : 'body active'}>
+                        {tokensList.map((f, index) => {
+                          return (
+                            <p
+                              key={index}
+                              onClick={() => {
+                                setSelectedDropDown(f)
+                                setDropDown(false)
+                              }}
+                            >
+                              {f.title}
+                            </p>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    {!isApproved ? (
+                      <button
+                        className="putOnSaleBtn"
+                        onClick={() => handleApprove()}
+                      >
+                        Approve
+                      </button>
+                    ) : (
+                      <button
+                        className="putOnSaleBtn"
+                        // disabled={!price || !selectedDropDown}
+                        onClick={handlePutOnSale}
+                      >
+                        Put On Sale
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              {!isApproved ? (
-                <button
-                  className="putOnSaleBtn"
-                  onClick={() => handleApprove()}
-                >
-                  Approve
-                </button>
-              ) : (
-                <button
-                  className="putOnSaleBtn"
-                  disabled={!price || !selectedDropDown}
-                  onClick={handlePutOnSale}
-                >
-                  Put On Sale
-                </button>
-              )}
-            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Form>
+      )}
+    </Formik>
   )
 }
 

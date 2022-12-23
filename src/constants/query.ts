@@ -170,6 +170,7 @@ export const haveToSendQuery = `
   query($owner: String!){
     shipments(where:{owner:$owner,status:"PREPARING"}){
       id
+      itemId
       owner
       status
       quantity
@@ -226,6 +227,9 @@ query($owner: String!,$category: String!){
     metadata
     category
     owner {
+      id
+    }
+    shopDetails {
       id
     }
   }
