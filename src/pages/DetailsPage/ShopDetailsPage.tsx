@@ -145,7 +145,7 @@ const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
                 </div>
               )}
               <div className="description-cont">
-                <h3>Brief Description:</h3>
+                <h3>Brief Description: </h3>
                 <p>
                   Contacts: any info shop want to share Ex phone number,
                   address, etc.

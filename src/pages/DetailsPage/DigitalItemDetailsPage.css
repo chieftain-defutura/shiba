@@ -205,3 +205,6 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+.slider-item img {
+  width: 100%;
+}

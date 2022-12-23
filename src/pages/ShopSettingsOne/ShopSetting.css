@@ -549,12 +549,12 @@ select {
   margin-left: 100px;
 }
 
-.brief-description-sub-menu-container .content-left {
+/* .brief-description-sub-menu-container .content-left {
   gap: 228px;
-}
+} */
 
 .brief-description-sub-menu-container .content-right {
-  gap: 50px;
+  gap: 30px;
 }
 .content-lefts p {
   margin-right: 10px;

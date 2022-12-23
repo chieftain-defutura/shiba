@@ -229,6 +229,7 @@ const Settings: React.FC<{ contractData: IContractData }> = ({
               className="arrow-icon"
               style={{
                 fontSize: '30px',
+                cursor: 'pointer',
               }}
               onClick={() => setClickRemoveItem(false)}
             />

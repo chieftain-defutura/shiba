@@ -246,8 +246,11 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                       </div>
                     )}
                     <div className="description-cont">
-                      <h3>Product Description:</h3>
-                      <p>Product Details:</p>
+                      <h3>
+                        Product Description: {ipfsData?.productDescription}
+                      </h3>
+
+                      <p>Product Details: {ipfsData?.ProductDetails}</p>
                     </div>
                   </div>
                   <div className="content-box-right">
