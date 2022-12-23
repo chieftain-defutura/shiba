@@ -106,6 +106,11 @@ const AddItem: React.FC<IAddItem> = () => {
           itemName: values.itemName,
           details: values.details,
           description: values.description,
+          logo: values.logo,
+          mainPhoto: values.mainPhoto,
+          photoOne: values.photoOne,
+          photoTwo: values.photoTwo,
+          photoThree: values.photoThree,
         },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
