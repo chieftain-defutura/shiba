@@ -4,20 +4,20 @@ import Loading from '../../../components/Loading/Loading'
 import { IUserDigitalItem } from '../../../constants/types'
 import { getDecryptedData } from '../../../utils/formatters'
 
-interface ICoursesCard {
-  fullproduct: string
-  category: string
-}
-export const CoursesCard: React.FC<ICoursesCard> = ({
+export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
+  shopDetails,
 }) => {
   const musicRef = useRef<HTMLAudioElement>(null)
 
   return (
     <div className="music-card">
       <div className="music-card-top">
-        <audio ref={musicRef} src={getDecryptedData(fullproduct)}></audio>
+        <audio
+          ref={musicRef}
+          src={getDecryptedData(fullproduct, [shopDetails.id])}
+        ></audio>
       </div>
       <div className="icon" onClick={() => musicRef.current?.play()}>
         <img src={Music} alt="card" />
@@ -48,13 +48,7 @@ const MyMusic: React.FC<IMyMusic> = ({ fetching, error, data }) => {
       ) : (
         <div className="music-item-card-container">
           {data?.digitalItems.map((item, i) => {
-            return (
-              <CoursesCard
-                key={i}
-                fullproduct={item.fullproduct}
-                category={item.category}
-              />
-            )
+            return <CoursesCard key={i} {...item} />
           })}
         </div>
       )}

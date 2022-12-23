@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
-import axios from 'axios'
 import { ethers } from 'ethers'
 import { useQuery } from 'urql'
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -61,9 +60,9 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   price,
   erc20Token,
   shopDetails,
+  id: itemId,
 }) => {
   const slider = useRef<Slider>(null)
-  const { itemId } = useParams()
   const { address } = useAccount()
   const { data: signerData } = useSigner()
   const [quantity, setQuantity] = useState(1)
@@ -110,26 +109,7 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
         await tx.wait()
       }
 
-      const resData = await axios({
-        method: 'post',
-        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-        data: {
-          name: values.name,
-          phone: values.phone,
-          address: values.address,
-          city: values.city,
-          state: values.state,
-          zipCode: values.zipCode,
-          country: values.country,
-        },
-        headers: {
-          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      const JsonHash = resData.data.IpfsHash
-      const encryptedHash = getEncryptedData(JsonHash)
+      const encryptedHash = getEncryptedData(JSON.stringify(values), [itemId])
 
       const contract = new ethers.Contract(
         SHIPMENT_CONTRACT,

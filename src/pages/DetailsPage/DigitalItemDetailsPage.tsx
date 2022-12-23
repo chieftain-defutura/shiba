@@ -38,18 +38,21 @@ const DigitalItemsDetailsPage: React.FC = () => {
   const { data, fetching } = result
   console.log(result)
 
-  if (fetching) return <Loading />
-
-  if (!data)
-    return (
-      <div>
-        <p style={{ textTransform: 'uppercase' }}>
-          There is no item with this id
-        </p>
-      </div>
-    )
-
-  return <ProductDetails {...data.digitalItem} />
+  return (
+    <HomeLayout>
+      {fetching ? (
+        <Loading />
+      ) : !data ? (
+        <div>
+          <p style={{ textTransform: 'uppercase' }}>
+            There is no item with this id
+          </p>
+        </div>
+      ) : (
+        <ProductDetails {...data.digitalItem} />
+      )}
+    </HomeLayout>
+  )
 }
 
 const ProductDetails: React.FC<IDigitalItem> = ({
@@ -112,50 +115,49 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   }
 
   return (
-    <HomeLayout>
-      <div className="music-details-container">
-        <div className="music-details-container-right">
-          <h2 className="title">{shopDetails.domainName}</h2>
-          <div className="content-box">
-            <div className="content-box-left">
-              <div className="slider">
-                <Slider {...settings} ref={slider}>
-                  <div className="slider-item">
-                    <img src={slideImg} alt="slider" />
-                  </div>
-                  <div className="slider-item">
-                    <img src={slideImg} alt="slider" />
-                  </div>
-                </Slider>
-                <button
-                  className="prev-btn slider-btn"
-                  onClick={() => slider.current?.slickPrev()}
-                >
-                  <img src={leftArrowIcon} alt="arrow" />
-                </button>
-                <button
-                  className="next-btn slider-btn"
-                  onClick={() => slider.current?.slickNext()}
-                >
-                  <img src={rightArrowIcon} alt="arrow" />
-                </button>
-              </div>
-              <div className="description-cont">
-                <h3>
-                  Product Description:{' '}
-                  {isLoading ? <Skeleton /> : ipfsData?.description}
-                </h3>
-              </div>
+    <div className="music-details-container">
+      <div className="music-details-container-right">
+        <h2 className="title">{shopDetails.domainName}</h2>
+        <div className="content-box">
+          <div className="content-box-left">
+            <div className="slider">
+              <Slider {...settings} ref={slider}>
+                <div className="slider-item">
+                  <img src={slideImg} alt="slider" />
+                </div>
+                <div className="slider-item">
+                  <img src={slideImg} alt="slider" />
+                </div>
+              </Slider>
+              <button
+                className="prev-btn slider-btn"
+                onClick={() => slider.current?.slickPrev()}
+              >
+                <img src={leftArrowIcon} alt="arrow" />
+              </button>
+              <button
+                className="next-btn slider-btn"
+                onClick={() => slider.current?.slickNext()}
+              >
+                <img src={rightArrowIcon} alt="arrow" />
+              </button>
             </div>
-            <div className="content-box-right">
-              <div className="product-details">
-                <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
-                <br />
-                <p>Details: {isLoading ? <Skeleton /> : ipfsData?.details}</p>
-                <button className="preview-btn">Preview</button>
-              </div>
+            <div className="description-cont">
+              <h3>
+                Product Description:{' '}
+                {isLoading ? <Skeleton /> : ipfsData?.description}
+              </h3>
+            </div>
+          </div>
+          <div className="content-box-right">
+            <div className="product-details">
+              <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
               <br />
-              {/* <div className="quantity-container">
+              <p>Details: {isLoading ? <Skeleton /> : ipfsData?.details}</p>
+              <button className="preview-btn">Preview</button>
+            </div>
+            <br />
+            {/* <div className="quantity-container">
                   <p>Quantity:</p>
                   <div className="quantity-box">
                     <button onClick={handleMinus}>
@@ -167,21 +169,20 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                     </button>
                   </div>
                 </div> */}
-              <div className="buy-container">
-                <div className="top">
-                  <p>
-                    Price:
-                    {ethers.utils.formatUnits(price, erc20Token.decimals)}
-                    {erc20Token.symbol}
-                  </p>
-                </div>
-                <button onClick={handleBuy}>Buy</button>
+            <div className="buy-container">
+              <div className="top">
+                <p>
+                  Price:
+                  {ethers.utils.formatUnits(price, erc20Token.decimals)}
+                  {erc20Token.symbol}
+                </p>
               </div>
+              <button onClick={handleBuy}>Buy</button>
             </div>
           </div>
         </div>
       </div>
-    </HomeLayout>
+    </div>
   )
 }
 

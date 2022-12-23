@@ -4,20 +4,20 @@ import PlayBtn from '../../../assets/icon/play-btn.svg'
 import { getDecryptedData } from '../../../utils/formatters'
 import Loading from '../../../components/Loading/Loading'
 
-interface ICoursesCard {
-  fullproduct: string
-  category: string
-}
-export const CoursesCard: React.FC<ICoursesCard> = ({
+export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
+  shopDetails,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   return (
     <div className="movies-card">
       <div className="movies-card-top">
-        <video ref={videoRef} src={getDecryptedData(fullproduct)}></video>
+        <video
+          ref={videoRef}
+          src={getDecryptedData(fullproduct, [shopDetails.id])}
+        ></video>
       </div>
       <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
@@ -49,13 +49,7 @@ const MyCourses: React.FC<IMyCourses> = ({ fetching, error, data }) => {
       ) : (
         <div className="item-card-container">
           {data?.digitalItems.map((item, i) => {
-            return (
-              <CoursesCard
-                key={i}
-                fullproduct={item.fullproduct}
-                category={item.category}
-              />
-            )
+            return <CoursesCard key={i} {...item} />
           })}
         </div>
       )}
