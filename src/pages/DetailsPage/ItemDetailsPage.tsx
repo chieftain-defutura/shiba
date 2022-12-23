@@ -6,22 +6,22 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMinus } from 'react-icons/bi'
 import { useAccount, useSigner, erc20ABI } from 'wagmi'
 import { Formik, Form, Field } from 'formik'
+import { useParams } from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton'
+
+import './ItemDetailsPage.css'
 import { useTransactionModal } from '../../context/TransactionContext'
 import shipmentABI from '../../utils/abi/shipmentABI.json'
-
 import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import cameraImg from '../../assets/icon/Camera.svg'
 import HomeLayout from '../../Layout/HomeLayout'
-import './ItemDetailsPage.css'
 import { SHIPMENT_CONTRACT } from '../../utils/contractAddress'
-import { useParams } from 'react-router-dom'
 import { physicalItemQuery } from '../../constants/query'
 import { IPhysicalItem } from '../../constants/types'
 import { getEncryptedData } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
-import Skeleton from 'react-loading-skeleton'
 import Loading from '../../components/Loading/Loading'
 import closeIcon from '../../assets/img/close-icon.png'
 
@@ -43,18 +43,21 @@ const ItemDetailsPage: React.FC = () => {
   })
   const { data, fetching } = result
 
-  if (fetching) return <Loading />
-
-  if (!data)
-    return (
-      <div>
-        <p style={{ textTransform: 'uppercase' }}>
-          There is no item with this id
-        </p>
-      </div>
-    )
-
-  return <ProductDetails {...data.physicalItem} />
+  return (
+    <HomeLayout>
+      {fetching ? (
+        <Loading />
+      ) : !data ? (
+        <div>
+          <p style={{ textTransform: 'uppercase' }}>
+            There is no item with this id
+          </p>
+        </div>
+      ) : (
+        <ProductDetails {...data.physicalItem} />
+      )}
+    </HomeLayout>
+  )
 }
 
 const ProductDetails: React.FC<IPhysicalItem> = ({
@@ -71,7 +74,6 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
   const [errorImg, setErrorImg] = useState(false)
-  const [downVoteClick, setDownVoteClick] = useState(true)
 
   const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
     hash: metadata,
@@ -135,215 +137,207 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   }
 
   return (
-    <HomeLayout>
-      <div className="categories-details-container">
-        <Formik
-          initialValues={{
-            name: '',
-            phone: '',
-            address: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            country: '',
-          }}
-          onSubmit={handleSubmit}
-        >
-          {({ isValid, dirty }) => (
-            <Form>
-              <div className="categories-details-container-right">
-                <h2 className="title">{shopDetails.domainName}</h2>
-                <div className="content-box">
-                  <div className="content-box-left">
-                    {!categoriesShipping ? (
-                      <div className="slider">
-                        <Slider {...settings} ref={slider}>
-                          <div className="slider-item">
-                            {errorImg ? (
-                              <div className="sliderImg-camera">
-                                <img src={cameraImg} alt="camera" />
-                              </div>
-                            ) : (
-                              <img
-                                src={slideImg}
-                                alt="slider"
-                                onError={() => setErrorImg(true)}
-                              />
-                            )}
-                          </div>
-                          <div className="slider-item">
-                            {errorImg ? (
-                              <div className="sliderImg-camera">
-                                <img src={cameraImg} alt="camera" />
-                              </div>
-                            ) : (
-                              <img
-                                src={slideImg}
-                                alt="slider"
-                                onError={() => setErrorImg(true)}
-                              />
-                            )}
-                          </div>
-                          <div className="slider-item">
-                            {errorImg ? (
-                              <div className="sliderImg-camera">
-                                <img src={cameraImg} alt="camera" />
-                              </div>
-                            ) : (
-                              <img
-                                src={slideImg}
-                                alt="slider"
-                                onError={() => setErrorImg(true)}
-                              />
-                            )}
-                          </div>
-                        </Slider>
-                        <button
-                          type="button"
-                          className="prev-btn slider-btn"
-                          onClick={() => slider.current?.slickPrev()}
-                        >
-                          <img src={leftArrowIcon} alt="arrow" />
-                        </button>
-                        <button
-                          type="button"
-                          className="next-btn slider-btn"
-                          onClick={() => slider.current?.slickNext()}
-                        >
-                          <img src={rightArrowIcon} alt="arrow" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="shipping-form-container">
+    <div className="categories-details-container">
+      <Formik
+        initialValues={{
+          name: '',
+          phone: '',
+          address: '',
+          city: '',
+          state: '',
+          zipCode: '',
+          country: '',
+        }}
+        onSubmit={handleSubmit}
+      >
+        {({ isValid, dirty }) => (
+          <Form>
+            <div className="categories-details-container-right">
+              <h2 className="title">{shopDetails.domainName}</h2>
+              <div className="content-box">
+                <div className="content-box-left">
+                  {!categoriesShipping ? (
+                    <div className="slider">
+                      <Slider {...settings} ref={slider}>
+                        <div className="slider-item">
+                          {errorImg ? (
+                            <div className="sliderImg-camera">
+                              <img src={cameraImg} alt="camera" />
+                            </div>
+                          ) : (
+                            <img
+                              src={slideImg}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
+                          )}
+                        </div>
+                        <div className="slider-item">
+                          {errorImg ? (
+                            <div className="sliderImg-camera">
+                              <img src={cameraImg} alt="camera" />
+                            </div>
+                          ) : (
+                            <img
+                              src={slideImg}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
+                          )}
+                        </div>
+                        <div className="slider-item">
+                          {errorImg ? (
+                            <div className="sliderImg-camera">
+                              <img src={cameraImg} alt="camera" />
+                            </div>
+                          ) : (
+                            <img
+                              src={slideImg}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
+                          )}
+                        </div>
+                      </Slider>
+                      <button
+                        type="button"
+                        className="prev-btn slider-btn"
+                        onClick={() => slider.current?.slickPrev()}
+                      >
+                        <img src={leftArrowIcon} alt="arrow" />
+                      </button>
+                      <button
+                        type="button"
+                        className="next-btn slider-btn"
+                        onClick={() => slider.current?.slickNext()}
+                      >
+                        <img src={rightArrowIcon} alt="arrow" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="shipping-form-container">
+                      <div>
                         <div>
-                          <div>
-                            <h2 className="title">Shipping form</h2>
-                            <div className="shipping-form">
-                              <img
-                                src={closeIcon}
-                                alt="close"
-                                className="close-icon"
-                                onClick={() => setCategoriesShipping(false)}
-                              />
-                            </div>
+                          <h2 className="title">Shipping form</h2>
+                          <div className="shipping-form">
+                            <img
+                              src={closeIcon}
+                              alt="close"
+                              className="close-icon"
+                              onClick={() => setCategoriesShipping(false)}
+                            />
                           </div>
-                          <div className="form-container">
-                            <div className="left">
-                              <p>Name:</p>
-                              <p>Phone:</p>
-                              <p>Address:</p>
-                              <p>City:</p>
-                              <p>State:</p>
-                              <p>Postal zip code:</p>
-                              <p>Country:</p>
-                            </div>
-                            <div className="right">
-                              <Field
-                                name="name"
-                                type="text"
-                                placeholder="Enter your name"
-                              />
-                              <Field
-                                name="phone"
-                                type="number"
-                                placeholder="Enter your number"
-                              />
-                              <Field
-                                name="address"
-                                type="text"
-                                placeholder="Enter your address"
-                              />
-                              <Field
-                                name="city"
-                                type="text"
-                                placeholder="City"
-                              />
-                              <Field
-                                name="state"
-                                type="text"
-                                placeholder="State"
-                              />
-                              <Field
-                                name="zipCode"
-                                type="text"
-                                placeholder="Zip code"
-                              />
-                              <Field
-                                name="country"
-                                type="text"
-                                placeholder="country"
-                              />
-                            </div>
+                        </div>
+                        <div className="form-container">
+                          <div className="left">
+                            <p>Name:</p>
+                            <p>Phone:</p>
+                            <p>Address:</p>
+                            <p>City:</p>
+                            <p>State:</p>
+                            <p>Postal zip code:</p>
+                            <p>Country:</p>
+                          </div>
+                          <div className="right">
+                            <Field
+                              name="name"
+                              type="text"
+                              placeholder="Enter your name"
+                            />
+                            <Field
+                              name="phone"
+                              type="number"
+                              placeholder="Enter your number"
+                            />
+                            <Field
+                              name="address"
+                              type="text"
+                              placeholder="Enter your address"
+                            />
+                            <Field name="city" type="text" placeholder="City" />
+                            <Field
+                              name="state"
+                              type="text"
+                              placeholder="State"
+                            />
+                            <Field
+                              name="zipCode"
+                              type="text"
+                              placeholder="Zip code"
+                            />
+                            <Field
+                              name="country"
+                              type="text"
+                              placeholder="country"
+                            />
                           </div>
                         </div>
                       </div>
-                    )}
-                    <div className="description-cont">
-                      <h3>
-                        Product Description: {ipfsData?.productDescription}
-                      </h3>
+                    </div>
+                  )}
+                  <div className="description-cont">
+                    <h3>Product Description: {ipfsData?.productDescription}</h3>
 
-                      <p>Product Details: {ipfsData?.productDetails}</p>
+                    <p>Product Details: {ipfsData?.productDetails}</p>
+                  </div>
+                </div>
+                <div className="content-box-right">
+                  <div className="product-details">
+                    {isLoading && <Skeleton count={10} />}
+                    {ipfsData &&
+                      Object.entries(ipfsData)
+                        .slice(5)
+                        .map((value: any, index) => (
+                          <p key={index.toString()}>
+                            <span style={{ textTransform: 'capitalize' }}>
+                              {value[0].replace(/([a-z](?=[A-Z]))/g, '$1 ')}
+                            </span>
+                            &nbsp;:&nbsp;<span>{value[1]}</span>
+                          </p>
+                        ))}
+                  </div>
+                  <br />
+                  <div className="quantity-container">
+                    <p>Quantity:</p>
+                    <div className="quantity-box">
+                      <button type="button" onClick={handleMinus}>
+                        <BiMinus />
+                      </button>
+                      <p>{quantity}</p>
+                      <button type="button" onClick={handlePlus}>
+                        <AiOutlinePlus />
+                      </button>
                     </div>
                   </div>
-                  <div className="content-box-right">
-                    <div className="product-details">
-                      {isLoading && <Skeleton count={10} />}
-                      {ipfsData &&
-                        Object.entries(ipfsData)
-                          .slice(5)
-                          .map((value: any, index) => (
-                            <p key={index.toString()}>
-                              <span style={{ textTransform: 'capitalize' }}>
-                                {value[0].replace(/([a-z](?=[A-Z]))/g, '$1 ')}
-                              </span>
-                              &nbsp;:&nbsp;<span>{value[1]}</span>
-                            </p>
-                          ))}
+                  <div className="buy-container">
+                    <div className="top">
+                      <p>
+                        Price: {formattedPrice}&nbsp;
+                        {erc20Token.symbol}
+                      </p>
+                      <p>
+                        Total: {quantity * formattedPrice} {erc20Token.symbol}
+                      </p>
                     </div>
-                    <br />
-                    <div className="quantity-container">
-                      <p>Quantity:</p>
-                      <div className="quantity-box">
-                        <button type="button" onClick={handleMinus}>
-                          <BiMinus />
+                    <div>
+                      {!categoriesShipping ? (
+                        <div onClick={() => setCategoriesShipping(true)}>
+                          <button>Buy</button>
+                        </div>
+                      ) : (
+                        <button type="submit" disabled={!(dirty && isValid)}>
+                          Buy
                         </button>
-                        <p>{quantity}</p>
-                        <button type="button" onClick={handlePlus}>
-                          <AiOutlinePlus />
-                        </button>
-                      </div>
-                    </div>
-                    <div className="buy-container">
-                      <div className="top">
-                        <p>
-                          Price: {formattedPrice}&nbsp;
-                          {erc20Token.symbol}
-                        </p>
-                        <p>
-                          Total: {quantity * formattedPrice} {erc20Token.symbol}
-                        </p>
-                      </div>
-                      <div>
-                        {!categoriesShipping ? (
-                          <div onClick={() => setCategoriesShipping(true)}>
-                            <button>Buy</button>
-                          </div>
-                        ) : (
-                          <button type="submit" disabled={!(dirty && isValid)}>
-                            Buy
-                          </button>
-                        )}
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </HomeLayout>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   )
 }
 
