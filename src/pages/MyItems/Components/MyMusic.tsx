@@ -1,5 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
+
 import Music from '../../../assets/icon/Music.svg'
+import Play from '../../../assets/icon/Play.svg'
+import Pause from '../../../assets/icon/Pause.svg'
 import Loading from '../../../components/Loading/Loading'
 import { IUserDigitalItem } from '../../../constants/types'
 import { getDecryptedData } from '../../../utils/formatters'
@@ -8,22 +11,50 @@ export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
   shopDetails,
+  itemName,
 }) => {
   const musicRef = useRef<HTMLAudioElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const handlePlay = () => {
+    setIsPlaying(true)
+    const player = musicRef.current?.play()
+
+    if (player) {
+      player.catch((err) => {
+        setIsPlaying(false)
+        console.log(err)
+        alert('invalid audio format.')
+      })
+    }
+  }
+
+  const handlePause = () => {
+    musicRef.current?.pause()
+    setIsPlaying(false)
+  }
 
   return (
     <div className="music-card">
       <div className="music-card-top">
         <audio
           ref={musicRef}
+          controls
           src={getDecryptedData(fullproduct, [shopDetails.id])}
         ></audio>
       </div>
-      <div className="icon" onClick={() => musicRef.current?.play()}>
-        <img src={Music} alt="card" />
+      <div className="icon">
+        <img className="abstract" src={Music} alt="card" />
+        <div className="music-controls">
+          {isPlaying ? (
+            <img src={Pause} alt="card" onClick={handlePause} />
+          ) : (
+            <img src={Play} alt="card" onClick={handlePlay} />
+          )}
+        </div>
       </div>
       <div className="details">
-        <h3>Name: {category}</h3>
+        <h3>Name: {itemName}</h3>
       </div>
     </div>
   )

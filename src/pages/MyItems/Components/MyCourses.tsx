@@ -8,6 +8,7 @@ export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
   shopDetails,
+  itemName,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -23,7 +24,7 @@ export const CoursesCard: React.FC<IUserDigitalItem> = ({
         <img src={PlayBtn} alt="card" />
       </div>
       <div className="details">
-        <h3>Name: {category}</h3>
+        <h3>Name: {itemName}</h3>
       </div>
     </div>
   )

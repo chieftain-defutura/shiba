@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { IUserDigitalItem } from '../../../constants/types'
-import PlayBtn from '../../../assets/icon/play-btn.svg'
+// import PlayBtn from '../../../assets/icon/play-btn.svg'
 import './item.scss'
 import { getDecryptedData } from '../../../utils/formatters'
 import Loading from '../../../components/Loading/Loading'
@@ -9,6 +9,7 @@ export const MoviesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
   shopDetails,
+  itemName,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -17,14 +18,17 @@ export const MoviesCard: React.FC<IUserDigitalItem> = ({
       <div className="movies-card-top">
         <video
           ref={videoRef}
+          controls
+          playsInline
+          muted
           src={getDecryptedData(fullproduct, [shopDetails.id])}
         ></video>
       </div>
-      <div className="icon" onClick={() => videoRef.current?.play()}>
+      {/* <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
-      </div>
+      </div> */}
       <div className="details">
-        <h3>Name: {category}</h3>
+        <h3>Name: {itemName}</h3>
       </div>
     </div>
   )

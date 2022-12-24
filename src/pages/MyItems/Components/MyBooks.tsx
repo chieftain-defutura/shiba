@@ -8,6 +8,7 @@ export const BookCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
   shopDetails,
+  itemName,
 }) => {
   const bookRef = useRef<HTMLAudioElement>(null)
 
@@ -26,7 +27,7 @@ export const BookCard: React.FC<IUserDigitalItem> = ({
         <img src={Book} alt="card" />
       </div>
       <div className="details">
-        <h3>Name: {category}</h3>
+        <h3>Name: {itemName}</h3>
       </div>
     </div>
   )

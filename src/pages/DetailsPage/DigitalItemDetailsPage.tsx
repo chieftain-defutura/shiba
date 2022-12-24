@@ -59,6 +59,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   shopDetails,
   metadata,
   price,
+  status,
 }) => {
   const { itemId } = useParams()
   const { data: signerData } = useSigner()
@@ -179,7 +180,8 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                   {erc20Token.symbol}
                 </p>
               </div>
-              <button onClick={handleBuy}>Buy</button>
+              {status === 'ACTIVE' && <button onClick={handleBuy}>Buy</button>}
+              {status === 'PURCHASED' && <h3>Item is Sold</h3>}
             </div>
           </div>
         </div>
