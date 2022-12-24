@@ -47,10 +47,12 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({ data }) => {
   return (
     <>
       {!data ? (
-        <Loading />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : !data?.digitalItems.length && !data?.physicalItems.length ? (
-        <div style={{ textAlign: 'center', marginTop: '60px' }}>
-          No Nfts Here for sale
+        <div className="error-msg">
+          <p> No Nfts Here for sale</p>
         </div>
       ) : (
         <div className="marketplace-container-right-content">

@@ -38,7 +38,9 @@ const HaveToSend: React.FC = () => {
                 <h2 className="heading">Shipping Queue</h2>
               </div>
               {fetching ? (
-                <Loading />
+                <div className="loading">
+                  <Loading />
+                </div>
               ) : (
                 <table cellSpacing="0" cellPadding="0">
                   <thead>
@@ -52,8 +54,8 @@ const HaveToSend: React.FC = () => {
                   <tbody>
                     {!data?.shipments.length ? (
                       <tr>
-                        <td style={{ textAlign: 'center' }} colSpan={2}>
-                          No Result
+                        <td colSpan={2} className="error-msg">
+                          <p>No Result</p>
                         </td>
                       </tr>
                     ) : (

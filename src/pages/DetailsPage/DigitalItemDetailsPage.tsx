@@ -41,7 +41,9 @@ const DigitalItemsDetailsPage: React.FC = () => {
   return (
     <HomeLayout>
       {fetching ? (
-        <Loading />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : !data ? (
         <div>
           <p style={{ textTransform: 'uppercase' }}>

@@ -49,9 +49,11 @@ const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
         <div className="shop-setting-one-container">
           <div className="shop-setting-one-container-right">
             {fetching ? (
-              <Loading />
+              <div className="loading">
+                <Loading />
+              </div>
             ) : error ? (
-              <div>
+              <div className="error-msg">
                 <p>Something went wrong</p>
               </div>
             ) : data[Object.keys(data)[0]] === null ? (

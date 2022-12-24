@@ -15,3 +15,12 @@ code {
 button:disabled {
   cursor: no-drop;
 }
+.loading {
+  margin-top: 100px;
+}
+
+.error-msg p {
+  margin-top: 180px;
+  text-align: center;
+  color: #fff;
+}

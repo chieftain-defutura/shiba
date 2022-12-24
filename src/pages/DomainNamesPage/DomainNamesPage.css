@@ -11,6 +11,7 @@
 
 .domain-name-container-left {
   flex: 1;
+  height: 60vh;
 }
 
 .domain-name-container-left .heading {

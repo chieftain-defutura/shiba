@@ -25,11 +25,17 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
     <div>
       <HomeLayout>
         {isLoading ? (
-          <Loading />
+          <div className="loading">
+            <Loading />
+          </div>
         ) : isError ? (
-          <div style={{ textAlign: 'center', color: '#fff' }}>Error</div>
+          <div className="error-msg">
+            <p>Error</p>
+          </div>
         ) : !nftsData.length ? (
-          <div style={{ textAlign: 'center', color: '#fff' }}>No Result</div>
+          <div className="error-msg">
+            <p>No Result</p>
+          </div>
         ) : (
           <div className="website-container">
             <div className="website-container-right">
