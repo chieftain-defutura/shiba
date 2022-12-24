@@ -1,3 +1,11 @@
+export type ISaleStauts =
+  | 'ACTIVE'
+  | 'PURCHASED'
+  | 'REMOVED'
+  | 'DISPATCHED'
+  | 'CANCELLED'
+  | 'COMPLETED'
+
 export type IDomainNft = {
   id: string
   domainName: string
@@ -54,6 +62,7 @@ export type IPhysicalItem = {
 export type IDigitalItem = {
   id: string
   metadata: string
+  status: ISaleStauts
   erc20Token: {
     id: string
     symbol: string
@@ -67,7 +76,7 @@ export type IDigitalItem = {
   price: string
   owner: {
     id: string
-  }
+  } | null
   subcategory: string
   category: string
 }
@@ -160,6 +169,7 @@ export type IUserCollection = {
 
 export type IUserDigitalItem = {
   id: string
+  itemName: string
   fullproduct: string
   metadata: string
   category: string

@@ -11,7 +11,6 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
 import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
-import { ArrElement } from '../../../constants/types'
 import { tokensList } from '../../../constants/contract'
 import { getTokenDecimals } from '../../../utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
@@ -36,6 +35,7 @@ const initialState = {
   days: '',
   customDays: '',
 }
+
 const AuctionCard: React.FC<IAuctionCardProps> = ({
   setOnAction,
   contractAddress,
@@ -61,6 +61,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
         status: 'pending',
         message: PENDING_MESSAGE,
       })
+
       const contract = new ethers.Contract(
         MARKETPLACE_CONTRACT_ADDRESS,
         auctionMarketplaceABI,
@@ -101,9 +102,11 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
     token: Yup.object({
       title: Yup.string().required('This is Required'),
     }),
-
     days: Yup.string().required('This is Required'),
-    customDays: Yup.string().required('This is Required'),
+    customDays: Yup.string().when('days', {
+      is: 'custom',
+      then: Yup.string().required('This is Required'),
+    }),
   })
 
   return (
@@ -135,6 +138,9 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                   <div className="content-right">
                     <div>
                       <Field as="select" name="charityAddress">
+                        <option value="">
+                          --- select a charity address ---
+                        </option>
                         {charityList.map((list) => (
                           <option key={list} value={list}>
                             {formatAddress(list)}
@@ -220,6 +226,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                     </div>
                     {!isApproved ? (
                       <button
+                        type="button"
                         className="putOnSaleBtn"
                         onClick={() => handleApprove()}
                       >

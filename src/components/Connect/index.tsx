@@ -1,12 +1,14 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useConnect } from 'wagmi'
 
 import Button from '../Button'
 import './Connect.css'
 
 export function Connector() {
-  const { connect, connectors, error, isLoading, pendingConnector } =
+  const { connectAsync, connectors, error, isLoading, pendingConnector } =
     useConnect()
+  const navigate = useNavigate()
 
   return (
     <div className="connector">
@@ -15,7 +17,10 @@ export function Connector() {
           variant="primary"
           disabled={!connector.ready}
           key={connector.id}
-          onClick={() => connect({ connector })}
+          onClick={async () => {
+            await connectAsync({ connector })
+            navigate('/home')
+          }}
         >
           {connector.name}
           {!connector.ready && ' (unsupported)'}
