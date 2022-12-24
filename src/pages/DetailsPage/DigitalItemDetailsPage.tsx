@@ -123,10 +123,13 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             <div className="slider">
               <Slider {...settings} ref={slider}>
                 <div className="slider-item">
-                  <img src={slideImg} alt="slider" />
+                  <img src={ipfsData?.photoOne} alt="slider" />
                 </div>
                 <div className="slider-item">
-                  <img src={slideImg} alt="slider" />
+                  <img src={ipfsData?.photoTwo} alt="slider" />
+                </div>
+                <div className="slider-item">
+                  <img src={ipfsData?.photoThree} alt="slider" />
                 </div>
               </Slider>
               <button
