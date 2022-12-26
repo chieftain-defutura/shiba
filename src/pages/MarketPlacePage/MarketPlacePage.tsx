@@ -36,6 +36,21 @@ const getGoodsDigitalQuery = `query($category: [String!]!){
   digitalItems( where:{status:ACTIVE, category_in:$category}){
     id
     category
+    shopDetails {
+      id
+      
+    }
+    subcategory
+    metadata
+    quantity
+    price
+    status
+    erc20Token{
+      id
+      symbol
+      decimals
+    }
+  
   }
 }`
 
@@ -43,6 +58,20 @@ const getGoodsPhysicalQuery = `query($category: [String!]!){
   physicalItems( where:{status:ACTIVE, category_in:$category}){
     id
     category
+    shopDetails {
+      id
+    }
+    subcategory
+    metadata
+    quantity
+    price
+    status
+    erc20Token{
+      id
+      symbol
+      decimals
+    }
+  
   }
 }`
 
@@ -327,6 +356,7 @@ const MarketPlacePage: React.FC = () => {
             <GoodsMaretPlace
               digitalData={goodsDigitalData}
               physicalData={goodsPhysicalData}
+              clickDropDown={clickDropDown}
             />
           ) : (
             <CorporateMarketplace />
