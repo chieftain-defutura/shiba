@@ -266,9 +266,9 @@
 
 .marketplace-container-right-content {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-row-gap: 40px;
-  grid-column-gap: 0px;
+  grid-template-columns: repeat(5, 150px);
+  row-gap: 25px;
+  column-gap: 15px;
 }
 
 .marketplace-container-right .marketplace-card-container .card {
@@ -280,6 +280,7 @@
 
 .marketplace-container-right .card .card-top img {
   border-radius: 8px 8px 0px 0px;
+  width: 145px;
 }
 
 .marketplace-container-right .card .card-center {
@@ -303,7 +304,7 @@
 .marketplace-container-right .card .card-bottom {
   padding: 0px 8px 0;
   border-top: 1px solid #343741;
-  width: 155px;
+  width: 140px;
 }
 .card-btn {
   display: grid;

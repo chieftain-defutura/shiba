@@ -61,13 +61,13 @@
 
 .website-container-right {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  row-gap: 20px;
-  column-gap: 20px;
+  grid-template-columns: repeat(5, 150px);
+  row-gap: 25px;
+  column-gap: 15px;
 }
 
 .website-container-right .website-card-container {
-  width: 154px;
+  width: 145px;
 }
 
 .website-container-right .card {

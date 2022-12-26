@@ -29,6 +29,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
   const [categoryList, setCategoryList] = useState<
     { name: string; subCategory: string[] }[]
   >([])
+
   const dispatch = useAppDispatch()
   const charityList = useAppSelector((store) => store.general.charityList)
   const isFetched = useAppSelector((store) => store.general.isFetched)

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
 import { ethers } from 'ethers'
 import { useQuery } from 'urql'
@@ -17,6 +17,7 @@ import { DigitalItemQuery } from '../../constants/query'
 import './DigitalItemDetailsPage.css'
 import Loading from '../../components/Loading/Loading'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
+import cameraImg from '../../assets/icon/Camera.svg'
 
 const settings = {
   dots: false,
@@ -68,6 +69,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   const { address } = useAccount()
   const slider = useRef<Slider>(null)
   const { setTransaction } = useTransactionModal()
+  const [digitalErrorImg, setDigitalErrorImg] = useState(false)
   const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
     hash: metadata,
   })
@@ -125,13 +127,61 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             <div className="slider">
               <Slider {...settings} ref={slider}>
                 <div className="slider-item">
-                  <img src={ipfsData?.photoOne} alt="slider" />
+                  {digitalErrorImg ? (
+                    <div className="sliderImg-camera">
+                      <img src={cameraImg} alt="camera" />
+                    </div>
+                  ) : (
+                    <div>
+                      {isLoading ? (
+                        <Skeleton width={'100%'} height={'100%'} />
+                      ) : (
+                        <img
+                          src={ipfsData?.photoOne}
+                          alt="slider"
+                          onError={() => setDigitalErrorImg(true)}
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="slider-item">
-                  <img src={ipfsData?.photoTwo} alt="slider" />
+                  {digitalErrorImg ? (
+                    <div className="sliderImg-camera">
+                      <img src={cameraImg} alt="camera" />
+                    </div>
+                  ) : (
+                    <div>
+                      {isLoading ? (
+                        <Skeleton />
+                      ) : (
+                        <img
+                          src={ipfsData?.photoTwo}
+                          alt="slider"
+                          onError={() => setDigitalErrorImg(true)}
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="slider-item">
-                  <img src={ipfsData?.photoThree} alt="slider" />
+                  {digitalErrorImg ? (
+                    <div className="sliderImg-camera">
+                      <img src={cameraImg} alt="camera" />
+                    </div>
+                  ) : (
+                    <div>
+                      {isLoading ? (
+                        <Skeleton />
+                      ) : (
+                        <img
+                          src={ipfsData?.photoThree}
+                          alt="slider"
+                          onError={() => setDigitalErrorImg(true)}
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
               </Slider>
               <button
@@ -149,7 +199,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             </div>
             <div className="description-cont">
               <h3>
-                Product Description:{' '}
+                Product Description:
                 {isLoading ? <Skeleton /> : ipfsData?.description}
               </h3>
             </div>

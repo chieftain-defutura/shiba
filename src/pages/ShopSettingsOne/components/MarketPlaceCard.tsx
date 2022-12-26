@@ -179,7 +179,9 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                         Approve
                       </button>
                     ) : (
-                      <button className="putOnSaleBtn">Put On Sale</button>
+                      <button className="putOnSaleBtn" type="submit">
+                        Put On Sale
+                      </button>
                     )}
                   </div>
                 </div>
