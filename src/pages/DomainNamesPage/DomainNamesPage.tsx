@@ -34,11 +34,17 @@ const DomainNamesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            <Loading />
+            <div className="loading">
+              <Loading />
+            </div>
           ) : error ? (
-            'something went wrong'
+            <div className="error-msg">
+              <p>something went wrong</p>
+            </div>
           ) : !nftData.length ? (
-            'No Nfts Here'
+            <div className="error-msg">
+              <p>No Nfts Here</p>
+            </div>
           ) : (
             <div className="domain-name-container-right">
               {nftData.map((f, idx: number) => (

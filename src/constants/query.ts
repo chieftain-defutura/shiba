@@ -76,6 +76,7 @@ query($id: String!){
   digitalItem(id:$id){
     id
     metadata
+    status
     shopDetails{
       id
       domainId
@@ -223,6 +224,7 @@ export const userDigitalItemsPageQuery = `
 query($owner: String!,$category: String!){
   digitalItems(where:{owner:$owner,category:$category}){
     id
+    itemName
     fullproduct
     metadata
     category

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -6,23 +6,32 @@ import { parseUnits } from 'ethers/lib/utils.js'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import * as Yup from 'yup'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
 import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
 import { tokensList } from '../../../constants/contract'
-import { ArrElement } from '../../../constants/types'
 import { getTokenDecimals } from '../../../utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
 import { formatAddress } from '../../../constants/variants'
 import { useAppSelector } from '../../../store/store'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
 
 type IMarketplaceCardProps = {
   setOnMarketplace: React.Dispatch<boolean>
   contractAddress: string
   isApproved: boolean
   handleApprove: () => Promise<void>
+}
+
+const initialState = {
+  charityAddress: '',
+  price: '',
+  token: {
+    title: '',
+    address: '',
+    decimal: '',
+  },
 }
 
 const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
@@ -38,18 +47,10 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
   const [dropDown, setDropDown] = useState(false)
-  const [selectedDropDown, setSelectedDropDown] =
-    useState<ArrElement<typeof tokensList>>()
-  const [price, setPrice] = useState('')
-  const [charityAddress, setCharityAddress] = useState('')
   const charityList = useAppSelector((store) => store.general.charityList)
 
-  useEffect(() => {
-    if (charityList.length) setCharityAddress(charityList[0])
-  }, [charityList])
-
-  const handlePutOnSale = async () => {
-    if (!address || !data || !selectedDropDown) return
+  const handlePutOnSale = async (values: typeof initialState) => {
+    if (!address || !data) return
     try {
       setTransaction({
         loading: true,
@@ -64,12 +65,12 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
       const tx = await contract.fixedSale(
         id,
         parseUnits(
-          price,
-          await getTokenDecimals(selectedDropDown.address, data),
+          values.price.toString(),
+          await getTokenDecimals(values.token.address, data),
         ).toString(),
-        selectedDropDown.address,
+        values.token.address,
         contractAddress,
-        charityAddress,
+        values.charityAddress,
       )
       await tx.wait()
       setTransaction({
@@ -92,17 +93,11 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
 
   return (
     <Formik
-      initialValues={{
-        charityAddress: '',
-        price: '',
-        tokenAddress: '',
-      }}
-      onSubmit={(values) => {
-        console.log(values)
-      }}
+      initialValues={initialState}
+      onSubmit={handlePutOnSale}
       validationSchema={validate}
     >
-      {() => (
+      {({ values, setFieldValue }) => (
         <Form>
           <div className="on-marketplace-container">
             <BsArrowLeftCircle
@@ -122,6 +117,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                 <div className="content-right">
                   <div>
                     <Field as="select" name="charityAddress">
+                      <option value="">--- select a charity address ---</option>
                       {charityList.map((list) => (
                         <option key={list} value={list}>
                           {formatAddress(list)}
@@ -153,7 +149,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                         className="header"
                         onClick={() => setDropDown(!dropDown)}
                       >
-                        <p>{selectedDropDown?.title}</p>
+                        <p>{values.token.title}</p>
                         <IoIosArrowDown />
                       </div>
                       <div className={!dropDown ? 'body' : 'body active'}>
@@ -162,7 +158,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                             <p
                               key={index}
                               onClick={() => {
-                                setSelectedDropDown(f)
+                                setFieldValue('token', f)
                                 setDropDown(false)
                               }}
                             >
@@ -176,19 +172,14 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                   <div>
                     {!isApproved ? (
                       <button
+                        type="button"
                         className="putOnSaleBtn"
                         onClick={() => handleApprove()}
                       >
                         Approve
                       </button>
                     ) : (
-                      <button
-                        className="putOnSaleBtn"
-                        // disabled={!price || !selectedDropDown}
-                        onClick={handlePutOnSale}
-                      >
-                        Put On Sale
-                      </button>
+                      <button className="putOnSaleBtn">Put On Sale</button>
                     )}
                   </div>
                 </div>

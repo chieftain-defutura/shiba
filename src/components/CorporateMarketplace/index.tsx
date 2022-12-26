@@ -18,11 +18,17 @@ const CorporateMarketplace: React.FC = () => {
   return (
     <div>
       {fetching ? (
-        <Loading />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : error ? (
-        <div style={{ textAlign: 'center' }}>Error</div>
+        <div className="error-msg">
+          <p>something went wrong</p>
+        </div>
       ) : !data?.fixedSales.length ? (
-        <div style={{ textAlign: 'center' }}>No Result</div>
+        <div className="error-msg">
+          <p>No Result</p>
+        </div>
       ) : (
         <div className="marketplace-container-right-content">
           {data?.fixedSales.map((f, idx) => (

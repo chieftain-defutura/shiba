@@ -32,7 +32,7 @@ const ShopPage: React.FC = () => {
     physicalShopTokens: IShopToken[]
   }>({ query: shopPageQuery })
 
-  const { data, fetching } = result
+  const { data, fetching, error } = result
 
   return (
     <div>
@@ -236,7 +236,21 @@ const ShopPage: React.FC = () => {
         </div>
 
         {fetching ? (
-          <Loading />
+          <div className="loading">
+            <Loading />
+          </div>
+        ) : error ? (
+          <div className="error-msg">
+            <p>something went wrong</p>
+          </div>
+        ) : !data?.digitalShopTokens.length ? (
+          <div className="error-msg">
+            <p>No Result</p>
+          </div>
+        ) : !data?.physicalShopTokens.length ? (
+          <div className="error-msg">
+            <p>No Result</p>
+          </div>
         ) : (
           <div className="website-container-right">
             {data?.digitalShopTokens.map((f, idx) => (

@@ -361,26 +361,28 @@ const MarketPlacePage: React.FC = () => {
           ) : (
             <CorporateMarketplace />
           )}
-          <div className="currency-select-container">
-            <div className="header">
-              <p>{selectedDropDown?.title}</p>
-              <IoIosArrowDown className="arrow-icon" />
+          {open && (
+            <div className="currency-select-container">
+              <div className="header">
+                <p>{selectedDropDown?.title}</p>
+                <IoIosArrowDown className="arrow-icon" />
+              </div>
+              <div className="body">
+                {tokensList.map((f, index) => {
+                  return (
+                    <p
+                      key={index}
+                      onClick={() => {
+                        setSelectedDropDown(f)
+                      }}
+                    >
+                      {f.title}
+                    </p>
+                  )
+                })}
+              </div>
             </div>
-            <div className="body">
-              {tokensList.map((f, index) => {
-                return (
-                  <p
-                    key={index}
-                    onClick={() => {
-                      setSelectedDropDown(f)
-                    }}
-                  >
-                    {f.title}
-                  </p>
-                )
-              })}
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <FooterBottom />

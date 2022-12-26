@@ -6,11 +6,9 @@
   gap: 60px;
   font-family: var(--oswaldFont);
 }
-
-/* .website-container-left {
-  flex: 1;
-} */
-
+.website-container-left {
+  height: 68vh;
+}
 .website-container-left .heading {
   font-weight: 700;
   font-size: 32px;
@@ -21,10 +19,6 @@
 }
 
 .website-container-left .checkbox-content {
-  /* display: flex;
-    align-items: center;
-  
-    justify-content: space-between; */
   display: grid;
   grid-template-columns: 4fr 0.5fr;
   margin: 18px 0;
@@ -74,7 +68,6 @@
 
 .website-container-right .website-card-container {
   width: 154px;
-  /* height: 247px; */
 }
 
 .website-container-right .card {

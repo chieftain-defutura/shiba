@@ -46,10 +46,12 @@ const AwaitingDeliveryPage: React.FC = () => {
               {!state && (
                 <>
                   {fetching ? (
-                    <Loading />
+                    <div className="loading">
+                      <Loading />
+                    </div>
                   ) : !data?.shipments.length ? (
-                    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                      No Result
+                    <div className="error-msg">
+                      <p>No Result</p>
                     </div>
                   ) : (
                     <table cellSpacing={0} cellPadding={0}>

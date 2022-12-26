@@ -211,13 +211,17 @@ const ActionPage: React.FC = () => {
         <div className="marketplace-container-right">
           <div>
             {fetching ? (
-              <div>
+              <div className="loading">
                 <Loading />
               </div>
             ) : error ? (
-              <div style={{ textAlign: 'center' }}>something went wrong</div>
+              <div className="error-msg">
+                <p>something went wrong</p>
+              </div>
             ) : !data?.auctions.length ? (
-              <div style={{ textAlign: 'center' }}>No Result</div>
+              <div className="error-msg">
+                <p>No Result</p>
+              </div>
             ) : (
               <div className="marketplace-container-right-content">
                 {data?.auctions.map((f, idx) => (

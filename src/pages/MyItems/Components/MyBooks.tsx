@@ -8,6 +8,7 @@ export const BookCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
   shopDetails,
+  itemName,
 }) => {
   const bookRef = useRef<HTMLAudioElement>(null)
 
@@ -26,7 +27,7 @@ export const BookCard: React.FC<IUserDigitalItem> = ({
         <img src={Book} alt="card" />
       </div>
       <div className="details">
-        <h3>Name: {category}</h3>
+        <h3>Name: {itemName}</h3>
       </div>
     </div>
   )
@@ -42,13 +43,17 @@ const MyBooks: React.FC<IMyBook> = ({ fetching, error, data }) => {
   return (
     <div className="item-container">
       {fetching ? (
-        <Loading />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : error ? (
-        <div style={{ color: '#fff', textAlign: 'center' }}>
-          something went wrong
+        <div className="error-msg">
+          <p>something went wrong</p>
         </div>
       ) : !data?.digitalItems.length ? (
-        <div style={{ color: '#fff', textAlign: 'center' }}>No Items Here</div>
+        <div className="error-msg">
+          <p>No Items Here</p>
+        </div>
       ) : (
         <div className="music-item-card-container">
           {data?.digitalItems.map((item, i) => {

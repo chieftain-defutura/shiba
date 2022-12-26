@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
@@ -11,7 +11,6 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
 import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
-import { ArrElement } from '../../../constants/types'
 import { tokensList } from '../../../constants/contract'
 import { getTokenDecimals } from '../../../utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
@@ -25,6 +24,18 @@ type IAuctionCardProps = {
   handleApprove: () => Promise<void>
 }
 
+const initialState = {
+  charityAddress: '',
+  price: '',
+  token: {
+    title: '',
+    address: '',
+    decimal: '',
+  },
+  days: '',
+  customDays: '',
+}
+
 const AuctionCard: React.FC<IAuctionCardProps> = ({
   setOnAction,
   contractAddress,
@@ -35,28 +46,22 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
   const { address } = useAccount()
   const location = useLocation()
   const navigate = useNavigate()
-  const [charityAddress, setCharityAddress] = useState('')
   const charityList = useAppSelector((store) => store.general.charityList)
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
   const [dropDown, setDropDown] = useState(false)
-  const [selectedDropDown, setSelectedDropDown] =
-    useState<ArrElement<typeof tokensList>>()
-  const [price, setPrice] = useState('')
-  const [days, setDays] = useState('')
 
-  useEffect(() => {
-    if (charityList.length) setCharityAddress(charityList[0])
-  }, [charityList])
+  const handlePutOnSale = async (values: typeof initialState) => {
+    if (!address || !data) return
+    console.log(values)
 
-  const handlePutOnSale = async () => {
-    if (!address || !data || !selectedDropDown) return
     try {
       setTransaction({
         loading: true,
         status: 'pending',
         message: PENDING_MESSAGE,
       })
+
       const contract = new ethers.Contract(
         MARKETPLACE_CONTRACT_ADDRESS,
         auctionMarketplaceABI,
@@ -65,13 +70,15 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
       const tx = await contract.createSaleAuction(
         id,
         parseUnits(
-          price,
-          await getTokenDecimals(selectedDropDown.address, data),
+          values.price.toString(),
+          await getTokenDecimals(values.token.address, data),
         ).toString(),
-        selectedDropDown?.address,
-        Number(days),
+        values.token.address,
+        values.days === 'custom'
+          ? Number(values.customDays)
+          : Number(values.days),
         contractAddress,
-        charityAddress,
+        values.charityAddress,
       )
       await tx.wait()
       setTransaction({
@@ -89,24 +96,27 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
 
   const validate = Yup.object({
     charityAddress: Yup.string().required('This is Required'),
-    price: Yup.string().required('This is Required'),
+    price: Yup.number()
+      .moreThan(0, 'price must be greater than 0')
+      .required('This is Required'),
+    token: Yup.object({
+      title: Yup.string().required('This is Required'),
+    }),
+    days: Yup.string().required('This is Required'),
+    customDays: Yup.string().when('days', {
+      is: 'custom',
+      then: Yup.string().required('This is Required'),
+    }),
   })
 
   return (
     <>
       <Formik
-        initialValues={{
-          charityAddress: '',
-          price: '',
-          tokenAddress: '',
-          selectOption: '',
-        }}
-        onSubmit={(values) => {
-          console.log(values)
-        }}
+        initialValues={initialState}
+        onSubmit={handlePutOnSale}
         validationSchema={validate}
       >
-        {() => (
+        {({ setFieldValue, values }) => (
           <Form>
             <div className="on-marketplace-container">
               <BsArrowLeftCircle
@@ -128,6 +138,9 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                   <div className="content-right">
                     <div>
                       <Field as="select" name="charityAddress">
+                        <option value="">
+                          --- select a charity address ---
+                        </option>
                         {charityList.map((list) => (
                           <option key={list} value={list}>
                             {formatAddress(list)}
@@ -142,12 +155,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                     </div>
                     <div className="price-select-container">
                       <div className="left">
-                        <Field
-                          type="number"
-                          placeholder="price"
-                          name="price"
-                          // onChange={(e) => setPrice(e.target.value)}
-                        />
+                        <Field type="number" placeholder="price" name="price" />
                         <ErrorMessage
                           name="price"
                           className="errorMsg"
@@ -160,7 +168,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                           className="header"
                           onClick={() => setDropDown(!dropDown)}
                         >
-                          <p>{selectedDropDown?.title}</p>
+                          <p>{values.token.title}</p>
                           <IoIosArrowDown />
                         </div>
                         <div className={!dropDown ? 'body' : 'body active'}>
@@ -169,7 +177,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                               <p
                                 key={index}
                                 onClick={() => {
-                                  setSelectedDropDown(f)
+                                  setFieldValue('token', f)
                                   setDropDown(false)
                                 }}
                               >
@@ -181,11 +189,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                       </div>
                     </div>
                     <div>
-                      <Field
-                        as="select"
-                        name="selectOption"
-                        //  onChange={(e) => setDays(e.target.value)}
-                      >
+                      <Field as="select" name="days">
                         <option value="">select an option</option>
                         <option value="1">1</option>
                         <option value="3">3</option>
@@ -199,22 +203,30 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                       />
                     </div>
                     <div>
-                      {days === 'custom' && (
-                        <Field
-                          style={{
-                            width: '100%',
-                            height: '30px',
-                            fontSize: '16px',
-                            fontFamily: 'Oswald',
-                          }}
-                          // onChange={(e) => setDays(e.target.value)}
-                          type="text"
-                          placeholder="Enter your custom days"
-                        />
+                      {values.days === 'custom' && (
+                        <div>
+                          <Field
+                            style={{
+                              width: '100%',
+                              height: '30px',
+                              fontSize: '16px',
+                              fontFamily: 'Oswald',
+                            }}
+                            type="number"
+                            placeholder="Enter your custom days"
+                            name="customDays"
+                          />
+                          <ErrorMessage
+                            className="errorMsg"
+                            component="div"
+                            name="customDays"
+                          />
+                        </div>
                       )}
                     </div>
                     {!isApproved ? (
                       <button
+                        type="button"
                         className="putOnSaleBtn"
                         onClick={() => handleApprove()}
                       >
@@ -223,8 +235,8 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                     ) : (
                       <button
                         className="putOnSaleBtn"
+                        type="submit"
                         // disabled={!price || !selectedDropDown || !days}
-                        onClick={handlePutOnSale}
                       >
                         Put On Sale
                       </button>

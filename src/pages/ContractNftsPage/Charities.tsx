@@ -82,11 +82,17 @@ const CharitiesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            <Loading />
+            <div className="loading">
+              <Loading />
+            </div>
           ) : error ? (
-            <div style={{ textAlign: 'center' }}>something went wrong</div>
+            <div className="error-msg">
+              <p>something went wrong</p>
+            </div>
           ) : !nftData.length ? (
-            <div style={{ textAlign: 'center' }}>No Nfts Here</div>
+            <div className="error-msg">
+              <p>No Nfts Here</p>
+            </div>
           ) : (
             <div className="website-container-right">
               {nftData.map((nft, idx: number) => (
@@ -96,6 +102,7 @@ const CharitiesPage: React.FC = () => {
           )}
         </div>
       </div>
+
       <FooterBottom />
     </div>
   )

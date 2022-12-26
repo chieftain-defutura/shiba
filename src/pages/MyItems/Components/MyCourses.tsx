@@ -8,6 +8,7 @@ export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
   category,
   shopDetails,
+  itemName,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -23,7 +24,7 @@ export const CoursesCard: React.FC<IUserDigitalItem> = ({
         <img src={PlayBtn} alt="card" />
       </div>
       <div className="details">
-        <h3>Name: {category}</h3>
+        <h3>Name: {itemName}</h3>
       </div>
     </div>
   )
@@ -39,13 +40,17 @@ const MyCourses: React.FC<IMyCourses> = ({ fetching, error, data }) => {
   return (
     <div className="item-container">
       {fetching ? (
-        <Loading />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : error ? (
-        <div style={{ color: '#fff', textAlign: 'center' }}>
-          something went wrong
+        <div className="error-msg">
+          <p>something went wrong</p>
         </div>
       ) : !data?.digitalItems.length ? (
-        <div style={{ color: '#fff', textAlign: 'center' }}>No Items Here</div>
+        <div className="error-msg">
+          <p>No Items Here</p>
+        </div>
       ) : (
         <div className="item-card-container">
           {data?.digitalItems.map((item, i) => {

@@ -42,7 +42,12 @@ const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
   const { data, fetching } = result
   console.log(data)
 
-  if (fetching) return <Loading />
+  if (fetching)
+    return (
+      <div className="loading">
+        <Loading />
+      </div>
+    )
 
   if (data[Object.keys(data)[0]] === null)
     return (

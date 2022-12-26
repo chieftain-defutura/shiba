@@ -9,7 +9,6 @@ import Skeleton from 'react-loading-skeleton'
 import { useTransactionModal } from '../../context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import slideImg from '../../assets/img/card-22.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import HomeLayout from '../../Layout/HomeLayout'
@@ -41,7 +40,9 @@ const DigitalItemsDetailsPage: React.FC = () => {
   return (
     <HomeLayout>
       {fetching ? (
-        <Loading />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : !data ? (
         <div>
           <p style={{ textTransform: 'uppercase' }}>
@@ -60,6 +61,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   shopDetails,
   metadata,
   price,
+  status,
 }) => {
   const { itemId } = useParams()
   const { data: signerData } = useSigner()
@@ -123,10 +125,13 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             <div className="slider">
               <Slider {...settings} ref={slider}>
                 <div className="slider-item">
-                  <img src={slideImg} alt="slider" />
+                  <img src={ipfsData?.photoOne} alt="slider" />
                 </div>
                 <div className="slider-item">
-                  <img src={slideImg} alt="slider" />
+                  <img src={ipfsData?.photoTwo} alt="slider" />
+                </div>
+                <div className="slider-item">
+                  <img src={ipfsData?.photoThree} alt="slider" />
                 </div>
               </Slider>
               <button
@@ -177,7 +182,8 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                   {erc20Token.symbol}
                 </p>
               </div>
-              <button onClick={handleBuy}>Buy</button>
+              {status === 'ACTIVE' && <button onClick={handleBuy}>Buy</button>}
+              {status === 'PURCHASED' && <h3>Item is Sold</h3>}
             </div>
           </div>
         </div>

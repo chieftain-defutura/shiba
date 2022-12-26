@@ -17,7 +17,7 @@ const userSlice = createSlice({
       state.leashBalance = Number(action.payload)
     },
     updateShibBalance: (state, action) => {
-      state.shiBalance = Number(action.payload)
+      state.shibBalance = Number(action.payload)
     },
     updateBoneBalance: (state, action) => {
       state.boneBalance = Number(action.payload)
