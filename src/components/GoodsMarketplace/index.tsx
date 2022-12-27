@@ -8,6 +8,7 @@ import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
 import { goodsItemsQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
 import PhysicalItem from '../PhysicallItem/PhysicalItem'
+import { parseUnits } from 'ethers/lib/utils.js'
 
 interface IGoodsPhysical {
   data:
@@ -21,13 +22,6 @@ interface IGoodsPhysical {
   physicalData: { physicalItems: IGoodsPhysicalItem[] }
   clickDropDown: string | null
   goodsCheckBox: string[]
-  priceData:
-    | {
-        physicalItems: IGoodsPhysicalItem[]
-        digitalItems: IGoodsDigitalItem[]
-      }
-    | undefined
-  value: string
 }
 
 export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
@@ -36,8 +30,6 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
   physicalData,
   clickDropDown,
   goodsCheckBox,
-  priceData,
-  value,
 }) => {
   return (
     <>
@@ -51,80 +43,9 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
         </div>
       ) : (
         <div className="marketplace-container-right-content">
-          {value === '' ? (
-            clickDropDown === null ? (
-              <>
-                {data?.digitalItems.map((f, idx) => (
-                  <div key={idx}>
-                    <Link
-                      to={`/digital-item-details/${f.id}`}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <DigitalItem {...f} />
-                    </Link>
-                  </div>
-                ))}
-                {data?.physicalItems.map((f, idx) => (
-                  <div key={idx}>
-                    <Link
-                      to={`/physical-item-details/${f.id}`}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <PhysicalItem {...f} />
-                    </Link>
-                  </div>
-                ))}
-              </>
-            ) : clickDropDown === 'Physical Goods' ? (
-              goodsCheckBox.length <= 0 ? (
-                data?.physicalItems.map((f, idx) => (
-                  <div key={idx}>
-                    <Link
-                      to={`/physical-item-details/${f.id}`}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <PhysicalItem {...f} />
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                physicalData?.physicalItems.map((f, idx) => (
-                  <div key={idx}>
-                    <Link
-                      to={`/physical-item-details/${f.id}`}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <PhysicalItem {...f} />
-                    </Link>
-                  </div>
-                ))
-              )
-            ) : goodsCheckBox.length <= 0 ? (
-              data?.digitalItems.map((f, idx) => (
-                <div key={idx}>
-                  <Link
-                    to={`/digital-item-details/${f.id}`}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <DigitalItem {...f} />
-                  </Link>
-                </div>
-              ))
-            ) : (
-              digitalData?.digitalItems.map((f, idx) => (
-                <div key={idx}>
-                  <Link
-                    to={`/digital-item-details/${f.id}`}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <DigitalItem {...f} />
-                  </Link>
-                </div>
-              ))
-            )
-          ) : (
+          {clickDropDown === null ? (
             <>
-              {priceData?.digitalItems.map((f, idx) => (
+              {data?.digitalItems.map((f, idx) => (
                 <div key={idx}>
                   <Link
                     to={`/digital-item-details/${f.id}`}
@@ -134,7 +55,7 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
                   </Link>
                 </div>
               ))}
-              {priceData?.physicalItems.map((f, idx) => (
+              {data?.physicalItems.map((f, idx) => (
                 <div key={idx}>
                   <Link
                     to={`/physical-item-details/${f.id}`}
@@ -145,6 +66,52 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
                 </div>
               ))}
             </>
+          ) : clickDropDown === 'Physical Goods' ? (
+            goodsCheckBox.length <= 0 ? (
+              data?.physicalItems.map((f, idx) => (
+                <div key={idx}>
+                  <Link
+                    to={`/physical-item-details/${f.id}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <PhysicalItem {...f} />
+                  </Link>
+                </div>
+              ))
+            ) : (
+              physicalData?.physicalItems.map((f, idx) => (
+                <div key={idx}>
+                  <Link
+                    to={`/physical-item-details/${f.id}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <PhysicalItem {...f} />
+                  </Link>
+                </div>
+              ))
+            )
+          ) : goodsCheckBox.length <= 0 ? (
+            data?.digitalItems.map((f, idx) => (
+              <div key={idx}>
+                <Link
+                  to={`/digital-item-details/${f.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <DigitalItem {...f} />
+                </Link>
+              </div>
+            ))
+          ) : (
+            digitalData?.digitalItems.map((f, idx) => (
+              <div key={idx}>
+                <Link
+                  to={`/digital-item-details/${f.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <DigitalItem {...f} />
+                </Link>
+              </div>
+            ))
           )}
         </div>
       )}
@@ -157,13 +124,8 @@ interface IGoodsMarketPlace {
   physicalData: { physicalItems: IGoodsPhysicalItem[] }
   clickDropDown: string | null
   goodsCheckBox: string[]
-  priceData:
-    | {
-        physicalItems: IGoodsPhysicalItem[]
-        digitalItems: IGoodsDigitalItem[]
-      }
-    | undefined
-  value: string
+  debouncedDomainName: string
+  selectedDropDown: string | undefined
 }
 
 const GoodsMaretPlace: React.FC<IGoodsMarketPlace> = ({
@@ -171,27 +133,32 @@ const GoodsMaretPlace: React.FC<IGoodsMarketPlace> = ({
   physicalData,
   clickDropDown,
   goodsCheckBox,
-  priceData,
-  value,
+  debouncedDomainName,
+  selectedDropDown,
 }) => {
   const [result] = useQuery<{
     physicalItems: IGoodsPhysicalItem[]
     digitalItems: IGoodsDigitalItem[]
   }>({
     query: goodsItemsQuery,
+    variables: {
+      price:
+        parseUnits(
+          !debouncedDomainName ? '0' : debouncedDomainName,
+          '18',
+        ).toString() || !debouncedDomainName,
+      erc20Token: selectedDropDown,
+    },
   })
   const { data } = result
   return (
     <>
-      {/* <GoodsDigital data={data?.digitalItems} /> */}
       <GoodsPhysical
         data={data}
         digitalData={digitalData}
         physicalData={physicalData}
         clickDropDown={clickDropDown}
         goodsCheckBox={goodsCheckBox}
-        priceData={priceData}
-        value={value}
       />
     </>
   )
