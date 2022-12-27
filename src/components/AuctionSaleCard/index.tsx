@@ -2,17 +2,24 @@ import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import ReactCountdown, { CountdownRenderProps } from 'react-countdown'
-
+import Skeleton from 'react-loading-skeleton'
+import { useQuery } from 'urql'
 import { formatEther } from 'ethers/lib/utils.js'
+
 import { useTransactionModal } from '../../context/TransactionContext'
-import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import {
+  DOMAIN_NFT_CONTRACT_ADDRESS,
+  MARKETPLACE_CONTRACT_ADDRESS,
+} from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import { IAuctionNft } from '../../constants/types'
 import Button from '../Button'
 import Modal from '../Model'
-
-import cardImg from '../../assets/img/card-3.png'
 import Close from '../../assets/icon/close.svg'
+import camera from '../../assets/icon/Camera.svg'
+import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
+import { formatAddress } from '../../constants/variants'
+import Loading from '../Loading/Loading'
 
 const AuctionSaleCard: React.FC<IAuctionNft> = ({
   erc20Token,
@@ -23,13 +30,14 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
   highestBid,
   startTime,
   endTime,
+  tokenId,
+  erc721TokenAddress,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
   const [open, setOpen] = useState(false)
   const [placeBid, setPlaceBid] = useState('')
-
   const auctionPrice = Number(formatEther(highestBid ? highestBid : price))
 
   const handleSale = async () => {
@@ -127,7 +135,7 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
           <div className="card-auction">
             <p>Auction Ended.</p>
           </div>
-          <div className="card-btn">
+          <div className="card-btns">
             {address?.toLowerCase() === owner.toLowerCase() ? (
               <>
                 <button onClick={handleFinishAuction}> Finish Auction</button>
@@ -163,13 +171,16 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
   return (
     <div className="marketplace-card-container">
       <div className="card">
-        <div className="card-top">
-          <img src={cardImg} alt="card" />
-        </div>
-        <div className="card-center">
-          <h3 className="title">The Holy Grail</h3>
-          <h4 className="sub-title">Pixart Motion</h4>
-        </div>
+        {erc721TokenAddress.toLowerCase() ===
+        DOMAIN_NFT_CONTRACT_ADDRESS.toLowerCase() ? (
+          <DomainImageCard owner={owner} tokenId={tokenId} />
+        ) : (
+          <Card
+            tokenId={tokenId}
+            erc721TokenAddress={erc721TokenAddress}
+            owner={owner}
+          />
+        )}
         <div className="card-bottom">
           <div className="card-price">
             <p>Reserved price</p>
@@ -211,6 +222,78 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
         </div>
       </div>
     </div>
+  )
+}
+
+const DomainImageCard: React.FC<{
+  tokenId: string
+  owner: string
+}> = ({ owner }) => {
+  const [result] = useQuery({
+    query: `query($id: ID!){
+    domainToken(id:$id){
+      domainName
+    }
+  }`,
+  })
+  const { fetching, data } = result
+  console.log(data)
+  return (
+    <>
+      <div className="card-top">
+        <h3>{fetching ? <Loading /> : data?.domainName}</h3>
+      </div>
+      <div className="card-center">
+        <h3 className="title">Owner</h3>
+        <h4 className="sub-title">{formatAddress(owner)}</h4>
+      </div>
+    </>
+  )
+}
+
+const Card: React.FC<{
+  tokenId: string
+  erc721TokenAddress: string
+  owner: string
+}> = ({ tokenId, erc721TokenAddress, owner }) => {
+  const [imageError, setImageError] = useState(false)
+  const { data, isLoading } = useGetNftsByIdQuery({
+    tokenId,
+    contractAddress: erc721TokenAddress,
+  })
+
+  return (
+    <>
+      {isLoading ? (
+        <div className="card-loader">
+          <Skeleton height={'100%'} />
+        </div>
+      ) : !data?.metadata?.logo || imageError ? (
+        <div className="card-top">
+          <img src={camera} alt="card" />
+        </div>
+      ) : (
+        <div className="card-top">
+          <img
+            src={data?.metadata?.logo}
+            alt="card"
+            onError={() => setImageError(true)}
+          />
+        </div>
+      )}
+      <div className="card-center">
+        <h3 className="title">
+          {isLoading ? (
+            <Skeleton />
+          ) : !data?.metadata?.shopName ? (
+            'unnamed'
+          ) : (
+            data?.metadata?.shopName
+          )}
+        </h3>
+        <h4 className="sub-title">{formatAddress(owner)}</h4>
+      </div>
+    </>
   )
 }
 
