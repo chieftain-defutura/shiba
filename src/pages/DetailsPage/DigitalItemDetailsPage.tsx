@@ -127,60 +127,48 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             <div className="slider">
               <Slider {...settings} ref={slider}>
                 <div className="slider-item">
-                  {digitalErrorImg ? (
+                  {isLoading ? (
+                    <Skeleton height={'58%'} width={'58%'} />
+                  ) : digitalErrorImg ? (
                     <div className="sliderImg-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
                   ) : (
-                    <div>
-                      {isLoading ? (
-                        <Skeleton width={'100%'} height={'100%'} />
-                      ) : (
-                        <img
-                          src={ipfsData?.photoOne}
-                          alt="slider"
-                          onError={() => setDigitalErrorImg(true)}
-                        />
-                      )}
-                    </div>
+                    <img
+                      src={ipfsData?.photoOne}
+                      alt="slider"
+                      onError={() => setDigitalErrorImg(true)}
+                    />
                   )}
                 </div>
                 <div className="slider-item">
-                  {digitalErrorImg ? (
+                  {isLoading ? (
+                    <Skeleton height={'58%'} width={'58%'} />
+                  ) : digitalErrorImg ? (
                     <div className="sliderImg-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
                   ) : (
-                    <div>
-                      {isLoading ? (
-                        <Skeleton />
-                      ) : (
-                        <img
-                          src={ipfsData?.photoTwo}
-                          alt="slider"
-                          onError={() => setDigitalErrorImg(true)}
-                        />
-                      )}
-                    </div>
+                    <img
+                      src={ipfsData?.photoTwo}
+                      alt="slider"
+                      onError={() => setDigitalErrorImg(true)}
+                    />
                   )}
                 </div>
                 <div className="slider-item">
-                  {digitalErrorImg ? (
+                  {isLoading ? (
+                    <Skeleton height={'58%'} width={'58%'} />
+                  ) : digitalErrorImg ? (
                     <div className="sliderImg-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
                   ) : (
-                    <div>
-                      {isLoading ? (
-                        <Skeleton />
-                      ) : (
-                        <img
-                          src={ipfsData?.photoThree}
-                          alt="slider"
-                          onError={() => setDigitalErrorImg(true)}
-                        />
-                      )}
-                    </div>
+                    <img
+                      src={ipfsData?.photoThree}
+                      alt="slider"
+                      onError={() => setDigitalErrorImg(true)}
+                    />
                   )}
                 </div>
               </Slider>

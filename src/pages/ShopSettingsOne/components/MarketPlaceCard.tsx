@@ -22,6 +22,7 @@ type IMarketplaceCardProps = {
   contractAddress: string
   isApproved: boolean
   handleApprove: () => Promise<void>
+  setClickCard: any
 }
 
 const initialState = {
@@ -39,6 +40,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   contractAddress,
   isApproved,
   handleApprove,
+  setClickCard,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
@@ -78,7 +80,8 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
         status: 'success',
         message: SUCCESS_MESSAGE,
       })
-      navigate(`/${location.pathname.split('/')[1]}`)
+      // navigate(`/${location.pathname.split('/')[1]}`)
+      setClickCard(null)
     } catch (error) {
       console.log('------Error On Put on sale--------')
       console.log(error)

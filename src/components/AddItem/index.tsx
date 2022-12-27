@@ -26,6 +26,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 interface IAddItem {
   setAddItem: any
+  setClickCard: any
 }
 
 const initialState = {
@@ -45,7 +46,7 @@ const initialState = {
   currency: '',
   charityAddress: '',
 }
-const AddItem: React.FC<IAddItem> = () => {
+const AddItem: React.FC<IAddItem> = ({ setClickCard }) => {
   const { id } = useParams() as { id: string }
   const { data } = useSigner()
   const { address } = useAccount()
@@ -143,6 +144,7 @@ const AddItem: React.FC<IAddItem> = () => {
       await tx.wait()
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
+      setClickCard(null)
     } catch (error) {
       console.log('Error sending File to IPFS:')
       console.log(error)
@@ -377,7 +379,8 @@ const AddItem: React.FC<IAddItem> = () => {
                     <div className="btn-cont">
                       <Button
                         variant="primary"
-                        type="button"
+                        type="submit"
+
                         // disabled={!(dirty && isValid)}
                       >
                         Submit Listing and Put on Sale

@@ -132,6 +132,7 @@ const Sell: React.FC<{
             contractAddress={contractAddress}
             isApproved={isApproved}
             handleApprove={handleApprove}
+            setClickCard={setClickCard}
           />
         )}
         {onAction && (
@@ -140,6 +141,7 @@ const Sell: React.FC<{
             contractAddress={contractAddress}
             isApproved={isApproved}
             handleApprove={handleApprove}
+            setClickCard={setClickCard}
           />
         )}
       </div>

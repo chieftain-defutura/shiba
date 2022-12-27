@@ -162,60 +162,61 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                     <div className="slider">
                       <Slider {...settings} ref={slider}>
                         <div className="slider-item-img">
+                          {isLoading ? (
+                            <Skeleton height={'58%'} width={'58%'} />
+                          ) : errorImg ? (
+                            <div className="slider-img-camera">
+                              <img src={cameraImg} alt="camera" />
+                            </div>
+                          ) : (
+                            <img
+                              src={ipfsData?.photoOne}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
+                          )}
+                        </div>
+                        {/* <div className="slider-item-img">
                           {errorImg ? (
                             <div className="slider-img-camera">
                               <img src={cameraImg} alt="camera" />
                             </div>
                           ) : (
-                            <div>
-                              {isLoading ? (
-                                <Skeleton />
-                              ) : (
-                                <img
-                                  src={ipfsData?.photoOne}
-                                  alt="slider"
-                                  onError={() => setErrorImg(true)}
-                                />
-                              )}
+                            <img
+                              src={ipfsData?.photoOne}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
+                          )}
+                        </div> */}
+                        <div className="slider-item-img">
+                          {isLoading ? (
+                            <Skeleton height={'58%'} width={'58%'} />
+                          ) : errorImg ? (
+                            <div className="slider-img-camera">
+                              <img src={cameraImg} alt="camera" />
                             </div>
+                          ) : (
+                            <img
+                              src={ipfsData?.photoTwo}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
                           )}
                         </div>
                         <div className="slider-item-img">
-                          {errorImg ? (
+                          {isLoading ? (
+                            <Skeleton height={'58%'} width={'58%'} />
+                          ) : errorImg ? (
                             <div className="slider-img-camera">
                               <img src={cameraImg} alt="camera" />
                             </div>
                           ) : (
-                            <div>
-                              {isLoading ? (
-                                <Skeleton />
-                              ) : (
-                                <img
-                                  src={ipfsData?.photoTwo}
-                                  alt="slider"
-                                  onError={() => setErrorImg(true)}
-                                />
-                              )}
-                            </div>
-                          )}
-                        </div>
-                        <div className="slider-item-img">
-                          {errorImg ? (
-                            <div className="slider-img-camera">
-                              <img src={cameraImg} alt="camera" />
-                            </div>
-                          ) : (
-                            <div>
-                              {isLoading ? (
-                                <Skeleton />
-                              ) : (
-                                <img
-                                  src={ipfsData?.photoThree}
-                                  alt="slider"
-                                  onError={() => setErrorImg(true)}
-                                />
-                              )}
-                            </div>
+                            <img
+                              src={ipfsData?.photoThree}
+                              alt="slider"
+                              onError={() => setErrorImg(true)}
+                            />
                           )}
                         </div>
                       </Slider>

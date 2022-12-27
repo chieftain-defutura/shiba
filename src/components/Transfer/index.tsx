@@ -6,8 +6,13 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
+import { BsArrowLeftCircle } from 'react-icons/bs'
 
-const Transfer: React.FC = () => {
+interface IAppearanceSetting {
+  setClickCard: any
+}
+
+const Transfer: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
   const { id } = useParams()
   const { data } = useSigner()
   const { address } = useAccount()
@@ -32,9 +37,10 @@ const Transfer: React.FC = () => {
 
       const tx = await contract.transferFrom(address, toAddress, id)
       await tx.wait()
-      console.log('success')
+      // navigate(`/${location.pathname.split('/')[1]}`)
       setTransaction({ loading: true, status: 'success' })
-      navigate(`/${location.pathname.split('/')[1]}`)
+      console.log('success')
+      setClickCard(null)
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
@@ -43,6 +49,11 @@ const Transfer: React.FC = () => {
 
   return (
     <div className="transfer-sub-menu-container sub-menu-container">
+      {/* <BsArrowLeftCircle
+        className="arrow-icon"
+        onClick={() => setClickCard(null)}
+      /> */}
+
       <div className="content">
         <input type="text" onChange={(e) => setToAddress(e.target.value)} />
       </div>
