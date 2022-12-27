@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
@@ -46,8 +46,8 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
-  // const location = useLocation()
-  // const navigate = useNavigate()
+  const location = useLocation()
+  const navigate = useNavigate()
   const charityList = useAppSelector((store) => store.general.charityList)
   const { setTransaction } = useTransactionModal()
   const { data } = useSigner()
@@ -88,8 +88,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
         status: 'success',
         message: SUCCESS_MESSAGE,
       })
-      setClickCard(null)
-      // navigate(`/${location.pathname.split('/')[1]}`)
+      navigate(`/${location.pathname.split('/')[1]}`)
     } catch (error) {
       console.log('------Error On Put on Auction--------')
       console.log(error)
