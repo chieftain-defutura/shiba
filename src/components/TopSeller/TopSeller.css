@@ -1,5 +1,5 @@
 .top-seller-container {
-  padding: 0 136px;
+  padding: 0 45px;
   color: var(--textColorOne);
 }
 
@@ -45,8 +45,12 @@
 
 .top-seller-container .top-seller-cards-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 28px;
+  /* grid-template-columns: repeat(4, 1fr); */
+  /* grid-template-columns: repeat(auto-fit, minmax (600px, 4fr)); */
+  /* grid-template-columns: repeat(auto-fit, minmax (180px, 1fr)); */
+  grid-template-columns: repeat(auto-fit, 16rem);
+  place-content: center;
+  /* grid-column-gap: 28px; */
   grid-row-gap: 46px;
   margin-bottom: 58px;
 }

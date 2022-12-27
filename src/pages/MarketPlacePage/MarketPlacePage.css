@@ -147,6 +147,10 @@
   line-height: 21px;
   cursor: pointer;
 }
+.check-box-container {
+  display: flex;
+  align-items: center;
+}
 
 .marketplace-container-left .check-box-container input[type='checkbox'] {
   appearance: none;
@@ -177,8 +181,13 @@
 }
 
 .marketplace-container-left .price-container {
-  margin-top: 63px;
+  margin-top: 60px;
   margin-bottom: 16px;
+}
+.price-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .marketplace-container-left .price-container .title,
@@ -186,15 +195,6 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 27px;
-  margin-bottom: 16px;
-}
-
-.marketplace-container-left .price-container .price-content,
-.currency-container .currency-content {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  padding: 0 11px;
 }
 
 .marketplace-container-left .price-container .price-select-cont,
@@ -213,6 +213,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
+  margin-top: 15px;
 }
 
 .marketplace-container-right {
