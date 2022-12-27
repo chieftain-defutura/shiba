@@ -212,13 +212,13 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
             )}
             {slide === 3 && (
               <div className="social-links-sub-menu-container sub-menu-container">
-                <div className="content">
+                <div className="content topContent">
                   <div className="content-left">
                     <p>Website:</p>
                     <p>Twitter:</p>
                     <p>Instagram:</p>
                   </div>
-                  <div className="content-right">
+                  <div className="content-right topContent">
                     <Field name="website" type="url" placeholder="Link" />
                     <Field name="twitter" type="url" placeholder="Link" />
                     <Field name="instagram" type="url" placeholder="Link" />

@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
+import Skeleton from 'react-loading-skeleton'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import cardImg from '../../assets/img/card-3.png'
 import { shopPageQuery } from '../../constants/query'
 import Loading from '../../components/Loading/Loading'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
-import Skeleton from 'react-loading-skeleton'
 import { formatAddress } from '../../constants/variants'
+import cameraImg from '../../assets/icon/Camera.svg'
 
 interface IShopToken {
   id: string
@@ -276,23 +276,27 @@ const ShopCard: React.FC<{ type: string } & IShopToken> = ({
 }) => {
   const { data, isLoading } = useGetIpfsDataQuery({ hash: tokenUri ?? '' })
   const [imageError, setImageError] = useState(false)
-  console.log(id, isLoading, data)
+
   return (
     <div className="website-card-container">
       <div className="card">
-        <div className="card-top">
-          {isLoading ? (
+        {isLoading ? (
+          <div className="card-loader">
             <Skeleton height={'100%'} />
-          ) : !data || imageError ? (
-            <img src={cardImg} alt="card" />
-          ) : (
+          </div>
+        ) : !data || imageError ? (
+          <div className="card-top">
+            <img src={cameraImg} alt="card" />
+          </div>
+        ) : (
+          <div className="card-top">
             <img
               src={data?.logo}
               alt="card"
               onError={() => setImageError(true)}
             />
-          )}
-        </div>
+          </div>
+        )}
         <div className="card-center">
           <h3 className="title">
             {!data || !data?.shopName ? 'unnamed' : data.shopName}

@@ -84,8 +84,8 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   tokenData,
 }) => {
   const [clickCard, setClickCard] = useState<any>(null)
-  const [clickAddItem, setClickAddItem] = useState<any>(null)
-  const [clickRemoveItem, setClickRemoveItem] = useState<any>(null)
+  const [clickAddItem, setClickAddItem] = useState(true)
+  const [clickRemoveItem, setClickRemoveItem] = useState(true)
   return (
     <>
       {/* <h2 className="heading">{tokenData.domainName}</h2> */}
@@ -218,7 +218,10 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
             {clickAddItem && (
               <div>
                 {contractData.pathName === 'my-digital-shop' ? (
-                  <AddItem setAddItem={setClickAddItem} />
+                  <AddItem
+                    setAddItem={setClickAddItem}
+                    setClickCard={setClickCard}
+                  />
                 ) : (
                   <PhysicalShopForm setClickCard={setClickAddItem} />
                 )}
@@ -299,7 +302,7 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
               {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
             </h2>
 
-            <Transfer />
+            <Transfer setClickCard={setClickCard} />
           </div>
         </div>
       )}

@@ -1,4 +1,5 @@
 import CryptoJs from 'crypto-js'
+import { formatUnits, parseUnits } from 'ethers/lib/utils.js'
 
 const CIPHER_SECRET_KEY = process.env.REACT_APP_CIPHER_SECRET_KEY
 
@@ -23,3 +24,9 @@ export const getDecryptedData = (data: string, ref: string[]) => {
   if (!decryptedData) return 'INVALID CIPHER TEXT'
   return decryptedData
 }
+
+export const formatTokenUnits = (value: string | number, decimals: string) =>
+  formatUnits(value, decimals)
+
+export const parseTokenUnits = (value: string, decimals: string) =>
+  parseUnits(value, decimals)

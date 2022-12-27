@@ -78,6 +78,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
+  margin-top: 80px;
 }
 
 .music-details-container-right .content-box-left .description-cont p {
@@ -209,10 +210,15 @@
   text-transform: uppercase;
   cursor: pointer;
 }
-.slider-item img {
+.slider-items img {
   width: 99.9%;
 }
 .sliderImg-camera img {
-  width: 40%;
-  margin: 50px auto;
+  width: 50%;
+  margin: -40px auto;
+}
+.slider-item img {
+  width: 99.9%;
+  height: 53vh;
+  object-fit: contain;
 }

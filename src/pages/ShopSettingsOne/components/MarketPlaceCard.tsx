@@ -22,6 +22,7 @@ type IMarketplaceCardProps = {
   contractAddress: string
   isApproved: boolean
   handleApprove: () => Promise<void>
+  setClickCard: any
 }
 
 const initialState = {
@@ -39,6 +40,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   contractAddress,
   isApproved,
   handleApprove,
+  setClickCard,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
@@ -179,7 +181,9 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                         Approve
                       </button>
                     ) : (
-                      <button className="putOnSaleBtn">Put On Sale</button>
+                      <button className="putOnSaleBtn" type="submit">
+                        Put On Sale
+                      </button>
                     )}
                   </div>
                 </div>

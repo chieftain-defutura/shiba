@@ -20,8 +20,35 @@ interface IPhysicalShopForm {
   setClickCard: any
 }
 
+const initialState = {
+  logo: '',
+  mainPhoto: '',
+  photoOne: '',
+  photoTwo: '',
+  photoThree: '',
+  itemName: '',
+  category: '',
+  subCategory: '',
+  size: '',
+  colour: '',
+  fabricType: '',
+  itemCondition: '',
+  productDescription: '',
+  productDetails: '',
+  manufacturer: '',
+  brand: '',
+  refundPossible: '',
+  department: '',
+  quantity: '',
+  price: '',
+  currency: '',
+  shipmentArea: '',
+  shipmentFee: '',
+  deliveredIn: '',
+  charityAddress: '',
+}
 const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
-  const { id } = useParams()
+  const { id } = useParams() as { id: string }
   const { address } = useAccount()
   const { data } = useSigner()
   const [slide, setSlide] = useState(1)
@@ -29,6 +56,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
   const [categoryList, setCategoryList] = useState<
     { name: string; subCategory: string[] }[]
   >([])
+
   const dispatch = useAppDispatch()
   const charityList = useAppSelector((store) => store.general.charityList)
   const isFetched = useAppSelector((store) => store.general.isFetched)
@@ -66,7 +94,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
     setSlide(slide + 1)
   }
 
-  const handleAddItem = async (values: any) => {
+  const handleAddItem = async (values: typeof initialState) => {
     if (!address || !data) return
 
     try {
@@ -94,7 +122,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
           shipmentArea: values.shipmentArea,
           shipmentFee: values.shipmentFee,
           deliveredIn: values.deliveredIn,
-          charitiesAddress: values.charitiesAddress,
+          charityAddress: values.charityAddress,
         },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
@@ -127,7 +155,6 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
       console.log('added')
       setTransaction({ loading: true, status: 'success' })
       setClickCard(null)
-      console.log(setClickCard)
     } catch (error) {
       console.log('-----Error: Add Item------')
       console.log(error)
@@ -146,33 +173,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
     <div>
       <div>
         <Formik
-          initialValues={{
-            logo: '',
-            mainPhoto: '',
-            photoOne: '',
-            photoTwo: '',
-            photoThree: '',
-            itemName: '',
-            category: '',
-            subCategory: '',
-            size: '',
-            colour: '',
-            fabricType: '',
-            itemCondition: '',
-            productDescription: '',
-            productDetails: '',
-            manufacturer: '',
-            brand: '',
-            refundPossible: '',
-            department: '',
-            quantity: '',
-            price: '',
-            currency: '',
-            shipmentArea: '',
-            shipmentFee: '',
-            deliveredIn: '',
-            charityAddress: '',
-          }}
+          initialValues={initialState}
           onSubmit={handleAddItem}
           validationSchema={validate}
         >

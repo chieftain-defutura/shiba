@@ -9,12 +9,13 @@ import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { WEBSITE_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import Loading from '../../components/Loading/Loading'
+import Skeleton from 'react-loading-skeleton'
 
 import cardImg from '../../assets/img/card-3.png'
 import './ContractNftsPage.css'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
-  const { data } = useGetNftsByIdQuery({
+  const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
     contractAddress: WEBSITE_NFT_CONTRACT_ADDRESS,
   })
@@ -32,10 +33,16 @@ const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
     <div className="website-card-container">
       <div className="card">
         <div className="card-top">
-          {imageError ? (
-            <img src={cardImg} alt="" />
+          {isLoading ? (
+            <Skeleton height={'100%'} />
+          ) : !data || imageError ? (
+            <img src={cardImg} alt="card" />
           ) : (
-            <img src={data?.metadata?.logo} alt="" />
+            <img
+              src={data?.metadata?.logo}
+              alt="card"
+              onError={() => setImageError(true)}
+            />
           )}
         </div>
         <div className="card-center">

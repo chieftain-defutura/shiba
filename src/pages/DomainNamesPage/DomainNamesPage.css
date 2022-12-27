@@ -70,12 +70,13 @@
 .domain-name-container-right {
   flex: 5;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(5, 150px);
+  row-gap: 25px;
+  column-gap: 15px;
 }
 
 .domain-name-container-right .domain-name-card-container {
-  width: 154px;
+  width: 145px;
 }
 
 .domain-name-container-right .card {

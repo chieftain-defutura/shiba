@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
+import Skeleton from 'react-loading-skeleton'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -9,12 +10,11 @@ import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { CHARITIES_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import Loading from '../../components/Loading/Loading'
-
-import cardImg from '../../assets/img/card-3.png'
+import cameraImg from '../../assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 
 const Card: React.FC<ICharityToken> = ({ owner, id, domainName }) => {
-  const { data } = useGetNftsByIdQuery({
+  const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
     contractAddress: CHARITIES_NFT_CONTRACT_ADDRESS,
   })
@@ -32,10 +32,16 @@ const Card: React.FC<ICharityToken> = ({ owner, id, domainName }) => {
     <div className="website-card-container">
       <div className="card">
         <div className="card-top">
-          {imageError ? (
-            <img src={cardImg} alt="" />
+          {isLoading ? (
+            <Skeleton height={'100%'} />
+          ) : !data || imageError ? (
+            <img src={cameraImg} alt="card" />
           ) : (
-            <img src={data?.metadata?.logo} alt="" />
+            <img
+              src={data?.metadata?.logo}
+              alt="card"
+              onError={() => setImageError(true)}
+            />
           )}
         </div>
         <div className="card-center">

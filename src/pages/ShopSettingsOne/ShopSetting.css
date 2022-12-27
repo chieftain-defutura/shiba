@@ -376,15 +376,16 @@ select {
 
 .stock-management-remove-item-container .remove-item-cards-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 28px;
+  grid-template-columns: repeat(5, 150px);
+  row-gap: 25px;
+  column-gap: 15px;
 }
 
 .stock-management-remove-item-container
   .remove-item-cards-container
   .remove-item-card {
   width: 154px;
-  height: 205px;
+  height: 220px;
   background: var(--bgColorSeven);
   border-radius: 0px 0px 8px 8px;
   position: relative;
@@ -403,7 +404,7 @@ select {
   .remove-item-cards-container
   .remove-item-card
   .card-center {
-  padding: 7px 10px 20px 10px;
+  padding: 7px 10px 10px 10px;
   border-bottom: 1px solid #343741;
 }
 
@@ -751,6 +752,7 @@ select {
   border: 1px solid var(--textColorTwo);
   box-shadow: 0px 0px 24px rgb(253 230 63 / 40%);
   border-radius: 999px;
+  width: 50%;
   height: 45px;
   padding: 4px 30px;
   font-weight: 700;
@@ -898,4 +900,10 @@ button:disabled {
 .files h5 {
   font-size: 28px;
   margin-bottom: 20px;
+}
+.topContent p:nth-child(1) {
+  margin-top: 25px;
+}
+.topContent input:nth-child(1) {
+  margin-top: 25px;
 }

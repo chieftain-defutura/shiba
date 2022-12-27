@@ -125,6 +125,7 @@ const Residual: React.FC<IResidualProps> = ({
       if (!tx) throw new Error('something went wrong')
       await tx.wait()
       setTransaction({ loading: true, status: 'success' })
+      setClickCard(null)
     } catch (error) {
       setTransaction({ loading: true, status: 'error' })
     }

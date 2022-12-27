@@ -22,6 +22,7 @@ type IAuctionCardProps = {
   contractAddress: string
   isApproved: boolean
   handleApprove: () => Promise<void>
+  setClickCard: any
 }
 
 const initialState = {
@@ -41,6 +42,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
   contractAddress,
   isApproved,
   handleApprove,
+  setClickCard,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()

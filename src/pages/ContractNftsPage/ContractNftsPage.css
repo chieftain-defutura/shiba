@@ -6,6 +6,7 @@
   gap: 60px;
   font-family: var(--oswaldFont);
 }
+
 .website-container-left {
   height: 68vh;
 }
@@ -61,13 +62,13 @@
 
 .website-container-right {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  row-gap: 20px;
-  column-gap: 20px;
+  grid-template-columns: repeat(5, 150px);
+  row-gap: 25px;
+  column-gap: 15px;
 }
 
 .website-container-right .website-card-container {
-  width: 154px;
+  width: 145px;
 }
 
 .website-container-right .card {
@@ -76,15 +77,23 @@
   border-radius: 8px;
 }
 
+.website-container-right .card .card-loader {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px 8px 0px 0px;
+}
+
 .website-container-right .card .card-top {
   width: 100%;
   aspect-ratio: 4/3;
+  background-color: #fff;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .website-container-right .card .card-top img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 8px 8px 0px 0px;
 }
 
