@@ -6,7 +6,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { useTransactionModal } from '../../context/TransactionContext'
-import { BsArrowLeftCircle } from 'react-icons/bs'
 
 interface IAppearanceSetting {
   setClickCard: any
@@ -37,10 +36,10 @@ const Transfer: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
 
       const tx = await contract.transferFrom(address, toAddress, id)
       await tx.wait()
-      // navigate(`/${location.pathname.split('/')[1]}`)
+      navigate(`/${location.pathname.split('/')[1]}`)
       setTransaction({ loading: true, status: 'success' })
       console.log('success')
-      setClickCard(null)
+      // setClickCard(null)
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
