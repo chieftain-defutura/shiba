@@ -375,39 +375,52 @@ const MarketPlacePage: React.FC = () => {
             </div>
           </div>
           <div className="price-container">
-            <p className="title">Price</p>
-            <div className="price-content">
+            <div className="price-title">
+              <p className="title">Price</p>
               <div className="price-select-cont">
                 <IoIosArrowDown className="arrow-icon" />
               </div>
+            </div>
+
+            <div className="price-content">
               <div className="check-box-container">
-                <label htmlFor="min">MIN</label>
-                <input
-                  id="min"
-                  type="text"
-                  value={minValue}
-                  onChange={(e) => setMinValue(e.target.value)}
-                />
+                <div>
+                  <label htmlFor="min">MIN</label>
+                </div>
+                <div>
+                  <input
+                    id="min"
+                    type="text"
+                    value={minValue}
+                    onChange={(e) => setMinValue(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="check-box-container">
-                <label htmlFor="max">Max</label>
-                <input
-                  id="max"
-                  type="text"
-                  value={maxValue}
-                  onChange={(e) => setMaxValue(e.target.value)}
-                />
+                <div>
+                  <label htmlFor="max">Max</label>
+                </div>
+                <div>
+                  <input
+                    id="max"
+                    type="text"
+                    value={maxValue}
+                    onChange={(e) => setMaxValue(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div className="currency-container">
-            <p className="title">Currency</p>
-            <div className="currency-content">
-              <div
-                className="currency-select-cont"
-                onClick={() => setOpen(!open)}
-              >
-                <IoIosArrowDown className="arrow-icon" />
+            <div className="price-title">
+              <p className="title">Currency</p>
+              <div className="currency-content">
+                <div
+                  className="currency-select-cont"
+                  onClick={() => setOpen(!open)}
+                >
+                  <IoIosArrowDown className="arrow-icon" />
+                </div>
               </div>
             </div>
           </div>
