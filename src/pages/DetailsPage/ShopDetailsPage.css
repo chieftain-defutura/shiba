@@ -72,7 +72,7 @@
 }
 
 .shoesboutique-container-right .content-box-left .description-cont {
-  margin-top: 12px;
+  margin-top: 40px;
 }
 
 .shoesboutique-container-right .content-box-left .description-cont h3 {
@@ -204,4 +204,9 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
+}
+.slider-shop-item img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
 }

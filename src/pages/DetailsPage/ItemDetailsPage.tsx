@@ -74,7 +74,10 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   const [quantity, setQuantity] = useState(1)
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
-  const [errorImg, setErrorImg] = useState(false)
+  const [itemDetailsErrorImgOne, setItemDetailsErrorImgOne] = useState(false)
+  const [itemDetailsErrorImgTwo, setItemDetailsErrorImgTwo] = useState(false)
+  const [itemDetailsErrorImgThree, setItemDetailsErrorImgThree] =
+    useState(false)
 
   const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
     hash: metadata,
@@ -161,62 +164,58 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                   {!categoriesShipping ? (
                     <div className="slider">
                       <Slider {...settings} ref={slider}>
-                        <div className="slider-item-img">
+                        <div>
                           {isLoading ? (
-                            <Skeleton height={'58%'} width={'58%'} />
-                          ) : errorImg ? (
+                            <Skeleton height={'100%'} />
+                          ) : itemDetailsErrorImgOne ? (
                             <div className="slider-img-camera">
                               <img src={cameraImg} alt="camera" />
                             </div>
                           ) : (
-                            <img
-                              src={ipfsData?.photoOne}
-                              alt="slider"
-                              onError={() => setErrorImg(true)}
-                            />
+                            <div className="slider-item-img">
+                              <img
+                                src={ipfsData?.photoOne}
+                                alt="slider"
+                                onError={() => setItemDetailsErrorImgOne(true)}
+                              />
+                            </div>
                           )}
                         </div>
-                        {/* <div className="slider-item-img">
-                          {errorImg ? (
-                            <div className="slider-img-camera">
-                              <img src={cameraImg} alt="camera" />
-                            </div>
-                          ) : (
-                            <img
-                              src={ipfsData?.photoOne}
-                              alt="slider"
-                              onError={() => setErrorImg(true)}
-                            />
-                          )}
-                        </div> */}
-                        <div className="slider-item-img">
+
+                        <div>
                           {isLoading ? (
-                            <Skeleton height={'58%'} width={'58%'} />
-                          ) : errorImg ? (
+                            <Skeleton height={'100%'} />
+                          ) : itemDetailsErrorImgTwo ? (
                             <div className="slider-img-camera">
                               <img src={cameraImg} alt="camera" />
                             </div>
                           ) : (
-                            <img
-                              src={ipfsData?.photoTwo}
-                              alt="slider"
-                              onError={() => setErrorImg(true)}
-                            />
+                            <div className="slider-item-img">
+                              <img
+                                src={ipfsData?.photoTwo}
+                                alt="slider"
+                                onError={() => setItemDetailsErrorImgTwo(true)}
+                              />
+                            </div>
                           )}
                         </div>
-                        <div className="slider-item-img">
+                        <div>
                           {isLoading ? (
-                            <Skeleton height={'58%'} width={'58%'} />
-                          ) : errorImg ? (
+                            <Skeleton height={'100%'} />
+                          ) : itemDetailsErrorImgThree ? (
                             <div className="slider-img-camera">
                               <img src={cameraImg} alt="camera" />
                             </div>
                           ) : (
-                            <img
-                              src={ipfsData?.photoThree}
-                              alt="slider"
-                              onError={() => setErrorImg(true)}
-                            />
+                            <div className="slider-item-img">
+                              <img
+                                src={ipfsData?.photoThree}
+                                alt="slider"
+                                onError={() =>
+                                  setItemDetailsErrorImgThree(true)
+                                }
+                              />
+                            </div>
                           )}
                         </div>
                       </Slider>
@@ -309,7 +308,10 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                       Object.entries(ipfsData)
                         .slice(5)
                         .map((value: any, index) => (
-                          <p key={index.toString()}>
+                          <p
+                            key={index.toString()}
+                            style={{ wordBreak: 'break-all' }}
+                          >
                             <span style={{ textTransform: 'capitalize' }}>
                               {value[0].replace(/([a-z](?=[A-Z]))/g, '$1 ')}
                             </span>

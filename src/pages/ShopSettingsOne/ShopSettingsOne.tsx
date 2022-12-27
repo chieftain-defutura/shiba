@@ -84,8 +84,8 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   tokenData,
 }) => {
   const [clickCard, setClickCard] = useState<any>(null)
-  const [clickAddItem, setClickAddItem] = useState(true)
-  const [clickRemoveItem, setClickRemoveItem] = useState(true)
+  const [clickAddItem, setClickAddItem] = useState(false)
+  const [clickRemoveItem, setClickRemoveItem] = useState(false)
   return (
     <>
       {/* <h2 className="heading">{tokenData.domainName}</h2> */}
@@ -178,44 +178,52 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
 
             {!clickRemoveItem && <h2 className="title">{clickCard}</h2>}
 
-            {!clickAddItem && !clickRemoveItem && (
-              <>
-                <div className="stock-management-cards">
-                  <div className="stock-management-card">
-                    <img src={cardImgSeven} alt="card" />
-                    <div className="card-content" style={{ padding: '0 10px' }}>
-                      <p className="title">Add new item in shop</p>
-                      <p className="desc">
-                        Lorem Ipsum has been the industry standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
-                      </p>
-                      <button onClick={() => setClickAddItem(true)}>
-                        Demo
-                      </button>
+            {clickCard === 'stock management' &&
+              !clickAddItem &&
+              !clickRemoveItem && (
+                <>
+                  <div className="stock-management-cards">
+                    <div className="stock-management-card">
+                      <img src={cardImgSeven} alt="card" />
+                      <div
+                        className="card-content"
+                        style={{ padding: '0 10px' }}
+                      >
+                        <p className="title">Add new item in shop</p>
+                        <p className="desc">
+                          Lorem Ipsum has been the industry standard dummy text
+                          ever since the 1500s, when an unknown printer took a
+                          galley of type and scrambled it to make a type
+                          specimen book.
+                        </p>
+                        <button onClick={() => setClickAddItem(true)}>
+                          Demo
+                        </button>
+                      </div>
+                    </div>
+                    <div className="stock-management-card">
+                      <img src={cardImgEighth} alt="card" />
+                      <div
+                        className="card-content"
+                        style={{ padding: '0 10px' }}
+                      >
+                        <p className="title">Remove Item From Shop</p>
+                        <p className="desc">
+                          Lorem Ipsum has been the industry standard dummy text
+                          ever since the 1500s, when an unknown printer took a
+                          galley of type and scrambled it to make a type
+                          specimen book.
+                        </p>
+                        <button onClick={() => setClickRemoveItem(true)}>
+                          Demo
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="stock-management-card">
-                    <img src={cardImgEighth} alt="card" />
-                    <div className="card-content" style={{ padding: '0 10px' }}>
-                      <p className="title">Remove Item From Shop</p>
-                      <p className="desc">
-                        Lorem Ipsum has been the industry standard dummy text
-                        ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen
-                        book.
-                      </p>
-                      <button onClick={() => setClickRemoveItem(true)}>
-                        Demo
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
 
-            {clickAddItem && (
+            {clickCard === 'stock management' && clickAddItem && (
               <div>
                 {contractData.pathName === 'my-digital-shop' ? (
                   <AddItem
@@ -291,17 +299,6 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
         <div>
           <h2 className="heading">{tokenData.domainName}</h2>
           <div className="residual-container">
-            {!clickAddItem && (
-              <BsArrowLeftCircle
-                className="arrow-icon"
-                onClick={() => setClickCard(null)}
-                style={{ marginTop: '15px' }}
-              />
-            )}
-            <h2 className="title">
-              {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-            </h2>
-
             <Transfer setClickCard={setClickCard} />
           </div>
         </div>

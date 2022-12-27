@@ -434,7 +434,8 @@ select {
   .remove-item-cards-container
   .remove-item-card
   .card-bottom {
-  padding: 8px;
+  padding: 4px;
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -549,10 +550,19 @@ select {
   cursor: pointer;
   margin-left: 100px;
 }
-
-/* .brief-description-sub-menu-container .content-left {
-  gap: 228px;
-} */
+.transfer-head h2 {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 25px;
+}
+.transfer-head svg {
+  margin: 22px 0 25px;
+}
 
 .brief-description-sub-menu-container .content-right {
   gap: 30px;

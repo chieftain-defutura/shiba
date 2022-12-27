@@ -1,69 +1,39 @@
-import React, { useEffect, useCallback, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useAccount } from 'wagmi'
+import { useQuery } from 'urql'
 
-import { SUB_GRAPH_API_URL } from '../../constants/api'
 import Card from './PhysicalCard'
+import { removePhysicalItemQuery } from '../../constants/query'
+import { IRemovePhysicalItem } from '../../constants/types'
 
 const PhysicalRemoveItem: React.FC = () => {
   const { id } = useParams()
-  const { address } = useAccount()
-  const [removePhysicalItems, setRemovePhysicalItems] = useState<any[]>([])
-
-  const handleRemovePhysicalItems = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-          query{
-            physicalItems(where:{ status: ACTIVE,shopDetails: "${id}"}){
-              id
-              quantity
-              shopDetails{
-                id
-              }
-              price
-              owner
-              erc20Token {
-                id
-                symbol
-                decimals
-              }
-              subcategory
-              category
-            }
-          }
-            `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-
-      setRemovePhysicalItems(data.data.physicalItems)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address, id])
-
-  useEffect(() => {
-    handleRemovePhysicalItems()
-  }, [handleRemovePhysicalItems])
+  const [result] = useQuery<{ physicalItems: IRemovePhysicalItem[] }>({
+    query: removePhysicalItemQuery,
+    variables: { id: id },
+    pause: !id,
+  })
+  const { fetching, data, error } = result
 
   return (
-    <div className="stock-management-remove-item-container">
-      <div className="remove-item-cards-container">
-        {removePhysicalItems.map((f, idx) => (
-          <div key={idx}>
-            <Card {...f} />
+    <div>
+      {fetching ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>something went wrong</div>
+      ) : !data?.physicalItems.length ? (
+        <div>No result</div>
+      ) : (
+        <div className="stock-management-remove-item-container">
+          <div className="remove-item-cards-container">
+            {data?.physicalItems.map((f, idx) => (
+              <div key={idx}>
+                <Card {...f} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

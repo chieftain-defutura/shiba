@@ -122,7 +122,6 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
           shipmentArea: values.shipmentArea,
           shipmentFee: values.shipmentFee,
           deliveredIn: values.deliveredIn,
-          charityAddress: values.charityAddress,
         },
         headers: {
           pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
@@ -148,7 +147,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
         values.category,
         values.subCategory,
         values.itemName,
-        '0xe05f949AB280414F4e3279fF3BE1e39774e4B4f3',
+        values.charityAddress,
       )
 
       await tx.wait()

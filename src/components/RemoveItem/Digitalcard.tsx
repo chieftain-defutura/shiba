@@ -7,21 +7,9 @@ import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
 import { formatUnits } from 'ethers/lib/utils.js'
 import cardImg from '../../assets/img/card-3.png'
+import { IRemoveDigitalItem } from '../../constants/types'
 
-interface ICard {
-  id: number
-  shopDetails: {
-    id: number
-  }
-  erc20Token: {
-    id: string
-    symbol: string
-    decimals: string
-  }
-  price: number
-}
-
-const DigitalCard: React.FC<ICard> = ({
+const DigitalCard: React.FC<IRemoveDigitalItem> = ({
   id: itemId,
   shopDetails: { id: shopId },
   erc20Token,
@@ -30,7 +18,6 @@ const DigitalCard: React.FC<ICard> = ({
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
-  //arrow
   const [slide] = useState(true)
 
   const handleRemoveItem = async () => {
@@ -81,9 +68,6 @@ const DigitalCard: React.FC<ICard> = ({
               <button>Details</button>
               <button onClick={handleRemoveItem}>Remove Shop</button>
             </div>
-          </div>
-          <div className="remove-card-bottom">
-            <p>Name: shoes winter</p>
           </div>
         </div>
       )}

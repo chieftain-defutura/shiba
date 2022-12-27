@@ -1,66 +1,39 @@
-import React, { useEffect, useCallback, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useAccount } from 'wagmi'
+import { useQuery } from 'urql'
 
-import { SUB_GRAPH_API_URL } from '../../constants/api'
 import Card from './Digitalcard'
+import { removeDigitalItemQuery } from '../../constants/query'
+import { IRemoveDigitalItem } from '../../constants/types'
 
 const DigitalRemoveItem: React.FC = () => {
   const { id } = useParams()
-  const { address } = useAccount()
-  const [removeDigitalItems, setRemoveDigitalItems] = useState<any[]>([])
+  const [result] = useQuery<{ digitalItems: IRemoveDigitalItem[] }>({
+    query: removeDigitalItemQuery,
+    variables: { id: id },
+    pause: !id,
+  })
+  const { fetching, data, error } = result
 
-  const handleRemovePhysicalItems = useCallback(async () => {
-    try {
-      if (!address) return
-      const { data } = await axios.post(
-        SUB_GRAPH_API_URL,
-        {
-          query: `
-       query{
-  digitalItems(where:{status:ACTIVE,shopDetails: "${id}"}){
-    id
-    shopDetails{
-      id
-    }
-		price
-    owner
-    erc20Token {
-      id
-      symbol
-      decimals
-    }
-    subcategory
-    category
-  }
-}
-        `,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      setRemoveDigitalItems(data.data.digitalItems)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [address, id])
-
-  useEffect(() => {
-    handleRemovePhysicalItems()
-  }, [handleRemovePhysicalItems])
   return (
-    <div className="stock-management-remove-item-container">
-      <div className="remove-item-cards-container">
-        {removeDigitalItems.map((f, idx) => (
-          <div key={idx}>
-            <Card {...f} />
+    <div>
+      {fetching ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>something went wrong</div>
+      ) : !data?.digitalItems.length ? (
+        <div>No result</div>
+      ) : (
+        <div className="stock-management-remove-item-container">
+          <div className="remove-item-cards-container">
+            {data?.digitalItems.map((f, idx) => (
+              <div key={idx}>
+                <Card {...f} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
