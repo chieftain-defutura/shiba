@@ -303,8 +303,9 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                 </div>
                 <div className="content-box-right">
                   <div className="product-details">
-                    {isLoading && <Skeleton count={10} />}
-                    {ipfsData &&
+                    {isLoading ? (
+                      <Skeleton count={10} />
+                    ) : ipfsData ? (
                       Object.entries(ipfsData)
                         .slice(5)
                         .map((value: any, index) => (
@@ -317,7 +318,8 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                             </span>
                             &nbsp;:&nbsp;<span>{value[1]}</span>
                           </p>
-                        ))}
+                        ))
+                    ) : null}
                   </div>
                   <br />
                   <div className="quantity-container">

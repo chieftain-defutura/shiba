@@ -1,12 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
+import { useNavigate } from 'react-router-dom'
 
 import './SliderCard.css'
 import Loading from '../Loading/Loading'
 import Camera from '../../assets/icon/Camera.svg'
-import cardOne from '../../assets/img/card-1.png'
 import ethIcon from '../../assets/img/eth-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
@@ -38,21 +38,26 @@ const Card: React.FC<IRecentlyListedItems> = ({
   price,
   erc20Token,
   metadata,
-  owner,
   shopDetails,
 }) => {
-  console.log(metadata)
   const { isLoading, data } = useGetIpfsDataQuery({ hash: metadata })
+  const [imageError, setImageError] = useState(false)
+  const navigate = useNavigate()
+
   return (
     <div>
       <div className="slider-card">
         <div className="card-top">
           {isLoading ? (
             <Skeleton height={'100%'} />
-          ) : !data ? (
+          ) : !data || imageError ? (
             <img src={Camera} alt="card" />
           ) : (
-            <img src={cardOne} alt="card" />
+            <img
+              src={data?.logo}
+              alt="card"
+              onError={() => setImageError(true)}
+            />
           )}
         </div>
         <div className="card-bottom">
@@ -96,7 +101,12 @@ const Card: React.FC<IRecentlyListedItems> = ({
             </div> */}
           </div>
         </div>
-        <button className="collect-btn">Buy Now</button>
+        <button
+          className="collect-btn"
+          onClick={() => navigate(`/physical-item-details/${id}`)}
+        >
+          Buy Now
+        </button>
       </div>
     </div>
   )

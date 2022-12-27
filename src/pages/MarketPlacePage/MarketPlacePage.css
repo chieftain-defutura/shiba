@@ -278,9 +278,24 @@
   margin-left: 0px;
 }
 
-.marketplace-container-right .card .card-top img {
+.marketplace-container-right .card .card-top {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #fff;
   border-radius: 8px 8px 0px 0px;
-  width: 145px;
+}
+
+.marketplace-container-right .card .card-loader {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.marketplace-container-right .card .card-top img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .marketplace-container-right .card .card-center {
