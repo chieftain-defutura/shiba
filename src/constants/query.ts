@@ -376,3 +376,43 @@ query{
   }
 }
 `
+export const removePhysicalItemQuery = `
+query($id:String!){
+  physicalItems(where:{ status: ACTIVE,shopDetails: $id}){
+    id
+    quantity
+    shopDetails{
+      id
+    }
+    price
+    owner
+    erc20Token {
+      id
+      symbol
+      decimals
+    }
+    subcategory
+    category
+  }
+}
+`
+
+export const removeDigitalItemQuery = `
+query($id:String!){
+  digitalItems(where:{status:ACTIVE,shopDetails: $id}){
+    id
+    shopDetails{
+      id
+    }
+		price
+    owner
+    erc20Token {
+      id
+      symbol
+      decimals
+    }
+    subcategory
+    category
+  }
+}
+`

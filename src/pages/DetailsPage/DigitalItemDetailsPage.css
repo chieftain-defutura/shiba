@@ -210,15 +210,14 @@
   text-transform: uppercase;
   cursor: pointer;
 }
-.slider-items img {
-  width: 99.9%;
-}
-.sliderImg-camera img {
-  width: 50%;
-  margin: -40px auto;
-}
+
 .slider-item img {
-  width: 99.9%;
-  height: 53vh;
-  object-fit: contain;
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+
+.sliderImg-camera img {
+  width: 100%;
+  aspect-ratio: 18/10;
 }

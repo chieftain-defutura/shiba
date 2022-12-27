@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Slider from 'react-slick'
 import { useQuery } from 'urql'
+import Skeleton from 'react-loading-skeleton'
 
 import './ShopDetailsPage.css'
 import HomeLayout from '../../Layout/HomeLayout'
@@ -18,6 +19,7 @@ import videoIcon from '../../assets/img/video-icon.png'
 import closeIcon from '../../assets/img/close-icon.png'
 import Loading from '../../components/Loading/Loading'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
+import cameraImg from '../../assets/icon/Camera.svg'
 
 const settings = {
   dots: false,
@@ -60,6 +62,10 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
   const slider = useRef<Slider>(null)
   const [upVoteClick, setUpVoteClick] = useState(false)
   const [downVoteClick, setDownVoteClick] = useState(false)
+  const [shopErrorImgOne, setShopErrorImgOne] = useState(false)
+  const [shopErrorImgTwo, setShopErrorImgTwo] = useState(false)
+  const [shopErrorImgThree, setShopErrorImgThree] = useState(false)
+
   const { isLoading, data } = useGetIpfsDataQuery(
     { hash: shopData?.tokenUri ?? '' },
     { skip: !shopData.tokenUri },
@@ -89,11 +95,50 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
           {!upVoteClick && !downVoteClick && (
             <div className="slider">
               <Slider {...settings} ref={slider}>
-                <div className="slider-item">
-                  <img src={slideImg} alt="slider" />
+                <div className="slider-shop-item">
+                  {isLoading ? (
+                    <Skeleton height={'100%'} />
+                  ) : shopErrorImgOne ? (
+                    <div className="slider-img-camera">
+                      <img src={cameraImg} alt="camera" />
+                    </div>
+                  ) : (
+                    <img
+                      src={data?.videoOne}
+                      alt="slider"
+                      onError={() => setShopErrorImgOne(true)}
+                    />
+                  )}
                 </div>
-                <div className="slider-item">
-                  <img src={slideImg} alt="slider" />
+                <div className="slider-shop-item">
+                  {isLoading ? (
+                    <Skeleton height={'100%'} />
+                  ) : shopErrorImgTwo ? (
+                    <div className="slider-img-camera">
+                      <img src={cameraImg} alt="camera" />
+                    </div>
+                  ) : (
+                    <img
+                      src={data?.videoTwo}
+                      alt="slider"
+                      onError={() => setShopErrorImgTwo(true)}
+                    />
+                  )}
+                </div>
+                <div className="slider-shop-item">
+                  {isLoading ? (
+                    <Skeleton height={'100%'} />
+                  ) : shopErrorImgThree ? (
+                    <div className="slider-img-camera">
+                      <img src={cameraImg} alt="camera" />
+                    </div>
+                  ) : (
+                    <img
+                      src={data?.videoThree}
+                      alt="slider"
+                      onError={() => setShopErrorImgThree(true)}
+                    />
+                  )}
                 </div>
               </Slider>
               <button

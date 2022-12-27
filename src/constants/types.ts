@@ -218,3 +218,44 @@ export type IIpfsShipmentDetails = {
   zipCode: string
   country: string
 }
+
+export type IRemovePhysicalItem = {
+  id: string
+  itemName: string
+  metadata: string
+  quantity: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  shopDetails: {
+    id: string
+    domainId: string
+    domainName: string
+  }
+  price: string
+  owner: {
+    id: string
+  }
+}
+
+export type IRemoveDigitalItem = {
+  id: string
+  itemName: string
+  metadata: string
+  erc20Token: {
+    id: string
+    symbol: string
+    decimals: string
+  }
+  shopDetails: {
+    id: string
+    domainId: string
+    domainName: string
+  }
+  price: string
+  owner: {
+    id: string
+  }
+}

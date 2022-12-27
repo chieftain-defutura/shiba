@@ -40,7 +40,6 @@ const Transfer: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
       navigate(`/${location.pathname.split('/')[1]}`)
       setTransaction({ loading: true, status: 'success' })
       console.log('success')
-      // setClickCard(null)
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
@@ -49,10 +48,13 @@ const Transfer: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
 
   return (
     <div className="transfer-sub-menu-container sub-menu-container">
-      <BsArrowLeftCircle
-        className="arrow-icon"
-        onClick={() => setClickCard(null)}
-      />
+      <div className="transfer-head">
+        <BsArrowLeftCircle
+          className="arrow-icon"
+          onClick={() => setClickCard(null)}
+        />
+        <h2>Transfer</h2>
+      </div>
 
       <div className="content">
         <input type="text" onChange={(e) => setToAddress(e.target.value)} />

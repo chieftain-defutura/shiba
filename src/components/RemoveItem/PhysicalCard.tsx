@@ -7,22 +7,9 @@ import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress
 import physicalShopABI from '../../utils/abi/physicalShopABI.json'
 import { formatUnits } from 'ethers/lib/utils.js'
 import cardImg from '../../assets/img/card-3.png'
+import { IRemovePhysicalItem } from '../../constants/types'
 
-interface ICard {
-  id: number
-  quantity: string
-  shopDetails: {
-    id: number
-  }
-  erc20Token: {
-    id: string
-    symbol: string
-    decimals: string
-  }
-  price: number
-}
-
-const PhysicalCard: React.FC<ICard> = ({
+const PhysicalCard: React.FC<IRemovePhysicalItem> = ({
   id: itemId,
   shopDetails: { id: shopId },
   erc20Token,
