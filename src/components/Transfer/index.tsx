@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 import React, { useState } from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { BsArrowLeftCircle } from 'react-icons/bs'
 
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import digitalShopABI from '../../utils/abi/digitalShopABI.json'
@@ -48,10 +49,10 @@ const Transfer: React.FC<IAppearanceSetting> = ({ setClickCard }) => {
 
   return (
     <div className="transfer-sub-menu-container sub-menu-container">
-      {/* <BsArrowLeftCircle
+      <BsArrowLeftCircle
         className="arrow-icon"
         onClick={() => setClickCard(null)}
-      /> */}
+      />
 
       <div className="content">
         <input type="text" onChange={(e) => setToAddress(e.target.value)} />

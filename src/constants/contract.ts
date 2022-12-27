@@ -23,6 +23,7 @@ export interface IContractData {
   transfer: boolean
   showDetails?: boolean
   query: string
+  userNftsQuery: string
 }
 
 export interface IContractDetails {
@@ -51,12 +52,24 @@ export const ContractDetails: IContractDetails = {
         digitalShopToken(id:$id){
           id
           domainName
+          tokenUri
           owner {
             id
           }
         }
       }
     `,
+    userNftsQuery: `
+    query($owner:String!){
+      digitalShopTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
   },
   'my-goods-shop': {
     address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -74,12 +87,24 @@ export const ContractDetails: IContractDetails = {
         physicalShopToken(id:$id){
           id
           domainName
+          tokenUri
           owner {
             id
           }
         }
       }
     `,
+    userNftsQuery: `
+    query($owner:String!){
+      physicalShopTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
   },
   'my-domains': {
     address: DOMAIN_NFT_CONTRACT_ADDRESS,
@@ -102,6 +127,17 @@ export const ContractDetails: IContractDetails = {
         }
       }
     `,
+    userNftsQuery: `
+    query($owner:String!){
+      domainTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
   },
   'my-charities': {
     address: CHARITIES_NFT_CONTRACT_ADDRESS,
@@ -118,12 +154,24 @@ export const ContractDetails: IContractDetails = {
         charityToken(id:$id){
           id
           domainName
+          tokenUri
           owner {
             id
           }
         }
       }
     `,
+    userNftsQuery: `
+    query($owner:String!){
+      charityTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
   },
   'my-websites': {
     address: WEBSITE_NFT_CONTRACT_ADDRESS,
@@ -140,12 +188,24 @@ export const ContractDetails: IContractDetails = {
         websiteToken(id:$id){
           id
           domainName
+          tokenUri
           owner {
             id
           }
         }
       }
     `,
+    userNftsQuery: `
+    query($owner:String!){
+      websiteTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
   },
 }
 
