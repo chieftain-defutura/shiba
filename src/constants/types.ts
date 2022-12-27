@@ -40,6 +40,7 @@ export type IFullOnBlockchainArtToken = {
 
 export type IPhysicalItem = {
   id: string
+  itemName: string
   metadata: string
   erc20Token: {
     id: string

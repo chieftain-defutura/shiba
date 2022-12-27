@@ -134,6 +134,7 @@ query{
   }
   physicalItems(where:{status:ACTIVE}){
     id
+    itemName
     quantity
     shopDetails{
       id
@@ -349,6 +350,29 @@ query{
     owner {
       id
     }    
+  }
+}
+`
+export const recentlyListedQuery = `
+query{
+  physicalItems(orderBy:listedAt,orderDirection:desc,first:10){
+    id
+    itemName
+    category
+    metadata
+    listedAt
+    price
+    shopDetails{
+       id
+       owner {
+        id
+      } 
+    }
+    erc20Token{
+      id
+      decimals
+      symbol
+    }
   }
 }
 `
