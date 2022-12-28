@@ -11,30 +11,16 @@ import { useQuery } from 'urql'
 import './MarketPlacePage.css'
 import { parseUnits } from 'ethers/lib/utils.js'
 import useDebounce from '../../hooks/useDebounce'
+import {
+  BONE_TOKEN_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  PAW_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+  SHI_TOKEN_ADDRESS,
+} from '../../utils/contractAddress'
 
-// const getCurrencyQuery = () => {
-//   return `query{
-//     digitalItems(where:{status:ACTIVE}){
-//       id
-//       metadata
-//       shopDetails{
-//         id
-//       }
-//       price
-//       erc20Token{
-//         id
-//         symbol
-//         decimals
-//       }
-//       subcategory
-//       category
-//     }
-
-//   }`
-// }
-
-const getGoodsDigitalQuery = `query($category: [String!]!, $price:String!,$erc20Token:String!){
-  digitalItems( where:{status:ACTIVE, category_in:$category ,price_gte:$price, erc20Token:$erc20Token}){
+const getGoodsDigitalQuery = `query($category: [String!], $price:String!,$erc20Token:[String!]){
+  digitalItems( where:{status:ACTIVE, category_in:$category ,price_gte:$price, erc20Token_in:$erc20Token}){
     id
     category
     shopDetails {
@@ -53,8 +39,8 @@ const getGoodsDigitalQuery = `query($category: [String!]!, $price:String!,$erc20
   }
 }`
 
-const getGoodsPhysicalQuery = `query($category: [String!]!, $price:String!,$erc20Token:String!){
-  physicalItems( where:{status:ACTIVE, category_in:$category, price_gte:$price, erc20Token:$erc20Token}){
+const getGoodsPhysicalQuery = `query($category: [String!]!, $price:String!,$erc20Token:[String!]){
+  physicalItems( where:{status:ACTIVE, category_in:$category, price_gte:$price, erc20Token_in:$erc20Token}){
     id
     category
     shopDetails {
@@ -83,10 +69,9 @@ const MarketPlacePage: React.FC = () => {
   const debouncedDomainName = useDebounce(minValue, 1000)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
-  console.log(minValue)
   const [open, setOpen] = useState(false)
 
-  console.log(selectedDropDown)
+  console.log(goodsCheckboxs)
   const [goodsDigitalResult] = useQuery({
     query: getGoodsDigitalQuery,
     variables: {
@@ -95,11 +80,20 @@ const MarketPlacePage: React.FC = () => {
         !debouncedDomainName ? '0' : debouncedDomainName,
         '18',
       ).toString(),
-      erc20Token: selectedDropDown?.address.toLowerCase(),
+      erc20Token: selectedDropDown?.address.toLowerCase()
+        ? [selectedDropDown.address.toLowerCase()]
+        : [
+            SHIB_TOKEN_ADDRESS.toLowerCase(),
+            SHI_TOKEN_ADDRESS.toLowerCase(),
+            LEASH_TOKEN_ADDRESS.toLowerCase(),
+            PAW_TOKEN_ADDRESS.toLowerCase(),
+            BONE_TOKEN_ADDRESS.toLowerCase(),
+          ],
     },
-    pause: !goodsCheckboxs.length || !debouncedDomainName || !selectedDropDown,
+    pause: !goodsCheckboxs.length,
   })
   const { data: goodsDigitalData } = goodsDigitalResult
+  console.log(goodsDigitalData)
 
   const [goodsPhysicalResult] = useQuery({
     query: getGoodsPhysicalQuery,
@@ -110,11 +104,20 @@ const MarketPlacePage: React.FC = () => {
           !debouncedDomainName ? '0' : debouncedDomainName,
           '18',
         ).toString() || !debouncedDomainName,
-      erc20Token: selectedDropDown?.address.toLowerCase(),
+      erc20Token: selectedDropDown?.address.toLowerCase()
+        ? [selectedDropDown.address.toLowerCase()]
+        : [
+            SHIB_TOKEN_ADDRESS.toLowerCase(),
+            SHI_TOKEN_ADDRESS.toLowerCase(),
+            LEASH_TOKEN_ADDRESS.toLowerCase(),
+            PAW_TOKEN_ADDRESS.toLowerCase(),
+            BONE_TOKEN_ADDRESS.toLowerCase(),
+          ],
     },
-    pause: !goodsCheckboxs.length || !debouncedDomainName || !selectedDropDown,
+    pause: !goodsCheckboxs.length,
   })
   const { data: goodsPhysicalData } = goodsPhysicalResult
+  console.log(goodsPhysicalData)
 
   const handleChange = ({
     target: { value },

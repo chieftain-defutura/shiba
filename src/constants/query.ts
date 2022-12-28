@@ -120,8 +120,8 @@ query {
 }`
 
 export const goodsItemsQuery = `
-query($price: String!,$erc20Token:String!){
-  digitalItems(where:{status:ACTIVE, price_gte:$price, erc20Token:$erc20Token}){
+query($price: String!,$erc20Token:[String!]){
+  digitalItems(where:{status:ACTIVE, price_gte:$price, erc20Token_in:$erc20Token}){
     id
     metadata
     itemName
@@ -137,7 +137,7 @@ query($price: String!,$erc20Token:String!){
     subcategory
     category
   }
-  physicalItems(where:{status:ACTIVE , price_gte:$price,erc20Token:$erc20Token}){
+  physicalItems(where:{status:ACTIVE , price_gte:$price,erc20Token_in:$erc20Token}){
     id
     itemName
     quantity
