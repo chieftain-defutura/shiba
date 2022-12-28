@@ -100,9 +100,25 @@ const Navigation: React.FC = () => {
                           <p style={{ fontSize: '14px' }}>
                             {formatAddress(val?.owner.id)}
                           </p>
-                          <p style={{ fontSize: '12px' }}>
-                            {val?.__typename} #{val?.id}
-                          </p>
+                          {val?.__typename === 'PhysicalShopToken' ? (
+                            <Link
+                              to={`/shop/goods/${val?.id}`}
+                              style={{ fontSize: '12px' }}
+                            >
+                              {val?.__typename} #{val?.id}
+                            </Link>
+                          ) : val?.__typename === 'DigitalShopToken' ? (
+                            <Link
+                              to={`/shop/digital/${val?.id}`}
+                              style={{ fontSize: '12px' }}
+                            >
+                              {val?.__typename} #{val?.id}
+                            </Link>
+                          ) : (
+                            <p style={{ fontSize: '12px' }}>
+                              {val?.__typename} #{val?.id}
+                            </p>
+                          )}
                         </div>
                       ))
                     })}

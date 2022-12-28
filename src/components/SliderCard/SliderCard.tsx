@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react'
 import Slider from 'react-slick'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
-import { useNavigate } from 'react-router-dom'
 
 import './SliderCard.css'
 import Loading from '../Loading/Loading'
@@ -15,6 +14,7 @@ import { IPhysicalItem } from '../../constants/types'
 import { formatTokenUnits } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 import { formatAddress } from '../../constants/variants'
+import { useNavigate } from 'react-router-dom'
 
 type IRecentlyListedItems = IPhysicalItem & {
   shopDetails: {
