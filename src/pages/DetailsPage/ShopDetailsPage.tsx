@@ -8,7 +8,6 @@ import './ShopDetailsPage.css'
 import HomeLayout from '../../Layout/HomeLayout'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
-import cardImgOne from '../../assets/img/card-20.png'
 import upVoteIcon from '../../assets/img/up-vote-md.png'
 import downVoteIcon from '../../assets/img/down-vote-md.png'
 import homeIcon from '../../assets/img/home-icon.png'
@@ -291,28 +290,32 @@ const ShopDetails: React.FC<{
               )}
             </div>
           </div>
-          <div className="button-cont">
-            <button
-              onClick={() => {
-                setUpVoteClick(true)
-                setDownVoteClick(false)
-              }}
-            >
-              <img src={upVoteIcon} alt="up vote" />
-              {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
-            </button>
-            <button>
-              <img
-                src={downVoteIcon}
-                alt="down vote"
+          {type === 'PHYSICAL' && (
+            <div className="button-cont">
+              <button
                 onClick={() => {
-                  setDownVoteClick(true)
-                  setUpVoteClick(false)
+                  setUpVoteClick(true)
+                  setDownVoteClick(false)
                 }}
-              />
-              {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
-            </button>
-          </div>
+              >
+                <img src={upVoteIcon} alt="up vote" />
+                {goodReviewResult.data
+                  ? goodReviewResult.data.reviews.length
+                  : 0}
+              </button>
+              <button>
+                <img
+                  src={downVoteIcon}
+                  alt="down vote"
+                  onClick={() => {
+                    setDownVoteClick(true)
+                    setUpVoteClick(false)
+                  }}
+                />
+                {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
+              </button>
+            </div>
+          )}
         </div>
         <div className="shoesboutique-container-bottom">
           <img src={homeIcon} alt="home" />

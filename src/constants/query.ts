@@ -202,6 +202,9 @@ export const awaitingDeliveryQuery = `
       itemId {
         id
         itemName
+        shopDetails {
+          id
+        }
       }
     }
   }
