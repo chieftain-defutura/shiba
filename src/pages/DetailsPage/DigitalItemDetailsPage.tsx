@@ -80,7 +80,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   } = useGetIpfsDataQuery({
     hash: metadata,
   })
-  console.log(ipfsData)
+
   const handleBuy = async () => {
     if (!address || !signerData) return
 

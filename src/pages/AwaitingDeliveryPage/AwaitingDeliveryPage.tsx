@@ -31,7 +31,6 @@ const AwaitingDeliveryPage: React.FC = () => {
     pause: !address,
   })
   const { data, fetching } = result
-  console.log(data)
 
   return (
     <div>
