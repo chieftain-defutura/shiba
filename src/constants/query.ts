@@ -499,3 +499,29 @@ query($shopId:String!,$status:String!){
   }
 }
 `
+
+export const searchDomainHeaderQuery = `
+query($name:String!){
+  digitalShopTokens(where:{domainName_starts_with:$name}){
+    id
+    owner {
+      id
+    }
+  	domainName
+	}
+  physicalShopTokens(where:{domainName_starts_with:$name}){
+    id
+    owner {
+      id
+    }
+  	domainName
+	}
+  domainTokens(where:{domainName_starts_with:$name,owner_not:"0x0000000000000000000000000000000000000000"}){
+    id
+    owner {
+      id
+    }
+    domainName
+  }
+}
+`

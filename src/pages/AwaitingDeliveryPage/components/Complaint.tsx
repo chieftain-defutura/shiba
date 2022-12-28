@@ -37,7 +37,7 @@ const Complaint: React.FC<IComplaintProps> = ({ data, setState }) => {
         shipmentABI,
         signerData,
       )
-      const tx = await contract.orderReceived(data.id, values.review)
+      const tx = await contract.orderComplaint(data.id, values.review)
       await tx.wait()
       setTransaction({ loading: true, status: 'success' })
       setState(null)
