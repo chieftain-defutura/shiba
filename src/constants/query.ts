@@ -300,7 +300,32 @@ query($id: String!){
     downVote
     owner {
       id
-    }    
+    }  
+    items(orderBy:id,orderDirection:desc,first:1){
+      id
+      itemName
+      price
+      metadata
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+    }
+    lastSale {
+      id
+      itemId {
+        id
+        itemName
+        metadata
+        price
+        erc20Token{
+        id
+        symbol
+        decimals
+      	}
+      }
+    }  
   }
 }
 `
@@ -315,7 +340,30 @@ query($id: String!){
     downVote
     owner {
       id
-    }    
+    } 
+    items(orderBy:id,orderDirection:desc,first:1){
+      id
+      itemName
+      price
+      metadata
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+    }
+    lastSale {
+      id
+      metadata
+      category
+      itemName
+      price
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+    }   
   }
 }
 `
