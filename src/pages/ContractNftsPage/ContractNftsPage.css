@@ -20,8 +20,9 @@
 }
 
 .website-container-left .checkbox-content {
-  display: grid;
-  grid-template-columns: 4fr 0.5fr;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
   margin: 18px 0;
 }
 

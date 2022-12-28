@@ -73,7 +73,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   const [digitalErrorImgTwo, setDigitalErrorImgTwo] = useState(false)
   const [digitalErrorImgThree, setDigitalErrorImgThree] = useState(false)
 
-  const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
+  const {
+    data: ipfsData,
+    isLoading,
+    data,
+  } = useGetIpfsDataQuery({
     hash: metadata,
   })
   console.log(ipfsData)
@@ -132,7 +136,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                 <div>
                   {isLoading ? (
                     <Skeleton height={'100%'} />
-                  ) : digitalErrorImgOne ? (
+                  ) : !data || digitalErrorImgOne ? (
                     <div className="sliderImg-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
@@ -149,7 +153,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                 <div>
                   {isLoading ? (
                     <Skeleton height={'100%'} />
-                  ) : digitalErrorImgTwo ? (
+                  ) : !data || digitalErrorImgTwo ? (
                     <div className="sliderImg-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
@@ -166,7 +170,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                 <div>
                   {isLoading ? (
                     <Skeleton height={'100%'} />
-                  ) : digitalErrorImgThree ? (
+                  ) : !data || digitalErrorImgThree ? (
                     <div className="sliderImg-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>

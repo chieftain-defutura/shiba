@@ -1,0 +1,24 @@
+.website-container-left .header .drop-down-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-top: 20px;
+  border-bottom: 1px solid #464646;
+}
+.website-container-left .header .drop-down-header p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  color: #acffe1;
+}
+.website-container-left .header .drop-down-header .arrow-icon {
+  font-size: 20px;
+  transition: 0.2s ease-in-out;
+}
+
+.website-container-left .header .drop-down-header.active .arrow-icon {
+  color: var(--textColorSeven);
+  transform: rotate(-180deg);
+}

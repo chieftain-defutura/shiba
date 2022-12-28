@@ -1,24 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 
 import { formatUnits } from 'ethers/lib/utils.js'
 import { useTransactionModal } from '../../context/TransactionContext'
-import { MARKETPLACE_CONTRACT_ADDRESS } from '../../utils/contractAddress'
+import {
+  DOMAIN_NFT_CONTRACT_ADDRESS,
+  MARKETPLACE_CONTRACT_ADDRESS,
+} from '../../utils/contractAddress'
 import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
 import { IFixedSale } from '../../constants/types'
-import cardImg from '../../assets/img/card-3.png'
 import './FixedSaleCard.scss'
+import { useQuery } from 'urql'
+import Loading from '../Loading/Loading'
+import { formatAddress } from '../../constants/variants'
+import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
+import Skeleton from 'react-loading-skeleton'
+import camera from '../../assets/icon/Camera.svg'
 
 const FixedSaleCard: React.FC<IFixedSale> = ({
   erc20Token,
   auctionId,
   price,
   owner,
+  tokenId,
+  erc721TokenAddress,
 }) => {
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
+
   const handleSale = async () => {
     if (!address || !data) return
 
@@ -45,6 +56,8 @@ const FixedSaleCard: React.FC<IFixedSale> = ({
         auctionMarketplaceABI,
         data,
       )
+      console.log(auctionId)
+
       const tx = await contract.finishFixedSale(auctionId)
       await tx.wait()
       console.log('saled')
@@ -57,6 +70,7 @@ const FixedSaleCard: React.FC<IFixedSale> = ({
 
   const handleRemove = async () => {
     if (!address || !data) return
+
     try {
       setTransaction({ loading: true, status: 'pending' })
       const contract = new ethers.Contract(
@@ -66,6 +80,7 @@ const FixedSaleCard: React.FC<IFixedSale> = ({
       )
       const tx = await contract.removeSale(auctionId)
       await tx.wait()
+      console.log('added')
 
       setTransaction({ loading: true, status: 'success' })
     } catch (error) {
@@ -73,16 +88,20 @@ const FixedSaleCard: React.FC<IFixedSale> = ({
       setTransaction({ loading: true, status: 'error' })
     }
   }
+
   return (
     <div className="marketplace-card-container">
       <div className="card">
-        <div className="card-top">
-          <img src={cardImg} alt="card" />
-        </div>
-        <div className="card-center">
-          <h3 className="title">The Holy Grail</h3>
-          <h4 className="sub-title">Pixart Motion</h4>
-        </div>
+        {erc721TokenAddress.toLowerCase() ===
+        DOMAIN_NFT_CONTRACT_ADDRESS.toLowerCase() ? (
+          <MarketPlaceImageCard owner={owner} tokenId={tokenId} />
+        ) : (
+          <Card
+            tokenId={tokenId}
+            erc721TokenAddress={erc721TokenAddress}
+            owner={owner}
+          />
+        )}
         <div className="cards-bottom">
           <p>Fixed price</p>
           <button style={{ width: '80%' }}>
@@ -101,6 +120,78 @@ const FixedSaleCard: React.FC<IFixedSale> = ({
         </div>
       </div>
     </div>
+  )
+}
+
+const MarketPlaceImageCard: React.FC<{
+  tokenId: string
+  owner: string
+}> = ({ owner }) => {
+  const [result] = useQuery({
+    query: `query($id: ID!){
+    domainToken(id:$id){
+      domainName
+    }
+  }`,
+  })
+  const { fetching, data } = result
+  console.log(data)
+  return (
+    <>
+      <div className="card-top">
+        <h3>{fetching ? <Loading /> : data?.domainName}</h3>
+      </div>
+      <div className="card-center">
+        <h3 className="title">Owner</h3>
+        <h4 className="sub-title">{formatAddress(owner)}</h4>
+      </div>
+    </>
+  )
+}
+
+const Card: React.FC<{
+  tokenId: string
+  erc721TokenAddress: string
+  owner: string
+}> = ({ tokenId, erc721TokenAddress, owner }) => {
+  const [imageError, setImageError] = useState(false)
+  const { data, isLoading } = useGetNftsByIdQuery({
+    tokenId,
+    contractAddress: erc721TokenAddress,
+  })
+
+  return (
+    <>
+      {isLoading ? (
+        <div className="card-loader">
+          <Skeleton height={'100%'} />
+        </div>
+      ) : !data?.metadata?.logo || imageError ? (
+        <div className="card-top">
+          <img src={camera} alt="card" />
+        </div>
+      ) : (
+        <div className="card-top">
+          <img
+            src={data?.metadata?.logo}
+            alt="card"
+            onError={() => setImageError(true)}
+          />
+        </div>
+      )}
+      <div className="card-center">
+        <h3 className="title">
+          {isLoading ? (
+            <Skeleton />
+          ) : !data?.metadata?.shopName ? (
+            'unnamed'
+          ) : (
+            data?.metadata?.shopName
+          )}
+        </h3>
+        <h4 className="sub-title">{formatAddress(owner)}</h4>
+      </div>
+    </>
   )
 }
 

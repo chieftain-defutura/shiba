@@ -147,10 +147,10 @@
   line-height: 21px;
   cursor: pointer;
 }
-.check-box-container {
+/* .check-box-container {
   display: flex;
   align-items: center;
-}
+} */
 
 .marketplace-container-left .check-box-container input[type='checkbox'] {
   appearance: none;
@@ -228,6 +228,15 @@
   right: 0;
   bottom: 0;
   padding: 20px 12px;
+}
+.check-boxs-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+.check-boxs-container label {
+  font-size: 16px;
 }
 
 .marketplace-container-right .currency-select-container .header {

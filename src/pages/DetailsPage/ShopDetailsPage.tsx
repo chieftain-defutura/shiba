@@ -115,8 +115,8 @@ const ShopDetails: React.FC<{
                 <div className="slider-shop-item">
                   {isLoading ? (
                     <Skeleton height={'100%'} />
-                  ) : shopErrorImgOne ? (
-                    <div className="slider-img-camera">
+                  ) : !data || shopErrorImgOne ? (
+                    <div className="shop-slider-img-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
                   ) : (
@@ -130,8 +130,8 @@ const ShopDetails: React.FC<{
                 <div className="slider-shop-item">
                   {isLoading ? (
                     <Skeleton height={'100%'} />
-                  ) : shopErrorImgTwo ? (
-                    <div className="slider-img-camera">
+                  ) : !data || shopErrorImgTwo ? (
+                    <div className="shop-slider-img-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
                   ) : (
@@ -145,8 +145,8 @@ const ShopDetails: React.FC<{
                 <div className="slider-shop-item">
                   {isLoading ? (
                     <Skeleton height={'100%'} />
-                  ) : shopErrorImgThree ? (
-                    <div className="slider-img-camera">
+                  ) : !data || shopErrorImgThree ? (
+                    <div className="shop-slider-img-camera">
                       <img src={cameraImg} alt="camera" />
                     </div>
                   ) : (

@@ -132,7 +132,7 @@ const ActionPage: React.FC = () => {
           <h2 className="heading">Auction</h2>
           <div className="accordion-container">
             {accordionData.map((item, idx) => (
-              <div key={idx} className="drop-down-container ">
+              <div key={idx} className="drop-down-container">
                 <div
                   className={
                     clickDropDown === idx
@@ -174,7 +174,7 @@ const ActionPage: React.FC = () => {
               </div>
             </div>
             <div className="price-content">
-              <div className="check-box-container">
+              <div className="check-boxs-container">
                 <label htmlFor="min">MIN</label>
                 <input
                   id="min"
@@ -182,7 +182,7 @@ const ActionPage: React.FC = () => {
                   onChange={(e) => setMinPrice(e.target.value)}
                 />
               </div>
-              <div className="check-box-container">
+              <div className="check-boxs-container">
                 <label htmlFor="max">Max</label>
                 <input
                   id="max"
