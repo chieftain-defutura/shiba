@@ -175,7 +175,7 @@ const ActionPage: React.FC = () => {
             </div>
             <div className="price-content">
               <div className="check-boxs-container">
-                <label htmlFor="min">MIN</label>
+                <label htmlFor="min">Min</label>
                 <input
                   id="min"
                   type="number"

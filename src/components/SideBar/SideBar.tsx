@@ -1,5 +1,5 @@
 import React from 'react'
-
+import CountUp from 'react-countup'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'urql'
 import { useAccount, useContractReads } from 'wagmi'
@@ -133,7 +133,14 @@ const SideBar: React.FC = () => {
               <Link to="/my-websites">
                 <p className="name">My Websites</p>
                 <p className="number">
-                  {balanceData?.[4] ? balanceData[4].toString() : 0}
+                  {balanceData?.[4] ? (
+                    <CountUp
+                      end={Number(balanceData[4].toString())}
+                      duration={1.2}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </Link>
             </div>
@@ -146,7 +153,14 @@ const SideBar: React.FC = () => {
               <Link to="/my-domains">
                 <p className="name">My Domains</p>
                 <p className="number">
-                  {balanceData?.[0] ? balanceData[0].toString() : 0}
+                  {balanceData?.[0] ? (
+                    <CountUp
+                      end={Number(balanceData[0].toString())}
+                      duration={1.2}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </Link>
             </div>
@@ -159,7 +173,14 @@ const SideBar: React.FC = () => {
               <Link to="/my-digital-shop">
                 <p className="name">My Digital Shop</p>
                 <p className="number">
-                  {balanceData?.[1] ? balanceData[1].toString() : 0}
+                  {balanceData?.[1] ? (
+                    <CountUp
+                      end={Number(balanceData[1].toString())}
+                      duration={1.2}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </Link>
             </div>
@@ -167,7 +188,14 @@ const SideBar: React.FC = () => {
               <Link to="/my-goods-shop">
                 <p className="name">My Goods Shop</p>
                 <p className="number">
-                  {balanceData?.[2] ? balanceData[2].toString() : 0}
+                  {balanceData?.[2] ? (
+                    <CountUp
+                      end={Number(balanceData[2].toString())}
+                      duration={1.2}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </Link>
             </div>
@@ -180,7 +208,14 @@ const SideBar: React.FC = () => {
               <Link to="/my-charities">
                 <p className="name">My Charities</p>
                 <p className="number">
-                  {balanceData?.[3] ? balanceData[3].toString() : 0}
+                  {balanceData?.[3] ? (
+                    <CountUp
+                      end={Number(balanceData[3].toString())}
+                      duration={1.2}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </Link>
             </div>
@@ -194,6 +229,7 @@ const SideBar: React.FC = () => {
                 <p className="name">Have to Send</p>
                 <p className="number">
                   {haveToSendresult.data?.shipments.length ?? 0}
+                  <CountUp end={Number()} />
                 </p>
               </Link>
             </div>

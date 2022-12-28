@@ -1,8 +1,6 @@
 .marketplace-container {
   color: var(--textColorOne);
   padding: 51px 100px;
-  /* display: flex;
-  gap: 10px; */
   display: grid;
   grid-template-columns: 1.1fr 4fr;
   gap: 60px;
@@ -27,12 +25,10 @@
 }
 
 .marketplace-container-left .accordion-container .accordion-header {
-  /* display: flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer; */
-  display: grid;
-  grid-template-columns: 3fr 0.4fr;
+  cursor: pointer;
 }
 
 .marketplace-container-left .accordion-container .accordion-header .title {
@@ -67,7 +63,7 @@
 }
 
 .marketplace-container-left .accordion-container .drop-down-container {
-  padding: 0 10px;
+  padding: 0 18px;
 }
 
 .marketplace-container-left .accordion-container .drop-down-header {
@@ -147,10 +143,6 @@
   line-height: 21px;
   cursor: pointer;
 }
-/* .check-box-container {
-  display: flex;
-  align-items: center;
-} */
 
 .marketplace-container-left .check-box-container input[type='checkbox'] {
   appearance: none;

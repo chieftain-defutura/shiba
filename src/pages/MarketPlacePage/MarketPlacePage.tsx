@@ -343,7 +343,7 @@ const MarketPlacePage: React.FC = () => {
             <div className="price-content">
               <div className="check-boxs-container">
                 <div>
-                  <label htmlFor="min">MIN</label>
+                  <label htmlFor="min">Min</label>
                 </div>
                 <div>
                   <input
