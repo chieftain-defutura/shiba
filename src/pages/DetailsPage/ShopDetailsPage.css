@@ -211,3 +211,9 @@
   aspect-ratio: 16/10;
   object-fit: cover;
 }
+.shop-slider-img-camera img {
+  width: 50%;
+  aspect-ratio: 14/10;
+  object-fit: cover;
+  margin: 55px auto;
+}

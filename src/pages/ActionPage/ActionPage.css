@@ -186,11 +186,16 @@
   /* margin-bottom: 16px; */
 }
 
-.action-container-left .price-container .price-content,
+/* .action-container-left .price-container .price-content,
 .currency-container .currency-content {
   display: flex;
   align-items: center;
   gap: 40px;
+} */
+
+.check-box-container {
+  width: 162px;
+  margin: 0 auto;
 }
 
 .action-container-left .price-container .price-select-cont,

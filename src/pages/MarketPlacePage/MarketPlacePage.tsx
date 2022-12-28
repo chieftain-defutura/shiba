@@ -344,7 +344,7 @@ const MarketPlacePage: React.FC = () => {
             </div>
 
             <div className="price-content">
-              <div className="check-box-container">
+              <div className="check-boxs-container">
                 <div>
                   <label htmlFor="min">MIN</label>
                 </div>
@@ -357,7 +357,7 @@ const MarketPlacePage: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="check-box-container">
+              <div className="check-boxs-container">
                 <div>
                   <label htmlFor="max">Max</label>
                 </div>

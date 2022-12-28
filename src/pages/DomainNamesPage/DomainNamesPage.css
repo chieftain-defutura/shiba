@@ -24,11 +24,8 @@
 }
 
 .domain-name-container-left .checkbox-content {
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between; */
-  display: grid;
-  grid-template-columns: 2fr 0.5fr;
+  display: flex;
+  justify-content: space-between;
   margin: 18px 0;
 }
 
