@@ -106,9 +106,7 @@ const NftTokenQuery = `query($erc721TokenAddress:[String!]!){
   }`
 
 const ActionPage: React.FC = () => {
-  const [clickDropDown, setClickDropDown] = useState(null)
   const [isValue, setIsValue] = useState('')
-  const [dropDown, setDropDown] = useState(false)
   const [graphQuery, setGraphQuery] = useState(auctionPageQuery)
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
@@ -179,6 +177,8 @@ const ActionPage: React.FC = () => {
         (f) => Number(formatTokenUnits(f.price, '18')) <= Number(maxPrice),
       ),
     )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maxPrice])
 
   const handleChange = ({
@@ -204,9 +204,9 @@ const ActionPage: React.FC = () => {
               <div key={idx} className="drop-down-container">
                 <div
                   className={
-                    clickDropDown === item.title
-                      ? 'drop-down-header active'
-                      : 'drop-down-header'
+                    // clickDropDown === item.title
+                    //   ? 'drop-down-header active'
+                    'drop-down-header'
                   }
                 >
                   <div className="drop-down-title">
@@ -323,24 +323,34 @@ const ActionPage: React.FC = () => {
               <div className="error-msg">
                 <p>something went wrong</p>
               </div>
-            ) : !filteredResult.length || !nftFilteredData?.auctions.length ? (
+            ) : !filteredResult.length ? (
               <div className="error-msg">
                 <p>No Result Found</p>
               </div>
             ) : (
-              <div className="marketplace-container-right-content">
-                {nftFilter.length <= 0
-                  ? filteredResult.map((f, idx) => (
-                      <div key={idx}>
-                        <AuctionSaleCard {...f} />
-                      </div>
-                    ))
-                  : nftFilteredData?.auctions.map((f, idx) => (
+              <>
+                {nftFilter.length <= 0 ? (
+                  <div className="marketplace-container-right-content">
+                    {filteredResult.map((f, idx) => (
                       <div key={idx}>
                         <AuctionSaleCard {...f} />
                       </div>
                     ))}
-              </div>
+                  </div>
+                ) : !nftFilteredData?.auctions.length ? (
+                  <div className="error-msg">
+                    <p>No Result Found</p>
+                  </div>
+                ) : (
+                  <div className="marketplace-container-right-content">
+                    {nftFilteredData?.auctions.map((f, idx) => (
+                      <div key={idx}>
+                        <AuctionSaleCard {...f} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
             {open && (
               <div className="currency-select-container">
@@ -349,7 +359,6 @@ const ActionPage: React.FC = () => {
 
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-
                 <div className="body">
                   {tokensList.map((f, index) => {
                     return (
@@ -357,7 +366,6 @@ const ActionPage: React.FC = () => {
                         key={index}
                         onClick={() => {
                           setSelectedDropDown(f)
-                          setDropDown(false)
                         }}
                       >
                         {f.title}

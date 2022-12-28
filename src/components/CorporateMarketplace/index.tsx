@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useQuery } from 'urql'
 
 import FixedSaleCard from '../FixedSaleCard'

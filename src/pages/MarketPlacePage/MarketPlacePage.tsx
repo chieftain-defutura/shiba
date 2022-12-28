@@ -13,7 +13,6 @@ import { parseUnits } from 'ethers/lib/utils.js'
 import useDebounce from '../../hooks/useDebounce'
 import {
   BONE_TOKEN_ADDRESS,
-  CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PAW_TOKEN_ADDRESS,
@@ -75,6 +74,7 @@ const MarketPlacePage: React.FC = () => {
     useState<ArrElement<typeof tokensList>>()
   const [open, setOpen] = useState(false)
   console.log(goodsCheckboxs)
+  console.log(setCorporateCheckBox)
   const [goodsDigitalResult] = useQuery({
     query: getGoodsDigitalQuery,
     variables: {
@@ -132,17 +132,17 @@ const MarketPlacePage: React.FC = () => {
     }
   }
 
-  const handleCorporateChange = ({
-    target: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
-    if (corporateCheckboxs.includes(value.toLowerCase())) {
-      setCorporateCheckBox((f) =>
-        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
-      )
-    } else {
-      setCorporateCheckBox((f) => f.concat(value.toLowerCase()))
-    }
-  }
+  // const handleCorporateChange = ({
+  //   target: { value },
+  // }: ChangeEvent<HTMLInputElement>) => {
+  //   if (corporateCheckboxs.includes(value.toLowerCase())) {
+  //     setCorporateCheckBox((f) =>
+  //       f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+  //     )
+  //   } else {
+  //     setCorporateCheckBox((f) => f.concat(value.toLowerCase()))
+  //   }
+  // }
 
   const handleDropDown = (item: any) => {
     if (clickDropDown === item.title) {
