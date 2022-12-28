@@ -211,7 +211,10 @@
 .marketplace-container-right {
   position: relative;
 }
-
+.currency-select-container {
+  position: fixed;
+  bottom: 0;
+}
 .marketplace-container-right .currency-select-container {
   width: 220px;
   height: 241px;

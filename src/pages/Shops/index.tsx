@@ -47,11 +47,6 @@ query($category:[String!]){
 }`
 
 const ShopPage: React.FC = () => {
-  const [openDigital, setOpenDigital] = useState(false)
-  const [openPhysical, setOpenPhysical] = useState(false)
-  const [openClothing, setOpenClothing] = useState(false)
-  const [openAccessories, setOpenAccessories] = useState(false)
-  const [openFood, setOpenFood] = useState(false)
   const [shopCheckBox, setShopCheckBox] = useState<string[]>([])
   const [dropDown, setDropDown] = useState(null)
 

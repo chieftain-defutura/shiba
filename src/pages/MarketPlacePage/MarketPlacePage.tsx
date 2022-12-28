@@ -66,6 +66,7 @@ const MarketPlacePage: React.FC = () => {
   const [goodsCheckboxs, setGoodsCheckBox] = useState<string[]>([])
   const [minValue, setMinValue] = useState('')
   const [maxValue, setMaxValue] = useState('')
+  const [priceDropDown, setPriceDropDown] = useState(false)
   const debouncedDomainName = useDebounce(minValue, 1000)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
@@ -336,41 +337,45 @@ const MarketPlacePage: React.FC = () => {
             </div>
           </div>
           <div className="price-container">
-            <div className="price-title">
+            <div
+              className="price-title"
+              onClick={() => setPriceDropDown(!priceDropDown)}
+            >
               <p className="title">Price</p>
               <div className="price-select-cont">
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
-
-            <div className="price-content">
-              <div className="check-boxs-container">
-                <div>
-                  <label htmlFor="min">Min</label>
+            {priceDropDown && (
+              <div className="price-content">
+                <div className="check-boxs-container">
+                  <div>
+                    <label htmlFor="min">Min</label>
+                  </div>
+                  <div>
+                    <input
+                      id="min"
+                      type="text"
+                      value={minValue}
+                      onChange={(e) => setMinValue(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input
-                    id="min"
-                    type="text"
-                    value={minValue}
-                    onChange={(e) => setMinValue(e.target.value)}
-                  />
+                <div className="check-boxs-container">
+                  <div>
+                    <label htmlFor="max">Max</label>
+                  </div>
+                  <div>
+                    <input
+                      id="max"
+                      type="text"
+                      value={maxValue}
+                      onChange={(e) => setMaxValue(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="check-boxs-container">
-                <div>
-                  <label htmlFor="max">Max</label>
-                </div>
-                <div>
-                  <input
-                    id="max"
-                    type="text"
-                    value={maxValue}
-                    onChange={(e) => setMaxValue(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
+            )}
           </div>
           <div className="currency-container">
             <div className="price-title">
