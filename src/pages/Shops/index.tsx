@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, ChangeEvent } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
@@ -47,13 +47,8 @@ query($category:[String!]){
 }`
 
 const ShopPage: React.FC = () => {
-  const [openDigital, setOpenDigital] = useState(false)
-  const [openPhysical, setOpenPhysical] = useState(false)
-  const [openClothing, setOpenClothing] = useState(false)
-  const [openAccessories, setOpenAccessories] = useState(false)
-  const [openFood, setOpenFood] = useState(false)
   const [shopCheckBox, setShopCheckBox] = useState<string[]>([])
-  const [dropDown, setDropDown] = useState(null)
+  const [dropDown, setDropDown] = useState<string | null>(null)
 
   const [result] = useQuery<{
     digitalShopTokens: IShopToken[]
@@ -67,11 +62,10 @@ const ShopPage: React.FC = () => {
     physicalItems: { shopDetails: IShopToken }[]
   }>({ query: shopItemsQuery, variables: { category: shopCheckBox } })
 
-  const { data: itemData } = itemresult
-
-  const uniqueIds: string[] = []
+  const { data: itemData, fetching: filterFetching } = itemresult
 
   const uniqueItem = useMemo(() => {
+    const uniqueIds: string[] = []
     if (!itemData) return
     const physical = itemData?.physicalItems.filter((element) => {
       const isDuplicate = uniqueIds.includes(element.shopDetails.id)
@@ -100,13 +94,27 @@ const ShopPage: React.FC = () => {
   }, [itemData])
 
   console.log(uniqueItem)
-  const handleDropDown = (idx: any) => {
-    if (dropDown === idx) {
+  const handleDropDown = (f: any) => {
+    if (dropDown === f.title) {
       return setDropDown(null)
     }
-    setDropDown(idx)
+    setDropDown(f.title)
+  }
+  console.log(dropDown)
+
+  const handleChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (shopCheckBox.includes(value.toLowerCase())) {
+      setShopCheckBox((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setShopCheckBox((f) => f.concat(value.toLowerCase()))
+    }
   }
 
+  console.log(shopCheckBox)
   return (
     <div>
       <Navigation />
@@ -114,24 +122,24 @@ const ShopPage: React.FC = () => {
         <div className="website-container-left">
           <h2 className="heading">Shop</h2>
 
-          <div className="header" onClick={() => setOpenDigital((m) => !m)}>
+          <div className="header">
             {shopingData.map((f, idx) => (
               <div key={idx} className="drop-down-container">
                 <div
                   className={
-                    dropDown === idx
+                    dropDown === f.title
                       ? 'drop-down-header active'
                       : 'drop-down-header'
                   }
-                  onClick={() => handleDropDown(idx)}
+                  onClick={() => handleDropDown(f)}
                 >
                   <p>{f?.title}</p>
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-                {dropDown === idx && (
+                {dropDown === f.title && (
                   <div
                     className={
-                      dropDown === idx
+                      dropDown === f.title
                         ? 'drop-down-body active'
                         : 'drop-down-body'
                     }
@@ -140,7 +148,12 @@ const ShopPage: React.FC = () => {
                       {f.labels.map((label, index) => (
                         <div className="checkbox-content" key={index}>
                           <label htmlFor="Human Rights">{label}</label>
-                          <input id="Human Rights" type="checkbox" />
+                          <input
+                            id="Human Rights"
+                            type="checkbox"
+                            value={label}
+                            onChange={handleChange}
+                          />
                         </div>
                       ))}
                     </div>
@@ -151,7 +164,7 @@ const ShopPage: React.FC = () => {
           </div>
         </div>
 
-        {fetching ? (
+        {fetching || filterFetching ? (
           <div className="loading">
             <Loading />
           </div>
@@ -169,7 +182,7 @@ const ShopPage: React.FC = () => {
           </div>
         ) : (
           <div className="website-container-right">
-            {shopCheckBox.length === 0 ? (
+            {shopCheckBox.length <= 0 ? (
               <>
                 {data?.digitalShopTokens.map((f, idx) => (
                   <ShopCard

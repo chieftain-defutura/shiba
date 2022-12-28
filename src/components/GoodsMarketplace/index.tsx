@@ -166,7 +166,6 @@ const GoodsMaretPlace: React.FC<IGoodsMarketPlace> = ({
     },
   })
   const { data } = result
-  console.log(data)
 
   return (
     <>

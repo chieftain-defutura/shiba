@@ -78,22 +78,26 @@
   line-height: 21px;
 }
 
-.action-container-left .accordion-container .drop-down-header .arrow-icon {
+/* .action-container-left .accordion-container .drop-down-header .arrow-icon {
   font-size: 20px;
   transition: 0.2s ease-in-out;
-}
+} */
 
-.action-container-left .accordion-container .drop-down-header.active p {
+.action-container-left
+  .accordion-container
+  .drop-down-header.active
+  .drop-down-title
+  p {
   color: var(--textColorSeven);
 }
 
-.action-container-left
+/* .action-container-left
   .accordion-container
   .drop-down-header.active
   .arrow-icon {
   color: var(--textColorSeven);
   transform: rotate(-180deg);
-}
+} */
 
 .action-container-left
   .accordion-container
@@ -113,7 +117,7 @@
   z-index: 10;
 }
 
-.action-container-left .checkbox-content {
+.action-container-left .drop-down-header.active .checkbox-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,7 +128,8 @@
 
 .action-container-left
   .accordion-container
-  .drop-down-body.active
+  .drop-down-header
+  /* .drop-down-body.active */
   .checkbox-content {
   display: flex;
   align-items: center;
@@ -133,14 +138,17 @@
   opacity: 1;
 }
 
-.action-container-left .check-box-container label {
+.action-container-left .drop-down-header .check-box-container label {
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   cursor: pointer;
 }
 
-.action-container-left .check-box-container input[type='checkbox'] {
+.action-container-left
+  .drop-down-header
+  .check-box-container
+  input[type='checkbox'] {
   appearance: none;
   -webkit-appearance: none;
   width: 15px;
@@ -153,7 +161,10 @@
   padding: 5px;
 }
 
-.action-container-left .check-box-container input[type='checkbox']:after {
+.action-container-left
+  .drop-down-header
+  .check-box-container
+  input[type='checkbox']:after {
   font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   font-size: 14px;
@@ -163,6 +174,7 @@
 }
 
 .action-container-left
+  .drop-down-header
   .check-box-container
   input[type='checkbox']:checked:after {
   display: block;
