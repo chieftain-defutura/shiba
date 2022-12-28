@@ -202,6 +202,9 @@ export const awaitingDeliveryQuery = `
       itemId {
         id
         itemName
+        shopDetails {
+          id
+        }
       }
     }
   }
@@ -300,7 +303,32 @@ query($id: String!){
     downVote
     owner {
       id
-    }    
+    }  
+    items(orderBy:id,orderDirection:desc,first:1){
+      id
+      itemName
+      price
+      metadata
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+    }
+    lastSale {
+      id
+      itemId {
+        id
+        itemName
+        metadata
+        price
+        erc20Token{
+        id
+        symbol
+        decimals
+      	}
+      }
+    }  
   }
 }
 `
@@ -315,7 +343,30 @@ query($id: String!){
     downVote
     owner {
       id
-    }    
+    } 
+    items(orderBy:id,orderDirection:desc,first:1){
+      id
+      itemName
+      price
+      metadata
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+    }
+    lastSale {
+      id
+      metadata
+      category
+      itemName
+      price
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+    }   
   }
 }
 `
@@ -445,6 +496,32 @@ query($shopId:String!,$status:String!){
     }
     review
     status
+  }
+}
+`
+
+export const searchDomainHeaderQuery = `
+query($name:String!){
+  digitalShopTokens(where:{domainName_starts_with:$name}){
+    id
+    owner {
+      id
+    }
+  	domainName
+	}
+  physicalShopTokens(where:{domainName_starts_with:$name}){
+    id
+    owner {
+      id
+    }
+  	domainName
+	}
+  domainTokens(where:{domainName_starts_with:$name,owner_not:"0x0000000000000000000000000000000000000000"}){
+    id
+    owner {
+      id
+    }
+    domainName
   }
 }
 `

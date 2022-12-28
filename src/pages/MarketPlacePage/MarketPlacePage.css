@@ -307,6 +307,8 @@
   aspect-ratio: 4/3;
   background-color: #fff;
   border-radius: 8px 8px 0px 0px;
+  display: flex;
+  place-items: center;
 }
 
 .marketplace-container-right .card .card-loader {

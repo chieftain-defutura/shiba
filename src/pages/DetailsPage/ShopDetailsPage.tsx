@@ -8,8 +8,6 @@ import './ShopDetailsPage.css'
 import HomeLayout from '../../Layout/HomeLayout'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
-import cardImgOne from '../../assets/img/card-20.png'
-import cardImgTwo from '../../assets/img/card-21.png'
 import upVoteIcon from '../../assets/img/up-vote-md.png'
 import downVoteIcon from '../../assets/img/down-vote-md.png'
 import homeIcon from '../../assets/img/home-icon.png'
@@ -22,6 +20,7 @@ import { IReviewOfShop } from '../../constants/types'
 import { getReviewOfShopQuery } from '../../constants/query'
 import closeIcon from '../../assets/img/close-icon.png'
 import { formatAddress } from '../../constants/variants'
+import { formatTokenUnits } from '../../utils/formatters'
 
 const settings = {
   dots: false,
@@ -32,7 +31,10 @@ const settings = {
   slidesToScroll: 1,
 }
 
-const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
+const ShopDetailsPage: React.FC<{
+  query: string
+  type: 'PHYSICAL' | 'DIGITAL'
+}> = ({ query, type }) => {
   const { shopId } = useParams()
   const [result] = useQuery({
     query,
@@ -54,13 +56,16 @@ const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
           <p>There is no shop with Token Id</p>
         </div>
       ) : (
-        <ShopDetails shopData={data[Object.keys(data)[0]]} />
+        <ShopDetails shopData={data[Object.keys(data)[0]]} type={type} />
       )}
     </HomeLayout>
   )
 }
 
-const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
+const ShopDetails: React.FC<{
+  shopData: any
+  type: 'PHYSICAL' | 'DIGITAL'
+}> = ({ shopData, type }) => {
   const slider = useRef<Slider>(null)
   const { shopId } = useParams() as { shopId: string }
   const [upVoteClick, setUpVoteClick] = useState(false)
@@ -264,43 +269,53 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
           <div className="sales-cards">
             <div className="sale-card">
               <h4 className="title">Last Sale</h4>
-              <img src={cardImgOne} alt="product" />
-              <div className="card-footer">
-                <p>Name:shoes</p>
-                <p className="price">Price:10400 SHI</p>
-              </div>
+              {shopData?.lastSale === null ? (
+                <h4 style={{ lineHeight: '100px' }}>NO ITEMS SOLD YET</h4>
+              ) : (
+                <LastSale
+                  item={
+                    type === 'DIGITAL'
+                      ? shopData?.lastSale
+                      : shopData?.lastSale.itemId
+                  }
+                />
+              )}
             </div>
             <div className="sale-card">
               <h4 className="title">Recently Listed</h4>
-              <img src={cardImgTwo} alt="product" />
-              <div className="card-footer">
-                <p>Name:shoes</p>
-                <p className="price">Price:10400 SHI</p>
-              </div>
+              {!shopData?.items?.length ? (
+                <h4 style={{ lineHeight: '100px' }}>NO ITEMS LISTED YET</h4>
+              ) : (
+                <RecentlyListed item={shopData?.items[0]} />
+              )}
             </div>
           </div>
-          <div className="button-cont">
-            <button
-              onClick={() => {
-                setUpVoteClick(true)
-                setDownVoteClick(false)
-              }}
-            >
-              <img src={upVoteIcon} alt="up vote" />
-              {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
-            </button>
-            <button>
-              <img
-                src={downVoteIcon}
-                alt="down vote"
+          {type === 'PHYSICAL' && (
+            <div className="button-cont">
+              <button
                 onClick={() => {
-                  setDownVoteClick(true)
-                  setUpVoteClick(false)
+                  setUpVoteClick(true)
+                  setDownVoteClick(false)
                 }}
-              />
-              {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
-            </button>
-          </div>
+              >
+                <img src={upVoteIcon} alt="up vote" />
+                {goodReviewResult.data
+                  ? goodReviewResult.data.reviews.length
+                  : 0}
+              </button>
+              <button>
+                <img
+                  src={downVoteIcon}
+                  alt="down vote"
+                  onClick={() => {
+                    setDownVoteClick(true)
+                    setUpVoteClick(false)
+                  }}
+                />
+                {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
+              </button>
+            </div>
+          )}
         </div>
         <div className="shoesboutique-container-bottom">
           <img src={homeIcon} alt="home" />
@@ -309,6 +324,98 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
         </div>
       </div>
     </div>
+  )
+}
+
+const LastSale = ({ item }: any) => {
+  const { isLoading, data } = useGetIpfsDataQuery(
+    { hash: item.metadata },
+    { skip: !item.metadata },
+  )
+  const [imageError, setImageError] = useState(false)
+
+  return (
+    <>
+      <div
+        className="card-image"
+        style={{
+          width: '200px',
+          height: '60px',
+          margin: 'auto',
+          marginBottom: '20px',
+        }}
+      >
+        {isLoading ? (
+          <Skeleton height={'100%'} />
+        ) : !data || imageError ? (
+          <img
+            src={cameraImg}
+            alt="product"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
+        ) : (
+          <img
+            src={data?.logo}
+            alt="product"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            onError={() => setImageError(true)}
+          />
+        )}
+      </div>
+      <div className="card-footer">
+        <p>Name:{item.itemName}</p>
+        <p className="price">
+          Price:{formatTokenUnits(item.price, item.erc20Token.decimals)}{' '}
+          {item.erc20Token.symbol}
+        </p>
+      </div>
+    </>
+  )
+}
+
+const RecentlyListed = ({ item }: any) => {
+  const { isLoading, data } = useGetIpfsDataQuery(
+    { hash: item.metadata },
+    { skip: !item.metadata },
+  )
+  const [imageError, setImageError] = useState(false)
+
+  return (
+    <>
+      <div
+        className="card-image"
+        style={{
+          width: '200px',
+          height: '60px',
+          margin: 'auto',
+          marginBottom: '20px',
+        }}
+      >
+        {isLoading ? (
+          <Skeleton height={'100%'} />
+        ) : !data || imageError ? (
+          <img
+            src={cameraImg}
+            alt="product"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
+        ) : (
+          <img
+            src={data?.logo}
+            alt="product"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            onError={() => setImageError(true)}
+          />
+        )}
+      </div>
+      <div className="card-footer">
+        <p>Name:{item.itemName}</p>
+        <p className="price">
+          Price:{formatTokenUnits(item.price, item.erc20Token.decimals)}{' '}
+          {item.erc20Token.symbol}
+        </p>
+      </div>
+    </>
   )
 }
 

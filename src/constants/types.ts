@@ -158,6 +158,9 @@ export type IAwaitingDelivery = {
   itemId: {
     id: string
     itemName: string
+    shopDetails: {
+      id: string
+    }
   }
 }
 

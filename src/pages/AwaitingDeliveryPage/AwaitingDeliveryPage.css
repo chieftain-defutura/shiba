@@ -112,6 +112,7 @@
 .complain-container .complain-top {
   padding: 29px 28px;
   height: 75%;
+  overflow-y: auto;
   border-bottom: 1px solid #d9d9d9;
 }
 

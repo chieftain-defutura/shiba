@@ -3,11 +3,15 @@ import React from 'react'
 import { useAccount, useSigner } from 'wagmi'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
+import Skeleton from 'react-loading-skeleton'
+import { useQuery } from 'urql'
 
 import shipmentABI from '../../../utils/abi/shipmentABI.json'
 import { useTransactionModal } from '../../../context/TransactionContext'
 import { SHIPMENT_CONTRACT } from '../../../utils/contractAddress'
-import { IAwaitingDelivery } from '../../../constants/types'
+import { IAwaitingDelivery, IReviewOfShop } from '../../../constants/types'
+import { getReviewOfShopQuery } from '../../../constants/query'
+import { formatAddress } from '../../../constants/variants'
 
 interface IComplaintProps {
   data: IAwaitingDelivery
@@ -18,6 +22,11 @@ const Complaint: React.FC<IComplaintProps> = ({ data, setState }) => {
   const { data: signerData } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
+  const [result] = useQuery<{ reviews: IReviewOfShop[] }>({
+    query: getReviewOfShopQuery,
+    variables: { shopId: data.itemId.shopDetails.id, status: 'BAD' },
+  })
+  const { fetching, data: reviewsData } = result
 
   const handleComplain = async (values: any) => {
     if (!address || !signerData) return
@@ -28,7 +37,7 @@ const Complaint: React.FC<IComplaintProps> = ({ data, setState }) => {
         shipmentABI,
         signerData,
       )
-      const tx = await contract.orderReceived(data.id, values.review)
+      const tx = await contract.orderComplaint(data.id, values.review)
       await tx.wait()
       setTransaction({ loading: true, status: 'success' })
       setState(null)
@@ -41,11 +50,21 @@ const Complaint: React.FC<IComplaintProps> = ({ data, setState }) => {
   return (
     <div className="complain-container">
       <div className="complain-top">
-        <p>0x002...02: All Great received, and very satisfied!</p>
-        <p>0x003...03: Thank you, wish you grow and many sells</p>
-        <p>0x003...04: Will buy always from you mate</p>
-        <p>0x004...04: Great seller</p>
-        <p>0x005...05: Just received shoes!</p>
+        {fetching ? (
+          <Skeleton count={5} baseColor="#ebebeb" highlightColor="#f5f5f5" />
+        ) : !reviewsData?.reviews.length ? (
+          <div>
+            <p style={{ textAlign: 'center', lineHeight: '100px' }}>
+              No review added yet
+            </p>
+          </div>
+        ) : (
+          reviewsData?.reviews.map((review, index) => (
+            <p key={index.toString()}>
+              {formatAddress(review.user)}: {review.review}
+            </p>
+          ))
+        )}
       </div>
       <Formik
         initialValues={{ review: '' }}

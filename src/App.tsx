@@ -80,11 +80,21 @@ const App: React.FC = () => {
         <Route path="/shop">
           <Route
             path="digital/:shopId"
-            element={<ShopDetailsPage query={digitalShopTokenByIdQuery} />}
+            element={
+              <ShopDetailsPage
+                query={digitalShopTokenByIdQuery}
+                type="DIGITAL"
+              />
+            }
           />
           <Route
             path="goods/:shopId"
-            element={<ShopDetailsPage query={physicalShopTokenByIdQuery} />}
+            element={
+              <ShopDetailsPage
+                query={physicalShopTokenByIdQuery}
+                type="PHYSICAL"
+              />
+            }
           />
         </Route>
         <Route
