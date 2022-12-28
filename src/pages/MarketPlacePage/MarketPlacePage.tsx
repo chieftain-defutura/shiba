@@ -132,17 +132,17 @@ const MarketPlacePage: React.FC = () => {
     }
   }
 
-  // const handleCorporateChange = ({
-  //   target: { value },
-  // }: ChangeEvent<HTMLInputElement>) => {
-  //   if (corporateCheckboxs.includes(value.toLowerCase())) {
-  //     setCorporateCheckBox((f) =>
-  //       f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
-  //     )
-  //   } else {
-  //     setCorporateCheckBox((f) => f.concat(value.toLowerCase()))
-  //   }
-  // }
+  const handleCorporateChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (corporateCheckboxs.includes(value.toLowerCase())) {
+      setCorporateCheckBox((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setCorporateCheckBox((f) => f.concat(value.toLowerCase()))
+    }
+  }
 
   console.log(corporateCheckboxs)
 
