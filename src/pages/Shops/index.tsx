@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
+import { Link } from 'react-router-dom'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -254,10 +255,10 @@ const ShopPage: React.FC = () => {
         ) : (
           <div className="website-container-right">
             {data?.digitalShopTokens.map((f, idx) => (
-              <ShopCard key={idx} {...f} type={'Digital'} />
+              <ShopCard key={idx} {...f} type={'Digital'} path={'digital'} />
             ))}
             {data?.physicalShopTokens.map((f, idx) => (
-              <ShopCard key={idx} {...f} type={'Physical'} />
+              <ShopCard key={idx} {...f} type={'Physical'} path={'goods'} />
             ))}
           </div>
         )}
@@ -267,54 +268,57 @@ const ShopPage: React.FC = () => {
   )
 }
 
-const ShopCard: React.FC<{ type: string } & IShopToken> = ({
+const ShopCard: React.FC<{ type: string; path: string } & IShopToken> = ({
   id,
   domainName,
   type,
   tokenUri,
   owner,
+  path,
 }) => {
   const { data, isLoading } = useGetIpfsDataQuery({ hash: tokenUri ?? '' })
   const [imageError, setImageError] = useState(false)
 
   return (
-    <div className="website-card-container">
-      <div className="card">
-        {isLoading ? (
-          <div className="card-loader">
-            <Skeleton height={'100%'} />
+    <Link to={`/shop/${path}/${id}`}>
+      <div className="website-card-container">
+        <div className="card">
+          {isLoading ? (
+            <div className="card-loader">
+              <Skeleton height={'100%'} />
+            </div>
+          ) : !data || imageError ? (
+            <div className="card-top">
+              <img src={cameraImg} alt="card" />
+            </div>
+          ) : (
+            <div className="card-top">
+              <img
+                src={data?.logo}
+                alt="card"
+                onError={() => setImageError(true)}
+              />
+            </div>
+          )}
+          <div className="card-center">
+            <h3 className="title">
+              {!data || !data?.shopName ? 'unnamed' : data.shopName}
+            </h3>
+            <h4 className="sub-title">{formatAddress(owner.id)}</h4>
           </div>
-        ) : !data || imageError ? (
-          <div className="card-top">
-            <img src={cameraImg} alt="card" />
+          <div className="card-bottom">
+            <p>{type} Shop Id:</p>
+            <p>#{id}</p>
           </div>
-        ) : (
-          <div className="card-top">
-            <img
-              src={data?.logo}
-              alt="card"
-              onError={() => setImageError(true)}
-            />
-          </div>
-        )}
-        <div className="card-center">
-          <h3 className="title">
-            {!data || !data?.shopName ? 'unnamed' : data.shopName}
-          </h3>
-          <h4 className="sub-title">{formatAddress(owner.id)}</h4>
         </div>
-        <div className="card-bottom">
-          <p>{type} Shop Id:</p>
-          <p>#{id}</p>
+        <div style={{ padding: '5px 0' }}>
+          <p style={{ fontSize: '14px' }}>Domain:</p>
+          <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+            <b>{domainName}</b>
+          </p>
         </div>
       </div>
-      <div style={{ padding: '5px 0' }}>
-        <p style={{ fontSize: '14px' }}>Domain:</p>
-        <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-          <b>{domainName}</b>
-        </p>
-      </div>
-    </div>
+    </Link>
   )
 }
 

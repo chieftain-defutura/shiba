@@ -8,6 +8,7 @@ import { useAccount, useSigner, erc20ABI } from 'wagmi'
 import { Formik, Form, Field } from 'formik'
 import { useParams } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
+import * as Yup from 'yup'
 
 import './ItemDetailsPage.css'
 import { useTransactionModal } from '../../context/TransactionContext'
@@ -31,6 +32,17 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+}
+
+const initialState = {
+  name: '',
+  phone: '',
+  address: '',
+  city: '',
+  state: '',
+  zipCode: '',
+  country: '',
+  quantity: 1,
 }
 
 const ItemDetailsPage: React.FC = () => {
@@ -67,11 +79,11 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   erc20Token,
   shopDetails,
   id: itemId,
+  quantity: availableQuantity,
 }) => {
   const slider = useRef<Slider>(null)
   const { address } = useAccount()
   const { data: signerData } = useSigner()
-  const [quantity, setQuantity] = useState(1)
   const { setTransaction } = useTransactionModal()
   const [categoriesShipping, setCategoriesShipping] = useState(false)
   const [itemDetailsErrorImgOne, setItemDetailsErrorImgOne] = useState(false)
@@ -82,22 +94,12 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   const { data: ipfsData, isLoading } = useGetIpfsDataQuery({
     hash: metadata,
   })
-  console.log(ipfsData)
 
   const formattedPrice = Number(
     ethers.utils.formatUnits(price, erc20Token.decimals),
   )
-  const handlePlus = () => {
-    setQuantity(quantity + 1)
-  }
 
-  const handleMinus = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
-    }
-  }
-
-  const handleSubmit = async (values: any, actions: any) => {
+  const handleSubmit = async (values: typeof initialState, actions: any) => {
     if (!address || !signerData) return
 
     try {
@@ -128,7 +130,11 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
         signerData,
       )
 
-      const tx = await contract.createBuyOrder(itemId, quantity, encryptedHash)
+      const tx = await contract.createBuyOrder(
+        itemId,
+        values.quantity,
+        encryptedHash,
+      )
       await tx.wait()
 
       setTransaction({ loading: true, status: 'success' })
@@ -141,21 +147,28 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
     }
   }
 
+  const validationSchema = Yup.object({
+    name: Yup.string().required('This field is required'),
+    phone: Yup.number().required('This field is required'),
+    address: Yup.string().required('This field is required'),
+    city: Yup.string().required('This field is required'),
+    state: Yup.string().required('This field is required'),
+    zipCode: Yup.number().required('This field is required'),
+    country: Yup.string().required('This field is required'),
+    quantity: Yup.number()
+      .min(1, 'minimum 1 Quantity is needed to purchase')
+      .max(Number(availableQuantity), 'maximum quantity exceeded')
+      .required('This field is required'),
+  })
+
   return (
     <div className="categories-details-container">
       <Formik
-        initialValues={{
-          name: '',
-          phone: '',
-          address: '',
-          city: '',
-          state: '',
-          zipCode: '',
-          country: '',
-        }}
+        initialValues={initialState}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isValid, dirty }) => (
+        {({ isValid, dirty, values, setValues }) => (
           <Form>
             <div className="categories-details-container-right">
               <h2 className="title">{shopDetails.domainName}</h2>
@@ -282,7 +295,7 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                             />
                             <Field
                               name="zipCode"
-                              type="text"
+                              type="number"
                               placeholder="Zip code"
                             />
                             <Field
@@ -325,14 +338,29 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                   <div className="quantity-container">
                     <p>Quantity:</p>
                     <div className="quantity-box">
-                      <button type="button" onClick={handleMinus}>
+                      <button
+                        type="button"
+                        disabled={values.quantity === 1}
+                        onClick={() =>
+                          setValues((f) => ({ ...f, quantity: f.quantity - 1 }))
+                        }
+                      >
                         <BiMinus />
                       </button>
-                      <p>{quantity}</p>
-                      <button type="button" onClick={handlePlus}>
+                      <p>{values.quantity}</p>
+                      <button
+                        type="button"
+                        disabled={values.quantity === Number(availableQuantity)}
+                        onClick={() =>
+                          setValues((f) => ({ ...f, quantity: f.quantity + 1 }))
+                        }
+                      >
                         <AiOutlinePlus />
                       </button>
                     </div>
+                  </div>
+                  <div className="quantity-container">
+                    <p>Available Quantity : {availableQuantity}</p>
                   </div>
                   <div className="buy-container">
                     <div className="top">
@@ -341,18 +369,27 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
                         {erc20Token.symbol}
                       </p>
                       <p>
-                        Total: {quantity * formattedPrice} {erc20Token.symbol}
+                        Total: {values.quantity * formattedPrice}{' '}
+                        {erc20Token.symbol}
                       </p>
                     </div>
                     <div>
-                      {!categoriesShipping ? (
-                        <div onClick={() => setCategoriesShipping(true)}>
-                          <button>Buy</button>
-                        </div>
-                      ) : (
-                        <button type="submit" disabled={!(dirty && isValid)}>
-                          Buy
-                        </button>
+                      {address?.toLowerCase() !==
+                        shopDetails.owner.id.toLowerCase() && (
+                        <>
+                          {!categoriesShipping ? (
+                            <div onClick={() => setCategoriesShipping(true)}>
+                              <button>Buy</button>
+                            </div>
+                          ) : (
+                            <button
+                              type="submit"
+                              disabled={!(dirty && isValid)}
+                            >
+                              Buy
+                            </button>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>

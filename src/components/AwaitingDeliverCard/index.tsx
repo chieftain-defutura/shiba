@@ -16,7 +16,7 @@ const AwaitingDeliveryCard: React.FC<IAwaitingDeliveryCard> = ({
     <>
       <tr className="body-tr">
         <td>
-          <p>Shoes1</p>
+          <p>{data.itemId.itemName}</p>
         </td>
         <td>
           <p>{data.quantity}</p>

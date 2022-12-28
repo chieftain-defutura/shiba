@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
+import Skeleton from 'react-loading-skeleton'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -9,9 +10,7 @@ import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { WEBSITE_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
 import Loading from '../../components/Loading/Loading'
-import Skeleton from 'react-loading-skeleton'
-
-import cardImg from '../../assets/img/card-3.png'
+import camera from '../../assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
@@ -36,7 +35,7 @@ const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
           {isLoading ? (
             <Skeleton height={'100%'} />
           ) : !data || imageError ? (
-            <img src={cardImg} alt="card" />
+            <img src={camera} alt="card" />
           ) : (
             <img
               src={data?.metadata?.logo}

@@ -41,6 +41,7 @@ export type IFullOnBlockchainArtToken = {
 export type IPhysicalItem = {
   id: string
   itemName: string
+  quantity: string
   metadata: string
   erc20Token: {
     id: string
@@ -51,6 +52,9 @@ export type IPhysicalItem = {
     id: string
     domainId: string
     domainName: string
+    owner: {
+      id: string
+    }
   }
   price: string
   owner: {
@@ -99,6 +103,7 @@ export type IFixedSale = {
 
 export type IGoodsDigitalItem = {
   id: string
+  itemName: string
   metadata: string
   shopDetails: {
     id: string
@@ -116,7 +121,9 @@ export type IGoodsDigitalItem = {
 export type IGoodsPhysicalItem = {
   id: string
   price: string
+  itemName: string
   quantity: string
+  metadata: string
   shopDetails: {
     id: string
   }
@@ -131,11 +138,14 @@ export type IGoodsPhysicalItem = {
 
 export type IHaveToSend = {
   id: string
-  itemId: string
   owner: string
   status: string
   quantity: string
   deliveryHash: string
+  itemId: {
+    id: string
+    itemName: string
+  }
 }
 
 export type IAwaitingDelivery = {
@@ -145,6 +155,10 @@ export type IAwaitingDelivery = {
   buyer: string
   quantity: string
   deliveryHash: string
+  itemId: {
+    id: string
+    itemName: string
+  }
 }
 
 export type IMyItems = {
@@ -223,6 +237,7 @@ export type IRemovePhysicalItem = {
   id: string
   itemName: string
   metadata: string
+  category: string
   quantity: string
   erc20Token: {
     id: string
@@ -258,4 +273,17 @@ export type IRemoveDigitalItem = {
   owner: {
     id: string
   }
+}
+
+export type IReviewOfShop = {
+  id: string
+  user: string
+  itemId: {
+    id: string
+    shopDetails: {
+      id: string
+    }
+  }
+  review: string
+  status: string
 }

@@ -11,6 +11,7 @@ import { IAuctionNft } from '../../constants/types'
 import Loading from '../../components/Loading/Loading'
 import { tokensList } from '../../constants/contract'
 import './ActionPage.css'
+import { parseUnits } from 'ethers/lib/utils.js'
 
 const getQuery = (orderBy: string, orderDirection: string) => {
   return `query{
@@ -55,13 +56,36 @@ const getCurrencyQuery = (erc20Token: string) => {
   }`
 }
 
+const getPriceQuery = (price: string) => {
+  return `query{
+    auctions(where:{status:ACTIVE,price_gte:"${price}"}){
+      id
+      tokenId
+      auctionId
+      owner
+      highestBid
+      price
+      endTime
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+      erc721TokenAddress
+      status
+    }
+  }`
+}
+
 const ActionPage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState(null)
   const [isValue, setIsValue] = useState('')
   const [dropDown, setDropDown] = useState(false)
   const [graphQuery, setGraphQuery] = useState(auctionPageQuery)
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
   const [open, setOpen] = useState(false)
-
+  console.log(maxPrice)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
   console.log(dropDown)
@@ -81,6 +105,11 @@ const ActionPage: React.FC = () => {
       getCurrencyQuery(selectedDropDown?.address.toLowerCase()),
     )
   }, [selectedDropDown?.address])
+
+  useMemo(() => {
+    if (!minPrice) return auctionPageQuery
+    return setGraphQuery(getPriceQuery(parseUnits(minPrice, '18').toString()))
+  }, [minPrice])
 
   const [result] = useQuery<{ auctions: IAuctionNft[] }>({
     query: graphQuery,
@@ -147,11 +176,19 @@ const ActionPage: React.FC = () => {
             <div className="price-content">
               <div className="check-box-container">
                 <label htmlFor="min">MIN</label>
-                <input id="min" type="checkbox" />
+                <input
+                  id="min"
+                  type="number"
+                  onChange={(e) => setMinPrice(e.target.value)}
+                />
               </div>
               <div className="check-box-container">
                 <label htmlFor="max">Max</label>
-                <input id="max" type="checkbox" />
+                <input
+                  id="max"
+                  type="number"
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                />
               </div>
             </div>
           </div>

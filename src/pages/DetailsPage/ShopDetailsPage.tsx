@@ -15,10 +15,13 @@ import downVoteIcon from '../../assets/img/down-vote-md.png'
 import homeIcon from '../../assets/img/home-icon.png'
 import questionIcon from '../../assets/img/question-icon.png'
 import videoIcon from '../../assets/img/video-icon.png'
-import closeIcon from '../../assets/img/close-icon.png'
 import Loading from '../../components/Loading/Loading'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 import cameraImg from '../../assets/icon/Camera.svg'
+import { IReviewOfShop } from '../../constants/types'
+import { getReviewOfShopQuery } from '../../constants/query'
+import closeIcon from '../../assets/img/close-icon.png'
+import { formatAddress } from '../../constants/variants'
 
 const settings = {
   dots: false,
@@ -59,11 +62,20 @@ const ShopDetailsPage: React.FC<{ query: string }> = ({ query }) => {
 
 const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
   const slider = useRef<Slider>(null)
+  const { shopId } = useParams() as { shopId: string }
   const [upVoteClick, setUpVoteClick] = useState(false)
   const [downVoteClick, setDownVoteClick] = useState(false)
   const [shopErrorImgOne, setShopErrorImgOne] = useState(false)
   const [shopErrorImgTwo, setShopErrorImgTwo] = useState(false)
   const [shopErrorImgThree, setShopErrorImgThree] = useState(false)
+  const [goodReviewResult] = useQuery<{ reviews: IReviewOfShop[] }>({
+    query: getReviewOfShopQuery,
+    variables: { shopId, status: 'GOOD' },
+  })
+  const [badReviewResult] = useQuery<{ reviews: IReviewOfShop[] }>({
+    query: getReviewOfShopQuery,
+    variables: { shopId, status: 'BAD' },
+  })
 
   const { isLoading, data } = useGetIpfsDataQuery(
     { hash: shopData?.tokenUri ?? '' },
@@ -79,13 +91,13 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
         {upVoteClick && (
           <div className="vote-detail">
             <img src={upVoteIcon} alt="up vote" />
-            {shopData ? shopData.upVote : 0}
+            {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
           </div>
         )}
         {downVoteClick && (
           <div className="vote-detail">
             <img src={downVoteIcon} alt="down vote" />
-            {shopData ? shopData.downVote : 0}
+            {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
           </div>
         )}
       </h2>
@@ -162,13 +174,39 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
                 className="close-icon"
                 onClick={() => setUpVoteClick(false)}
               />
-              <div>
-                <p>0x002...02: All Great received, and very satisfied!</p>
-                <p>0x003...03: Thank you, wish you grow and many sells</p>
-                <p>0x003...04: Will buy always from you mate</p>
-                <p>0x004...04: Great seller</p>
-                <p>0x005...05: Just received shoes!</p>
-              </div>
+              {goodReviewResult.fetching ? (
+                <Skeleton count={5} />
+              ) : !goodReviewResult.data ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>Oops something went wrong</p>
+                </div>
+              ) : !goodReviewResult.data?.reviews.length ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>No reviews is added Yet.</p>
+                </div>
+              ) : (
+                <div>
+                  {goodReviewResult.data.reviews.map((details, index) => (
+                    <p key={index.toString()}>
+                      {formatAddress(details.user)}: {details.review}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           )}
           {downVoteClick && (
@@ -179,23 +217,39 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
                 className="close-icon"
                 onClick={() => setDownVoteClick(false)}
               />
-              <div>
-                <p>
-                  0x002...02: No receive, nothing!!! You say 5 day delivery but
-                  passed 5 months!
-                </p>
-                <p>0x003...03: oh another scammer</p>
-                <p>0x003...04: scammed by this seller, don’t buy from him</p>
-                <p>
-                  0x004...04: I buyed a pair of boots but received 2 socks,
-                  great job foker!
-                </p>
-                <p>
-                  0x005...05: He ask me for more money for delivery, I will not
-                  send nothing more, he is a scammer! I see now, thank you
-                  people
-                </p>
-              </div>
+              {badReviewResult.fetching ? (
+                <Skeleton count={5} />
+              ) : !badReviewResult.data ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>Oops something went wrong</p>
+                </div>
+              ) : !badReviewResult.data?.reviews.length ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>No reviews is added Yet.</p>
+                </div>
+              ) : (
+                <div>
+                  {badReviewResult.data.reviews.map((details, index) => (
+                    <p key={index.toString()}>
+                      {formatAddress(details.user)}: {details.review}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           )}
           <div className="description-cont">
@@ -233,7 +287,7 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
               }}
             >
               <img src={upVoteIcon} alt="up vote" />
-              {shopData ? shopData.upVote : 0}
+              {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
             </button>
             <button>
               <img
@@ -244,7 +298,7 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
                   setUpVoteClick(false)
                 }}
               />
-              {shopData ? shopData.downVote : 0}
+              {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
             </button>
           </div>
         </div>

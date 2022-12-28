@@ -395,8 +395,19 @@ select {
 .stock-management-remove-item-container
   .remove-item-cards-container
   .remove-item-card
+  .card-top {
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+
+.stock-management-remove-item-container
+  .remove-item-cards-container
+  .remove-item-card
   .card-top
   img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   border-radius: 8px 8px 0px 0px;
 }
 
