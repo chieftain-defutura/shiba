@@ -9,6 +9,13 @@ import { goodsItemsQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
 import PhysicalItem from '../PhysicallItem/PhysicalItem'
 import { parseUnits } from 'ethers/lib/utils.js'
+import {
+  BONE_TOKEN_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  PAW_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+  SHI_TOKEN_ADDRESS,
+} from '../../utils/contractAddress'
 
 interface IGoodsPhysical {
   data:
@@ -147,10 +154,20 @@ const GoodsMaretPlace: React.FC<IGoodsMarketPlace> = ({
           !debouncedDomainName ? '0' : debouncedDomainName,
           '18',
         ).toString() || !debouncedDomainName,
-      erc20Token: selectedDropDown,
+      erc20Token: selectedDropDown?.toLowerCase()
+        ? [selectedDropDown.toLowerCase()]
+        : [
+            SHIB_TOKEN_ADDRESS.toLowerCase(),
+            SHI_TOKEN_ADDRESS.toLowerCase(),
+            LEASH_TOKEN_ADDRESS.toLowerCase(),
+            PAW_TOKEN_ADDRESS.toLowerCase(),
+            BONE_TOKEN_ADDRESS.toLowerCase(),
+          ],
     },
   })
   const { data } = result
+  console.log(data)
+
   return (
     <>
       <GoodsPhysical
