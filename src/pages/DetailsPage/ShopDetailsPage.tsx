@@ -18,7 +18,10 @@ import videoIcon from '../../assets/img/video-icon.png'
 import Loading from '../../components/Loading/Loading'
 import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 import cameraImg from '../../assets/icon/Camera.svg'
-import Reviews from '../../components/ShopDetails/Reviews'
+import { IReviewOfShop } from '../../constants/types'
+import { getReviewOfShopQuery } from '../../constants/query'
+import closeIcon from '../../assets/img/close-icon.png'
+import { formatAddress } from '../../constants/variants'
 
 const settings = {
   dots: false,
@@ -65,6 +68,14 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
   const [shopErrorImgOne, setShopErrorImgOne] = useState(false)
   const [shopErrorImgTwo, setShopErrorImgTwo] = useState(false)
   const [shopErrorImgThree, setShopErrorImgThree] = useState(false)
+  const [goodReviewResult] = useQuery<{ reviews: IReviewOfShop[] }>({
+    query: getReviewOfShopQuery,
+    variables: { shopId, status: 'GOOD' },
+  })
+  const [badReviewResult] = useQuery<{ reviews: IReviewOfShop[] }>({
+    query: getReviewOfShopQuery,
+    variables: { shopId, status: 'BAD' },
+  })
 
   const { isLoading, data } = useGetIpfsDataQuery(
     { hash: shopData?.tokenUri ?? '' },
@@ -80,13 +91,13 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
         {upVoteClick && (
           <div className="vote-detail">
             <img src={upVoteIcon} alt="up vote" />
-            {shopData ? shopData.upVote : 0}
+            {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
           </div>
         )}
         {downVoteClick && (
           <div className="vote-detail">
             <img src={downVoteIcon} alt="down vote" />
-            {shopData ? shopData.downVote : 0}
+            {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
           </div>
         )}
       </h2>
@@ -156,18 +167,90 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
             </div>
           )}
           {upVoteClick && (
-            <Reviews
-              status="GOOD"
-              shopId={shopId}
-              handleClose={() => setUpVoteClick(false)}
-            />
+            <div className="up-vote-box">
+              <img
+                src={closeIcon}
+                alt="close"
+                className="close-icon"
+                onClick={() => setUpVoteClick(false)}
+              />
+              {goodReviewResult.fetching ? (
+                <Skeleton count={5} />
+              ) : !goodReviewResult.data ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>Oops something went wrong</p>
+                </div>
+              ) : !goodReviewResult.data?.reviews.length ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>No reviews is added Yet.</p>
+                </div>
+              ) : (
+                <div>
+                  {goodReviewResult.data.reviews.map((details, index) => (
+                    <p key={index.toString()}>
+                      {formatAddress(details.user)}: {details.review}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
           {downVoteClick && (
-            <Reviews
-              status="BAD"
-              shopId={shopId}
-              handleClose={() => setDownVoteClick(false)}
-            />
+            <div className="up-vote-box">
+              <img
+                src={closeIcon}
+                alt="close"
+                className="close-icon"
+                onClick={() => setDownVoteClick(false)}
+              />
+              {badReviewResult.fetching ? (
+                <Skeleton count={5} />
+              ) : !badReviewResult.data ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>Oops something went wrong</p>
+                </div>
+              ) : !badReviewResult.data?.reviews.length ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>No reviews is added Yet.</p>
+                </div>
+              ) : (
+                <div>
+                  {badReviewResult.data.reviews.map((details, index) => (
+                    <p key={index.toString()}>
+                      {formatAddress(details.user)}: {details.review}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
           <div className="description-cont">
             <h3>Brief Description: </h3>
@@ -204,7 +287,7 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
               }}
             >
               <img src={upVoteIcon} alt="up vote" />
-              {shopData ? shopData.upVote : 0}
+              {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
             </button>
             <button>
               <img
@@ -215,7 +298,7 @@ const ShopDetails: React.FC<{ shopData: any }> = ({ shopData }) => {
                   setUpVoteClick(false)
                 }}
               />
-              {shopData ? shopData.downVote : 0}
+              {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
             </button>
           </div>
         </div>
