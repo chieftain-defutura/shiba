@@ -44,7 +44,7 @@ const HaveToSendCard: React.FC<IHaveToSendProps> = ({
     <>
       <tr className="body-tr">
         <td>
-          <p>Shoes1</p>
+          <p>{data.itemId.itemName}</p>
         </td>
         <td>
           <p>{data.quantity}</p>

@@ -191,6 +191,7 @@
   padding: 24px 18px;
   position: relative;
   color: #000000;
+  overflow-y: auto;
 }
 
 .shoesboutique-container-right .up-vote-box .close-icon {

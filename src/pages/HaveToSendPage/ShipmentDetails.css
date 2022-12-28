@@ -61,13 +61,15 @@
 }
 
 .shipping-details-container-right .shipping-form-container .shipping-form {
-  width: 603px;
-  height: 331px;
+  max-width: 600px;
+  width: 100%;
   background-color: var(--bgColorTwo);
   border-radius: 5px;
   padding: 15px 62px;
   margin-top: 54px;
   margin-bottom: 39px;
+  display: flex;
+  flex-direction: column;
 }
 
 .shipping-details-container-right .shipping-form-container .title {

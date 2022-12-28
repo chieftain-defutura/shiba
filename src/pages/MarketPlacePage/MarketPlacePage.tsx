@@ -93,6 +93,7 @@ const getGoodsPriceQuery = `query($price: String!){
   physicalItems(where:{status:ACTIVE,price_gte:$price  }){
     id
     quantity
+    metadata
     shopDetails{
       id
     }

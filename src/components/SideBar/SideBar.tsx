@@ -12,7 +12,11 @@ import {
   WEBSITE_NFT_CONTRACT_ADDRESS,
 } from '../../utils/contractAddress'
 import shopAbi from '../../utils/abi/physicalShopABI.json'
-import { userCollectionsQuery } from '../../constants/query'
+import {
+  awaitingDeliveryQuery,
+  haveToSendQuery,
+  userCollectionsQuery,
+} from '../../constants/query'
 import { IUserCollection } from '../../constants/types'
 import './SideBar.css'
 
@@ -23,8 +27,26 @@ const SideBar: React.FC = () => {
     variables: { user: address },
     pause: !address,
   })
-
   const { data } = result
+
+  const [haveToSendresult] = useQuery<{
+    shipments: unknown[]
+  }>({
+    query: haveToSendQuery,
+    variables: {
+      owner: address?.toLowerCase(),
+    },
+    pause: !address,
+  })
+  const [awaitingDeliveryResult] = useQuery<{
+    shipments: unknown[]
+  }>({
+    query: awaitingDeliveryQuery,
+    variables: {
+      buyer: address?.toLowerCase(),
+    },
+    pause: !address,
+  })
 
   const { data: balanceData } = useContractReads({
     contracts: [
@@ -170,13 +192,17 @@ const SideBar: React.FC = () => {
             <div className="content">
               <Link to="/have-to-send">
                 <p className="name">Have to Send</p>
-                <p className="number">0</p>
+                <p className="number">
+                  {haveToSendresult.data?.shipments.length ?? 0}
+                </p>
               </Link>
             </div>
             <div className="content">
               <Link to="/awaiting-delivery">
                 <p className="name">Awaiting Delivery</p>
-                <p className="number">0</p>
+                <p className="number">
+                  {awaitingDeliveryResult.data?.shipments.length ?? 0}
+                </p>
               </Link>
             </div>
           </div>

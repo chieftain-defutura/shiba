@@ -51,10 +51,14 @@ query($id: String!){
   physicalItem(id:$id){
     id
     metadata
+    quantity
     shopDetails{
       id
       domainId
       domainName
+      owner{
+        id
+      }
     }
 		price
     owner {
@@ -120,6 +124,7 @@ query{
   digitalItems(where:{status:ACTIVE}){
     id
     metadata
+    itemName
     shopDetails{
       id
     }
@@ -136,6 +141,7 @@ query{
     id
     itemName
     quantity
+    metadata
     shopDetails{
       id
     }
@@ -172,24 +178,31 @@ export const haveToSendQuery = `
   query($owner: String!){
     shipments(where:{owner:$owner,status:"PREPARING"}){
       id
-      itemId
       owner
       status
       quantity
       deliveryHash
+      itemId{
+        id
+        itemName
+      }
     }
   }
   `
 
 export const awaitingDeliveryQuery = `
   query($buyer: String!){
-    shipments(where:{buyer:$buyer}){
+    shipments(where:{buyer:$buyer,status_in:[PREPARING,DISPATCHED]}){
       id
       owner
       buyer
       status
       quantity
       deliveryHash
+      itemId {
+        id
+        itemName
+      }
     }
   }
   `
@@ -381,6 +394,8 @@ query($id:String!){
   physicalItems(where:{ status: ACTIVE,shopDetails: $id}){
     id
     quantity
+    metadata
+    itemName
     shopDetails{
       id
     }
@@ -413,6 +428,23 @@ query($id:String!){
     }
     subcategory
     category
+  }
+}
+`
+
+export const getReviewOfShopQuery = `
+query($shopId:String!,$status:String!){
+  reviews(where:{itemId_:{shopDetails:$shopId},status:$status}){
+    id
+    user
+    itemId {
+      id
+      shopDetails {
+        id
+      }
+    }
+    review
+    status
   }
 }
 `
