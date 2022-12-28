@@ -28,7 +28,7 @@ const Reviews: React.FC<IReviewsProps> = ({ handleClose, shopId, status }) => {
         onClick={handleClose}
       />
       {fetching ? (
-        <Skeleton count={10} />
+        <Skeleton count={5} />
       ) : !data ? (
         <div
           style={{

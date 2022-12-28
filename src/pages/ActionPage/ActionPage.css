@@ -183,15 +183,14 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 27px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 }
 
 .action-container-left .price-container .price-content,
 .currency-container .currency-content {
   display: flex;
   align-items: center;
-  gap: 26px;
-  padding: 0 11px;
+  gap: 40px;
 }
 
 .action-container-left .price-container .price-select-cont,

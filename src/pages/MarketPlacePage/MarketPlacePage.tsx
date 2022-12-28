@@ -33,8 +33,8 @@ import useDebounce from '../../hooks/useDebounce'
 //   }`
 // }
 
-const getGoodsDigitalQuery = `query($category: [String!]!, $price:String!){
-  digitalItems( where:{status:ACTIVE, category_in:$category ,price_gte:$price}){
+const getGoodsDigitalQuery = `query($category: [String!]!, $price:String!,$erc20Token:String!){
+  digitalItems( where:{status:ACTIVE, category_in:$category ,price_gte:$price, erc20Token:$erc20Token}){
     id
     category
     shopDetails {
@@ -53,8 +53,8 @@ const getGoodsDigitalQuery = `query($category: [String!]!, $price:String!){
   }
 }`
 
-const getGoodsPhysicalQuery = `query($category: [String!]!, $price:String!){
-  physicalItems( where:{status:ACTIVE, category_in:$category, price_gte:$price}){
+const getGoodsPhysicalQuery = `query($category: [String!]!, $price:String!,$erc20Token:String!){
+  physicalItems( where:{status:ACTIVE, category_in:$category, price_gte:$price, erc20Token:$erc20Token}){
     id
     category
     shopDetails {
@@ -71,40 +71,6 @@ const getGoodsPhysicalQuery = `query($category: [String!]!, $price:String!){
       decimals
     }
   
-  }
-}`
-
-const getGoodsPriceQuery = `query($price: String!){
-  digitalItems(where:{ price_gte:$price }){
-    id
-    metadata
-    shopDetails{
-      id
-    }
-    price
-    erc20Token {
-      id
-      symbol
-      decimals
-    }
-    subcategory
-    category
-  }
-  physicalItems(where:{status:ACTIVE,price_gte:$price  }){
-    id
-    quantity
-    metadata
-    shopDetails{
-      id
-    }
-    price
-    erc20Token {
-      id
-      symbol
-      decimals
-    }
-    subcategory
-    category
   }
 }`
 
@@ -119,6 +85,8 @@ const MarketPlacePage: React.FC = () => {
     useState<ArrElement<typeof tokensList>>()
   console.log(minValue)
   const [open, setOpen] = useState(false)
+
+  console.log(selectedDropDown)
   const [goodsDigitalResult] = useQuery({
     query: getGoodsDigitalQuery,
     variables: {
@@ -127,8 +95,9 @@ const MarketPlacePage: React.FC = () => {
         !debouncedDomainName ? '0' : debouncedDomainName,
         '18',
       ).toString(),
+      erc20Token: selectedDropDown?.address.toLowerCase(),
     },
-    pause: !goodsCheckboxs.length || !debouncedDomainName,
+    pause: !goodsCheckboxs.length || !debouncedDomainName || !selectedDropDown,
   })
   const { data: goodsDigitalData } = goodsDigitalResult
 
@@ -141,24 +110,12 @@ const MarketPlacePage: React.FC = () => {
           !debouncedDomainName ? '0' : debouncedDomainName,
           '18',
         ).toString() || !debouncedDomainName,
+      erc20Token: selectedDropDown?.address.toLowerCase(),
     },
-    pause: !goodsCheckboxs.length,
+    pause: !goodsCheckboxs.length || !debouncedDomainName || !selectedDropDown,
   })
   const { data: goodsPhysicalData } = goodsPhysicalResult
 
-  const [goodsPriceResult] = useQuery({
-    query: getGoodsPriceQuery,
-    variables: {
-      price: parseUnits(
-        !debouncedDomainName ? '0' : debouncedDomainName,
-        '18',
-      ).toString(),
-    },
-    pause: !debouncedDomainName,
-  })
-  const { data: goodsPriceData } = goodsPriceResult
-
-  console.log(goodsPriceData)
   const handleChange = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
@@ -376,39 +333,52 @@ const MarketPlacePage: React.FC = () => {
             </div>
           </div>
           <div className="price-container">
-            <p className="title">Price</p>
-            <div className="price-content">
+            <div className="price-title">
+              <p className="title">Price</p>
               <div className="price-select-cont">
                 <IoIosArrowDown className="arrow-icon" />
               </div>
+            </div>
+
+            <div className="price-content">
               <div className="check-box-container">
-                <label htmlFor="min">MIN</label>
-                <input
-                  id="min"
-                  type="text"
-                  value={minValue}
-                  onChange={(e) => setMinValue(e.target.value)}
-                />
+                <div>
+                  <label htmlFor="min">MIN</label>
+                </div>
+                <div>
+                  <input
+                    id="min"
+                    type="text"
+                    value={minValue}
+                    onChange={(e) => setMinValue(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="check-box-container">
-                <label htmlFor="max">Max</label>
-                <input
-                  id="max"
-                  type="text"
-                  value={maxValue}
-                  onChange={(e) => setMaxValue(e.target.value)}
-                />
+                <div>
+                  <label htmlFor="max">Max</label>
+                </div>
+                <div>
+                  <input
+                    id="max"
+                    type="text"
+                    value={maxValue}
+                    onChange={(e) => setMaxValue(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div className="currency-container">
-            <p className="title">Currency</p>
-            <div className="currency-content">
-              <div
-                className="currency-select-cont"
-                onClick={() => setOpen(!open)}
-              >
-                <IoIosArrowDown className="arrow-icon" />
+            <div className="price-title">
+              <p className="title">Currency</p>
+              <div className="currency-content">
+                <div
+                  className="currency-select-cont"
+                  onClick={() => setOpen(!open)}
+                >
+                  <IoIosArrowDown className="arrow-icon" />
+                </div>
               </div>
             </div>
           </div>
@@ -421,8 +391,8 @@ const MarketPlacePage: React.FC = () => {
               physicalData={goodsPhysicalData}
               clickDropDown={clickDropDown}
               goodsCheckBox={goodsCheckboxs}
-              priceData={goodsPriceData}
-              value={minValue}
+              debouncedDomainName={debouncedDomainName}
+              selectedDropDown={selectedDropDown?.address.toLowerCase()}
             />
           ) : (
             <CorporateMarketplace />
