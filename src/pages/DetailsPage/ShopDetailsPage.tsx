@@ -6,7 +6,6 @@ import Skeleton from 'react-loading-skeleton'
 
 import './ShopDetailsPage.css'
 import HomeLayout from '../../Layout/HomeLayout'
-import slideImg from '../../assets/img/slider-1.png'
 import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
 import cardImgOne from '../../assets/img/card-20.png'
