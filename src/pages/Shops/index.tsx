@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
@@ -22,8 +22,37 @@ interface IShopToken {
   }
 }
 
+export const shopItemsQuery = `
+query($category:[String!]){
+  digitalItems(where:{status:ACTIVE,category_in:$category}){
+    shopDetails{
+      id
+      domainName
+      tokenUri
+      owner {
+        id
+      }  
+    }
+  }
+  physicalItems(where:{status:ACTIVE , category_in:$category}){
+    shopDetails{
+      id
+      domainName
+      tokenUri
+      owner {
+        id
+      }  
+    }
+  }
+}`
+
 const ShopPage: React.FC = () => {
   const [openDigital, setOpenDigital] = useState(false)
+  const [openPhysical, setOpenPhysical] = useState(false)
+  const [openClothing, setOpenClothing] = useState(false)
+  const [openAccessories, setOpenAccessories] = useState(false)
+  const [openFood, setOpenFood] = useState(false)
+  const [shopCheckBox, setShopCheckBox] = useState<string[]>([])
   const [dropDown, setDropDown] = useState(null)
 
   const [result] = useQuery<{
@@ -33,6 +62,44 @@ const ShopPage: React.FC = () => {
 
   const { data, fetching, error } = result
 
+  const [itemresult] = useQuery<{
+    digitalItems: { shopDetails: IShopToken }[]
+    physicalItems: { shopDetails: IShopToken }[]
+  }>({ query: shopItemsQuery, variables: { category: shopCheckBox } })
+
+  const { data: itemData } = itemresult
+
+  const uniqueIds: string[] = []
+
+  const uniqueItem = useMemo(() => {
+    if (!itemData) return
+    const physical = itemData?.physicalItems.filter((element) => {
+      const isDuplicate = uniqueIds.includes(element.shopDetails.id)
+
+      if (!isDuplicate) {
+        uniqueIds.push(element.shopDetails.id)
+
+        return true
+      }
+
+      return false
+    })
+    const digital = itemData?.digitalItems.filter((element) => {
+      const isDuplicate = uniqueIds.includes(element.shopDetails.id)
+
+      if (!isDuplicate) {
+        uniqueIds.push(element.shopDetails.id)
+
+        return true
+      }
+
+      return false
+    })
+
+    return { digital, physical }
+  }, [itemData])
+
+  console.log(uniqueItem)
   const handleDropDown = (idx: any) => {
     if (dropDown === idx) {
       return setDropDown(null)
@@ -102,12 +169,40 @@ const ShopPage: React.FC = () => {
           </div>
         ) : (
           <div className="website-container-right">
-            {data?.digitalShopTokens.map((f, idx) => (
-              <ShopCard key={idx} {...f} type={'Digital'} path={'digital'} />
-            ))}
-            {data?.physicalShopTokens.map((f, idx) => (
-              <ShopCard key={idx} {...f} type={'Physical'} path={'goods'} />
-            ))}
+            {shopCheckBox.length === 0 ? (
+              <>
+                {data?.digitalShopTokens.map((f, idx) => (
+                  <ShopCard
+                    key={idx}
+                    {...f}
+                    type={'Digital'}
+                    path={'digital'}
+                  />
+                ))}
+                {data?.physicalShopTokens.map((f, idx) => (
+                  <ShopCard key={idx} {...f} type={'Physical'} path={'goods'} />
+                ))}
+              </>
+            ) : (
+              <>
+                {uniqueItem?.digital.map((f, idx) => (
+                  <ShopCard
+                    key={idx}
+                    {...f.shopDetails}
+                    type={'Digital'}
+                    path={'digital'}
+                  />
+                ))}
+                {uniqueItem?.physical.map((f, idx) => (
+                  <ShopCard
+                    key={idx}
+                    {...f.shopDetails}
+                    type={'Physical'}
+                    path={'goods'}
+                  />
+                ))}
+              </>
+            )}
           </div>
         )}
       </div>
