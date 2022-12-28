@@ -169,7 +169,6 @@ const ActionPage: React.FC = () => {
     setFilteredResult(data.auctions)
     setRawResult(data.auctions)
   }, [data])
-  console.log(filteredResult)
 
   useMemo(() => {
     if (!maxPrice) return setFilteredResult(rawResult)

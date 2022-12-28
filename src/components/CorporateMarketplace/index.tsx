@@ -5,9 +5,17 @@ import FixedSaleCard from '../FixedSaleCard'
 import { IFixedSale } from '../../constants/types'
 import { fixedSaleQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
+import { parseUnits } from 'ethers/lib/utils.js'
+import {
+  BONE_TOKEN_ADDRESS,
+  LEASH_TOKEN_ADDRESS,
+  PAW_TOKEN_ADDRESS,
+  SHIB_TOKEN_ADDRESS,
+  SHI_TOKEN_ADDRESS,
+} from '../../utils/contractAddress'
 
-const CorportateQuery = `query($erc721TokenAddress:[String!]!) {
-  fixedSales(where:{status:ACTIVE, erc721TokenAddress_in:$erc721TokenAddress}){
+const CorportateQuery = `query($erc721TokenAddress:[String!]!,$price:String!,$erc20Token:[String!]!) {
+  fixedSales(where:{status:ACTIVE, erc721TokenAddress_in:$erc721TokenAddress, price_gte:$price,  erc20Token_in:$erc20Token}){
   id
   auctionId
   tokenId
@@ -24,14 +32,33 @@ const CorportateQuery = `query($erc721TokenAddress:[String!]!) {
 }`
 interface ICorporateMarketplace {
   goodsCheckBox: string[]
+  debouncedDomainName: string
+  selectedDropDown: any
 }
 const CorporateMarketplace: React.FC<ICorporateMarketplace> = ({
   goodsCheckBox,
+  debouncedDomainName,
+  selectedDropDown,
 }) => {
   const [result] = useQuery<{
     fixedSales: IFixedSale[]
   }>({
     query: fixedSaleQuery,
+    variables: {
+      price: parseUnits(
+        !debouncedDomainName ? '0' : debouncedDomainName,
+        '18',
+      ).toString(),
+      erc20Token: selectedDropDown?.address.toLowerCase()
+        ? [selectedDropDown.address.toLowerCase()]
+        : [
+            SHIB_TOKEN_ADDRESS.toLowerCase(),
+            SHI_TOKEN_ADDRESS.toLowerCase(),
+            LEASH_TOKEN_ADDRESS.toLowerCase(),
+            PAW_TOKEN_ADDRESS.toLowerCase(),
+            BONE_TOKEN_ADDRESS.toLowerCase(),
+          ],
+    },
   })
   const { data, fetching, error } = result
 
@@ -41,11 +68,24 @@ const CorporateMarketplace: React.FC<ICorporateMarketplace> = ({
     query: CorportateQuery,
     variables: {
       erc721TokenAddress: goodsCheckBox,
+      price: parseUnits(
+        !debouncedDomainName ? '0' : debouncedDomainName,
+        '18',
+      ).toString(),
+      erc20Token: selectedDropDown?.address.toLowerCase()
+        ? [selectedDropDown.address.toLowerCase()]
+        : [
+            SHIB_TOKEN_ADDRESS.toLowerCase(),
+            SHI_TOKEN_ADDRESS.toLowerCase(),
+            LEASH_TOKEN_ADDRESS.toLowerCase(),
+            PAW_TOKEN_ADDRESS.toLowerCase(),
+            BONE_TOKEN_ADDRESS.toLowerCase(),
+          ],
     },
-    pause: !goodsCheckBox,
+    pause: !goodsCheckBox.length,
   })
-  console.log(goodsCheckBox)
   const { data: filteredData, fetching: filterFetching } = filterResult
+  console.log(filteredData)
 
   return (
     <div>

@@ -13,7 +13,6 @@ import { parseUnits } from 'ethers/lib/utils.js'
 import useDebounce from '../../hooks/useDebounce'
 import {
   BONE_TOKEN_ADDRESS,
-  CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PAW_TOKEN_ADDRESS,
@@ -144,6 +143,8 @@ const MarketPlacePage: React.FC = () => {
     }
   }
 
+  console.log(corporateCheckboxs)
+
   const handleDropDown = (item: any) => {
     if (clickDropDown === item.title) {
       return setClickDropDown(null)
@@ -261,88 +262,12 @@ const MarketPlacePage: React.FC = () => {
                       id="Human Rights"
                       type="checkbox"
                       value={item.address}
-                      onChange={handleChange}
+                      onChange={handleCorporateChange}
                     />
                   </div>
                 </div>
               ))}
             </div>
-            {/* <div
-              className={
-                isAccordionActive === 2
-                  ? 'drop-down-container'
-                  : 'drop-down-container active'
-              }
-            >
-              <div
-                className={
-                  clickDropDown === 'Digital Goods Shop'
-                    ? 'drop-down-header active'
-                    : 'drop-down-header'
-                }
-                onClick={() =>
-                  isAccordionActive === 2 &&
-                  handleDropDown('Digital Goods Shop')
-                }
-              >
-                <p>Digital Goods Shop</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              {clickDropDown === 'Digital Goods Shop' && (
-                <div
-                  className={
-                    clickDropDown === 'Digital Goods Shop'
-                      ? 'drop-down-body active'
-                      : 'drop-down-body'
-                  }
-                >
-                  <div className="check-box-container">
-                    <div className="checkbox-content">
-                      <label htmlFor="Human Rights">Human Rights</label>
-                      <input id="Human Rights" type="checkbox" />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div
-              className={
-                isAccordionActive === 2
-                  ? 'drop-down-container'
-                  : 'drop-down-container active'
-              }
-            >
-              <div
-                className={
-                  clickDropDown === 'Charity Organisation'
-                    ? 'drop-down-header active'
-                    : 'drop-down-header'
-                }
-                onClick={() =>
-                  isAccordionActive === 2 &&
-                  handleDropDown('Charity Organisations')
-                }
-              >
-                <p>Charity Organisation</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              {clickDropDown === 'Charity Organisation' && (
-                <div
-                  className={
-                    clickDropDown === 'Charity Organisation'
-                      ? 'drop-down-body active'
-                      : 'drop-down-body'
-                  }
-                >
-                  <div className="check-box-container">
-                    <div className="checkbox-content">
-                      <label htmlFor="Human Rights">Human Rights</label>
-                      <input id="Human Rights" type="checkbox" />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div> */}
           </div>
           <div className="price-container">
             <div className="price-title">
@@ -407,7 +332,11 @@ const MarketPlacePage: React.FC = () => {
               selectedDropDown={selectedDropDown?.address.toLowerCase()}
             />
           ) : (
-            <CorporateMarketplace goodsCheckBox={corporateCheckboxs} />
+            <CorporateMarketplace
+              goodsCheckBox={corporateCheckboxs}
+              selectedDropDown={selectedDropDown}
+              debouncedDomainName={debouncedDomainName}
+            />
           )}
           {open && (
             <div className="currency-select-container">

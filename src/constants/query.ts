@@ -102,8 +102,8 @@ query($id: String!){
 `
 
 export const fixedSaleQuery = `
-query {
-  fixedSales(where:{status:ACTIVE}){
+query ($price: String!,$erc20Token:[String!]){
+  fixedSales(where:{status:ACTIVE, price_gte:$price, erc20Token_in:$erc20Token}){
   id
   auctionId
   tokenId
