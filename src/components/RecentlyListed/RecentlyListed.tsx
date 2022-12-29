@@ -8,7 +8,7 @@ import { IListedItems } from '../../constants/types'
 import { recentlyListedQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
 
-const RecentlyListed = () => {
+const RecentlyListed: React.FC = () => {
   const navigate = useNavigate()
   const [result] = useQuery<{ physicalItems: IListedItems[] }>({
     query: recentlyListedQuery,

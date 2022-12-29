@@ -18,6 +18,7 @@ import { searchDomainNameQuery } from '../../constants/query'
 import { formatAddress } from '../../constants/variants'
 import { domainRegex } from '../../lib/helpers'
 import './SendCryptoPage.css'
+import Loading from '../../components/Loading/Loading'
 
 type IOwner = {
   id: string
@@ -191,18 +192,30 @@ const SendCryptoPage: React.FC = () => {
               </div>
               <div className="detail-right">
                 <div>
-                  {fetching
-                    ? 'Loading...'
-                    : !toAddressDetails
-                    ? 'No matches Found'
-                    : toAddressDetails.domainUsedFor}
+                  {fetching ? (
+                    <div className="loading">
+                      <Loading />
+                    </div>
+                  ) : !toAddressDetails ? (
+                    <div className="error-msg">
+                      <p>No matches Found</p>
+                    </div>
+                  ) : (
+                    toAddressDetails.domainUsedFor
+                  )}
                 </div>
                 <div>
-                  {fetching
-                    ? 'Loading...'
-                    : !toAddressDetails
-                    ? 'No matches Found'
-                    : formatAddress(toAddressDetails.address)}
+                  {fetching ? (
+                    <div className="loading">
+                      <Loading />
+                    </div>
+                  ) : !toAddressDetails ? (
+                    <div className="error-msg">
+                      <p>No matches Found</p>
+                    </div>
+                  ) : (
+                    formatAddress(toAddressDetails.address)
+                  )}
                 </div>
                 <div className="vote-cont">
                   <div>

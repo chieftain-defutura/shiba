@@ -1,6 +1,7 @@
 import React, { useMemo, useState, ChangeEvent } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
+import { motion } from 'framer-motion'
 
 import { ArrElement } from '../../constants/types'
 import Navigation from '../../components/Navigation/Navigation'
