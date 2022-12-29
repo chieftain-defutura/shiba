@@ -371,7 +371,7 @@
 .slider-item-img img {
   width: 100%;
   aspect-ratio: 16/10;
-  object-fit: cover;
+  object-fit: contain;
 }
 .slider-img-camera img {
   width: 50%;

@@ -418,8 +418,8 @@ query{
 }
 `
 export const recentlyListedQuery = `
-query{
-  physicalItems(orderBy:listedAt,orderDirection:desc,first:10){
+query($category:[String!]){
+  physicalItems(orderBy:listedAt,orderDirection:desc,first:10,where:{category_in:$category}){
     id
     itemName
     category

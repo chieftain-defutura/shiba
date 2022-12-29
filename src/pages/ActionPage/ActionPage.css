@@ -204,7 +204,9 @@
   align-items: center;
   gap: 40px;
 } */
-
+.check-boxs-container input {
+  width: 200px;
+}
 .check-box-container {
   width: 162px;
   margin: 0 auto;
@@ -289,6 +291,11 @@
   flex: 5;
   height: 100vh;
   position: relative;
+}
+
+.currency-select-container {
+  position: fixed;
+  top: 35%;
 }
 
 .action-container-right .currency-select-container {

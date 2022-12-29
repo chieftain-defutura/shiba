@@ -290,3 +290,9 @@ export type IReviewOfShop = {
   review: string
   status: string
 }
+
+export type IListedItems = IPhysicalItem & {
+  shopDetails: {
+    owner: { id: string }
+  }
+}

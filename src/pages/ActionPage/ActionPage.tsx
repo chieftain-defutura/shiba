@@ -114,6 +114,7 @@ const ActionPage: React.FC = () => {
   const [rawResult, setRawResult] = useState<IAuctionNft[]>([])
   const [nftFilter, setNftFilter] = useState<string[]>([])
   const [open, setOpen] = useState(false)
+  const [priceDropDown, setPriceDropDown] = useState(false)
   console.log(maxPrice)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
@@ -230,28 +231,34 @@ const ActionPage: React.FC = () => {
           <div className="price-container">
             <div className="price-title" style={{ marginBottom: '20px' }}>
               <p className="title">Price</p>
-              <div className="price-select-cont">
+              <div
+                className="price-select-cont"
+                onClick={() => setPriceDropDown(!priceDropDown)}
+              >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
-            <div className="price-content">
-              <div className="check-boxs-container">
-                <label htmlFor="min">MIN</label>
-                <input
-                  id="min"
-                  type="number"
-                  onChange={(e) => setMinPrice(e.target.value)}
-                />
+            {priceDropDown && (
+              <div className="price-content">
+                <div className="check-boxs-container">
+                  <label htmlFor="min">Min</label>
+                  <input
+                    id="min"
+                    type="number"
+                    onChange={(e) => setMinPrice(e.target.value)}
+                  />
+                </div>
+
+                <div className="check-boxs-container">
+                  <label htmlFor="max">Max</label>
+                  <input
+                    id="max"
+                    type="number"
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                  />
+                </div>
               </div>
-              <div className="check-boxs-container">
-                <label htmlFor="max">Max</label>
-                <input
-                  id="max"
-                  type="number"
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                />
-              </div>
-            </div>
+            )}
           </div>
           <div className="currency-container">
             <div className="price-title">

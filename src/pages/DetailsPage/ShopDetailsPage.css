@@ -209,7 +209,7 @@
 .slider-shop-item img {
   width: 100%;
   aspect-ratio: 16/10;
-  object-fit: cover;
+  object-fit: contain;
 }
 .shop-slider-img-camera img {
   width: 50%;

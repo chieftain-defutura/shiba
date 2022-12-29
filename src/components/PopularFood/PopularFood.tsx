@@ -1,24 +1,24 @@
 import React from 'react'
 import { useQuery } from 'urql'
-import { useNavigate } from 'react-router-dom'
 
-import './RecentlyListed.css'
+import './PopularFood.css'
 import SliderCard from '../SliderCard/SliderCard'
 import { IListedItems } from '../../constants/types'
 import { recentlyListedQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
 
-const RecentlyListed: React.FC = () => {
-  const navigate = useNavigate()
+const PopularFood = () => {
   const [result] = useQuery<{ physicalItems: IListedItems[] }>({
     query: recentlyListedQuery,
-    variables: { category: ['accessories', 'clothing'] },
+    variables: { category: ['food'] },
   })
   const { fetching, data } = result
 
+  if (!data?.physicalItems.length) return null
+
   return (
-    <div className="recently-listed">
-      <h2 className="section-title">Recently listed Goods</h2>
+    <div className="popular-food-container">
+      <h2 className="section-title">Popular In Food</h2>
       {fetching ? (
         <Loading />
       ) : !data ? (
@@ -29,10 +29,10 @@ const RecentlyListed: React.FC = () => {
         <SliderCard data={data.physicalItems} />
       )}
       <div className="btn-container">
-        <button onClick={() => navigate('/marketplace')}>see more</button>
+        <button>see more</button>
       </div>
     </div>
   )
 }
 
-export default RecentlyListed
+export default PopularFood

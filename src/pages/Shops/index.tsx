@@ -48,7 +48,7 @@ query($category:[String!]){
 
 const ShopPage: React.FC = () => {
   const [shopCheckBox, setShopCheckBox] = useState<string[]>([])
-  const [dropDown, setDropDown] = useState<string | null>(null)
+  const [labelDropDown, setLabelDropDown] = useState<number[]>([])
 
   const [result] = useQuery<{
     digitalShopTokens: IShopToken[]
@@ -92,15 +92,14 @@ const ShopPage: React.FC = () => {
 
     return { digital, physical }
   }, [itemData])
-
   console.log(uniqueItem)
-  const handleDropDown = (f: any) => {
-    if (dropDown === f.title) {
-      return setDropDown(null)
-    }
-    setDropDown(f.title)
-  }
-  console.log(dropDown)
+
+  // const handleDropDown = (f: any) => {
+  //   if (dropDown === f.title) {
+  //     return setDropDown(null)
+  //   }
+  //   setDropDown(f.title)
+  // }
 
   const handleChange = ({
     target: { value },
@@ -113,8 +112,8 @@ const ShopPage: React.FC = () => {
       setShopCheckBox((f) => f.concat(value.toLowerCase()))
     }
   }
-
   console.log(shopCheckBox)
+
   return (
     <div>
       <Navigation />
@@ -124,6 +123,39 @@ const ShopPage: React.FC = () => {
 
           <div className="header">
             {shopingData.map((f, idx) => (
+              <div key={idx} className="drop-down-container">
+                <div
+                  className={'drop-down-header'}
+                  onClick={() => {
+                    if (labelDropDown.includes(idx)) {
+                      setLabelDropDown((l) => l.filter((f) => f !== idx))
+                    } else {
+                      setLabelDropDown((l) => [...l, idx])
+                    }
+                  }}
+                >
+                  <p>{f.title}</p>
+                  <IoIosArrowDown className="arrow-icon" />
+                </div>
+
+                {labelDropDown.includes(idx) && (
+                  <div className="check-box-container">
+                    {f.labels.map((label, index) => (
+                      <div className="checkbox-content" key={index}>
+                        <label htmlFor="Human Rights">{label}</label>
+                        <input
+                          id="Human Rights"
+                          type="checkbox"
+                          value={label}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            {/* {shopingData.map((f, idx) => (
               <div key={idx} className="drop-down-container">
                 <div
                   className={
@@ -136,7 +168,7 @@ const ShopPage: React.FC = () => {
                   <p>{f?.title}</p>
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-                {dropDown === f.title && (
+                {dropDown && (
                   <div
                     className={
                       dropDown === f.title
@@ -160,7 +192,7 @@ const ShopPage: React.FC = () => {
                   </div>
                 )}
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 

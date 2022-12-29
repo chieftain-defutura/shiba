@@ -1,9 +1,10 @@
 .header-nav-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 23px 10px;
   color: var(--textColorOne);
   font-family: var(--montserratFont);
+  margin-left: 28%;
 }
 
 .header-nav-container .header-nav ul {
