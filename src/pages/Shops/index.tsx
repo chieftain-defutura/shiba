@@ -49,6 +49,7 @@ query($category:[String!]){
 const ShopPage: React.FC = () => {
   const [shopCheckBox, setShopCheckBox] = useState<string[]>([])
   const [dropDown, setDropDown] = useState(null)
+  const [labelDropDown, setLabelDropDown] = useState(false)
 
   const [result] = useQuery<{
     digitalShopTokens: IShopToken[]
@@ -93,8 +94,8 @@ const ShopPage: React.FC = () => {
 
     return { digital, physical }
   }, [itemData])
+  // console.log(uniqueItem)
 
-  console.log(uniqueItem)
   const handleDropDown = (idx: any) => {
     if (dropDown === idx) {
       return setDropDown(null)
@@ -121,9 +122,24 @@ const ShopPage: React.FC = () => {
                   onClick={() => handleDropDown(idx)}
                 >
                   <p>{f?.title}</p>
-                  <IoIosArrowDown className="arrow-icon" />
+                  <IoIosArrowDown
+                    className="arrow-icon"
+                    onClick={() => setLabelDropDown(!labelDropDown)}
+                  />
                 </div>
-                {!dropDown && (
+
+                {!labelDropDown && (
+                  <div className="check-box-container">
+                    {f.labels.map((label, index) => (
+                      <div className="checkbox-content" key={index}>
+                        <label htmlFor="Human Rights">{label}</label>
+                        <input id="Human Rights" type="checkbox" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* {!dropDown && (
                   <div
                     className={
                       dropDown === idx
@@ -140,7 +156,7 @@ const ShopPage: React.FC = () => {
                       ))}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             ))}
           </div>

@@ -103,25 +103,45 @@ const SideBar: React.FC = () => {
             <div className="content">
               <Link to="/my-movies">
                 <p className="name">My Movies</p>
-                <p className="number">{getMyCollectionCount('movies')}</p>
+                <p className="number">
+                  <CountUp
+                    end={Number(getMyCollectionCount('movies'))}
+                    duration={0.4}
+                  />
+                </p>
               </Link>
             </div>
             <div className="content">
               <Link to="/my-music">
                 <p className="name">My Music</p>
-                <p className="number">{getMyCollectionCount('music')}</p>
+                <p className="number">
+                  <CountUp
+                    end={Number(getMyCollectionCount('music'))}
+                    duration={0.4}
+                  />
+                </p>
               </Link>
             </div>
             <div className="content">
               <Link to="/my-books">
                 <p className="name">My Books</p>
-                <p className="number">{getMyCollectionCount('books')}</p>
+                <p className="number">
+                  <CountUp
+                    end={Number(getMyCollectionCount('books'))}
+                    duration={0.4}
+                  />
+                </p>
               </Link>
             </div>
             <div className="content">
               <Link to="/my-courses">
                 <p className="name">My Courses</p>
-                <p className="number">{getMyCollectionCount('courses')}</p>
+                <p className="number">
+                  <CountUp
+                    end={Number(getMyCollectionCount('courses'))}
+                    duration={0.4}
+                  />
+                </p>
               </Link>
             </div>
           </div>
@@ -136,7 +156,7 @@ const SideBar: React.FC = () => {
                   {balanceData?.[4] ? (
                     <CountUp
                       end={Number(balanceData[4].toString())}
-                      duration={1.2}
+                      duration={0.4}
                     />
                   ) : (
                     0
@@ -156,7 +176,7 @@ const SideBar: React.FC = () => {
                   {balanceData?.[0] ? (
                     <CountUp
                       end={Number(balanceData[0].toString())}
-                      duration={1.2}
+                      duration={0.4}
                     />
                   ) : (
                     0
@@ -176,7 +196,7 @@ const SideBar: React.FC = () => {
                   {balanceData?.[1] ? (
                     <CountUp
                       end={Number(balanceData[1].toString())}
-                      duration={1.2}
+                      duration={0.4}
                     />
                   ) : (
                     0
@@ -191,7 +211,7 @@ const SideBar: React.FC = () => {
                   {balanceData?.[2] ? (
                     <CountUp
                       end={Number(balanceData[2].toString())}
-                      duration={1.2}
+                      duration={0.4}
                     />
                   ) : (
                     0
@@ -211,7 +231,7 @@ const SideBar: React.FC = () => {
                   {balanceData?.[3] ? (
                     <CountUp
                       end={Number(balanceData[3].toString())}
-                      duration={1.2}
+                      duration={0.4}
                     />
                   ) : (
                     0
@@ -228,8 +248,16 @@ const SideBar: React.FC = () => {
               <Link to="/have-to-send">
                 <p className="name">Have to Send</p>
                 <p className="number">
-                  {haveToSendresult.data?.shipments.length ?? 0}
-                  <CountUp end={Number()} />
+                  {haveToSendresult.data ? (
+                    <CountUp
+                      end={Number(haveToSendresult.data?.shipments.length)}
+                      duration={0.4}
+                    />
+                  ) : (
+                    0
+                  )}
+
+                  {/* {haveToSendresult.data?.shipments.length ?? 0} */}
                 </p>
               </Link>
             </div>
@@ -237,7 +265,18 @@ const SideBar: React.FC = () => {
               <Link to="/awaiting-delivery">
                 <p className="name">Awaiting Delivery</p>
                 <p className="number">
-                  {awaitingDeliveryResult.data?.shipments.length ?? 0}
+                  {awaitingDeliveryResult.data ? (
+                    <CountUp
+                      end={Number(
+                        awaitingDeliveryResult.data?.shipments.length,
+                      )}
+                      duration={0.4}
+                    />
+                  ) : (
+                    0
+                  )}
+
+                  {/* {awaitingDeliveryResult.data?.shipments.length ?? 0} */}
                 </p>
               </Link>
             </div>
