@@ -5,6 +5,7 @@ import { useQuery } from 'urql'
 import Card from './PhysicalCard'
 import { removePhysicalItemQuery } from '../../constants/query'
 import { IRemovePhysicalItem } from '../../constants/types'
+import Loading from '../Loading/Loading'
 
 const PhysicalRemoveItem: React.FC = () => {
   const { id } = useParams()
@@ -18,11 +19,17 @@ const PhysicalRemoveItem: React.FC = () => {
   return (
     <div>
       {fetching ? (
-        <div>Loading...</div>
+        <div className="loading">
+          <Loading />
+        </div>
       ) : error ? (
-        <div>something went wrong</div>
+        <div className="error-msg">
+          <p>something went wrong</p>
+        </div>
       ) : !data?.physicalItems.length ? (
-        <div>No result</div>
+        <div className="error-msg">
+          <p>No result</p>
+        </div>
       ) : (
         <div className="stock-management-remove-item-container">
           <div className="remove-item-cards-container">
