@@ -48,7 +48,6 @@ query($category:[String!]){
 
 const ShopPage: React.FC = () => {
   const [shopCheckBox, setShopCheckBox] = useState<string[]>([])
-  const [dropDown, setDropDown] = useState<string | null>(null)
   const [labelDropDown, setLabelDropDown] = useState<number[]>([])
 
   const [result] = useQuery<{
@@ -126,11 +125,7 @@ const ShopPage: React.FC = () => {
             {shopingData.map((f, idx) => (
               <div key={idx} className="drop-down-container">
                 <div
-                  className={
-                    dropDown === f.title
-                      ? 'drop-down-header active'
-                      : 'drop-down-header'
-                  }
+                  className={'drop-down-header'}
                   onClick={() => {
                     if (labelDropDown.includes(idx)) {
                       setLabelDropDown((l) => l.filter((f) => f !== idx))
