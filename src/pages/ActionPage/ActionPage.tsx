@@ -160,7 +160,7 @@ const ActionPage: React.FC = () => {
     fetching: nftFilterFetching,
     error: nftFilteredError,
   } = nftFilterResult
-  console.log(nftFilteredData)
+  console.log(rawResult)
 
   useMemo(() => {
     if (!data) return
@@ -169,7 +169,7 @@ const ActionPage: React.FC = () => {
   }, [data])
 
   useMemo(() => {
-    if (!maxPrice) return setFilteredResult(rawResult)
+    if (!maxPrice) return
 
     setFilteredResult(
       rawResult.filter(

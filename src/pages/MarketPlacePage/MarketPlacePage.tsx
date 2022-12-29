@@ -257,7 +257,11 @@ const MarketPlacePage: React.FC = () => {
                   <p>{item.title}</p>
                   <div
                     className="check-box-container"
-                    style={{ width: 0, margin: 0 }}
+                    style={
+                      isAccordionActive === 2
+                        ? { margin: 0, width: 0 }
+                        : { display: 'none' }
+                    }
                   >
                     <input
                       id="Human Rights"
