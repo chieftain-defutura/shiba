@@ -23,17 +23,11 @@ type IRecentlyListedItems = IPhysicalItem & {
 }
 
 const settings = {
-  // className: 'center',
-  // arrows: false,
-  // centerMode: true,
-  // infinite: true,
-  // centerPadding: '160px',
-  // slidesToShow: 3,
-  // slidesToScroll: 1,
-  // speed: 500,
+  className: 'center',
   arrows: false,
-  infinite: true,
-  dots: false,
+  centerMode: true,
+  infinite: false,
+  centerPadding: '160px',
   slidesToShow: 3,
   slidesToScroll: 1,
   speed: 500,
@@ -115,10 +109,16 @@ const SliderCard = () => {
 
   if (fetching) return <Loading />
 
+  if (!data) return null
+
   return (
     <div className="slider-card-container">
       <div>
-        <Slider {...settings} ref={refSlider}>
+        <Slider
+          {...settings}
+          infinite={data?.physicalItems.length > 3 ? true : false}
+          ref={refSlider}
+        >
           {data?.physicalItems.map((item) => (
             <Card key={item.id} {...item} />
           ))}
