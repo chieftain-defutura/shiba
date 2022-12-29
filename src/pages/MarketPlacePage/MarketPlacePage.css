@@ -227,7 +227,7 @@
 }
 .currency-select-container {
   position: fixed;
-  bottom: 0;
+  top: 30%;
 }
 .marketplace-container-right .currency-select-container {
   width: 220px;

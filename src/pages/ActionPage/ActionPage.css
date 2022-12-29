@@ -295,7 +295,7 @@
 
 .currency-select-container {
   position: fixed;
-  bottom: 0;
+  top: 35%;
 }
 
 .action-container-right .currency-select-container {
