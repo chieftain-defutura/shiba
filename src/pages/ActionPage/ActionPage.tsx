@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, ChangeEvent } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 
@@ -12,6 +12,15 @@ import Loading from '../../components/Loading/Loading'
 import { tokensList } from '../../constants/contract'
 import './ActionPage.css'
 import { parseUnits } from 'ethers/lib/utils.js'
+import { formatTokenUnits } from '../../utils/formatters'
+import {
+  ART_NFT_CONTRACT_ADDRESS,
+  CHARITIES_NFT_CONTRACT_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  DOMAIN_NFT_CONTRACT_ADDRESS,
+  MARKETPLACE_CONTRACT_ADDRESS,
+  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+} from '../../utils/contractAddress'
 
 const getQuery = (orderBy: string, orderDirection: string) => {
   return `query{
@@ -77,19 +86,39 @@ const getPriceQuery = (price: string) => {
   }`
 }
 
+const NftTokenQuery = `query($erc721TokenAddress:[String!]!){
+    auctions(where:{status:ACTIVE,erc721TokenAddress_in:$erc721TokenAddress}){
+      id
+      tokenId
+      auctionId
+      owner
+      highestBid
+      price
+      endTime
+      erc20Token{
+        id
+        symbol
+        decimals
+      }
+      erc721TokenAddress
+      status
+    }
+  }`
+
 const ActionPage: React.FC = () => {
-  const [clickDropDown, setClickDropDown] = useState(null)
   const [isValue, setIsValue] = useState('')
-  const [dropDown, setDropDown] = useState(false)
   const [graphQuery, setGraphQuery] = useState(auctionPageQuery)
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
+  const [filteredResult, setFilteredResult] = useState<IAuctionNft[]>([])
+  const [rawResult, setRawResult] = useState<IAuctionNft[]>([])
+  const [nftFilter, setNftFilter] = useState<string[]>([])
   const [open, setOpen] = useState(false)
   const [priceDropDown, setPriceDropDown] = useState(false)
   console.log(maxPrice)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
-  console.log(dropDown)
+  console.log(nftFilter)
   useMemo(() => {
     if (isValue === 'high-to-low')
       return setGraphQuery(getQuery('price', 'desc'))
@@ -100,6 +129,7 @@ const ActionPage: React.FC = () => {
     return auctionPageQuery
   }, [isValue])
 
+  // currency
   useMemo(() => {
     if (!selectedDropDown?.address) return auctionPageQuery
     return setGraphQuery(
@@ -107,6 +137,7 @@ const ActionPage: React.FC = () => {
     )
   }, [selectedDropDown?.address])
 
+  //price
   useMemo(() => {
     if (!minPrice) return auctionPageQuery
     return setGraphQuery(getPriceQuery(parseUnits(minPrice, '18').toString()))
@@ -118,11 +149,48 @@ const ActionPage: React.FC = () => {
   const { data, fetching, error } = result
   console.log(data)
 
-  const handleDropDown = (idx: any) => {
-    if (clickDropDown === idx) {
-      return setClickDropDown(null)
+  const [nftFilterResult] = useQuery<{ auctions: IAuctionNft[] }>({
+    query: NftTokenQuery,
+    variables: {
+      erc721TokenAddress: nftFilter,
+    },
+    pause: !nftFilter.length,
+  })
+  const {
+    data: nftFilteredData,
+    fetching: nftFilterFetching,
+    error: nftFilteredError,
+  } = nftFilterResult
+  console.log(nftFilteredData)
+
+  useMemo(() => {
+    if (!data) return
+    setFilteredResult(data.auctions)
+    setRawResult(data.auctions)
+  }, [data])
+
+  useMemo(() => {
+    if (!maxPrice) return setFilteredResult(rawResult)
+
+    setFilteredResult(
+      rawResult.filter(
+        (f) => Number(formatTokenUnits(f.price, '18')) <= Number(maxPrice),
+      ),
+    )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maxPrice])
+
+  const handleChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (nftFilter.includes(value.toLowerCase())) {
+      setNftFilter((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setNftFilter((f) => f.concat(value.toLowerCase()))
     }
-    setClickDropDown(idx)
   }
 
   return (
@@ -136,33 +204,26 @@ const ActionPage: React.FC = () => {
               <div key={idx} className="drop-down-container">
                 <div
                   className={
-                    clickDropDown === idx
-                      ? 'drop-down-header active'
-                      : 'drop-down-header'
+                    // clickDropDown === item.title
+                    //   ? 'drop-down-header active'
+                    'drop-down-header'
                   }
-                  onClick={() => handleDropDown(idx)}
                 >
-                  <p>{item?.title}</p>
-                  <IoIosArrowDown className="arrow-icon" />
-                </div>
-                {clickDropDown === idx && (
-                  <div
-                    className={
-                      clickDropDown === idx
-                        ? 'drop-down-body active'
-                        : 'drop-down-body'
-                    }
-                  >
-                    <div className="check-box-container">
-                      {item.labels.map((label, index) => (
-                        <div className="checkbox-content" key={index}>
-                          <label htmlFor="Human Rights">{label.label}</label>
-                          <input id="Human Rights" type="checkbox" />
-                        </div>
-                      ))}
-                    </div>
+                  <div className="drop-down-title">
+                    <p>{item?.title}</p>
                   </div>
-                )}
+                  <div
+                    className="check-box-container"
+                    style={{ width: 0, margin: 0 }}
+                  >
+                    <input
+                      id="Human Rights"
+                      type="checkbox"
+                      value={item.address}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -260,26 +321,42 @@ const ActionPage: React.FC = () => {
         </div>
         <div className="marketplace-container-right">
           <div>
-            {fetching ? (
+            {fetching || nftFilterFetching ? (
               <div className="loading">
                 <Loading />
               </div>
-            ) : error ? (
+            ) : error || nftFilteredError ? (
               <div className="error-msg">
                 <p>something went wrong</p>
               </div>
-            ) : !data?.auctions.length ? (
+            ) : !filteredResult.length ? (
               <div className="error-msg">
-                <p>No Result</p>
+                <p>No Result Found</p>
               </div>
             ) : (
-              <div className="marketplace-container-right-content">
-                {data?.auctions.map((f, idx) => (
-                  <div key={idx}>
-                    <AuctionSaleCard {...f} />
+              <>
+                {nftFilter.length <= 0 ? (
+                  <div className="marketplace-container-right-content">
+                    {filteredResult.map((f, idx) => (
+                      <div key={idx}>
+                        <AuctionSaleCard {...f} />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                ) : !nftFilteredData?.auctions.length ? (
+                  <div className="error-msg">
+                    <p>No Result Found</p>
+                  </div>
+                ) : (
+                  <div className="marketplace-container-right-content">
+                    {nftFilteredData?.auctions.map((f, idx) => (
+                      <div key={idx}>
+                        <AuctionSaleCard {...f} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
             {open && (
               <div className="currency-select-container">
@@ -288,7 +365,6 @@ const ActionPage: React.FC = () => {
 
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-
                 <div className="body">
                   {tokensList.map((f, index) => {
                     return (
@@ -296,7 +372,6 @@ const ActionPage: React.FC = () => {
                         key={index}
                         onClick={() => {
                           setSelectedDropDown(f)
-                          setDropDown(false)
                         }}
                       >
                         {f.title}
@@ -319,10 +394,12 @@ export default ActionPage
 const accordionData = [
   {
     title: 'Domain Names',
+    address: DOMAIN_NFT_CONTRACT_ADDRESS,
     labels: [{ label: '.shib' }],
   },
   {
     title: 'Physical Goods Shop',
+    address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
     labels: [
       { label: 'Accessories' },
       { label: 'Clothing ' },
@@ -331,6 +408,7 @@ const accordionData = [
   },
   {
     title: 'Digital Goods Shop',
+    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
     labels: [
       { label: 'Movies' },
       { label: 'Courses' },
@@ -340,6 +418,7 @@ const accordionData = [
   },
   {
     title: 'Charity Organisation',
+    address: CHARITIES_NFT_CONTRACT_ADDRESS,
     labels: [
       { label: 'Human Rights' },
       { label: 'Education' },
@@ -352,6 +431,7 @@ const accordionData = [
   },
   {
     title: 'auctions',
+    address: MARKETPLACE_CONTRACT_ADDRESS,
     labels: [
       { label: 'Human Rights' },
       { label: 'Education' },
@@ -364,6 +444,7 @@ const accordionData = [
   },
   {
     title: 'Full On Blockchain NFT',
+    address: ART_NFT_CONTRACT_ADDRESS,
     labels: [{ label: 'ART' }, { label: 'File' }, { label: 'Other' }],
   },
 ]

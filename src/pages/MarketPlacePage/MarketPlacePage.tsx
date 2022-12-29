@@ -13,8 +13,10 @@ import { parseUnits } from 'ethers/lib/utils.js'
 import useDebounce from '../../hooks/useDebounce'
 import {
   BONE_TOKEN_ADDRESS,
+  DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PAW_TOKEN_ADDRESS,
+  PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
 } from '../../utils/contractAddress'
@@ -64,6 +66,7 @@ const MarketPlacePage: React.FC = () => {
   const [isAccordionActive, setIsAccordionActive] = useState<number | null>(1)
   const [clickDropDown, setClickDropDown] = useState<string | null>(null)
   const [goodsCheckboxs, setGoodsCheckBox] = useState<string[]>([])
+  const [corporateCheckboxs, setCorporateCheckBox] = useState<string[]>([])
   const [minValue, setMinValue] = useState('')
   const [maxValue, setMaxValue] = useState('')
   const [priceDropDown, setPriceDropDown] = useState(false)
@@ -71,8 +74,8 @@ const MarketPlacePage: React.FC = () => {
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
   const [open, setOpen] = useState(false)
-
   console.log(goodsCheckboxs)
+  console.log(setCorporateCheckBox)
   const [goodsDigitalResult] = useQuery({
     query: getGoodsDigitalQuery,
     variables: {
@@ -94,7 +97,6 @@ const MarketPlacePage: React.FC = () => {
     pause: !goodsCheckboxs.length,
   })
   const { data: goodsDigitalData } = goodsDigitalResult
-  console.log(goodsDigitalData)
 
   const [goodsPhysicalResult] = useQuery({
     query: getGoodsPhysicalQuery,
@@ -118,7 +120,6 @@ const MarketPlacePage: React.FC = () => {
     pause: !goodsCheckboxs.length,
   })
   const { data: goodsPhysicalData } = goodsPhysicalResult
-  console.log(goodsPhysicalData)
 
   const handleChange = ({
     target: { value },
@@ -131,6 +132,20 @@ const MarketPlacePage: React.FC = () => {
       setGoodsCheckBox((f) => f.concat(value.toLowerCase()))
     }
   }
+
+  const handleCorporateChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (corporateCheckboxs.includes(value.toLowerCase())) {
+      setCorporateCheckBox((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setCorporateCheckBox((f) => f.concat(value.toLowerCase()))
+    }
+  }
+
+  console.log(corporateCheckboxs)
 
   const handleDropDown = (item: any) => {
     if (clickDropDown === item.title) {
@@ -228,112 +243,32 @@ const MarketPlacePage: React.FC = () => {
                   : 'drop-down-container active'
               }
             >
-              <div
-                className={
-                  clickDropDown === 'Physical Goods Shop'
-                    ? 'drop-down-header active'
-                    : 'drop-down-header'
-                }
-                onClick={() =>
-                  isAccordionActive === 2 &&
-                  handleDropDown('Physical Goods Shop')
-                }
-              >
-                <p>Physical Goods Shop</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              {clickDropDown === 'Physical Goods Shop' && (
+              {corpoteAccordionData.map((item, idx) => (
                 <div
+                  key={idx}
                   className={
-                    clickDropDown === 'Physical Goods Shop'
-                      ? 'drop-down-body active'
-                      : 'drop-down-body'
+                    clickDropDown === item.title
+                      ? 'drop-down-header active'
+                      : 'drop-down-header'
+                  }
+                  onClick={() =>
+                    isAccordionActive === 2 && handleDropDown(item)
                   }
                 >
-                  <div className="check-box-container">
-                    <div className="checkbox-content">
-                      <label htmlFor="Human Rights">Human Rights</label>
-                      <input id="Human Rights" type="checkbox" />
-                    </div>
+                  <p>{item.title}</p>
+                  <div
+                    className="check-box-container"
+                    style={{ width: 0, margin: 0 }}
+                  >
+                    <input
+                      id="Human Rights"
+                      type="checkbox"
+                      value={item.address}
+                      onChange={handleCorporateChange}
+                    />
                   </div>
                 </div>
-              )}
-            </div>
-            <div
-              className={
-                isAccordionActive === 2
-                  ? 'drop-down-container'
-                  : 'drop-down-container active'
-              }
-            >
-              <div
-                className={
-                  clickDropDown === 'Digital Goods Shop'
-                    ? 'drop-down-header active'
-                    : 'drop-down-header'
-                }
-                onClick={() =>
-                  isAccordionActive === 2 &&
-                  handleDropDown('Digital Goods Shop')
-                }
-              >
-                <p>Digital Goods Shop</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              {clickDropDown === 'Digital Goods Shop' && (
-                <div
-                  className={
-                    clickDropDown === 'Digital Goods Shop'
-                      ? 'drop-down-body active'
-                      : 'drop-down-body'
-                  }
-                >
-                  <div className="check-box-container">
-                    <div className="checkbox-content">
-                      <label htmlFor="Human Rights">Human Rights</label>
-                      <input id="Human Rights" type="checkbox" />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div
-              className={
-                isAccordionActive === 2
-                  ? 'drop-down-container'
-                  : 'drop-down-container active'
-              }
-            >
-              <div
-                className={
-                  clickDropDown === 'Charity Organisation'
-                    ? 'drop-down-header active'
-                    : 'drop-down-header'
-                }
-                onClick={() =>
-                  isAccordionActive === 2 &&
-                  handleDropDown('Charity Organisations')
-                }
-              >
-                <p>Charity Organisation</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              {clickDropDown === 'Charity Organisation' && (
-                <div
-                  className={
-                    clickDropDown === 'Charity Organisation'
-                      ? 'drop-down-body active'
-                      : 'drop-down-body'
-                  }
-                >
-                  <div className="check-box-container">
-                    <div className="checkbox-content">
-                      <label htmlFor="Human Rights">Human Rights</label>
-                      <input id="Human Rights" type="checkbox" />
-                    </div>
-                  </div>
-                </div>
-              )}
+              ))}
             </div>
           </div>
           <div className="price-container">
@@ -403,7 +338,11 @@ const MarketPlacePage: React.FC = () => {
               selectedDropDown={selectedDropDown?.address.toLowerCase()}
             />
           ) : (
-            <CorporateMarketplace />
+            <CorporateMarketplace
+              goodsCheckBox={corporateCheckboxs}
+              selectedDropDown={selectedDropDown}
+              debouncedDomainName={debouncedDomainName}
+            />
           )}
           {open && (
             <div className="currency-select-container">
@@ -493,5 +432,20 @@ const accordionData = [
   //     { label: 'Health' },
   //     { label: 'Sport' },
   //   ],
+  // },
+]
+
+const corpoteAccordionData = [
+  {
+    title: 'Physical Goods Shop',
+    address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+  },
+  {
+    title: 'Digital Goods Shop',
+    address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  },
+  // {
+  //   title: 'Charity Organisation',
+  //   address: CHARITIES_NFT_CONTRACT_ADDRESS,
   // },
 ]

@@ -102,8 +102,8 @@ query($id: String!){
 `
 
 export const fixedSaleQuery = `
-query {
-  fixedSales(where:{status:ACTIVE}){
+query ($price: String!,$erc20Token:[String!]){
+  fixedSales(where:{status:ACTIVE, price_gte:$price, erc20Token_in:$erc20Token}){
   id
   auctionId
   tokenId
@@ -496,6 +496,32 @@ query($shopId:String!,$status:String!){
     }
     review
     status
+  }
+}
+`
+
+export const searchDomainHeaderQuery = `
+query($name:String!){
+  digitalShopTokens(where:{domainName_starts_with:$name}){
+    id
+    owner {
+      id
+    }
+  	domainName
+	}
+  physicalShopTokens(where:{domainName_starts_with:$name}){
+    id
+    owner {
+      id
+    }
+  	domainName
+	}
+  domainTokens(where:{domainName_starts_with:$name,owner_not:"0x0000000000000000000000000000000000000000"}){
+    id
+    owner {
+      id
+    }
+    domainName
   }
 }
 `

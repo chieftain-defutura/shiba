@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import './RecentlyListed.css'
 import SliderCard from '../SliderCard/SliderCard'
+import New from '../SliderCard/New'
 
 const RecentlyListed = () => {
   const navigate = useNavigate()
@@ -10,7 +11,8 @@ const RecentlyListed = () => {
     <div className="recently-listed">
       <h2 className="section-title">Recently listed Goods</h2>
 
-      <SliderCard />
+      {/* <SliderCard /> */}
+      <New />
 
       <div className="btn-container">
         <button onClick={() => navigate('/marketplace')}>see more</button>

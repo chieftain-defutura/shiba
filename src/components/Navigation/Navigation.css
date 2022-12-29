@@ -68,6 +68,28 @@
   gap: 45px;
 }
 
+.container-right .search-box-wrapper {
+  position: relative;
+}
+
+.container-right .search-box-wrapper .search-box-block {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  background-color: var(--borderColor);
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.container-right .search-box-wrapper .search-box-block .search-list {
+  background-color: #58595fcc;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--borderColor);
+}
+
 .container-right .search-box-container {
   width: 266px;
   height: 32px;
@@ -88,7 +110,6 @@
 .container-right .search-box-container input {
   width: 100%;
   background-color: transparent;
-  border-radius: 10px;
   outline: 0;
   border: 0;
   color: var(--textColorOne);

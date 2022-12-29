@@ -43,7 +43,6 @@ const ShopDetailsPage: React.FC<{
   })
 
   const { data, fetching } = result
-  console.log(data)
 
   return (
     <HomeLayout>
@@ -86,8 +85,6 @@ const ShopDetails: React.FC<{
     { hash: shopData?.tokenUri ?? '' },
     { skip: !shopData.tokenUri },
   )
-
-  console.log(data)
 
   return (
     <div className="shoesboutique-container-right">

@@ -137,14 +137,22 @@
   opacity: 1;
 }
 
-.marketplace-container-left .check-box-container label {
+.marketplace-container-left
+  .accordion-container
+  .drop-down-header
+  .check-box-container
+  label {
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   cursor: pointer;
 }
 
-.marketplace-container-left .check-box-container input[type='checkbox'] {
+.marketplace-container-left
+  .accordion-container
+  .drop-down-header
+  .check-box-container
+  input[type='checkbox'] {
   appearance: none;
   -webkit-appearance: none;
   width: 15px;
@@ -157,7 +165,11 @@
   padding: 5px;
 }
 
-.marketplace-container-left .check-box-container input[type='checkbox']:after {
+.marketplace-container-left
+  .accordion-container
+  .drop-down-header
+  .check-box-container
+  input[type='checkbox']:after {
   font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   font-size: 14px;
@@ -167,6 +179,8 @@
 }
 
 .marketplace-container-left
+  .accordion-container
+  .drop-down-header
   .check-box-container
   input[type='checkbox']:checked:after {
   display: block;
@@ -288,6 +302,8 @@
   aspect-ratio: 4/3;
   background-color: #fff;
   border-radius: 8px 8px 0px 0px;
+  display: flex;
+  place-items: center;
 }
 
 .marketplace-container-right .card .card-loader {
