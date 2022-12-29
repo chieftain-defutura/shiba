@@ -2,10 +2,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import './RecentlyListed.css'
-import SliderCard from '../SliderCard/SliderCard'
 import New from '../SliderCard/New'
 
-const RecentlyListed = () => {
+const RecentlyListed: React.FC = () => {
   const navigate = useNavigate()
   return (
     <div className="recently-listed">

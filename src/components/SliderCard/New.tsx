@@ -153,8 +153,6 @@ import Slider from 'react-slick'
 import cardOne from '../../assets/img/card-1.png'
 import avatarOne from '../../assets/img/avatar-1.png'
 import ethIcon from '../../assets/img/eth-icon.png'
-import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
-import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
 import './SliderCard.css'
 import { useQuery } from 'urql'
 import { recentlyListedQuery } from '../../constants/query'
@@ -175,12 +173,12 @@ const settings = {
   slidesToShow: 3,
   speed: 500,
 }
-const SliderCard = () => {
-  const refSlider = useRef<Slider>(null)
+const SliderCard: React.FC = () => {
+  // const refSlider = useRef<Slider>(null)
   const [result] = useQuery<{ physicalItems: IRecentlyListedItems[] }>({
     query: recentlyListedQuery,
   })
-  const { fetching, data } = result
+  const { data } = result
   console.log(data)
   return (
     <div style={{ maxWidth: '75%' }}>
