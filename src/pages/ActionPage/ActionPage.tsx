@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import autoAnimate from '@formkit/auto-animate'
 
 import { ArrElement } from 'constants/types'
-import Navigation from 'components/Navigation/Navigation'
 import FooterBottom from 'components/FooterBottom/FooterBottom'
 import AuctionSaleCard from 'components/AuctionSaleCard'
 import { auctionPageQuery } from 'constants/query'
@@ -204,7 +203,6 @@ const ActionPage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
       <div className="action-container">
         <div className="action-container-left">
           <h2 className="heading">Auction</h2>

@@ -3,7 +3,6 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { AnimatePresence, motion } from 'framer-motion'
 import autoAnimate from '@formkit/auto-animate'
 
-import Navigation from 'components/Navigation/Navigation'
 import FooterBottom from 'components/FooterBottom/FooterBottom'
 import CorporateMarketplace from 'components/CorporateMarketplace'
 import GoodsMaretPlace from 'components/GoodsMarketplace'
@@ -173,7 +172,6 @@ const MarketPlacePage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
       <div className="marketplace-container">
         <div className="marketplace-container-left">
           <h2 className="heading">MarketPlace</h2>

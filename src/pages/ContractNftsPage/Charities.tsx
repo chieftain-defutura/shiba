@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
 
-import Navigation from 'components/Navigation/Navigation'
 import FooterBottom from 'components/FooterBottom/FooterBottom'
 import { charitiesPageQuery } from 'constants/query'
 import { ICharityToken } from 'constants/types'
@@ -74,7 +73,6 @@ const CharitiesPage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
       <div className="website-container" style={{ paddingTop: '51px' }}>
         <div className="website-container-left">
           <h2 className="heading">Charities</h2>

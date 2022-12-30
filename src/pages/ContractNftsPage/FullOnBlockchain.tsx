@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
 
-import Navigation from 'components/Navigation/Navigation'
 import FooterBottom from 'components/FooterBottom/FooterBottom'
 import { fullOnBlockchainPageQuery } from 'constants/query'
 import { IFullOnBlockchainArtToken } from 'constants/types'
@@ -74,7 +73,6 @@ const FullOnBlockchainPage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
       <div className="website-container" style={{ paddingTop: '51px' }}>
         <div className="website-container-left">
           <h2 className="heading">Full On Blockchain Art</h2>

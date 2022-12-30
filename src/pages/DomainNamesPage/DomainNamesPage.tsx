@@ -1,7 +1,6 @@
 import React from 'react'
 import { useQuery } from 'urql'
 
-import Navigation from 'components/Navigation/Navigation'
 import FooterBottom from 'components/FooterBottom/FooterBottom'
 import { domainPageQuery } from 'constants/query'
 import { IDomainNft } from 'constants/types'
@@ -20,7 +19,6 @@ const DomainNamesPage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
       <div className="domain-name-container">
         <div className="domain-name-container-left">
           <h2 className="heading">Domain Names</h2>

@@ -5,7 +5,6 @@ import Skeleton from 'react-loading-skeleton'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import Navigation from 'components/Navigation/Navigation'
 import FooterBottom from 'components/FooterBottom/FooterBottom'
 import { shopPageQuery } from 'constants/query'
 import Loading from 'components/Loading/Loading'
@@ -110,7 +109,6 @@ const ShopPage: React.FC = () => {
 
   return (
     <div>
-      <Navigation />
       <div className="shop-container" style={{ paddingTop: '51px' }}>
         <div className="shop-container-left">
           <h2 className="heading">Shop</h2>
