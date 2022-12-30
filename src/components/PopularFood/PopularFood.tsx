@@ -7,7 +7,7 @@ import { IListedItems } from '../../constants/types'
 import { recentlyListedQuery } from '../../constants/query'
 import Loading from '../Loading/Loading'
 
-const PopularFood = () => {
+const PopularFood: React.FC = () => {
   const [result] = useQuery<{ physicalItems: IListedItems[] }>({
     query: recentlyListedQuery,
     variables: { category: ['food'] },

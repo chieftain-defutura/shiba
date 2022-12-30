@@ -3,6 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
 import { Link } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -94,13 +95,6 @@ const ShopPage: React.FC = () => {
   }, [itemData])
   console.log(uniqueItem)
 
-  // const handleDropDown = (f: any) => {
-  //   if (dropDown === f.title) {
-  //     return setDropDown(null)
-  //   }
-  //   setDropDown(f.title)
-  // }
-
   const handleChange = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
@@ -137,62 +131,40 @@ const ShopPage: React.FC = () => {
                   <p>{f.title}</p>
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-
-                {labelDropDown.includes(idx) && (
-                  <div className="check-box-container">
-                    {f.labels.map((label, index) => (
-                      <div className="checkbox-content" key={index}>
-                        <label htmlFor="Human Rights">{label}</label>
-                        <input
-                          id="Human Rights"
-                          type="checkbox"
-                          value={label}
-                          onChange={handleChange}
-                        />
+                <AnimatePresence>
+                  {labelDropDown.includes(idx) && (
+                    <motion.div
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: 'auto',
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                    >
+                      <div className="check-box-container">
+                        {f.labels.map((label, index) => (
+                          <div className="checkbox-content" key={index}>
+                            <label htmlFor="Human Rights">{label}</label>
+                            <input
+                              id="Human Rights"
+                              type="checkbox"
+                              value={label}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
-            {/* {shopingData.map((f, idx) => (
-              <div key={idx} className="drop-down-container">
-                <div
-                  className={
-                    dropDown === f.title
-                      ? 'drop-down-header active'
-                      : 'drop-down-header'
-                  }
-                  onClick={() => handleDropDown(f)}
-                >
-                  <p>{f?.title}</p>
-                  <IoIosArrowDown className="arrow-icon" />
-                </div>
-                {dropDown && (
-                  <div
-                    className={
-                      dropDown === f.title
-                        ? 'drop-down-body active'
-                        : 'drop-down-body'
-                    }
-                  >
-                    <div className="check-box-container">
-                      {f.labels.map((label, index) => (
-                        <div className="checkbox-content" key={index}>
-                          <label htmlFor="Human Rights">{label}</label>
-                          <input
-                            id="Human Rights"
-                            type="checkbox"
-                            value={label}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))} */}
           </div>
         </div>
 

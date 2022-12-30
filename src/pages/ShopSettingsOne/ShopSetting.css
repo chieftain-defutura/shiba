@@ -783,6 +783,7 @@ select {
   color: var(--textColorOne);
   cursor: pointer;
   transition: all 300ms linear;
+  white-space: nowrap;
 }
 button:disabled {
   cursor: no-drop;

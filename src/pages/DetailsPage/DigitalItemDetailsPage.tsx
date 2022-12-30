@@ -201,7 +201,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             <div className="description-cont">
               <h3>
                 Product Description:
-                {isLoading ? <Skeleton /> : ipfsData?.description}
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  <LongText content={ipfsData?.description} limit={390} />
+                )}
               </h3>
             </div>
           </div>
@@ -209,7 +213,14 @@ const ProductDetails: React.FC<IDigitalItem> = ({
             <div className="product-details">
               <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
               <br />
-              <p>Details: {isLoading ? <Skeleton /> : ipfsData?.details}</p>
+              <p>
+                Details:{' '}
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  <LongText content={ipfsData?.details} limit={180} />
+                )}
+              </p>
               <button className="preview-btn">Preview</button>
             </div>
             <br />
@@ -244,3 +255,36 @@ const ProductDetails: React.FC<IDigitalItem> = ({
 }
 
 export default DigitalItemsDetailsPage
+
+interface ILongText {
+  content: string
+  limit: number
+}
+
+const LongText: React.FC<ILongText> = ({ content, limit }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  const showMore = () => setShowAll(true)
+  const showLess = () => setShowAll(false)
+
+  if (content.length <= limit) {
+    // there is nothing more to show
+    return <div>{content}</div>
+  }
+  if (showAll) {
+    return (
+      <div style={{ height: '150px', overflowY: 'scroll' }}>
+        <p style={{ fontSize: '13px' }}>{content}</p>
+        <button onClick={showLess}>Read less</button>
+      </div>
+    )
+  }
+  const toShow = content.substring(0, limit) + '...'
+  return (
+    <div>
+      <p style={{ fontSize: '13px' }}> {toShow}</p>
+
+      <button onClick={showMore}>Read more</button>
+    </div>
+  )
+}
