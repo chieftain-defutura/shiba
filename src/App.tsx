@@ -21,7 +21,7 @@ import Navigation from 'components/Navigation'
 
 const ShopPage = lazy(() => import('pages/Shops'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
-const AuctionPage = lazy(() => import('pages/ActionPage'))
+const AuctionPage = lazy(() => import('pages/AuctionPage'))
 const MintNftPage = lazy(() => import('pages/MintNftPage'))
 const CharitiesPage = lazy(() => import('pages/ContractNftsPage/Charities'))
 const WebsitesPage = lazy(() => import('pages/ContractNftsPage/WebsitesPage'))

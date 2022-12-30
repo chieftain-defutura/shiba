@@ -30,7 +30,6 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
   owner,
   id,
   highestBid,
-  startTime,
   endTime,
   tokenId,
   erc721TokenAddress,

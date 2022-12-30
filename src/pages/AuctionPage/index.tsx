@@ -21,7 +21,7 @@ import {
   MARKETPLACE_CONTRACT_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from 'utils/contractAddress'
-import './ActionPage.css'
+import './AuctionPage.css'
 
 const getQuery = (orderBy: string, orderDirection: string) => {
   return `query{
@@ -106,7 +106,7 @@ const NftTokenQuery = `query($erc721TokenAddress:[String!]!){
     }
   }`
 
-const ActionPage: React.FC = () => {
+const AuctionPage: React.FC = () => {
   const [isValue, setIsValue] = useState('')
   const [graphQuery, setGraphQuery] = useState(auctionPageQuery)
   const [minPrice, setMinPrice] = useState('')
@@ -409,7 +409,7 @@ const ActionPage: React.FC = () => {
   )
 }
 
-export default ActionPage
+export default AuctionPage
 
 const accordionData = [
   {
