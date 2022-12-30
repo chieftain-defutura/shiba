@@ -496,6 +496,3 @@ const corpoteAccordionData = [
   //   address: CHARITIES_NFT_CONTRACT_ADDRESS,
   // },
 ]
-function useAutoAnimate(): [any] {
-  throw new Error('Function not implemented.')
-}
