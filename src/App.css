@@ -16,9 +16,9 @@
   --textColorSix: #ccd5df;
   --textColorSeven: #acffe1;
   --textColorEighth: #959595;
-  --oswaldFont: "Oswald", sans-serif;
-  --poppinsFont: "Poppins", sans-serif;
-  --montserratFont: "Montserrat", sans-serif;
+  --oswaldFont: 'Oswald', sans-serif;
+  --poppinsFont: 'Poppins', sans-serif;
+  --montserratFont: 'Montserrat', sans-serif;
 }
 
 * {
@@ -29,6 +29,12 @@
 
 body {
   background-color: var(--bgColor);
+}
+.App {
+  max-width: 1440px;
+  min-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* COMMON STYLES */
