@@ -27,7 +27,6 @@ import {
 import domainABI from 'utils/abi/domainABI.json'
 import { useTransactionModal } from 'context/TransactionContext'
 import { mintDomainNft, mintNft } from 'utils/methods'
-import HomeLayout from 'Layout/HomeLayout'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from 'utils/messaging'
 import { domainRegex, getDomainNamePrice } from 'lib/helpers'
 
@@ -303,212 +302,208 @@ const MintNftPage: React.FC = () => {
 
   return (
     <div>
-      <HomeLayout>
-        <div className="mint-nft-container">
-          <div className="mint-nft-container-right">
-            <h2 className="heading">Mint NFT</h2>
-            <div className="box-1">
-              <div className="box-left">
-                <p className="title">Please Select NFT token type:</p>
-                <div className="content-container">
-                  <div className="content-title">
-                    <p className="title">Total LEASH cost:</p>
-                    <p className="title">Total SHIB cost:</p>
-                  </div>
-                  <div className="content-input">
-                    <input readOnly value={0.02} />
-                    <input readOnly value={1000000} />
-                  </div>
+      <div className="mint-nft-container">
+        <div className="mint-nft-container-right">
+          <h2 className="heading">Mint NFT</h2>
+          <div className="box-1">
+            <div className="box-left">
+              <p className="title">Please Select NFT token type:</p>
+              <div className="content-container">
+                <div className="content-title">
+                  <p className="title">Total LEASH cost:</p>
+                  <p className="title">Total SHIB cost:</p>
                 </div>
-              </div>
-              <div className="box-right">
-                <div
-                  className="custom-drop-down"
-                  onClick={() => setIsDropDownClick(!isDropDownClick)}
-                >
-                  {selectedOption}
-                  <MdKeyboardArrowDown className="arrow-icon" />
-                </div>
-                <div
-                  className={
-                    isDropDownClick
-                      ? 'drop-down-content active'
-                      : 'drop-down-content'
-                  }
-                >
-                  {ContractData.map((list, index) => (
-                    <p
-                      key={index.toString()}
-                      onClick={() => {
-                        setSelectedOption(list.title)
-                        setIsDropDownClick(false)
-                      }}
-                    >
-                      {list.title}
-                    </p>
-                  ))}
+                <div className="content-input">
+                  <input readOnly value={0.02} />
+                  <input readOnly value={1000000} />
                 </div>
               </div>
             </div>
-            <div className="box-2" style={{ marginLeft: '65px' }}>
-              <div className="box-left">
-                <p className="title">Connect to:</p>
-                <div className="content-container">
-                  <div className="content-title">
-                    <div
-                      className="left"
-                      onClick={() => setConnectExistingDomain(false)}
-                      style={{
-                        pointerEvents:
-                          selectedOption &&
-                          selectedOption !== UNATTACHED_DOMAIN_NAME
-                            ? 'none'
-                            : 'initial',
-                        opacity:
-                          selectedOption &&
-                          selectedOption !== UNATTACHED_DOMAIN_NAME
-                            ? '0.8'
-                            : '1',
-                      }}
-                    >
-                      <div
-                        className={
-                          connectToExistingDomain ? 'circle' : 'circle active'
-                        }
-                      ></div>
-                      <p className="title">New Domain Name:</p>
-                    </div>
-                    <div
-                      className="left"
-                      onClick={() => setConnectExistingDomain(true)}
-                      style={{
-                        pointerEvents:
-                          selectedOption === UNATTACHED_DOMAIN_NAME
-                            ? 'none'
-                            : 'initial',
-                        opacity:
-                          selectedOption === UNATTACHED_DOMAIN_NAME
-                            ? '0.8'
-                            : '1',
-                      }}
-                    >
-                      <div
-                        className={
-                          connectToExistingDomain ? 'circle active' : 'circle'
-                        }
-                      ></div>
-                      <p className="title">Existing Domain Name:</p>
-                    </div>
-                  </div>
-                  <div className="content-input">
-                    <div className="right">
-                      <input
-                        onChange={(e) => setDomainName(e.target.value)}
-                        placeholder="shoesboutique"
-                        value={domainName}
-                        style={{
-                          pointerEvents: connectToExistingDomain
-                            ? 'none'
-                            : 'initial',
-                          opacity: connectToExistingDomain ? '0.8' : '1',
-                          color: 'white',
-                        }}
-                      />
-                      <select
-                        className="custom-select-box"
-                        onChange={(e) => setSelected(e.target.value)}
-                        style={{
-                          pointerEvents: connectToExistingDomain
-                            ? 'none'
-                            : 'initial',
-                          opacity: connectToExistingDomain ? '0.8' : '1',
-                        }}
-                      >
-                        {domainData.map((f, index) => {
-                          return (
-                            <option key={index} value={f}>
-                              {f}
-                            </option>
-                          )
-                        })}
-                      </select>
-                      {selectedOption &&
-                        (selectedOption === UNATTACHED_DOMAIN_NAME ||
-                          (selectedOption !== UNATTACHED_DOMAIN_NAME &&
-                            !connectToExistingDomain)) &&
-                        domainError && (
-                          <p style={{ color: 'red', fontSize: '16px' }}>
-                            {domainError}
-                          </p>
-                        )}
-                    </div>
-
-                    <div className="right-2">
-                      <select
-                        className="custom-select-box"
-                        onChange={(e) => setSelectDomain(e.target.value)}
-                        style={{
-                          width: '100%',
-                          pointerEvents:
-                            selectedOption === UNATTACHED_DOMAIN_NAME ||
-                            !connectToExistingDomain
-                              ? 'none'
-                              : 'initial',
-                          opacity:
-                            selectedOption === UNATTACHED_DOMAIN_NAME ||
-                            !connectToExistingDomain
-                              ? '0.8'
-                              : '1',
-                        }}
-                      >
-                        <option value="">please select</option>
-                        {userDomainNfts.map((f, index) => {
-                          return (
-                            <option key={index} value={f.tokenId}>
-                              {f.name}
-                            </option>
-                          )
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                </div>
+            <div className="box-right">
+              <div
+                className="custom-drop-down"
+                onClick={() => setIsDropDownClick(!isDropDownClick)}
+              >
+                {selectedOption}
+                <MdKeyboardArrowDown className="arrow-icon" />
               </div>
-            </div>
-            <div className="domain-error">
-              {errorMessage ? (
-                <div style={{ color: 'red' }}>{errorMessage}</div>
-              ) : (
-                ''
-              )}
-            </div>
-            <div className="box-3">
-              <div className="box-left">
-                <div className="content">
-                  <p className="title">Total PAW cost:</p>
-                  <input value={pawAmount} readOnly />
-                </div>
-              </div>
-
-              <div className="box-right">
-                {!canShowCreateButton ? (
-                  <button onClick={() => handleApproveToken()}>Approve</button>
-                ) : (
-                  <button
-                    className="btn-mint"
+              <div
+                className={
+                  isDropDownClick
+                    ? 'drop-down-content active'
+                    : 'drop-down-content'
+                }
+              >
+                {ContractData.map((list, index) => (
+                  <p
+                    key={index.toString()}
                     onClick={() => {
-                      mintButton()
+                      setSelectedOption(list.title)
+                      setIsDropDownClick(false)
                     }}
-                    disabled={loading || !!errorMessage}
                   >
-                    Create
-                  </button>
-                )}
+                    {list.title}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
+          <div className="box-2" style={{ marginLeft: '65px' }}>
+            <div className="box-left">
+              <p className="title">Connect to:</p>
+              <div className="content-container">
+                <div className="content-title">
+                  <div
+                    className="left"
+                    onClick={() => setConnectExistingDomain(false)}
+                    style={{
+                      pointerEvents:
+                        selectedOption &&
+                        selectedOption !== UNATTACHED_DOMAIN_NAME
+                          ? 'none'
+                          : 'initial',
+                      opacity:
+                        selectedOption &&
+                        selectedOption !== UNATTACHED_DOMAIN_NAME
+                          ? '0.8'
+                          : '1',
+                    }}
+                  >
+                    <div
+                      className={
+                        connectToExistingDomain ? 'circle' : 'circle active'
+                      }
+                    ></div>
+                    <p className="title">New Domain Name:</p>
+                  </div>
+                  <div
+                    className="left"
+                    onClick={() => setConnectExistingDomain(true)}
+                    style={{
+                      pointerEvents:
+                        selectedOption === UNATTACHED_DOMAIN_NAME
+                          ? 'none'
+                          : 'initial',
+                      opacity:
+                        selectedOption === UNATTACHED_DOMAIN_NAME ? '0.8' : '1',
+                    }}
+                  >
+                    <div
+                      className={
+                        connectToExistingDomain ? 'circle active' : 'circle'
+                      }
+                    ></div>
+                    <p className="title">Existing Domain Name:</p>
+                  </div>
+                </div>
+                <div className="content-input">
+                  <div className="right">
+                    <input
+                      onChange={(e) => setDomainName(e.target.value)}
+                      placeholder="shoesboutique"
+                      value={domainName}
+                      style={{
+                        pointerEvents: connectToExistingDomain
+                          ? 'none'
+                          : 'initial',
+                        opacity: connectToExistingDomain ? '0.8' : '1',
+                        color: 'white',
+                      }}
+                    />
+                    <select
+                      className="custom-select-box"
+                      onChange={(e) => setSelected(e.target.value)}
+                      style={{
+                        pointerEvents: connectToExistingDomain
+                          ? 'none'
+                          : 'initial',
+                        opacity: connectToExistingDomain ? '0.8' : '1',
+                      }}
+                    >
+                      {domainData.map((f, index) => {
+                        return (
+                          <option key={index} value={f}>
+                            {f}
+                          </option>
+                        )
+                      })}
+                    </select>
+                    {selectedOption &&
+                      (selectedOption === UNATTACHED_DOMAIN_NAME ||
+                        (selectedOption !== UNATTACHED_DOMAIN_NAME &&
+                          !connectToExistingDomain)) &&
+                      domainError && (
+                        <p style={{ color: 'red', fontSize: '16px' }}>
+                          {domainError}
+                        </p>
+                      )}
+                  </div>
+
+                  <div className="right-2">
+                    <select
+                      className="custom-select-box"
+                      onChange={(e) => setSelectDomain(e.target.value)}
+                      style={{
+                        width: '100%',
+                        pointerEvents:
+                          selectedOption === UNATTACHED_DOMAIN_NAME ||
+                          !connectToExistingDomain
+                            ? 'none'
+                            : 'initial',
+                        opacity:
+                          selectedOption === UNATTACHED_DOMAIN_NAME ||
+                          !connectToExistingDomain
+                            ? '0.8'
+                            : '1',
+                      }}
+                    >
+                      <option value="">please select</option>
+                      {userDomainNfts.map((f, index) => {
+                        return (
+                          <option key={index} value={f.tokenId}>
+                            {f.name}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="domain-error">
+            {errorMessage ? (
+              <div style={{ color: 'red' }}>{errorMessage}</div>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="box-3">
+            <div className="box-left">
+              <div className="content">
+                <p className="title">Total PAW cost:</p>
+                <input value={pawAmount} readOnly />
+              </div>
+            </div>
+
+            <div className="box-right">
+              {!canShowCreateButton ? (
+                <button onClick={() => handleApproveToken()}>Approve</button>
+              ) : (
+                <button
+                  className="btn-mint"
+                  onClick={() => {
+                    mintButton()
+                  }}
+                  disabled={loading || !!errorMessage}
+                >
+                  Create
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-      </HomeLayout>
+      </div>
     </div>
   )
 }

@@ -111,8 +111,8 @@ const ShopPage: React.FC = () => {
   return (
     <div>
       <Navigation />
-      <div className="website-container" style={{ paddingTop: '51px' }}>
-        <div className="website-container-left">
+      <div className="shop-container" style={{ paddingTop: '51px' }}>
+        <div className="shop-container-left">
           <h2 className="heading">Shop</h2>
 
           <div className="header">
@@ -185,7 +185,7 @@ const ShopPage: React.FC = () => {
             <p>No Result</p>
           </div>
         ) : (
-          <div className="website-container-right">
+          <div className="shop-container-right">
             {shopCheckBox.length <= 0 ? (
               <>
                 {data?.digitalShopTokens.map((f, idx) => (
@@ -241,7 +241,7 @@ const ShopCard: React.FC<{ type: string; path: string } & IShopToken> = ({
 
   return (
     <Link to={`/shop/${path}/${id}`}>
-      <div className="website-card-container">
+      <div className="shop-card-container">
         <div className="card">
           {isLoading ? (
             <div className="card-loader">

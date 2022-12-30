@@ -1,4 +1,163 @@
-.website-container-left .header .drop-down-header {
+.shop-container {
+  color: var(--textColorOne);
+  padding: 5px 70px;
+  display: grid;
+  grid-template-columns: 1.1fr 4fr;
+  gap: 60px;
+  font-family: var(--oswaldFont);
+}
+
+.shop-container-left {
+  height: 68vh;
+}
+.shop-container-left .heading {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 52px;
+  color: var(--textColorTwo);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.shop-container-left .checkbox-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  margin: 18px 0;
+}
+
+.shop-container-left .check-box-container label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  cursor: pointer;
+}
+
+.shop-container-left .check-box-container input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: var(--textColorOne);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.shop-container-left .check-box-container input[type='checkbox']:after {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 14px;
+  content: '\f00c';
+  color: var(--black);
+  display: none;
+}
+
+.shop-container-left .check-box-container input[type='checkbox']:checked:after {
+  display: block;
+}
+
+.shop-container-right {
+  display: grid;
+  grid-template-columns: repeat(5, 150px);
+  row-gap: 25px;
+  column-gap: 15px;
+}
+
+.shop-container-right .shop-card-container {
+  width: 145px;
+}
+
+.shop-container-right .card {
+  background-color: var(--bgColorSeven);
+  width: 100%;
+  border-radius: 8px;
+}
+
+.shop-container-right .card .card-loader {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.shop-container-right .card .card-top {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #fff;
+  border-radius: 8px 8px 0px 0px;
+  display: flex;
+  place-items: center;
+}
+
+.shop-container-right .card .card-top img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.shop-container-right .card .card-center {
+  padding: 7px 10px 20px 10px;
+  border-bottom: 1px solid #343741;
+}
+
+.shop-container-right .card .card-center .title {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--textColorTwo);
+}
+
+.shop-container-right .card .card-center .sub-title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--textColorThree);
+}
+
+.shop-container-right .card .card-bottom {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shop-container-right .card .card-bottom p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--textColorTwo);
+  margin: 0;
+}
+.good-shop-quantity p {
+  font-size: 14px;
+}
+
+.shop-container-right .card .card-bottom button {
+  border: 1px solid var(--textColorTwo);
+  filter: drop-shadow(0px 0px 24px rgba(253, 230, 63, 0.4));
+  border-radius: 999px;
+  font-weight: 400;
+  font-size: 8px;
+  color: var(--textColorTwo);
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px 4px 12px;
+}
+
+.shop-container-right .shop-card-container .domain-name {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  margin-top: 12px;
+}
+
+.shop-container-left .header .drop-down-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6,19 +165,19 @@
   margin-top: 20px;
   border-bottom: 1px solid #464646;
 }
-.website-container-left .header .drop-down-header p {
+.shop-container-left .header .drop-down-header p {
   margin: 0;
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
   color: #acffe1;
 }
-.website-container-left .header .drop-down-header .arrow-icon {
+.shop-container-left .header .drop-down-header .arrow-icon {
   font-size: 20px;
   transition: 0.2s ease-in-out;
 }
 
-.website-container-left .header .drop-down-header.active .arrow-icon {
+.shop-container-left .header .drop-down-header.active .arrow-icon {
   color: var(--textColorSeven);
   transform: rotate(-180deg);
 }
