@@ -1,7 +1,8 @@
-import React, { useMemo, useState, ChangeEvent } from 'react'
+import React, { useMemo, useState, ChangeEvent, useEffect, useRef } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useQuery } from 'urql'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import autoAnimate from '@formkit/auto-animate'
 
 import { ArrElement } from '../../constants/types'
 import Navigation from '../../components/Navigation/Navigation'
@@ -194,6 +195,13 @@ const ActionPage: React.FC = () => {
     }
   }
 
+  //auto animate
+  const parent = useRef(null)
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current)
+  }, [parent])
+
   return (
     <div>
       <Navigation />
@@ -239,27 +247,29 @@ const ActionPage: React.FC = () => {
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
-            {priceDropDown && (
-              <div className="price-content">
-                <div className="check-boxs-container">
-                  <label htmlFor="min">Min</label>
-                  <input
-                    id="min"
-                    type="number"
-                    onChange={(e) => setMinPrice(e.target.value)}
-                  />
-                </div>
+            <div ref={parent}>
+              {priceDropDown && (
+                <div className="price-content">
+                  <div className="check-boxs-container">
+                    <label htmlFor="min">Min</label>
+                    <input
+                      id="min"
+                      type="number"
+                      onChange={(e) => setMinPrice(e.target.value)}
+                    />
+                  </div>
 
-                <div className="check-boxs-container">
-                  <label htmlFor="max">Max</label>
-                  <input
-                    id="max"
-                    type="number"
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                  />
+                  <div className="check-boxs-container">
+                    <label htmlFor="max">Max</label>
+                    <input
+                      id="max"
+                      type="number"
+                      onChange={(e) => setMaxPrice(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <div className="currency-container">
             <div className="price-title">
@@ -359,29 +369,46 @@ const ActionPage: React.FC = () => {
                 )}
               </>
             )}
-            {open && (
-              <div className="currency-select-container">
-                <div className="header">
-                  <p>{selectedDropDown?.title}</p>
+            <AnimatePresence>
+              {open && (
+                <motion.div
+                  initial={{
+                    height: 0,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    height: 'auto',
+                    opacity: 1,
+                  }}
+                  exit={{
+                    height: 0,
+                    opacity: 0,
+                  }}
+                >
+                  <div className="currency-select-container">
+                    <div className="header">
+                      <p>{selectedDropDown?.title}</p>
 
-                  <IoIosArrowDown className="arrow-icon" />
-                </div>
-                <div className="body">
-                  {tokensList.map((f, index) => {
-                    return (
-                      <p
-                        key={index}
-                        onClick={() => {
-                          setSelectedDropDown(f)
-                        }}
-                      >
-                        {f.title}
-                      </p>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
+                      <IoIosArrowDown className="arrow-icon" />
+                    </div>
+                    <div className="body">
+                      {tokensList.map((f, index) => {
+                        return (
+                          <p
+                            key={index}
+                            onClick={() => {
+                              setSelectedDropDown(f)
+                            }}
+                          >
+                            {f.title}
+                          </p>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
+import { AnimatePresence, motion } from 'framer-motion'
+import autoAnimate from '@formkit/auto-animate'
 
 import Navigation from '../../components/Navigation/Navigation'
 import FooterBottom from '../../components/FooterBottom/FooterBottom'
@@ -162,6 +164,13 @@ const MarketPlacePage: React.FC = () => {
     setIsAccordionActive(idx)
   }
 
+  //auto animate
+  const parent = useRef(null)
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current)
+  }, [parent])
+
   return (
     <div>
       <Navigation />
@@ -200,29 +209,48 @@ const MarketPlacePage: React.FC = () => {
                   <p>{item?.title}</p>
                   <IoIosArrowDown className="arrow-icon" />
                 </div>
-                {clickDropDown === item.title && (
-                  <div
-                    className={
-                      clickDropDown === item.title
-                        ? 'drop-down-body active'
-                        : 'drop-down-body'
-                    }
-                  >
-                    <div className="check-box-container">
-                      {item.labels.map((label, index) => (
-                        <div className="checkbox-content" key={index}>
-                          <label htmlFor="Human Rights">{label.label}</label>
-                          <input
-                            id="Human Rights"
-                            type="checkbox"
-                            value={label.label}
-                            onChange={handleChange}
-                          />
+                <AnimatePresence>
+                  {clickDropDown === item.title && (
+                    <motion.div
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: 'auto',
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                    >
+                      <div
+                        className={
+                          clickDropDown === item.title
+                            ? 'drop-down-body active'
+                            : 'drop-down-body'
+                        }
+                      >
+                        <div className="check-box-container">
+                          {item.labels.map((label, index) => (
+                            <div className="checkbox-content" key={index}>
+                              <label htmlFor="Human Rights">
+                                {label.label}
+                              </label>
+                              <input
+                                id="Human Rights"
+                                type="checkbox"
+                                value={label.label}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
@@ -281,36 +309,38 @@ const MarketPlacePage: React.FC = () => {
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
-            {priceDropDown && (
-              <div className="price-content">
-                <div className="check-boxs-container">
-                  <div>
-                    <label htmlFor="min">Min</label>
+            <div ref={parent}>
+              {priceDropDown && (
+                <div className="price-content">
+                  <div className="check-boxs-container">
+                    <div>
+                      <label htmlFor="min">Min</label>
+                    </div>
+                    <div>
+                      <input
+                        id="min"
+                        type="text"
+                        value={minValue}
+                        onChange={(e) => setMinValue(e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <input
-                      id="min"
-                      type="text"
-                      value={minValue}
-                      onChange={(e) => setMinValue(e.target.value)}
-                    />
+                  <div className="check-boxs-container">
+                    <div>
+                      <label htmlFor="max">Max</label>
+                    </div>
+                    <div>
+                      <input
+                        id="max"
+                        type="text"
+                        value={maxValue}
+                        onChange={(e) => setMaxValue(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="check-boxs-container">
-                  <div>
-                    <label htmlFor="max">Max</label>
-                  </div>
-                  <div>
-                    <input
-                      id="max"
-                      type="text"
-                      value={maxValue}
-                      onChange={(e) => setMaxValue(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <div className="currency-container">
             <div className="price-title">
@@ -344,28 +374,45 @@ const MarketPlacePage: React.FC = () => {
               debouncedDomainName={debouncedDomainName}
             />
           )}
-          {open && (
-            <div className="currency-select-container">
-              <div className="header">
-                <p>{selectedDropDown?.title}</p>
-                <IoIosArrowDown className="arrow-icon" />
-              </div>
-              <div className="body">
-                {tokensList.map((f, index) => {
-                  return (
-                    <p
-                      key={index}
-                      onClick={() => {
-                        setSelectedDropDown(f)
-                      }}
-                    >
-                      {f.title}
-                    </p>
-                  )
-                })}
-              </div>
-            </div>
-          )}
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{
+                  height: 0,
+                  opacity: 0,
+                }}
+                animate={{
+                  height: 'auto',
+                  opacity: 1,
+                }}
+                exit={{
+                  height: 0,
+                  opacity: 0,
+                }}
+              >
+                <div className="currency-select-container">
+                  <div className="header">
+                    <p>{selectedDropDown?.title}</p>
+                    <IoIosArrowDown className="arrow-icon" />
+                  </div>
+                  <div className="body">
+                    {tokensList.map((f, index) => {
+                      return (
+                        <p
+                          key={index}
+                          onClick={() => {
+                            setSelectedDropDown(f)
+                          }}
+                        >
+                          {f.title}
+                        </p>
+                      )
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
       <FooterBottom />
@@ -449,3 +496,6 @@ const corpoteAccordionData = [
   //   address: CHARITIES_NFT_CONTRACT_ADDRESS,
   // },
 ]
+function useAutoAnimate(): [any] {
+  throw new Error('Function not implemented.')
+}

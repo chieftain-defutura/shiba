@@ -188,6 +188,11 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                             )
                           })}
                         </div>
+                        <ErrorMessage
+                          name="token.title"
+                          className="errorMsg"
+                          component="div"
+                        />
                       </div>
                     </div>
                     <div>
@@ -198,6 +203,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                         <option value="7">7</option>
                         <option value="custom">Custom</option>
                       </Field>
+
                       <ErrorMessage
                         name="selectOption"
                         className="errorMsg"

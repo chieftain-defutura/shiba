@@ -91,6 +91,9 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   const validate = Yup.object({
     charityAddress: Yup.string().required('This is Required'),
     price: Yup.string().required('This is Required'),
+    token: Yup.object({
+      title: Yup.string().required('This is Required'),
+    }),
   })
 
   return (
@@ -134,12 +137,7 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                   </div>
                   <div className="price-select-container">
                     <div className="left">
-                      <Field
-                        type="number"
-                        placeholder="price"
-                        name="price"
-                        // onChange={(e) => setPrice(e.target.value)}
-                      />
+                      <Field type="number" placeholder="price" name="price" />
                       <ErrorMessage
                         name="price"
                         className="errorMsg"
@@ -169,6 +167,11 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
                           )
                         })}
                       </div>
+                      <ErrorMessage
+                        name="token.title"
+                        className="errorMsg"
+                        component="div"
+                      />
                     </div>
                   </div>
                   <div>
