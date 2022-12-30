@@ -16,6 +16,7 @@ import { formatAddress } from 'constants/variants'
 const Navigation: React.FC = () => {
   const { address } = useAccount()
   const [open, setOpen] = useState(false)
+  const [inputFocus, setInputFocus] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const debouncedSearchInput = useDebounce(searchInput, 1000)
   const [result] = useQuery({
@@ -74,9 +75,11 @@ const Navigation: React.FC = () => {
                 placeholder="Search by Domain"
                 value={searchInput}
                 onChange={({ target }) => setSearchInput(target.value)}
+                onFocus={() => setInputFocus(true)}
+                onBlur={() => setInputFocus(false)}
               />
             </div>
-            {debouncedSearchInput && (
+            {inputFocus && debouncedSearchInput && (
               <div className="search-box-block">
                 {fetching ? (
                   <div style={{ padding: '10px' }}>
