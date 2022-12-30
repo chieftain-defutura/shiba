@@ -1,7 +1,7 @@
 import React from 'react'
 
-import HeaderNav from 'components/HeaderNav/HeaderNav'
-import SideBar from 'components/SideBar/SideBar'
+import HeaderNav from 'components/HeaderNav/index'
+import SideBar from 'components/SideBar'
 import './HomeLayout.scss'
 
 interface IHomeLayout {

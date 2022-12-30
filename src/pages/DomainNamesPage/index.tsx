@@ -1,11 +1,11 @@
 import React from 'react'
 import { useQuery } from 'urql'
 
-import FooterBottom from 'components/FooterBottom/FooterBottom'
+import FooterBottom from 'components/FooterBottom/index'
 import { domainPageQuery } from 'constants/query'
 import { IDomainNft } from 'constants/types'
 import { formatAddress } from 'constants/variants'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 import './DomainNamesPage.css'
 
 const DomainNamesPage: React.FC = () => {

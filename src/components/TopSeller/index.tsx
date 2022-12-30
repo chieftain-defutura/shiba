@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Card from '../Card/Card'
+import Card from 'components/Card'
 import './TopSeller.css'
 
-const TopSeller = () => {
+const TopSeller: React.FC = () => {
   return (
     <div className="top-seller-container">
       <h2 className="section-title">Top Seller</h2>

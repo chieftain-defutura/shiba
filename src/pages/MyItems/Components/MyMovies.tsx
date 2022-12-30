@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 import { IUserDigitalItem } from 'constants/types'
 import { getDecryptedData } from 'utils/formatters'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 import './item.scss'
 
 export const MoviesCard: React.FC<IUserDigitalItem> = ({

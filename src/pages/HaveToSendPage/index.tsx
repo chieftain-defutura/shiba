@@ -7,7 +7,7 @@ import { haveToSendQuery } from 'constants/query'
 import ArrowIcon from 'assets/img/left-arrow-icon-2.png'
 import HomeLayout from 'Layout/HomeLayout'
 import HaveToSendCard from 'components/HaveToSendCard'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 import ShipmentDetails from './ShipmentDetails'
 import './HaveToSend.css'
 

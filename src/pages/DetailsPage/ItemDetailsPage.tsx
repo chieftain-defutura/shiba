@@ -22,7 +22,7 @@ import { physicalItemQuery } from 'constants/query'
 import { IPhysicalItem } from 'constants/types'
 import { formatTokenUnits, getEncryptedData } from 'utils/formatters'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 import closeIcon from 'assets/img/close-icon.png'
 import { useAppSelector } from 'store/store'
 

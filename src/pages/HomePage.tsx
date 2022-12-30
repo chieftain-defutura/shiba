@@ -1,10 +1,10 @@
 import React from 'react'
 
-import TopSeller from 'components/TopSeller/TopSeller'
-import Banner from 'components/Banner/Banner'
+import TopSeller from 'components/TopSeller'
+import Banner from 'components/Banner'
 import Footer from 'components/Footer/Footer'
-import PopularFood from 'components/PopularFood/PopularFood'
-import RecentlyListed from 'components/RecentlyListed/RecentlyListed'
+import PopularFood from 'components/PopularFood'
+import RecentlyListed from 'components/RecentlyListed'
 
 const HomePage: React.FC = () => {
   return (
