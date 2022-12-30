@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAccount } from 'wagmi'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'urql'
@@ -82,6 +82,7 @@ const NftCard: React.FC<{ data: INftData; contractData: IContractData }> = ({
     { hash: data.tokenUri ?? '' },
     { skip: !data.tokenUri },
   )
+  const [imgError, setImageError] = useState(false)
 
   return (
     <div className="website-card-container">
@@ -92,10 +93,14 @@ const NftCard: React.FC<{ data: INftData; contractData: IContractData }> = ({
           </div>
         ) : (
           <div className="card-top">
-            {!ipfsData ? (
+            {!ipfsData || imgError ? (
               <img src={camera} alt="card" />
             ) : (
-              <img src={ipfsData?.logo} alt="card" />
+              <img
+                src={ipfsData?.logo}
+                alt="card"
+                onError={() => setImageError(true)}
+              />
             )}
           </div>
         )}
