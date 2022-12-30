@@ -218,12 +218,13 @@ const MintNftPage: React.FC = () => {
       return setPrice(Number('1000000'.toString()))
     if (selectedNftType?.title === DIGITAL_GOOD_SHOP)
       return setPrice(Number('0.02'.toString()))
-  }, [selectedNftType, pawAmount])
-
+  }, [selectedNftType])
   const canShowCreateButton = useMemo(() => {
     if (!selectedNftType) {
       return true
     }
+
+    console.log(price)
 
     // eslint-disable-next-line no-prototype-builtins
     if (!selectedNftType.hasOwnProperty('tokenAddress')) {
