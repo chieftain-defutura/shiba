@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
 
+import './MyContractNfts.css'
 import HomeLayout from 'Layout/HomeLayout'
 import { IContractData } from 'constants/contract'
 import FooterBottom from 'components/FooterBottom/index'
