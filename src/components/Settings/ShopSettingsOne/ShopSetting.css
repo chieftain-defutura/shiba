@@ -561,6 +561,13 @@ select {
   cursor: pointer;
   margin-left: 100px;
 }
+
+.transfer-sub-menu-container .btn-cont button {
+  cursor: pointer;
+}
+.transfer-sub-menu-container .btn-cont button:disabled {
+  cursor: no-drop;
+}
 .transfer-head h2 {
   display: flex;
   justify-content: center;

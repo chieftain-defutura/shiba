@@ -7,9 +7,9 @@ import {
   usePrepareContractWrite,
 } from 'wagmi'
 
-import { RESIDUAL_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
-import residualABI from '../../../utils/abi/resideuABI.json'
-import { useTransactionModal } from '../../../context/TransactionContext'
+import { RESIDUAL_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import residualABI from 'utils/abi/resideuABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
 import './Residual.scss'
 
 interface IResidualProps {
@@ -144,7 +144,6 @@ const Residual: React.FC<IResidualProps> = ({
         <div className="content" style={{ flexDirection: 'column' }}>
           {!formattedData.paused && (
             <div className="content-block">
-              {/* <h4>Set Residual %</h4> */}
               {formattedData.totalPercent === '0' ? (
                 <>
                   <label>Set Residual %</label>
@@ -180,7 +179,6 @@ const Residual: React.FC<IResidualProps> = ({
           )}
 
           <div className="content-block">
-            {/* <h4>Residual Getters List and their Shares</h4> */}
             <label>
               Residual Getters List <br /> and their Shares
               <select className="residualSelect">
@@ -201,7 +199,6 @@ const Residual: React.FC<IResidualProps> = ({
             <>
               <div className="content-block">
                 <div>
-                  {/* <h4>Add Residual Getter</h4> */}
                   <div className="add-getter-cont">
                     <label>Add Residual Getter </label>
                     <div className="residual-input">
@@ -236,7 +233,6 @@ const Residual: React.FC<IResidualProps> = ({
                 </button>
               </div>
               <div className="content-block">
-                {/* <h4>Remove Residual Getter</h4> */}
                 <label>
                   Remove Residual Getter
                   <select

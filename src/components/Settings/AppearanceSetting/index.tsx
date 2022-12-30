@@ -4,12 +4,12 @@ import { Formik, Field, Form } from 'formik'
 import { useSigner, useAccount } from 'wagmi'
 import { ethers } from 'ethers'
 import axios from 'axios'
+
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
-
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import { useTransactionModal } from '../../context/TransactionContext'
-import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
+import digitalShopABI from 'utils/abi/digitalShopABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
+import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 
 const initialState = {
   logo: '',

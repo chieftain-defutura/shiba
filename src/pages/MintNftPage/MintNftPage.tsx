@@ -23,13 +23,13 @@ import {
   WEBSITE_NFT_CONTRACT_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
   ART_NFT_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
-import domainABI from '../../utils/abi/domainABI.json'
-import { useTransactionModal } from '../../context/TransactionContext'
-import { mintDomainNft, mintNft } from '../../utils/methods'
-import HomeLayout from '../../Layout/HomeLayout'
-import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../utils/messaging'
-import { domainRegex, getDomainNamePrice } from '../../lib/helpers'
+} from 'utils/contractAddress'
+import domainABI from 'utils/abi/domainABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
+import { mintDomainNft, mintNft } from 'utils/methods'
+import HomeLayout from 'Layout/HomeLayout'
+import { PENDING_MESSAGE, SUCCESS_MESSAGE } from 'utils/messaging'
+import { domainRegex, getDomainNamePrice } from 'lib/helpers'
 
 interface IContractData {
   title: string
@@ -411,6 +411,7 @@ const MintNftPage: React.FC = () => {
                             ? 'none'
                             : 'initial',
                           opacity: connectToExistingDomain ? '0.8' : '1',
+                          color: 'white',
                         }}
                       />
                       <select

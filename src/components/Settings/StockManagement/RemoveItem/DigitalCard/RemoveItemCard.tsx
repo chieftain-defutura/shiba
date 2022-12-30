@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
 
-import { useTransactionModal } from '../../context/TransactionContext'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import digitalShopABI from 'utils/abi/digitalShopABI.json'
 import { formatUnits } from 'ethers/lib/utils.js'
-import cardImg from '../../assets/img/card-3.png'
-import { IRemoveDigitalItem } from '../../constants/types'
+import { IRemoveDigitalItem } from 'constants/types'
+import cardImg from 'assets/img/card-3.png'
 
 const DigitalCard: React.FC<IRemoveDigitalItem> = ({
   id: itemId,
@@ -46,10 +46,6 @@ const DigitalCard: React.FC<IRemoveDigitalItem> = ({
     <div>
       {slide && (
         <div>
-          {/* <BsArrowLeftCircle
-            className="arrow-icon"
-            onClick={() => setSlide(false)}
-          /> */}
           <div className="remove-item-card">
             <div className="card-top">
               <img src={cardImg} alt="card" />

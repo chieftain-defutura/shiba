@@ -1,12 +1,12 @@
 import React, { useRef } from 'react'
-import { IUserDigitalItem } from '../../../constants/types'
-import PlayBtn from '../../../assets/icon/play-btn.svg'
-import { getDecryptedData } from '../../../utils/formatters'
-import Loading from '../../../components/Loading/Loading'
+
+import { IUserDigitalItem } from 'constants/types'
+import PlayBtn from 'assets/icon/play-btn.svg'
+import { getDecryptedData } from 'utils/formatters'
+import Loading from 'components/Loading/Loading'
 
 export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
-  category,
   shopDetails,
   itemName,
 }) => {

@@ -4,17 +4,16 @@ import { useQuery } from 'urql'
 import { AnimatePresence, motion } from 'framer-motion'
 import autoAnimate from '@formkit/auto-animate'
 
-import { ArrElement } from '../../constants/types'
-import Navigation from '../../components/Navigation/Navigation'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import AuctionSaleCard from '../../components/AuctionSaleCard'
-import { auctionPageQuery } from '../../constants/query'
-import { IAuctionNft } from '../../constants/types'
-import Loading from '../../components/Loading/Loading'
-import { tokensList } from '../../constants/contract'
-import './ActionPage.css'
+import { ArrElement } from 'constants/types'
+import Navigation from 'components/Navigation/Navigation'
+import FooterBottom from 'components/FooterBottom/FooterBottom'
+import AuctionSaleCard from 'components/AuctionSaleCard'
+import { auctionPageQuery } from 'constants/query'
+import { IAuctionNft } from 'constants/types'
+import Loading from 'components/Loading/Loading'
+import { tokensList } from 'constants/contract'
 import { parseUnits } from 'ethers/lib/utils.js'
-import { formatTokenUnits } from '../../utils/formatters'
+import { formatTokenUnits } from 'utils/formatters'
 import {
   ART_NFT_CONTRACT_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
@@ -22,7 +21,8 @@ import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   MARKETPLACE_CONTRACT_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
+} from 'utils/contractAddress'
+import './ActionPage.css'
 
 const getQuery = (orderBy: string, orderDirection: string) => {
   return `query{
@@ -211,13 +211,7 @@ const ActionPage: React.FC = () => {
           <div className="accordion-container">
             {accordionData.map((item, idx) => (
               <div key={idx} className="drop-down-container">
-                <div
-                  className={
-                    // clickDropDown === item.title
-                    //   ? 'drop-down-header active'
-                    'drop-down-header'
-                  }
-                >
+                <div className={'drop-down-header'}>
                   <div className="drop-down-title">
                     <p>{item?.title}</p>
                   </div>

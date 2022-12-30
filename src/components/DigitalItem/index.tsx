@@ -4,12 +4,12 @@ import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import Skeleton from 'react-loading-skeleton'
 import { formatUnits } from 'ethers/lib/utils.js'
 
-import { useTransactionModal } from '../../context/TransactionContext'
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import { IGoodsDigitalItem } from '../../constants/types'
-import cameraImg from '../../assets/icon/Camera.svg'
-import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
+import { useTransactionModal } from 'context/TransactionContext'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import digitalShopABI from 'utils/abi/digitalShopABI.json'
+import { IGoodsDigitalItem } from 'constants/types'
+import cameraImg from 'assets/icon/Camera.svg'
+import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 
 const DigitalItem: React.FC<IGoodsDigitalItem> = ({
   erc20Token,

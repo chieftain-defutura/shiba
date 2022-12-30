@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { useAccount, useSigner } from 'wagmi'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { ethers } from 'ethers'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import { parseUnits } from 'ethers/lib/utils.js'
+import { useAccount, useSigner } from 'wagmi'
+import { ethers } from 'ethers'
 import * as Yup from 'yup'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
 
-import { useTransactionModal } from '../../../context/TransactionContext'
-import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
-import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
-import { tokensList } from '../../../constants/contract'
-import { getTokenDecimals } from '../../../utils/methods'
-import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
-import { useAppSelector } from '../../../store/store'
-import { formatAddress } from '../../../constants/variants'
+import { useTransactionModal } from 'context/TransactionContext'
+import { MARKETPLACE_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import auctionMarketplaceABI from 'utils/abi/auctionMarketplaceABI.json'
+import { tokensList } from 'constants/contract'
+import { getTokenDecimals } from 'utils/methods'
+import { PENDING_MESSAGE, SUCCESS_MESSAGE } from 'utils/messaging'
+import { useAppSelector } from 'store/store'
+import { formatAddress } from 'constants/variants'
 
 type IAuctionCardProps = {
   setOnAction: React.Dispatch<boolean>
@@ -42,7 +42,6 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
   contractAddress,
   isApproved,
   handleApprove,
-  setClickCard,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()
@@ -241,11 +240,7 @@ const AuctionCard: React.FC<IAuctionCardProps> = ({
                         Approve
                       </button>
                     ) : (
-                      <button
-                        className="putOnSaleBtn"
-                        type="submit"
-                        // disabled={!price || !selectedDropDown || !days}
-                      >
+                      <button className="putOnSaleBtn" type="submit">
                         Put On Sale
                       </button>
                     )}

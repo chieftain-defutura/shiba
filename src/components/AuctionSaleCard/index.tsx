@@ -6,19 +6,19 @@ import Skeleton from 'react-loading-skeleton'
 import { useQuery } from 'urql'
 import { formatEther } from 'ethers/lib/utils.js'
 
-import { useTransactionModal } from '../../context/TransactionContext'
+import { useTransactionModal } from 'context/TransactionContext'
 import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   MARKETPLACE_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
-import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
-import { IAuctionNft } from '../../constants/types'
+} from 'utils/contractAddress'
+import auctionMarketplaceABI from 'utils/abi/auctionMarketplaceABI.json'
+import { IAuctionNft } from 'constants/types'
 import Button from '../Button'
 import Modal from '../Model'
-import Close from '../../assets/icon/close.svg'
-import camera from '../../assets/icon/Camera.svg'
-import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
-import { formatAddress } from '../../constants/variants'
+import Close from 'assets/icon/close.svg'
+import camera from 'assets/icon/Camera.svg'
+import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
+import { formatAddress } from 'constants/variants'
 import Loading from '../Loading/Loading'
 
 const AuctionSaleCard: React.FC<IAuctionNft> = ({

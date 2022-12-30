@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import Backdrop from '../../modal/BackDrop'
+import Backdrop from 'modal/BackDrop'
 
 const modalVaraints = {
   initial: {

@@ -7,14 +7,14 @@ import * as Yup from 'yup'
 import axios from 'axios'
 
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import { TokenData } from '../../constants/tokenData'
-import physicalShopABI from '../../utils/abi/physicalShopABI.json'
-import { useTransactionModal } from '../../context/TransactionContext'
+import { TokenData } from 'constants/tokenData'
+import physicalShopABI from 'utils/abi/physicalShopABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
 import { parseUnits } from 'ethers/lib/utils.js'
-import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import { getPhysicalShopCategory } from '../../utils/methods'
-import { useAppDispatch, useAppSelector } from '../../store/store'
-import { fetchCarityList } from '../../store/slices/generalSlice'
+import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import { getPhysicalShopCategory } from 'utils/methods'
+import { useAppDispatch, useAppSelector } from 'store/store'
+import { fetchCarityList } from 'store/slices/generalSlice'
 
 interface IPhysicalShopForm {
   setClickCard: any

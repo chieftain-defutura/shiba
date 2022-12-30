@@ -10,14 +10,14 @@ import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
   WEBSITE_NFT_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
-import shopAbi from '../../utils/abi/physicalShopABI.json'
+} from 'utils/contractAddress'
+import shopAbi from 'utils/abi/physicalShopABI.json'
 import {
   awaitingDeliveryQuery,
   haveToSendQuery,
   userCollectionsQuery,
-} from '../../constants/query'
-import { IUserCollection } from '../../constants/types'
+} from 'constants/query'
+import { IUserCollection } from 'constants/types'
 import './SideBar.css'
 
 const SideBar: React.FC = () => {
@@ -256,8 +256,6 @@ const SideBar: React.FC = () => {
                   ) : (
                     0
                   )}
-
-                  {/* {haveToSendresult.data?.shipments.length ?? 0} */}
                 </p>
               </Link>
             </div>
@@ -275,8 +273,6 @@ const SideBar: React.FC = () => {
                   ) : (
                     0
                   )}
-
-                  {/* {awaitingDeliveryResult.data?.shipments.length ?? 0} */}
                 </p>
               </Link>
             </div>

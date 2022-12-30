@@ -3,20 +3,20 @@ import { ethers } from 'ethers'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 
 import { formatUnits } from 'ethers/lib/utils.js'
-import { useTransactionModal } from '../../context/TransactionContext'
+import { useTransactionModal } from 'context/TransactionContext'
 import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   MARKETPLACE_CONTRACT_ADDRESS,
-} from '../../utils/contractAddress'
-import auctionMarketplaceABI from '../../utils/abi/auctionMarketplaceABI.json'
-import { IFixedSale } from '../../constants/types'
+} from 'utils/contractAddress'
+import auctionMarketplaceABI from 'utils/abi/auctionMarketplaceABI.json'
+import { IFixedSale } from 'constants/types'
 import './FixedSaleCard.scss'
 import { useQuery } from 'urql'
 import Loading from '../Loading/Loading'
-import { formatAddress } from '../../constants/variants'
-import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
+import { formatAddress } from 'constants/variants'
+import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import Skeleton from 'react-loading-skeleton'
-import camera from '../../assets/icon/Camera.svg'
+import camera from 'assets/icon/Camera.svg'
 
 const FixedSaleCard: React.FC<IFixedSale> = ({
   erc20Token,

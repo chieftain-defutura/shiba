@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { formatUnits } from 'ethers/lib/utils.js'
 import Skeleton from 'react-loading-skeleton'
 
-import { IGoodsPhysicalItem } from '../../constants/types'
-import cameraImg from '../../assets/icon/Camera.svg'
+import { IGoodsPhysicalItem } from 'constants/types'
+import cameraImg from 'assets/icon/Camera.svg'
 import '../PhysicallItem/PhysicallItem.scss'
-import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
+import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 
 const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({
   erc20Token,

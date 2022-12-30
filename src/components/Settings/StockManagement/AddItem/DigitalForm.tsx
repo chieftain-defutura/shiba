@@ -13,15 +13,15 @@ import {
   LEASH_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import { PAW_TOKEN_ADDRESS } from '../../utils/contractAddress'
-import { useTransactionModal } from '../../context/TransactionContext'
-import { getEncryptedData } from '../../utils/formatters'
-import Button from '../Button'
-import { getDigitalShopCategory } from '../../utils/methods'
-import { useAppDispatch, useAppSelector } from '../../store/store'
-import { fetchCarityList } from '../../store/slices/generalSlice'
+} from 'utils/contractAddress'
+import digitalShopABI from 'utils/abi/digitalShopABI.json'
+import { PAW_TOKEN_ADDRESS } from 'utils/contractAddress'
+import { useTransactionModal } from 'context/TransactionContext'
+import { getEncryptedData } from 'utils/formatters'
+import Button from 'components/Button'
+import { getDigitalShopCategory } from 'utils/methods'
+import { useAppDispatch, useAppSelector } from 'store/store'
+import { fetchCarityList } from 'store/slices/generalSlice'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 interface IAddItem {

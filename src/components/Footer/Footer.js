@@ -1,13 +1,13 @@
 import React from 'react'
 
-import logo from '../../assets/img/logo.png'
-import descordIcon from '../../assets/img/descord-icon.png'
-import twitterIcon from '../../assets/img/twitter-icon.png'
-import instagramIcon from '../../assets/img/instagram-icon.png'
-import youtubeIcon from '../../assets/img/youtube-icon.png'
-import instagramIconTwo from '../../assets/img/instagram-icon-2.png'
-import twitterIconTwo from '../../assets/img/twitter-icon-2.png'
-import facebookIconTwo from '../../assets/img/facebook-icon.png'
+import logo from 'assets/img/logo.png'
+import descordIcon from 'assets/img/descord-icon.png'
+import twitterIcon from 'assets/img/twitter-icon.png'
+import instagramIcon from 'assets/img/instagram-icon.png'
+import youtubeIcon from 'assets/img/youtube-icon.png'
+import instagramIconTwo from 'assets/img/instagram-icon-2.png'
+import twitterIconTwo from 'assets/img/twitter-icon-2.png'
+import facebookIconTwo from 'assets/img/facebook-icon.png'
 import './Footer.css'
 
 const Footer = () => {

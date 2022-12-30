@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { useAccount, useSigner } from 'wagmi'
-import { ethers } from 'ethers'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
+import { useAccount, useSigner } from 'wagmi'
+import { ethers } from 'ethers'
 import * as Yup from 'yup'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
 
-import { useTransactionModal } from '../../../context/TransactionContext'
-import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../utils/contractAddress'
-import auctionMarketplaceABI from '../../../utils/abi/auctionMarketplaceABI.json'
-import { tokensList } from '../../../constants/contract'
-import { getTokenDecimals } from '../../../utils/methods'
-import { PENDING_MESSAGE, SUCCESS_MESSAGE } from '../../../utils/messaging'
-import { formatAddress } from '../../../constants/variants'
-import { useAppSelector } from '../../../store/store'
+import { useTransactionModal } from 'context/TransactionContext'
+import { MARKETPLACE_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import auctionMarketplaceABI from 'utils/abi/auctionMarketplaceABI.json'
+import { tokensList } from 'constants/contract'
+import { getTokenDecimals } from 'utils/methods'
+import { PENDING_MESSAGE, SUCCESS_MESSAGE } from 'utils/messaging'
+import { formatAddress } from 'constants/variants'
+import { useAppSelector } from 'store/store'
 
 type IMarketplaceCardProps = {
   setOnMarketplace: React.Dispatch<boolean>
@@ -40,7 +40,6 @@ const MarketPlaceCard: React.FC<IMarketplaceCardProps> = ({
   contractAddress,
   isApproved,
   handleApprove,
-  setClickCard,
 }) => {
   const { id } = useParams()
   const { address } = useAccount()

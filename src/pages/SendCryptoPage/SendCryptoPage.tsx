@@ -6,19 +6,18 @@ import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { useQuery } from 'urql'
 
-import upVoteIcon from '../../assets/img/up-vote-icon.png'
-import downVoteIcon from '../../assets/img/down-vote-icon.png'
-import HomeLayout from '../../Layout/HomeLayout'
-import { tokensList } from '../../constants/contract'
-import { ArrElement } from '../../constants/types'
-import { useTransactionModal } from '../../context/TransactionContext'
-import { getTokenDecimals } from '../../utils/methods'
-import useDebounce from '../../hooks/useDebounce'
-import { searchDomainNameQuery } from '../../constants/query'
-import { formatAddress } from '../../constants/variants'
-import { domainRegex } from '../../lib/helpers'
+import upVoteIcon from 'assets/img/up-vote-icon.png'
+import downVoteIcon from 'assets/img/down-vote-icon.png'
+import HomeLayout from 'Layout/HomeLayout'
+import { tokensList } from 'constants/contract'
+import { ArrElement } from 'constants/types'
+import { useTransactionModal } from 'context/TransactionContext'
+import { getTokenDecimals } from 'utils/methods'
+import useDebounce from 'hooks/useDebounce'
+import { searchDomainNameQuery } from 'constants/query'
+import { formatAddress } from 'constants/variants'
+import { domainRegex } from 'lib/helpers'
 import './SendCryptoPage.css'
-import Loading from '../../components/Loading/Loading'
 
 type IOwner = {
   id: string
@@ -192,30 +191,18 @@ const SendCryptoPage: React.FC = () => {
               </div>
               <div className="detail-right">
                 <div>
-                  {fetching ? (
-                    <div className="loading">
-                      <Loading />
-                    </div>
-                  ) : !toAddressDetails ? (
-                    <div className="error-msg">
-                      <p>No matches Found</p>
-                    </div>
-                  ) : (
-                    toAddressDetails.domainUsedFor
-                  )}
+                  {fetching
+                    ? 'Loading...'
+                    : !toAddressDetails
+                    ? 'No matches Found'
+                    : toAddressDetails.domainUsedFor}
                 </div>
                 <div>
-                  {fetching ? (
-                    <div className="loading">
-                      <Loading />
-                    </div>
-                  ) : !toAddressDetails ? (
-                    <div className="error-msg">
-                      <p>No matches Found</p>
-                    </div>
-                  ) : (
-                    formatAddress(toAddressDetails.address)
-                  )}
+                  {fetching
+                    ? 'Loading'
+                    : !toAddressDetails
+                    ? 'No matches Found'
+                    : formatAddress(toAddressDetails.address)}
                 </div>
                 <div className="vote-cont">
                   <div>

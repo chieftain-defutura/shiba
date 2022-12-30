@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react'
 
-import Music from '../../../assets/icon/Music.svg'
-import Play from '../../../assets/icon/Play.svg'
-import Pause from '../../../assets/icon/Pause.svg'
-import Loading from '../../../components/Loading/Loading'
-import { IUserDigitalItem } from '../../../constants/types'
-import { getDecryptedData } from '../../../utils/formatters'
+import Music from 'assets/icon/Music.svg'
+import Play from 'assets/icon/Play.svg'
+import Pause from 'assets/icon/Pause.svg'
+import Loading from 'components/Loading/Loading'
+import { IUserDigitalItem } from 'constants/types'
+import { getDecryptedData } from 'utils/formatters'
 
 export const CoursesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
