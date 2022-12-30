@@ -2,8 +2,8 @@ import React from 'react'
 import { useQuery } from 'urql'
 
 import FixedSaleCard from '../FixedSaleCard'
-import { IFixedSale } from '../../constants/types'
-import { fixedSaleQuery } from '../../constants/query'
+import { IFixedSale } from 'constants/types'
+import { fixedSaleQuery } from 'constants/query'
 import Loading from '../Loading/Loading'
 import { parseUnits } from 'ethers/lib/utils.js'
 import {
@@ -12,7 +12,7 @@ import {
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
+} from 'utils/contractAddress'
 
 const CorportateQuery = `query($erc721TokenAddress:[String!]!,$price:String!,$erc20Token:[String!]!) {
   fixedSales(where:{status:ACTIVE, erc721TokenAddress_in:$erc721TokenAddress, price_gte:$price,  erc20Token_in:$erc20Token}){

@@ -2,10 +2,10 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'urql'
 
-import Card from './PhysicalCard'
-import { removePhysicalItemQuery } from '../../constants/query'
-import { IRemovePhysicalItem } from '../../constants/types'
-import Loading from '../Loading/Loading'
+import Card from './RemoveItemCard'
+import { removePhysicalItemQuery } from 'constants/query'
+import { IRemovePhysicalItem } from 'constants/types'
+import Loading from 'components/Loading/Loading'
 
 const PhysicalRemoveItem: React.FC = () => {
   const { id } = useParams()

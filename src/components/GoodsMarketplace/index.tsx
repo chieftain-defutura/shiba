@@ -1,11 +1,10 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom'
 import { useQuery } from 'urql'
 
 import DigitalItem from '../DigitalItem'
-import { IGoodsDigitalItem, IGoodsPhysicalItem } from '../../constants/types'
-import { goodsItemsQuery } from '../../constants/query'
+import { IGoodsDigitalItem, IGoodsPhysicalItem } from 'constants/types'
+import { goodsItemsQuery } from 'constants/query'
 import Loading from '../Loading/Loading'
 import PhysicalItem from '../PhysicallItem/PhysicalItem'
 import { parseUnits } from 'ethers/lib/utils.js'
@@ -15,7 +14,7 @@ import {
   PAW_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
+} from 'utils/contractAddress'
 
 interface IGoodsPhysical {
   data:

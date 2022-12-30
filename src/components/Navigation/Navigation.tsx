@@ -4,14 +4,14 @@ import { Link, NavLink } from 'react-router-dom'
 
 import { Connector } from '../Connect'
 import Modal from '../Model'
-import logo from '../../assets/img/logo.png'
-import searchIcon from '../../assets/img/search-icon.png'
+import logo from 'assets/img/logo.png'
+import searchIcon from 'assets/img/search-icon.png'
 import './Navigation.css'
-import useDebounce from '../../hooks/useDebounce'
+import useDebounce from 'hooks/useDebounce'
 import { useQuery } from 'urql'
-import { searchDomainHeaderQuery } from '../../constants/query'
+import { searchDomainHeaderQuery } from 'constants/query'
 import Skeleton from 'react-loading-skeleton'
-import { formatAddress } from '../../constants/variants'
+import { formatAddress } from 'constants/variants'
 
 const Navigation: React.FC = () => {
   const { address } = useAccount()

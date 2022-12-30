@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
-import { IUserDigitalItem } from '../../../constants/types'
-// import PlayBtn from '../../../assets/icon/play-btn.svg'
+
+import { IUserDigitalItem } from 'constants/types'
+import { getDecryptedData } from 'utils/formatters'
+import Loading from 'components/Loading/Loading'
 import './item.scss'
-import { getDecryptedData } from '../../../utils/formatters'
-import Loading from '../../../components/Loading/Loading'
 
 export const MoviesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,

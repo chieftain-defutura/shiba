@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
 
-import HomeLayout from '../../Layout/HomeLayout'
-import { IContractData } from '../../constants/contract'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import Loading from '../../components/Loading/Loading'
-import camera from '../../assets/icon/Camera.svg'
-import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
-import { DOMAIN_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import { formatAddress } from '../../constants/variants'
+import HomeLayout from 'Layout/HomeLayout'
+import { IContractData } from 'constants/contract'
+import FooterBottom from 'components/FooterBottom/FooterBottom'
+import Loading from 'components/Loading/Loading'
+import camera from 'assets/icon/Camera.svg'
+import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
+import { DOMAIN_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import { formatAddress } from 'constants/variants'
 
 interface INftData {
   id: string

@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
 
-import { useTransactionModal } from '../../../context/TransactionContext'
+import { useTransactionModal } from 'context/TransactionContext'
 import {
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   RESIDUAL_CONTRACT_ADDRESS,
-} from '../../../utils/contractAddress'
-import residualABI from '../../../utils/abi/resideuABI.json'
-import cardImgSix from '../../../assets/img/card-9.png'
+} from 'utils/contractAddress'
+import residualABI from 'utils/abi/resideuABI.json'
+import cardImgSix from 'assets/img/card-9.png'
 
 const FinalizeToken: React.FC = () => {
   const { id } = useParams()

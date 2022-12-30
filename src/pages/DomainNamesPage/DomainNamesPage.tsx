@@ -1,12 +1,12 @@
 import React from 'react'
 import { useQuery } from 'urql'
 
-import Navigation from '../../components/Navigation/Navigation'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import { domainPageQuery } from '../../constants/query'
-import { IDomainNft } from '../../constants/types'
-import { formatAddress } from '../../constants/variants'
-import Loading from '../../components/Loading/Loading'
+import Navigation from 'components/Navigation/Navigation'
+import FooterBottom from 'components/FooterBottom/FooterBottom'
+import { domainPageQuery } from 'constants/query'
+import { IDomainNft } from 'constants/types'
+import { formatAddress } from 'constants/variants'
+import Loading from 'components/Loading/Loading'
 import './DomainNamesPage.css'
 
 const DomainNamesPage: React.FC = () => {

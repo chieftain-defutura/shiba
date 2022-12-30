@@ -8,15 +8,15 @@ import {
   BONE_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
   SHIB_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
-import { useAppDispatch, useAppSelector } from '../../store/store'
+} from 'utils/contractAddress'
+import { useAppDispatch, useAppSelector } from 'store/store'
 import {
   updateBoneBalance,
   updateLeashBalance,
   updatePawBalance,
   updateShiBalance,
   updateShibBalance,
-} from '../../store/slices/userSlice'
+} from 'store/slices/userSlice'
 import './HeaderNav.css'
 
 const HeaderNav: React.FC = () => {

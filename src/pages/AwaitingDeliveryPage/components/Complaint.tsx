@@ -6,12 +6,12 @@ import * as Yup from 'yup'
 import Skeleton from 'react-loading-skeleton'
 import { useQuery } from 'urql'
 
-import shipmentABI from '../../../utils/abi/shipmentABI.json'
-import { useTransactionModal } from '../../../context/TransactionContext'
-import { SHIPMENT_CONTRACT } from '../../../utils/contractAddress'
-import { IAwaitingDelivery, IReviewOfShop } from '../../../constants/types'
-import { getReviewOfShopQuery } from '../../../constants/query'
-import { formatAddress } from '../../../constants/variants'
+import shipmentABI from 'utils/abi/shipmentABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
+import { SHIPMENT_CONTRACT } from 'utils/contractAddress'
+import { IAwaitingDelivery, IReviewOfShop } from 'constants/types'
+import { getReviewOfShopQuery } from 'constants/query'
+import { formatAddress } from 'constants/variants'
 
 interface IComplaintProps {
   data: IAwaitingDelivery

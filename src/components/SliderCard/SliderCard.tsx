@@ -3,15 +3,15 @@ import Slider from 'react-slick'
 import Skeleton from 'react-loading-skeleton'
 import { useNavigate } from 'react-router-dom'
 
+import { IListedItems } from 'constants/types'
+import { formatTokenUnits } from 'utils/formatters'
+import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
+import { formatAddress } from 'constants/variants'
+import Camera from 'assets/icon/Camera.svg'
+import ethIcon from 'assets/img/eth-icon.png'
+import leftArrowIcon from 'assets/img/left-arrow-icon.png'
+import rightArrowIcon from 'assets/img/right-arrow-icon.png'
 import './SliderCard.css'
-import Camera from '../../assets/icon/Camera.svg'
-import ethIcon from '../../assets/img/eth-icon.png'
-import leftArrowIcon from '../../assets/img/left-arrow-icon.png'
-import rightArrowIcon from '../../assets/img/right-arrow-icon.png'
-import { IListedItems } from '../../constants/types'
-import { formatTokenUnits } from '../../utils/formatters'
-import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
-import { formatAddress } from '../../constants/variants'
 
 const settings = {
   className: 'center',

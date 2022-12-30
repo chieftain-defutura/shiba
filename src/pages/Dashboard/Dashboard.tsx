@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import HomeLayout from '../../Layout/HomeLayout'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
+import HomeLayout from 'Layout/HomeLayout'
+import FooterBottom from 'components/FooterBottom/FooterBottom'
 import { DemoDashboard } from './Dashboards'
 import './Dashboard.css'
 

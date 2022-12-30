@@ -1,7 +1,7 @@
-import NftImg from '../../assets/img/nftMintImg.png'
-import ChatImg from '../../assets/img/chatImg.png'
-import DashiboardImg from '../../assets/img/dashiboardImg.png'
-import HelpImg from '../../assets/img/helpFAQImg.png'
+import NftImg from 'assets/img/nftMintImg.png'
+import ChatImg from 'assets/img/chatImg.png'
+import DashiboardImg from 'assets/img/dashiboardImg.png'
+import HelpImg from 'assets/img/helpFAQImg.png'
 
 export const DemoDashboard = [
   {

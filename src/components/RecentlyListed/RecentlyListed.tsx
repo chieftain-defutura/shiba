@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 import './RecentlyListed.css'
 import SliderCard from '../SliderCard/SliderCard'
-import { IListedItems } from '../../constants/types'
-import { recentlyListedQuery } from '../../constants/query'
+import { IListedItems } from 'constants/types'
+import { recentlyListedQuery } from 'constants/query'
 import Loading from '../Loading/Loading'
 
 const RecentlyListed: React.FC = () => {

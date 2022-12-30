@@ -4,9 +4,9 @@ import { useAccount, useSigner } from 'wagmi'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 
-import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import digitalShopABI from '../../utils/abi/digitalShopABI.json'
-import { useTransactionModal } from '../../context/TransactionContext'
+import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import digitalShopABI from 'utils/abi/digitalShopABI.json'
+import { useTransactionModal } from 'context/TransactionContext'
 
 interface IAppearanceSetting {
   setClickCard: any

@@ -17,6 +17,7 @@ import {
   physicalShopTokenByIdQuery,
 } from './constants/query'
 import HomeLayout from 'Layout/HomeLayout'
+import Navigation from 'components/Navigation/Navigation'
 
 const ShopPage = lazy(() => import('pages/Shops'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
@@ -48,6 +49,7 @@ const PhysicalItemDetailsPage = lazy(
 const App: React.FC = () => {
   return (
     <div className="App">
+      <Navigation />
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -64,6 +66,14 @@ const App: React.FC = () => {
               element={
                 <Suspense fallback={null}>
                   <MintNftPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="send-crypto"
+              element={
+                <Suspense fallback={null}>
+                  <SendCryptoPage />
                 </Suspense>
               }
             />
@@ -126,14 +136,7 @@ const App: React.FC = () => {
                 </Suspense>
               }
             />
-            <Route
-              path="send-crypto"
-              element={
-                <Suspense fallback={null}>
-                  <SendCryptoPage />
-                </Suspense>
-              }
-            />
+
             <Route
               path="auction"
               element={

@@ -3,16 +3,15 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { AnimatePresence, motion } from 'framer-motion'
 import autoAnimate from '@formkit/auto-animate'
 
-import Navigation from '../../components/Navigation/Navigation'
-import FooterBottom from '../../components/FooterBottom/FooterBottom'
-import CorporateMarketplace from '../../components/CorporateMarketplace'
-import GoodsMaretPlace from '../../components/GoodsMarketplace'
-import { ArrElement } from '../../constants/types'
-import { tokensList } from '../../constants/contract'
+import Navigation from 'components/Navigation/Navigation'
+import FooterBottom from 'components/FooterBottom/FooterBottom'
+import CorporateMarketplace from 'components/CorporateMarketplace'
+import GoodsMaretPlace from 'components/GoodsMarketplace'
+import { ArrElement } from 'constants/types'
+import { tokensList } from 'constants/contract'
 import { useQuery } from 'urql'
-import './MarketPlacePage.css'
 import { parseUnits } from 'ethers/lib/utils.js'
-import useDebounce from '../../hooks/useDebounce'
+import useDebounce from 'hooks/useDebounce'
 import {
   BONE_TOKEN_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -21,7 +20,8 @@ import {
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
-} from '../../utils/contractAddress'
+} from 'utils/contractAddress'
+import './MarketPlacePage.css'
 
 const getGoodsDigitalQuery = `query($category: [String!], $price:String!,$erc20Token:[String!]){
   digitalItems( where:{status:ACTIVE, category_in:$category ,price_gte:$price, erc20Token_in:$erc20Token}){

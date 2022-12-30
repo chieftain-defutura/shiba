@@ -3,14 +3,14 @@ import { ethers } from 'ethers'
 import { useAccount, useSigner } from 'wagmi'
 import Skeleton from 'react-loading-skeleton'
 import { formatUnits } from 'ethers/lib/utils.js'
-
-import { useTransactionModal } from '../../context/TransactionContext'
-import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from '../../utils/contractAddress'
-import physicalShopABI from '../../utils/abi/physicalShopABI.json'
-import cameraImg from '../../assets/icon/Camera.svg'
-import { IRemovePhysicalItem } from '../../constants/types'
-import { useGetIpfsDataQuery } from '../../store/slices/ipfsApiSlice'
 import { useNavigate } from 'react-router-dom'
+
+import { useTransactionModal } from 'context/TransactionContext'
+import { PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import physicalShopABI from 'utils/abi/physicalShopABI.json'
+import { IRemovePhysicalItem } from 'constants/types'
+import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
+import cameraImg from 'assets/icon/Camera.svg'
 
 const PhysicalCard: React.FC<IRemovePhysicalItem> = ({
   id: itemId,
