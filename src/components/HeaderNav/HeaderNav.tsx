@@ -26,23 +26,23 @@ const HeaderNav: React.FC = () => {
 
   const { data: pawBalanceData } = useBalance({
     address: address,
-    token: PAW_TOKEN_ADDRESS,
+    token: PAW_TOKEN_ADDRESS as any,
   })
   const { data: boneBalanceData } = useBalance({
     address: address,
-    token: BONE_TOKEN_ADDRESS,
+    token: BONE_TOKEN_ADDRESS as any,
   })
   const { data: shibBalanceData } = useBalance({
     address: address,
-    token: SHIB_TOKEN_ADDRESS,
+    token: SHIB_TOKEN_ADDRESS as any,
   })
   const { data: leashBalanceData } = useBalance({
     address: address,
-    token: LEASH_TOKEN_ADDRESS,
+    token: LEASH_TOKEN_ADDRESS as any,
   })
   const { data: shiBalanceData } = useBalance({
     address: address,
-    token: SHI_TOKEN_ADDRESS,
+    token: SHI_TOKEN_ADDRESS as any,
   })
 
   useMemo(() => {
