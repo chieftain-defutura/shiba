@@ -5,7 +5,7 @@ import { useQuery } from 'urql'
 import Card from './RemoveItemCard'
 import { removeDigitalItemQuery } from 'constants/query'
 import { IRemoveDigitalItem } from 'constants/types'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 
 const DigitalRemoveItem: React.FC = () => {
   const { id } = useParams()

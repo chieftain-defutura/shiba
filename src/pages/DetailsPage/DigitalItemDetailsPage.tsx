@@ -17,7 +17,7 @@ import { DigitalItemQuery } from 'constants/query'
 import './DigitalItemDetailsPage.css'
 import { useAppSelector } from '../../store/store'
 import { formatTokenUnits } from '../../utils/formatters'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
 

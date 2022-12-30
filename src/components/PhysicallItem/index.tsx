@@ -11,7 +11,6 @@ const PhysicalItem: React.FC<IGoodsPhysicalItem> = ({
   erc20Token,
   price,
   quantity,
-  shopDetails,
   metadata,
   itemName,
   category,

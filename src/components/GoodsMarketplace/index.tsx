@@ -5,8 +5,8 @@ import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { IGoodsDigitalItem, IGoodsPhysicalItem } from 'constants/types'
 import { goodsItemsQuery } from 'constants/query'
-import Loading from '../Loading/Loading'
-import PhysicalItem from '../PhysicallItem/PhysicalItem'
+import Loading from '../Loading'
+import PhysicalItem from '../PhysicallItem'
 import { parseUnits } from 'ethers/lib/utils.js'
 import {
   BONE_TOKEN_ADDRESS,

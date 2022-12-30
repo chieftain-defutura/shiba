@@ -15,8 +15,8 @@ const settings = {
   slidesToScroll: 1,
 }
 
-const Banner = () => {
-  const refSlider = useRef(null)
+const Banner: React.FC = () => {
+  const refSlider = useRef<Slider>(null)
 
   return (
     <div className="banner">
@@ -56,13 +56,13 @@ const Banner = () => {
       </Slider>
       <button
         className="prev-btn slider-btn"
-        onClick={() => refSlider.current.slickPrev()}
+        onClick={() => refSlider.current?.slickPrev()}
       >
         <img src={leftArrowIcon} alt="arrow-icon" />
       </button>
       <button
         className="next-btn slider-btn"
-        onClick={() => refSlider.current.slickNext()}
+        onClick={() => refSlider.current?.slickNext()}
       >
         <img src={rightArrowIcon} alt="arrow-icon" />
       </button>

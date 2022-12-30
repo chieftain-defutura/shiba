@@ -8,7 +8,6 @@ import { useQuery } from 'urql'
 
 import upVoteIcon from 'assets/img/up-vote-icon.png'
 import downVoteIcon from 'assets/img/down-vote-icon.png'
-import HomeLayout from 'Layout/HomeLayout'
 import { tokensList } from 'constants/contract'
 import { ArrElement } from 'constants/types'
 import { useTransactionModal } from 'context/TransactionContext'
@@ -127,98 +126,96 @@ const SendCryptoPage: React.FC = () => {
 
   return (
     <div>
-      <HomeLayout>
-        <div className="send-crypto-container">
-          <div className="send-crypto-container-right">
-            <h2 className="title">Send Crypto</h2>
-            <div className="send-container">
-              <div className="input-cont">
-                <input
-                  placeholder="search a domain name..."
-                  value={searchDomain}
-                  onChange={(e) => setSearchDomain(e.target.value)}
-                />
-                <FaRegCopy className="copy-icon" />
+      <div className="send-crypto-container">
+        <div className="send-crypto-container-right">
+          <h2 className="title">Send Crypto</h2>
+          <div className="send-container">
+            <div className="input-cont">
+              <input
+                placeholder="search a domain name..."
+                value={searchDomain}
+                onChange={(e) => setSearchDomain(e.target.value)}
+              />
+              <FaRegCopy className="copy-icon" />
+            </div>
+            <div className="select-currency-container">
+              <div className="header" onClick={() => setDropDown((d) => !d)}>
+                <p>
+                  {!selectedToken ? 'Select Currency' : selectedToken.title}
+                </p>
+                <IoIosArrowDown />
               </div>
-              <div className="select-currency-container">
-                <div className="header" onClick={() => setDropDown((d) => !d)}>
-                  <p>
-                    {!selectedToken ? 'Select Currency' : selectedToken.title}
+              <div className={dropDown ? 'body active' : 'body'}>
+                {tokensList.map((list, index) => (
+                  <p
+                    key={index.toString()}
+                    onClick={() => {
+                      setSelectedToken(list)
+                      setDropDown(false)
+                    }}
+                  >
+                    {list.title}
                   </p>
-                  <IoIosArrowDown />
-                </div>
-                <div className={dropDown ? 'body active' : 'body'}>
-                  {tokensList.map((list, index) => (
-                    <p
-                      key={index.toString()}
-                      onClick={() => {
-                        setSelectedToken(list)
-                        setDropDown(false)
-                      }}
-                    >
-                      {list.title}
-                    </p>
-                  ))}
-                </div>
+                ))}
               </div>
             </div>
-            {searchDomain && !domainRegex().test(searchDomain) && (
-              <p style={{ color: 'red' }}>Invalid Domain name</p>
-            )}
-            <div className="send-container">
-              <div className="input-cont">
-                <input
-                  placeholder="enter amount to send"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-              </div>
+          </div>
+          {searchDomain && !domainRegex().test(searchDomain) && (
+            <p style={{ color: 'red' }}>Invalid Domain name</p>
+          )}
+          <div className="send-container">
+            <div className="input-cont">
+              <input
+                placeholder="enter amount to send"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
             </div>
-            <div className="send-container">
-              <button
-                className="send-btn"
-                disabled={!toAddressDetails || !amount}
-                onClick={() => handleSend()}
-              >
-                Send
-              </button>
+          </div>
+          <div className="send-container">
+            <button
+              className="send-btn"
+              disabled={!toAddressDetails || !amount}
+              onClick={() => handleSend()}
+            >
+              Send
+            </button>
+          </div>
+          <div className="domain-details-cont">
+            <div className="detail-left">
+              <div>Domain is registered for : </div>
+              <div>Domain owner : </div>
+              <div>Domain Reputation: </div>
             </div>
-            <div className="domain-details-cont">
-              <div className="detail-left">
-                <div>Domain is registered for : </div>
-                <div>Domain owner : </div>
-                <div>Domain Reputation: </div>
+            <div className="detail-right">
+              <div>
+                {fetching
+                  ? 'Loading...'
+                  : !toAddressDetails
+                  ? 'No matches Found'
+                  : toAddressDetails.domainUsedFor}
               </div>
-              <div className="detail-right">
+              <div>
+                {fetching
+                  ? 'Loading'
+                  : !toAddressDetails
+                  ? 'No matches Found'
+                  : formatAddress(toAddressDetails.address)}
+              </div>
+              <div className="vote-cont">
                 <div>
-                  {fetching
-                    ? 'Loading...'
-                    : !toAddressDetails
-                    ? 'No matches Found'
-                    : toAddressDetails.domainUsedFor}
+                  {!toAddressDetails ? 0 : toAddressDetails.reputation.good}{' '}
+                  <img src={upVoteIcon} alt="up vote" />
                 </div>
                 <div>
-                  {fetching
-                    ? 'Loading'
-                    : !toAddressDetails
-                    ? 'No matches Found'
-                    : formatAddress(toAddressDetails.address)}
-                </div>
-                <div className="vote-cont">
-                  <div>
-                    {!toAddressDetails ? 0 : toAddressDetails.reputation.good}{' '}
-                    <img src={upVoteIcon} alt="up vote" />
-                  </div>
-                  <div>
-                    {!toAddressDetails ? 0 : toAddressDetails.reputation.good}{' '}
-                    <img src={downVoteIcon} alt="down vote" />
-                  </div>
+                  {!toAddressDetails ? 0 : toAddressDetails.reputation.good}{' '}
+                  <img src={downVoteIcon} alt="down vote" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </HomeLayout>
+      </div>
     </div>
   )
 }

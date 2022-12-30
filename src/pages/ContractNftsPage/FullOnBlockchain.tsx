@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
 
-import FooterBottom from 'components/FooterBottom/FooterBottom'
+import FooterBottom from 'components/FooterBottom/index'
 import { fullOnBlockchainPageQuery } from 'constants/query'
 import { IFullOnBlockchainArtToken } from 'constants/types'
 import { formatAddress } from 'constants/variants'
 import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 
 import cardImg from 'assets/img/card-3.png'
 import './ContractNftsPage.css'

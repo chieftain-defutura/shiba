@@ -21,7 +21,7 @@ import Close from 'assets/icon/close.svg'
 import camera from 'assets/icon/Camera.svg'
 import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import { formatAddress } from 'constants/variants'
-import Loading from '../Loading/Loading'
+import Loading from '../Loading'
 
 const AuctionSaleCard: React.FC<IAuctionNft> = ({
   erc20Token,

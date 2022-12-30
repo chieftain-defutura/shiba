@@ -4,7 +4,7 @@ import { useQuery } from 'urql'
 import FixedSaleCard from '../FixedSaleCard'
 import { IFixedSale } from 'constants/types'
 import { fixedSaleQuery } from 'constants/query'
-import Loading from '../Loading/Loading'
+import Loading from '../Loading'
 import { parseUnits } from 'ethers/lib/utils.js'
 import {
   BONE_TOKEN_ADDRESS,

@@ -5,7 +5,7 @@ import { useQuery } from 'urql'
 import Card from './RemoveItemCard'
 import { removePhysicalItemQuery } from 'constants/query'
 import { IRemovePhysicalItem } from 'constants/types'
-import Loading from 'components/Loading/Loading'
+import Loading from 'components/Loading'
 
 const PhysicalRemoveItem: React.FC = () => {
   const { id } = useParams()

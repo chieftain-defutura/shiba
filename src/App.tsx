@@ -6,8 +6,8 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 import HomePage from './pages/HomePage'
-import ShopSettingsOne from './pages/ShopSettingsOne/ShopSettingsOne'
-import Dashboard from './pages/Dashboard/Dashboard'
+import ShopSettingsOne from 'pages/ShopSettingsOne'
+import Dashboard from 'pages/Dashboard'
 import MyContractNfts from './pages/MyContractNfts'
 import MyItems from './pages/MyItems'
 import { ContractDetails, DigitalItemsCategory } from './constants/contract'
@@ -17,28 +17,24 @@ import {
   physicalShopTokenByIdQuery,
 } from './constants/query'
 import HomeLayout from 'Layout/HomeLayout'
-import Navigation from 'components/Navigation/Navigation'
+import Navigation from 'components/Navigation'
 
 const ShopPage = lazy(() => import('pages/Shops'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
-const AuctionPage = lazy(() => import('pages/ActionPage/ActionPage'))
-const MintNftPage = lazy(() => import('pages/MintNftPage/MintNftPage'))
+const AuctionPage = lazy(() => import('pages/ActionPage'))
+const MintNftPage = lazy(() => import('pages/MintNftPage'))
 const CharitiesPage = lazy(() => import('pages/ContractNftsPage/Charities'))
 const WebsitesPage = lazy(() => import('pages/ContractNftsPage/WebsitesPage'))
 const ShopDetailsPage = lazy(() => import('pages/DetailsPage/ShopDetailsPage'))
-const SendCryptoPage = lazy(() => import('pages/SendCryptoPage/SendCryptoPage'))
-const DomainNamesPage = lazy(
-  () => import('pages/DomainNamesPage/DomainNamesPage'),
-)
+const SendCryptoPage = lazy(() => import('pages/SendCryptoPage'))
+const DomainNamesPage = lazy(() => import('pages/DomainNamesPage'))
 const FullOnBlockchainPage = lazy(
   () => import('pages/ContractNftsPage/FullOnBlockchain'),
 )
 const AwaitingDeliveryPage = lazy(
-  () => import('pages/AwaitingDeliveryPage/AwaitingDeliveryPage'),
+  () => import('pages/AwaitingDeliveryPage/index'),
 )
-const MarketPlacePage = lazy(
-  () => import('pages/MarketPlacePage/MarketPlacePage'),
-)
+const MarketPlacePage = lazy(() => import('pages/MarketPlacePage'))
 const DigitalItemDetailsPage = lazy(
   () => import('pages/DetailsPage/DigitalItemDetailsPage'),
 )

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { IAwaitingDelivery } from 'constants/types'
-import { IAwaitingStatus } from 'pages/AwaitingDeliveryPage/AwaitingDeliveryPage'
+import { IAwaitingStatus } from 'pages/AwaitingDeliveryPage/index'
 
 interface IAwaitingDeliveryCard {
   data: IAwaitingDelivery

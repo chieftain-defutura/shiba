@@ -3,7 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { AnimatePresence, motion } from 'framer-motion'
 import autoAnimate from '@formkit/auto-animate'
 
-import FooterBottom from 'components/FooterBottom/FooterBottom'
+import FooterBottom from 'components/FooterBottom/index'
 import CorporateMarketplace from 'components/CorporateMarketplace'
 import GoodsMaretPlace from 'components/GoodsMarketplace'
 import { ArrElement } from 'constants/types'

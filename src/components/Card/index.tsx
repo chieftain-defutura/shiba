@@ -3,7 +3,7 @@ import React from 'react'
 import './Card.css'
 import cardImg from 'assets/img/card-2.png'
 
-const Card = () => {
+const Card: React.FC = () => {
   return (
     <div className="card-container">
       <div className="card-top">
