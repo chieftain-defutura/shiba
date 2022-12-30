@@ -20,10 +20,11 @@ import HomeLayout from 'Layout/HomeLayout'
 import { SHIPMENT_CONTRACT } from 'utils/contractAddress'
 import { physicalItemQuery } from 'constants/query'
 import { IPhysicalItem } from 'constants/types'
-import { getEncryptedData } from 'utils/formatters'
+import { formatTokenUnits, getEncryptedData } from 'utils/formatters'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import Loading from 'components/Loading/Loading'
 import closeIcon from 'assets/img/close-icon.png'
+import { useAppSelector } from 'store/store'
 
 const settings = {
   dots: false,
@@ -88,6 +89,7 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   const [categoriesShipping, setCategoriesShipping] = useState(false)
   const [itemDetailsErrorImgOne, setItemDetailsErrorImgOne] = useState(false)
   const [itemDetailsErrorImgTwo, setItemDetailsErrorImgTwo] = useState(false)
+  const user = useAppSelector((store) => store.user)
   const [itemDetailsErrorImgThree, setItemDetailsErrorImgThree] =
     useState(false)
 
@@ -105,6 +107,16 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
 
   const handleSubmit = async (values: typeof initialState, actions: any) => {
     if (!address || !signerData) return
+
+    if (
+      user[erc20Token.id.toLowerCase()] <
+      Number(formatTokenUnits(price, erc20Token.decimals))
+    )
+      return setTransaction({
+        loading: true,
+        status: 'error',
+        message: 'Insufficient balance',
+      })
 
     try {
       setTransaction({ loading: true, status: 'pending' })

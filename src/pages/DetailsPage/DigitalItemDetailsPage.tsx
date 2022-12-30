@@ -15,6 +15,8 @@ import HomeLayout from 'Layout/HomeLayout'
 import { IDigitalItem } from 'constants/types'
 import { DigitalItemQuery } from 'constants/query'
 import './DigitalItemDetailsPage.css'
+import { useAppSelector } from '../../store/store'
+import { formatTokenUnits } from '../../utils/formatters'
 import Loading from 'components/Loading/Loading'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
@@ -36,7 +38,6 @@ const DigitalItemsDetailsPage: React.FC = () => {
   })
 
   const { data, fetching } = result
-  console.log(result)
 
   return (
     <HomeLayout>
@@ -72,6 +73,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   const [digitalErrorImgOne, setDigitalErrorImgOne] = useState(false)
   const [digitalErrorImgTwo, setDigitalErrorImgTwo] = useState(false)
   const [digitalErrorImgThree, setDigitalErrorImgThree] = useState(false)
+  const user = useAppSelector((store) => store.user)
 
   const {
     data: ipfsData,
@@ -83,6 +85,16 @@ const ProductDetails: React.FC<IDigitalItem> = ({
 
   const handleBuy = async () => {
     if (!address || !signerData) return
+
+    if (
+      user[erc20Token.id.toLowerCase()] <
+      Number(formatTokenUnits(price, erc20Token.decimals))
+    )
+      return setTransaction({
+        loading: true,
+        status: 'error',
+        message: 'Insufficient balance',
+      })
 
     try {
       setTransaction({ loading: true, status: 'pending' })
@@ -119,9 +131,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
       console.log('added')
 
       setTransaction({ loading: true, status: 'success' })
-    } catch (error) {
+    } catch (error: any) {
       console.log(error)
-      setTransaction({ loading: true, status: 'error' })
+      // const f = Object.entries(error).map((d) => d)
+      console.log(error.reason)
+      setTransaction({ loading: true, status: 'error', message: error.reason })
     }
   }
 

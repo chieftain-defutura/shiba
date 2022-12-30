@@ -10,6 +10,8 @@ import digitalShopABI from 'utils/abi/digitalShopABI.json'
 import { IGoodsDigitalItem } from 'constants/types'
 import cameraImg from 'assets/icon/Camera.svg'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
+import { useAppSelector } from 'store/store'
+import { formatTokenUnits } from 'utils/formatters'
 
 const DigitalItem: React.FC<IGoodsDigitalItem> = ({
   erc20Token,
@@ -24,6 +26,7 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
   const { setTransaction } = useTransactionModal()
   const [imageError, setImageError] = useState(false)
   const { isLoading, data } = useGetIpfsDataQuery({ hash: metadata })
+  const user = useAppSelector((store) => store.user)
 
   const handleBuy = async () => {
     if (!address || !signerData) return
@@ -35,6 +38,15 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
         erc20ABI,
         signerData,
       )
+      if (
+        user[erc20Token.id.toLowerCase()] <
+        Number(formatTokenUnits(price, erc20Token.decimals))
+      )
+        return setTransaction({
+          loading: true,
+          status: 'error',
+          message: 'Insufficient balance',
+        })
 
       const allowance = Number(
         (

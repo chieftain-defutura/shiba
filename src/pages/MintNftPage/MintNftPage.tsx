@@ -3,6 +3,8 @@ import { ethers } from 'ethers'
 import axios from 'axios'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { useContractReads, erc20ABI, useAccount, useSigner } from 'wagmi'
+import { useAppSelector } from '../../store/store'
+import { formatTokenUnits } from '../../utils/formatters'
 
 import {
   DIGITAL_GOOD_SHOP,
@@ -101,8 +103,9 @@ const MintNftPage: React.FC = () => {
     useState<IContractData[]>(ContractData)
   const [domainName, setDomainName] = useState('')
   const [connectToExistingDomain, setConnectExistingDomain] = useState(false)
-
+  const [price, setPrice] = useState<number>(0)
   const [selectDomain, setSelectDomain] = useState('')
+  const user = useAppSelector((store) => store.user)
   const [userDomainNfts, setUserDomainNfts] = useState<
     { tokenId: string; name: string }[]
   >([])
@@ -208,10 +211,21 @@ const MintNftPage: React.FC = () => {
     // eslint-disable-next-line   react-hooks/exhaustive-deps
   }, [selectedOption])
 
+  useMemo(() => {
+    if (!selectedNftType) return
+    if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME)
+      return setPrice(Number(pawAmount))
+    if (selectedNftType?.title === PHYSICAL_GOODS_SHOP)
+      return setPrice(Number('1000000'.toString()))
+    if (selectedNftType?.title === DIGITAL_GOOD_SHOP)
+      return setPrice(Number('0.02'.toString()))
+  }, [selectedNftType])
   const canShowCreateButton = useMemo(() => {
     if (!selectedNftType) {
       return true
     }
+
+    console.log(price)
 
     // eslint-disable-next-line no-prototype-builtins
     if (!selectedNftType.hasOwnProperty('tokenAddress')) {
@@ -278,6 +292,16 @@ const MintNftPage: React.FC = () => {
       if (!selectedNftType) return
       console.log(selectedNftType)
 
+      if (
+        selectedNftType.tokenAddress &&
+        user[selectedNftType.tokenAddress.toLowerCase()] < price
+      )
+        return setTransaction({
+          loading: true,
+          status: 'error',
+          message: 'Insufficient balance',
+        })
+
       if (selectedNftType?.title === UNATTACHED_DOMAIN_NAME) {
         setTransaction({ loading: true, status: 'pending' })
         await mintDomainNft(domainName, selected, signerData)
@@ -294,9 +318,9 @@ const MintNftPage: React.FC = () => {
       setTimeout(() => {
         window.location.reload()
       }, 3000)
-    } catch (error) {
-      console.log(error)
-      setTransaction({ loading: true, status: 'error' })
+    } catch (error: any) {
+      console.log(error.reason)
+      setTransaction({ loading: true, status: 'error', message: error.reason })
     }
   }
 
