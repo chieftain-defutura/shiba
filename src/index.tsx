@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { WagmiConfig } from 'wagmi'
 import { Provider as ReduxProvider } from 'react-redux'
 import { createClient, Provider as UrqlProvider } from 'urql'
-
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -15,6 +14,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import { SUB_GRAPH_API_URL } from './constants/api'
 import { SkeletonTheme } from 'react-loading-skeleton'
+import { Buffer } from 'buffer'
+window.Buffer = Buffer
 
 const urqlClient = createClient({
   url: SUB_GRAPH_API_URL,

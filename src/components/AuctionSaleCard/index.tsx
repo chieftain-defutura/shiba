@@ -154,7 +154,9 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
                 <button onClick={handleFinishAuction}> Finish Auction</button>
                 <button onClick={handleRemoveSale}>Remove Sale</button>
               </>
-            ) : null}
+            ) : (
+              <button onClick={handleFinishAuction}> Finish Auction</button>
+            )}
           </div>
         </>
       )
@@ -170,7 +172,6 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
         <div className="card-btns">
           {address?.toLowerCase() === owner.toLowerCase() ? (
             <>
-              <button onClick={handleFinishAuction}> Finish Auction</button>
               <button onClick={handleRemoveSale}>Remove Sale</button>
             </>
           ) : (
