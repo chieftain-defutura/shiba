@@ -19,6 +19,8 @@ import Close from '../../assets/icon/close.svg'
 import camera from '../../assets/icon/Camera.svg'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
 import { formatAddress } from '../../constants/variants'
+import { useAppSelector } from '../../store/store'
+import { formatTokenUnits } from '../../utils/formatters'
 import Loading from '../Loading/Loading'
 
 const AuctionSaleCard: React.FC<IAuctionNft> = ({
@@ -38,6 +40,7 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
   const { setTransaction } = useTransactionModal()
   const [open, setOpen] = useState(false)
   const [placeBid, setPlaceBid] = useState('')
+  const user = useAppSelector((store) => store.user)
   const auctionPrice = Number(formatEther(highestBid ? highestBid : price))
 
   const handleSale = async () => {
@@ -47,6 +50,16 @@ const AuctionSaleCard: React.FC<IAuctionNft> = ({
       setOpen(false)
       setTransaction({ loading: true, status: 'pending' })
       const erc20Contract = new ethers.Contract(erc20Token.id, erc20ABI, data)
+
+      if (
+        user[erc20Token.id.toLowerCase()] <
+        Number(formatTokenUnits(price, erc20Token.decimals))
+      )
+        return setTransaction({
+          loading: true,
+          status: 'error',
+          message: 'Insufficient balance',
+        })
 
       const allowance = Number(
         (

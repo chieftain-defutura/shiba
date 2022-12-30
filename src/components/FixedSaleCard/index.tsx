@@ -15,6 +15,8 @@ import { useQuery } from 'urql'
 import Loading from '../Loading/Loading'
 import { formatAddress } from '../../constants/variants'
 import { useGetNftsByIdQuery } from '../../store/slices/alchemyApiSlice'
+import { useAppSelector } from '../../store/store'
+import { formatTokenUnits } from '../../utils/formatters'
 import Skeleton from 'react-loading-skeleton'
 import camera from '../../assets/icon/Camera.svg'
 
@@ -29,9 +31,20 @@ const FixedSaleCard: React.FC<IFixedSale> = ({
   const { data } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
+  const user = useAppSelector((store) => store.user)
 
   const handleSale = async () => {
     if (!address || !data) return
+
+    if (
+      user[erc20Token.id.toLowerCase()] <
+      Number(formatTokenUnits(price, erc20Token.decimals))
+    )
+      return setTransaction({
+        loading: true,
+        status: 'error',
+        message: 'Insufficient balance',
+      })
 
     try {
       setTransaction({ loading: true, status: 'pending' })
