@@ -23,11 +23,11 @@
 }
 
 .shoesboutique-container-right .content-box {
-  width: 100%;
+  width: 90%;
   height: 455px;
   border: 1px solid #828282;
   border-radius: 10px;
-  margin-top: 53px;
+  margin: 53px auto 0;
   padding: 15px;
   display: flex;
   gap: 20px;
@@ -95,7 +95,7 @@
 }
 
 .shoesboutique-container-right .content-box-right .sale-card {
-  width: 385px;
+  width: 250px;
   border-radius: 5px;
   background-color: var(--textColorOne);
   padding: 5px;

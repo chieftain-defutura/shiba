@@ -181,3 +181,15 @@
   color: var(--textColorSeven);
   transform: rotate(-180deg);
 }
+/* .arrow-icon {
+  transition: 0.2s ease-in-out;
+}
+.arrow-icon:active {
+  transform: rotate(-180deg);
+} */
+.arrow {
+  transition: 0.1s ease-in-out;
+}
+.arrow.active {
+  transform: rotate(-180deg);
+}

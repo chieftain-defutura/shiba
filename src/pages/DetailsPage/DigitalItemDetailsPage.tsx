@@ -17,9 +17,9 @@ import { DigitalItemQuery } from 'constants/query'
 import './DigitalItemDetailsPage.css'
 import { useAppSelector } from '../../store/store'
 import { formatTokenUnits } from '../../utils/formatters'
-import Loading from 'components/Loading'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
+import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
 
 const settings = {
   dots: false,
@@ -42,8 +42,8 @@ const DigitalItemsDetailsPage: React.FC = () => {
   return (
     <HomeLayout>
       {fetching ? (
-        <div className="loading">
-          <Loading />
+        <div>
+          <CardDetailsLoading />
         </div>
       ) : !data ? (
         <div>

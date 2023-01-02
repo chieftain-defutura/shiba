@@ -8,11 +8,11 @@ import './MyContractNfts.css'
 import HomeLayout from 'Layout/HomeLayout'
 import { IContractData } from 'constants/contract'
 import FooterBottom from 'components/FooterBottom/index'
-import Loading from 'components/Loading'
 import camera from 'assets/icon/Camera.svg'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import { DOMAIN_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 import { formatAddress } from 'constants/variants'
+import CardLoading from 'components/Loading/CardLoading'
 
 interface INftData {
   id: string
@@ -41,8 +41,8 @@ const MyContractNfts: React.FC<{ contractData: IContractData }> = ({
     <div>
       <HomeLayout>
         {fetching ? (
-          <div className="loading">
-            <Loading />
+          <div className="card-loading">
+            <CardLoading />
           </div>
         ) : error ? (
           <div className="error-msg">

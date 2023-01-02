@@ -7,11 +7,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import FooterBottom from 'components/FooterBottom/index'
 import { shopPageQuery } from 'constants/query'
-import Loading from 'components/Loading'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import { formatAddress } from 'constants/variants'
 import cameraImg from 'assets/icon/Camera.svg'
 import './Shops.css'
+import CardLoading from 'components/Loading/CardLoading'
 
 interface IShopToken {
   id: string
@@ -117,7 +117,7 @@ const ShopPage: React.FC = () => {
             {shopingData.map((f, idx) => (
               <div key={idx} className="drop-down-container">
                 <div
-                  className={'drop-down-header'}
+                  className="drop-down-header"
                   onClick={() => {
                     if (labelDropDown.includes(idx)) {
                       setLabelDropDown((l) => l.filter((f) => f !== idx))
@@ -127,8 +127,15 @@ const ShopPage: React.FC = () => {
                   }}
                 >
                   <p>{f.title}</p>
-                  <IoIosArrowDown className="arrow-icon" />
+                  <div
+                    className={
+                      labelDropDown.includes(idx) ? 'arrow active' : 'arrow'
+                    }
+                  >
+                    <IoIosArrowDown className="arrow-icon" />
+                  </div>
                 </div>
+
                 <AnimatePresence>
                   {labelDropDown.includes(idx) && (
                     <motion.div
@@ -168,7 +175,7 @@ const ShopPage: React.FC = () => {
 
         {fetching || filterFetching ? (
           <div className="loading">
-            <Loading />
+            <CardLoading />
           </div>
         ) : error ? (
           <div className="error-msg">

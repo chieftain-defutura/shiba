@@ -5,8 +5,8 @@ import FooterBottom from 'components/FooterBottom/index'
 import { domainPageQuery } from 'constants/query'
 import { IDomainNft } from 'constants/types'
 import { formatAddress } from 'constants/variants'
-import Loading from 'components/Loading'
 import './DomainNamesPage.css'
+import CardLoading from 'components/Loading/CardLoading'
 
 const DomainNamesPage: React.FC = () => {
   const [result] = useQuery<{ domainTokens: IDomainNft[] }>({
@@ -32,8 +32,8 @@ const DomainNamesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            <div className="loading">
-              <Loading />
+            <div>
+              <CardLoading />
             </div>
           ) : error ? (
             <div className="error-msg">

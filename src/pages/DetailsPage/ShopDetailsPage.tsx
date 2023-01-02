@@ -12,7 +12,6 @@ import downVoteIcon from 'assets/img/down-vote-md.png'
 import homeIcon from 'assets/img/home-icon.png'
 import questionIcon from 'assets/img/question-icon.png'
 import videoIcon from 'assets/img/video-icon.png'
-import Loading from 'components/Loading'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
 import { IReviewOfShop } from 'constants/types'
@@ -21,6 +20,7 @@ import closeIcon from 'assets/img/close-icon.png'
 import { formatAddress } from 'constants/variants'
 import { formatTokenUnits } from 'utils/formatters'
 import './ShopDetailsPage.css'
+import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
 
 const settings = {
   dots: false,
@@ -47,8 +47,8 @@ const ShopDetailsPage: React.FC<{
   return (
     <HomeLayout>
       {fetching ? (
-        <div className="loading">
-          <Loading />
+        <div>
+          <CardDetailsLoading isShop />
         </div>
       ) : data[Object.keys(data)[0]] === null ? (
         <div>

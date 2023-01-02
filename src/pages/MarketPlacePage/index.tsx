@@ -70,11 +70,12 @@ const MarketPlacePage: React.FC = () => {
   const [corporateCheckboxs, setCorporateCheckBox] = useState<string[]>([])
   const [minValue, setMinValue] = useState('')
   const [maxValue, setMaxValue] = useState('')
-  const [priceDropDown, setPriceDropDown] = useState(false)
   const debouncedDomainName = useDebounce(minValue, 1000)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
-  const [open, setOpen] = useState(false)
+  const [priceDropDown, setPriceDropDown] = useState(false)
+  const [currencyDropDown, setCurrencyDropDown] = useState(false)
+
   console.log(goodsCheckboxs)
   console.log(setCorporateCheckBox)
   const [goodsDigitalResult] = useQuery({
@@ -169,6 +170,20 @@ const MarketPlacePage: React.FC = () => {
   useEffect(() => {
     parent.current && autoAnimate(parent.current)
   }, [parent])
+
+  //toggle dropDown
+
+  const priceToggle = () => {
+    setPriceDropDown((priceDropDown) => !priceDropDown)
+  }
+  const priceToggleClassCheck = priceDropDown ? 'active' : 'price-select-cont'
+
+  const currencyToggle = () => {
+    setCurrencyDropDown((currencyDropDown) => !currencyDropDown)
+  }
+  const currencyToggleClassCheck = currencyDropDown
+    ? 'active'
+    : 'currency-select-cont'
 
   return (
     <div>
@@ -307,7 +322,10 @@ const MarketPlacePage: React.FC = () => {
               onClick={() => setPriceDropDown(!priceDropDown)}
             >
               <p className="title">Price</p>
-              <div className="price-select-cont">
+              <div
+                className={`price-select-cont ${priceToggleClassCheck}`}
+                onClick={priceToggle}
+              >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
@@ -320,6 +338,7 @@ const MarketPlacePage: React.FC = () => {
                     </div>
                     <div>
                       <input
+                        style={{ width: '190px' }}
                         id="min"
                         type="text"
                         value={minValue}
@@ -333,6 +352,7 @@ const MarketPlacePage: React.FC = () => {
                     </div>
                     <div>
                       <input
+                        style={{ width: '190px' }}
                         id="max"
                         type="text"
                         value={maxValue}
@@ -345,15 +365,16 @@ const MarketPlacePage: React.FC = () => {
             </div>
           </div>
           <div className="currency-container">
-            <div className="price-title">
+            <div
+              className="price-title"
+              onClick={() => setCurrencyDropDown(!currencyDropDown)}
+            >
               <p className="title">Currency</p>
-              <div className="currency-content">
-                <div
-                  className="currency-select-cont"
-                  onClick={() => setOpen(!open)}
-                >
-                  <IoIosArrowDown className="arrow-icon" />
-                </div>
+              <div
+                className={`currency-select-cont ${currencyToggleClassCheck}`}
+                onClick={currencyToggle}
+              >
+                <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
           </div>
@@ -377,7 +398,7 @@ const MarketPlacePage: React.FC = () => {
             />
           )}
           <AnimatePresence>
-            {open && (
+            {currencyDropDown && (
               <motion.div
                 initial={{
                   height: 0,

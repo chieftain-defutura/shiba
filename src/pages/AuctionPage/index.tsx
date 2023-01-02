@@ -9,7 +9,6 @@ import FooterBottom from 'components/FooterBottom/index'
 import AuctionSaleCard from 'components/AuctionSaleCard'
 import { auctionPageQuery } from 'constants/query'
 import { IAuctionNft } from 'constants/types'
-import Loading from 'components/Loading'
 import { tokensList } from 'constants/contract'
 import { parseUnits } from 'ethers/lib/utils.js'
 import { formatTokenUnits } from 'utils/formatters'
@@ -22,6 +21,7 @@ import {
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
 } from 'utils/contractAddress'
 import './AuctionPage.css'
+import CardLoading from 'components/Loading/CardLoading'
 
 const getQuery = (orderBy: string, orderDirection: string) => {
   return `query{
@@ -114,8 +114,8 @@ const AuctionPage: React.FC = () => {
   const [filteredResult, setFilteredResult] = useState<IAuctionNft[]>([])
   const [rawResult, setRawResult] = useState<IAuctionNft[]>([])
   const [nftFilter, setNftFilter] = useState<string[]>([])
-  const [open, setOpen] = useState(false)
   const [priceDropDown, setPriceDropDown] = useState(false)
+  const [currencyDropDown, setCurrencyDropDown] = useState(false)
   console.log(maxPrice)
   const [selectedDropDown, setSelectedDropDown] =
     useState<ArrElement<typeof tokensList>>()
@@ -201,6 +201,20 @@ const AuctionPage: React.FC = () => {
     parent.current && autoAnimate(parent.current)
   }, [parent])
 
+  //toggle dropDown
+
+  const priceToggle = () => {
+    setPriceDropDown((priceDropDown) => !priceDropDown)
+  }
+  const priceToggleClassCheck = priceDropDown ? 'active' : 'price-select-cont'
+
+  const currencyToggle = () => {
+    setCurrencyDropDown((currencyDropDown) => !currencyDropDown)
+  }
+  const currencyToggleClassCheck = currencyDropDown
+    ? 'active'
+    : 'currency-select-cont'
+
   return (
     <div>
       <div className="action-container">
@@ -230,11 +244,15 @@ const AuctionPage: React.FC = () => {
           </div>
 
           <div className="price-container">
-            <div className="price-title" style={{ marginBottom: '20px' }}>
+            <div
+              className="price-title"
+              onClick={() => setPriceDropDown(!priceDropDown)}
+              style={{ marginBottom: '20px' }}
+            >
               <p className="title">Price</p>
               <div
-                className="price-select-cont"
-                onClick={() => setPriceDropDown(!priceDropDown)}
+                className={`price-select-cont ${priceToggleClassCheck}`}
+                onClick={priceToggle}
               >
                 <IoIosArrowDown className="arrow-icon" />
               </div>
@@ -264,15 +282,17 @@ const AuctionPage: React.FC = () => {
             </div>
           </div>
           <div className="currency-container">
-            <div className="price-title">
+            <div
+              className="price-title"
+              onClick={() => setCurrencyDropDown(!currencyDropDown)}
+            >
               <p className="title">Currency</p>
-              <div className="currency-content">
-                <div
-                  className="currency-select-cont"
-                  onClick={() => setOpen(!open)}
-                >
-                  <IoIosArrowDown className="arrow-icon" />
-                </div>
+
+              <div
+                className={`currency-select-cont ${currencyToggleClassCheck}`}
+                onClick={currencyToggle}
+              >
+                <IoIosArrowDown className="arrow-icon" />
               </div>
             </div>
           </div>
@@ -325,8 +345,8 @@ const AuctionPage: React.FC = () => {
         <div className="marketplace-container-right">
           <div>
             {fetching || nftFilterFetching ? (
-              <div className="loading">
-                <Loading />
+              <div>
+                <CardLoading />
               </div>
             ) : error || nftFilteredError ? (
               <div className="error-msg">
@@ -362,7 +382,7 @@ const AuctionPage: React.FC = () => {
               </>
             )}
             <AnimatePresence>
-              {open && (
+              {currencyDropDown && (
                 <motion.div
                   initial={{
                     height: 0,

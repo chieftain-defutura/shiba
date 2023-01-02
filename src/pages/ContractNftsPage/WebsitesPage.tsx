@@ -8,9 +8,9 @@ import { IWebsiteToken } from 'constants/types'
 import { formatAddress } from 'constants/variants'
 import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import { WEBSITE_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
-import Loading from 'components/Loading'
 import camera from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
+import CardLoading from 'components/Loading/CardLoading'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
   const { data, isLoading } = useGetNftsByIdQuery({
@@ -97,8 +97,8 @@ const WebsitesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            <div className="loading">
-              <Loading />
+            <div>
+              <CardLoading />
             </div>
           ) : error ? (
             <div className="error-msg">

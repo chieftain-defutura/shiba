@@ -8,9 +8,9 @@ import { ICharityToken } from 'constants/types'
 import { formatAddress } from 'constants/variants'
 import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import { CHARITIES_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
-import Loading from 'components/Loading'
 import cameraImg from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
+import CardLoading from 'components/Loading/CardLoading'
 
 const Card: React.FC<ICharityToken> = ({ owner, id, domainName }) => {
   const { data, isLoading } = useGetNftsByIdQuery({
@@ -86,8 +86,8 @@ const CharitiesPage: React.FC = () => {
         </div>
         <div>
           {fetching ? (
-            <div className="loading">
-              <Loading />
+            <div>
+              <CardLoading />
             </div>
           ) : error ? (
             <div className="error-msg">

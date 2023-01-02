@@ -18,6 +18,7 @@ import {
 } from './constants/query'
 import HomeLayout from 'Layout/HomeLayout'
 import Navigation from 'components/Navigation'
+import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
 
 const ShopPage = lazy(() => import('pages/Shops'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
@@ -213,6 +214,14 @@ const App: React.FC = () => {
             element={
               <Suspense fallback={null}>
                 <DigitalItemDetailsPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/skeleton"
+            element={
+              <Suspense fallback={null}>
+                <CardDetailsLoading />
               </Suspense>
             }
           />

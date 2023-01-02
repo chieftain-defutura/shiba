@@ -5,7 +5,6 @@ import { useQuery } from 'urql'
 import DigitalItem from '../DigitalItem'
 import { IGoodsDigitalItem, IGoodsPhysicalItem } from 'constants/types'
 import { goodsItemsQuery } from 'constants/query'
-import Loading from '../Loading'
 import PhysicalItem from '../PhysicallItem'
 import { parseUnits } from 'ethers/lib/utils.js'
 import {
@@ -15,6 +14,7 @@ import {
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
 } from 'utils/contractAddress'
+import CardLoading from 'components/Loading/CardLoading'
 
 interface IGoodsPhysical {
   data:
@@ -40,8 +40,8 @@ export const GoodsPhysical: React.FC<IGoodsPhysical> = ({
   return (
     <>
       {!data ? (
-        <div className="loading">
-          <Loading />
+        <div>
+          <CardLoading />
         </div>
       ) : !data?.digitalItems.length && !data?.physicalItems.length ? (
         <div className="error-msg">

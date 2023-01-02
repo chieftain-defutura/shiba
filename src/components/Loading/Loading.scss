@@ -47,3 +47,63 @@
     }
   }
 }
+
+.skeleton {
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(5, 150px);
+  column-gap: 15px;
+  row-gap: 25px;
+
+  .skeleton-container {
+    background: #272a34;
+    padding: 3px 0;
+    width: 145px;
+    .card-img {
+      width: 145px;
+    }
+    .card-line {
+      &:nth-child(2) {
+        margin-top: 15px;
+      }
+    }
+  }
+}
+.shop-heading {
+  width: 35%;
+  margin: 0 auto;
+}
+.card-details-container {
+  width: 80%;
+  margin: 60px auto;
+  border: 1px solid #828282;
+  border-radius: 10px;
+  padding: 40px;
+
+  .card-details {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 20px;
+  }
+  .endLine {
+    width: 75%;
+    &:nth-child(1) {
+      margin-top: 30px;
+    }
+  }
+}
+
+.shop-skeleton-container {
+  .cardLine {
+    &:nth-child(1) {
+      margin-top: 10px;
+    }
+  }
+}
+.shop-skeleton-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 90px;
+}

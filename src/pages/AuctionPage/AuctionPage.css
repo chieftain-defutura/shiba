@@ -7,6 +7,13 @@
   font-family: var(--oswaldFont);
 }
 
+.price-select-cont.active {
+  transform: rotate(-180deg);
+}
+.currency-select-cont.active {
+  transform: rotate(-180deg);
+}
+
 .action-container-left {
   flex: 1.1;
 }
