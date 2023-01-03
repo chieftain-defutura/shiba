@@ -174,7 +174,7 @@ const ShopPage: React.FC = () => {
         </div>
 
         {fetching || filterFetching ? (
-          <div className="loading">
+          <div>
             <CardLoading />
           </div>
         ) : error ? (
