@@ -8,9 +8,9 @@ import { formatAddress } from 'constants/variants'
 import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 
+import CardLoading from 'components/Loading/CardLoading'
 import cardImg from 'assets/img/card-3.png'
 import './ContractNftsPage.css'
-import CardLoading from 'components/Loading/CardLoading'
 
 const Card: React.FC<IFullOnBlockchainArtToken> = ({
   owner,

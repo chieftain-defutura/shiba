@@ -5,8 +5,8 @@ import FooterBottom from 'components/FooterBottom/index'
 import { domainPageQuery } from 'constants/query'
 import { IDomainNft } from 'constants/types'
 import { formatAddress } from 'constants/variants'
-import './DomainNamesPage.css'
 import CardLoading from 'components/Loading/CardLoading'
+import './DomainNamesPage.css'
 
 const DomainNamesPage: React.FC = () => {
   const [result] = useQuery<{ domainTokens: IDomainNft[] }>({

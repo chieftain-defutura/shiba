@@ -247,7 +247,10 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                     href={ipfsData.preview}
                     target="_blank"
                     rel="noreferrer noopener"
-                  ></a>
+                    download
+                  >
+                    View preview
+                  </a>
                 </Modal>
               )}
 

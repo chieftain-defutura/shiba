@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import * as Yup from 'yup'
 
-import './ItemDetailsPage.css'
 import { useTransactionModal } from 'context/TransactionContext'
 import shipmentABI from 'utils/abi/shipmentABI.json'
 import rightArrowIcon from 'assets/img/right-arrow-icon.png'
@@ -25,6 +24,7 @@ import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import closeIcon from 'assets/img/close-icon.png'
 import { useAppSelector } from 'store/store'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import './ItemDetailsPage.css'
 
 const settings = {
   dots: false,

@@ -19,8 +19,8 @@ import { getReviewOfShopQuery } from 'constants/query'
 import closeIcon from 'assets/img/close-icon.png'
 import { formatAddress } from 'constants/variants'
 import { formatTokenUnits } from 'utils/formatters'
-import './ShopDetailsPage.css'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import './ShopDetailsPage.css'
 
 const settings = {
   dots: false,
