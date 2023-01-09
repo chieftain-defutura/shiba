@@ -3,26 +3,42 @@ import React, { useRef } from 'react'
 import { IUserDigitalItem } from 'constants/types'
 import { getDecryptedData } from 'utils/formatters'
 import Loading from 'components/Loading'
+import ReactPlayer from 'react-player'
 import './item.scss'
 
 export const MoviesCard: React.FC<IUserDigitalItem> = ({
   fullproduct,
-  category,
   shopDetails,
   itemName,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
+  // const video = getDecryptedData(fullproduct, [shopDetails.id])
+
+  // const getDecryptedData = () => {
+  //   const result =
+  // }
+
   return (
     <div className="movies-card">
       <div className="movies-card-top">
-        <video
-          ref={videoRef}
-          controls
-          playsInline
-          muted
-          src={getDecryptedData(fullproduct, [shopDetails.id])}
-        ></video>
+        {getDecryptedData(fullproduct, [shopDetails.id]).includes(
+          'youtube.com',
+        ) ? (
+          <video
+            ref={videoRef}
+            controls
+            playsInline
+            muted
+            src={getDecryptedData(fullproduct, [shopDetails.id])}
+          ></video>
+        ) : (
+          <ReactPlayer
+            url={getDecryptedData(fullproduct, [shopDetails.id])}
+            width={300}
+            height={200}
+          />
+        )}
       </div>
       {/* <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
