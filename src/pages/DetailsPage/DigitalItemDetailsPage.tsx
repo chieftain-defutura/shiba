@@ -5,6 +5,7 @@ import { useQuery } from 'urql'
 import { erc20ABI, useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
+import ReactPlayer from 'react-player'
 
 import { useTransactionModal } from 'context/TransactionContext'
 import { DIGITAL_GOODS_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
@@ -20,6 +21,7 @@ import { formatTokenUnits } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import Modal from 'components/Model'
 
 const settings = {
   dots: false,
@@ -73,6 +75,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   const [digitalErrorImgOne, setDigitalErrorImgOne] = useState(false)
   const [digitalErrorImgTwo, setDigitalErrorImgTwo] = useState(false)
   const [digitalErrorImgThree, setDigitalErrorImgThree] = useState(false)
+  const [preview, setPreview] = useState(false)
   const user = useAppSelector((store) => store.user)
 
   const {
@@ -199,6 +202,21 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                   )}
                 </div>
               </Slider>
+              {preview && ipfsData?.preview.includes('youtube.com') ? (
+                <Modal isOpen={preview} handleClose={() => setPreview(false)}>
+                  <ReactPlayer url={ipfsData?.preview} />
+                </Modal>
+              ) : (
+                <Modal isOpen={preview} handleClose={() => setPreview(false)}>
+                  <video
+                    controls
+                    playsInline
+                    muted
+                    src={ipfsData?.preview}
+                  ></video>
+                </Modal>
+              )}
+
               <button
                 className="prev-btn slider-btn"
                 onClick={() => slider.current?.slickPrev()}
@@ -228,14 +246,19 @@ const ProductDetails: React.FC<IDigitalItem> = ({
               <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
               <br />
               <p>
-                Details:{' '}
+                Details:
                 {isLoading ? (
                   <Skeleton />
                 ) : (
                   <LongText content={ipfsData?.details} limit={180} />
                 )}
               </p>
-              <button className="preview-btn">Preview</button>
+              <button
+                className="preview-btn"
+                onClick={() => setPreview((m) => !m)}
+              >
+                Preview
+              </button>
             </div>
             <br />
             {/* <div className="quantity-container">
