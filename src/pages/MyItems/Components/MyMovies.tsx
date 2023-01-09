@@ -13,33 +13,21 @@ export const MoviesCard: React.FC<IUserDigitalItem> = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // const video = getDecryptedData(fullproduct, [shopDetails.id])
+  const video = getDecryptedData(fullproduct, [shopDetails.id])
 
-  // const getDecryptedData = () => {
-  //   const result =
-  // }
+  const res = video.includes('youtube.com')
+  console.log(res)
 
   return (
     <div className="movies-card">
       <div className="movies-card-top">
-        {getDecryptedData(fullproduct, [shopDetails.id]).includes(
-          'youtube.com',
-        ) ? (
-          <video
-            ref={videoRef}
-            controls
-            playsInline
-            muted
-            src={getDecryptedData(fullproduct, [shopDetails.id])}
-          ></video>
+        {!res ? (
+          <video ref={videoRef} controls playsInline src={video}></video>
         ) : (
-          <ReactPlayer
-            url={getDecryptedData(fullproduct, [shopDetails.id])}
-            width={300}
-            height={200}
-          />
+          <ReactPlayer url={video} width={300} height={200} />
         )}
       </div>
+
       {/* <div className="icon" onClick={() => videoRef.current?.play()}>
         <img src={PlayBtn} alt="card" />
       </div> */}

@@ -230,13 +230,15 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                 <img src={rightArrowIcon} alt="arrow" />
               </button>
             </div>
-            <div className="description-cont">
+            <div className="description-cont" style={{ marginTop: '-10px' }}>
               <h3>
                 Product Description:
                 {isLoading ? (
                   <Skeleton />
                 ) : (
-                  <LongText content={ipfsData?.description} limit={390} />
+                  <div style={{ marginTop: '10px' }}>
+                    <LongText content={ipfsData?.description} limit={390} />
+                  </div>
                 )}
               </h3>
             </div>

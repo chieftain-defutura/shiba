@@ -31,7 +31,15 @@ const WrongNetworkModal: React.FC<IWrongNetworkModal> = ({
               <h2>Wrong network</h2>
               <button
                 onClick={() => switchNetwork?.(5)}
-                style={{ background: ' #38F2AF', color: '#fff' }}
+                style={{
+                  background: ' #38F2AF',
+                  color: '#fff',
+                  borderRadius: '5px',
+                  padding: '15px 20px',
+                  border: 'none',
+                  outline: 'none',
+                  cursor: 'pointer',
+                }}
               >
                 Switch Network
               </button>
