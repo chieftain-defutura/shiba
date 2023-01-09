@@ -39,6 +39,9 @@ const WrongNetworkModal: React.FC<IWrongNetworkModal> = ({
                   border: 'none',
                   outline: 'none',
                   cursor: 'pointer',
+                  width: '40%',
+                  margin: '0 auto',
+                  fontSize: '16px',
                 }}
               >
                 Switch Network
