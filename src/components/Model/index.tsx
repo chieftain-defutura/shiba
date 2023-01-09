@@ -36,7 +36,7 @@ interface IReactModal {
 interface IModal {
   children: ReactNode
   handleClose?: () => void
-  isOpen: boolean
+  isOpen?: boolean
   overlay?: boolean
 }
 
