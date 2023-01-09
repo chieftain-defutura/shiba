@@ -65,6 +65,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   shopDetails,
   metadata,
   price,
+  category,
   status,
 }) => {
   const { itemId } = useParams()
@@ -202,18 +203,51 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                   )}
                 </div>
               </Slider>
-              {preview && ipfsData?.preview.includes('youtube.com') ? (
+
+              {preview &&
+                category === 'movies' &&
+                (ipfsData?.preview.includes('youtube.com') ? (
+                  <Modal isOpen={preview} handleClose={() => setPreview(false)}>
+                    <ReactPlayer url={ipfsData?.preview} />
+                  </Modal>
+                ) : (
+                  <Modal isOpen={preview} handleClose={() => setPreview(false)}>
+                    <video
+                      controls
+                      playsInline
+                      muted
+                      src={ipfsData?.preview}
+                    ></video>
+                  </Modal>
+                ))}
+              {preview &&
+                category === 'courses' &&
+                (ipfsData?.preview.includes('youtube.com') ? (
+                  <Modal isOpen={preview} handleClose={() => setPreview(false)}>
+                    <ReactPlayer url={ipfsData?.preview} />
+                  </Modal>
+                ) : (
+                  <Modal isOpen={preview} handleClose={() => setPreview(false)}>
+                    <video
+                      controls
+                      playsInline
+                      muted
+                      src={ipfsData?.preview}
+                    ></video>
+                  </Modal>
+                ))}
+              {preview && category === 'music' && (
                 <Modal isOpen={preview} handleClose={() => setPreview(false)}>
-                  <ReactPlayer url={ipfsData?.preview} />
+                  <audio controls src={ipfsData.preview}></audio>
                 </Modal>
-              ) : (
+              )}
+              {preview && category === 'books' && (
                 <Modal isOpen={preview} handleClose={() => setPreview(false)}>
-                  <video
-                    controls
-                    playsInline
-                    muted
-                    src={ipfsData?.preview}
-                  ></video>
+                  <a
+                    href={ipfsData.preview}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  ></a>
                 </Modal>
               )}
 
