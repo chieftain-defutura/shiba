@@ -29,7 +29,20 @@ const WrongNetworkModal: React.FC<IWrongNetworkModal> = ({
           >
             <div className="transaction_modal-content">
               <h2>Wrong network</h2>
-              <button onClick={() => switchNetwork?.(5)}>Switch Network</button>
+              <button
+                onClick={() => switchNetwork?.(5)}
+                style={{
+                  background: ' #38F2AF',
+                  color: '#fff',
+                  borderRadius: '5px',
+                  padding: '15px 20px',
+                  border: 'none',
+                  outline: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                Switch Network
+              </button>
             </div>
           </motion.div>
         )}
