@@ -21,6 +21,8 @@ import { formatTokenUnits } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import Book from 'assets/icon/Book-mark.svg'
+import Music from 'assets/icon/Music.svg'
 import Modal from 'components/Model'
 
 const settings = {
@@ -238,7 +240,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                 ))}
               {preview && category === 'music' && (
                 <Modal isOpen={preview} handleClose={() => setPreview(false)}>
-                  <audio controls src={ipfsData.preview}></audio>
+                  <div className="book-preview">
+                    <img className="abstract" src={Music} alt="card" />
+                    <audio controls src={ipfsData.preview}></audio>
+                    <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
+                  </div>
                 </Modal>
               )}
               {preview && category === 'books' && (
@@ -248,8 +254,10 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                     target="_blank"
                     rel="noreferrer noopener"
                     download
+                    className="book-preview"
                   >
-                    View preview
+                    <img src={Book} alt="card" />
+                    <p>Name:{isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
                   </a>
                 </Modal>
               )}

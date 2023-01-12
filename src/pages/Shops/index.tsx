@@ -17,6 +17,7 @@ interface IShopToken {
   id: string
   domainName: string
   tokenUri: string | null
+  metadata: string
   owner: {
     id: string
   }
@@ -27,6 +28,7 @@ query($category:[String!]){
   digitalItems(where:{status:ACTIVE,category_in:$category}){
     shopDetails{
       id
+      metadata
       domainName
       tokenUri
       owner {
@@ -38,6 +40,7 @@ query($category:[String!]){
     shopDetails{
       id
       domainName
+      metadata
       tokenUri
       owner {
         id
@@ -56,14 +59,13 @@ const ShopPage: React.FC = () => {
   }>({ query: shopPageQuery })
 
   const { data, fetching, error } = result
-
+  console.log(data?.digitalShopTokens)
   const [itemresult] = useQuery<{
     digitalItems: { shopDetails: IShopToken }[]
     physicalItems: { shopDetails: IShopToken }[]
   }>({ query: shopItemsQuery, variables: { category: shopCheckBox } })
 
   const { data: itemData, fetching: filterFetching } = itemresult
-
   const uniqueItem = useMemo(() => {
     const uniqueIds: string[] = []
     if (!itemData) return
@@ -92,7 +94,6 @@ const ShopPage: React.FC = () => {
 
     return { digital, physical }
   }, [itemData])
-  console.log(uniqueItem)
 
   const handleChange = ({
     target: { value },
@@ -105,7 +106,6 @@ const ShopPage: React.FC = () => {
       setShopCheckBox((f) => f.concat(value.toLowerCase()))
     }
   }
-  console.log(shopCheckBox)
 
   return (
     <div>

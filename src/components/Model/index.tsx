@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { useEffect, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -46,6 +46,13 @@ const BaseModal: React.FC<IModal> = ({
   isOpen,
   overlay = true,
 }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [])
   if (!isOpen) return null
 
   return (

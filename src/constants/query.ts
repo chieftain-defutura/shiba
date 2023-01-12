@@ -472,6 +472,8 @@ query($id:String!){
     }
 		price
     owner
+    metadata
+    itemName
     erc20Token {
       id
       symbol

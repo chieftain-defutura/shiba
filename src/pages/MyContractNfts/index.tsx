@@ -172,10 +172,11 @@ const DomainNftCard: React.FC<{
           ) : (
             <span></span>
           )}
-
-          <Link to={`/${contractData.pathName}/${data.id}`}>
-            <button style={{ width: '50px' }}>Get In</button>
-          </Link>
+          {contractData.pathName === 'my-domains' ? null : (
+            <Link to={`/${contractData.pathName}/${data.id}`}>
+              <button style={{ width: '50px' }}>Get In</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

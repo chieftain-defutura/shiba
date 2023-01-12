@@ -224,3 +224,17 @@
   object-fit: cover;
   margin: 55px auto;
 }
+
+.book-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.book-preview p {
+  font-size: 30px;
+}
+.book-preview img {
+  width: 100px;
+}

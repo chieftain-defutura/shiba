@@ -76,6 +76,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
         digitalShopABI,
         signerData,
       )
+
       const tx = await contract.setBaseURI(id, JsonHash)
       await tx.wait()
       console.log('updated')

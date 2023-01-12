@@ -45,7 +45,7 @@ export const ContractDetails: IContractDetails = {
     residual: true,
     sell: true,
     finalizeToken: true,
-    transfer: true,
+    transfer: false,
     showDetails: true,
     query: `
       query($id:String!) {
@@ -80,7 +80,7 @@ export const ContractDetails: IContractDetails = {
     residual: true,
     sell: true,
     finalizeToken: true,
-    transfer: true,
+    transfer: false,
     showDetails: true,
     query: `
       query($id:String!) {
@@ -114,8 +114,8 @@ export const ContractDetails: IContractDetails = {
     appearanceSetting: false,
     residual: false,
     sell: false,
-    finalizeToken: true,
-    transfer: true,
+    finalizeToken: false,
+    transfer: false,
     query: `
       query($id:String!) {
         domainToken(id:$id){

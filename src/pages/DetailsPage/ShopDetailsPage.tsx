@@ -85,7 +85,7 @@ const ShopDetails: React.FC<{
     { hash: shopData?.tokenUri ?? '' },
     { skip: !shopData.tokenUri },
   )
-
+  console.log(data.instagram)
   return (
     <div className="shoesboutique-container-right">
       <h2 className="title">
@@ -330,7 +330,6 @@ const LastSale = ({ item }: any) => {
     { skip: !item.metadata },
   )
   const [imageError, setImageError] = useState(false)
-
   return (
     <>
       <div

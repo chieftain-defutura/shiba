@@ -262,6 +262,7 @@ export type IRemoveDigitalItem = {
   id: string
   itemName: string
   metadata: string
+  category: string
   erc20Token: {
     id: string
     symbol: string

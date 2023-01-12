@@ -23,9 +23,7 @@ export const BookCard: React.FC<IUserDigitalItem> = ({
           <img src={Book} alt="card" />
         </a>
       </div>
-      <div className="icon">
-        <img src={Book} alt="card" />
-      </div>
+
       <div className="details">
         <h3>Name: {itemName}</h3>
       </div>
