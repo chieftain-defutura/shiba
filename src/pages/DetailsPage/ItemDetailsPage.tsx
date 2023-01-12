@@ -100,6 +100,7 @@ const ProductDetails: React.FC<IPhysicalItem> = ({
   } = useGetIpfsDataQuery({
     hash: metadata,
   })
+  console.log(metadata)
 
   const formattedPrice = Number(
     ethers.utils.formatUnits(price, erc20Token.decimals),

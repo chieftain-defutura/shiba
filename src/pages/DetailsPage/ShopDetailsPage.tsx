@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Slider from 'react-slick'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
@@ -20,6 +20,10 @@ import closeIcon from 'assets/img/close-icon.png'
 import { formatAddress } from 'constants/variants'
 import { formatTokenUnits } from 'utils/formatters'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import instagramIcon from 'assets/img/instagram-icon.png'
+import twitterIcon from 'assets/img/twitter-icon.png'
+import descordIcon from 'assets/img/descord-icon.png'
+
 import './ShopDetailsPage.css'
 
 const settings = {
@@ -85,6 +89,7 @@ const ShopDetails: React.FC<{
     { hash: shopData?.tokenUri ?? '' },
     { skip: !shopData.tokenUri },
   )
+  console.log(data)
 
   return (
     <div className="shoesboutique-container-right">
@@ -255,11 +260,9 @@ const ShopDetails: React.FC<{
             </div>
           )}
           <div className="description-cont">
-            <h3>Brief Description: </h3>
-            <p>
-              Contacts: any info shop want to share Ex phone number, address,
-              etc.
-            </p>
+            <h3 style={{ marginBottom: '5px' }}>Shop Name: {data.shopName}</h3>
+            <h3>Brief Description: {data.description}</h3>
+            <p>Contacts: {data.contacts}</p>
           </div>
         </div>
         <div className="content-box-right">
@@ -318,6 +321,21 @@ const ShopDetails: React.FC<{
           <img src={homeIcon} alt="home" />
           <img src={questionIcon} alt="question" />
           <img src={videoIcon} alt="video" />
+          <a href={data.instagram} target="_blank" rel="noreferrer">
+            <div className="insta">
+              <img src={instagramIcon} alt="instagram" />
+            </div>
+          </a>
+          <a href={data.twitter} target="_blank" rel="noreferrer">
+            <div className="insta">
+              <img src={twitterIcon} alt="twitter" />
+            </div>
+          </a>
+          <a href={data.website} target="_blank" rel="noreferrer">
+            <div className="insta">
+              <img src={descordIcon} alt="descord" />
+            </div>
+          </a>
         </div>
       </div>
     </div>

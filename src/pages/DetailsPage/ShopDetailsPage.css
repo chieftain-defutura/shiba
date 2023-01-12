@@ -85,7 +85,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
-  margin-top: 12px;
+  margin-top: 5px;
 }
 
 .shoesboutique-container-right .content-box-right .sales-cards {
@@ -171,12 +171,17 @@
 }
 
 .shoesboutique-container-bottom {
-  display: flex;
-  align-items: center;
-  gap: 39px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* align-items: center; */
+  gap: 20px;
   position: absolute;
   bottom: 25px;
   right: 75px;
+}
+.insta img {
+  width: 26px;
+  object-fit: cover;
 }
 
 .shoesboutique-container-bottom img {

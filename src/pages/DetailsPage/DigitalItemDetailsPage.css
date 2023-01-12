@@ -8,6 +8,17 @@
 .music-details-container-right {
   flex: 5;
 }
+.read-less {
+  background: #38f2af;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 4px 15px;
+  font-family: var(--oswaldFont);
+  font-size: 14px;
+  margin-top: 10px;
+}
 
 .music-details-container-right .title {
   font-weight: 900;
