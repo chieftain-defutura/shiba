@@ -88,6 +88,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   } = useGetIpfsDataQuery({
     hash: metadata,
   })
+  console.log(ipfsData)
 
   const handleBuy = async () => {
     if (!address || !signerData) return
@@ -357,9 +358,11 @@ const LongText: React.FC<ILongText> = ({ content, limit }) => {
   }
   if (showAll) {
     return (
-      <div style={{ height: '150px', overflowY: 'scroll' }}>
+      <div style={{ height: '150px' }}>
         <p style={{ fontSize: '13px' }}>{content}</p>
-        <button onClick={showLess}>Read less</button>
+        <button onClick={showLess} className="read-less">
+          Read less
+        </button>
       </div>
     )
   }
@@ -368,7 +371,9 @@ const LongText: React.FC<ILongText> = ({ content, limit }) => {
     <div>
       <p style={{ fontSize: '13px' }}> {toShow}</p>
 
-      <button onClick={showMore}>Read more</button>
+      <button onClick={showMore} className="read-less">
+        Read more
+      </button>
     </div>
   )
 }

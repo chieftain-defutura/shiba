@@ -10,8 +10,8 @@ import { shopPageQuery } from 'constants/query'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import { formatAddress } from 'constants/variants'
 import cameraImg from 'assets/icon/Camera.svg'
-import './Shops.css'
 import CardLoading from 'components/Loading/CardLoading'
+import './Shops.css'
 
 interface IShopToken {
   id: string
