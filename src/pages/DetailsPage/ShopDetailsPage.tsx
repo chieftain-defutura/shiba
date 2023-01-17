@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Slider from 'react-slick'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
