@@ -1,0 +1,13 @@
+.transfer-sub-menu-container {
+  .file-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+    .image {
+      margin-bottom: 10px;
+      border-radius: 50%;
+    }
+  }
+}

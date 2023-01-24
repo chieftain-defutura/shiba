@@ -25,6 +25,7 @@ import twitterIcon from 'assets/img/twitter-icon.png'
 import descordIcon from 'assets/img/descord-icon.png'
 
 import './ShopDetailsPage.css'
+import { LongText } from './DigitalItemDetailsPage'
 
 const settings = {
   dots: false,
@@ -90,7 +91,7 @@ const ShopDetails: React.FC<{
     { skip: !shopData.tokenUri },
   )
 
-  return (
+  return data ? (
     <div className="shoesboutique-container-right">
       <h2 className="title">
         {shopData?.domainName}
@@ -260,7 +261,10 @@ const ShopDetails: React.FC<{
           )}
           <div className="description-cont">
             <h3 style={{ marginBottom: '5px' }}>Shop Name: {data.shopName}</h3>
-            <h3>Brief Description: {data.description}</h3>
+            <h3>
+              Brief Description:
+              <LongText content={data?.description} limit={180} />
+            </h3>
             <p>Contacts: {data.contacts}</p>
           </div>
         </div>
@@ -338,6 +342,224 @@ const ShopDetails: React.FC<{
         </div>
       </div>
     </div>
+  ) : (
+    <div className="shoesboutique-container-right">
+      <h2 className="title">
+        <div>domain name</div>
+        {upVoteClick && (
+          <div className="vote-detail">
+            <img src={upVoteIcon} alt="up vote" />
+            {goodReviewResult.data ? goodReviewResult.data.reviews.length : 0}
+          </div>
+        )}
+        {downVoteClick && (
+          <div className="vote-detail">
+            <img src={downVoteIcon} alt="down vote" />
+            {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
+          </div>
+        )}
+      </h2>
+      <div className="content-box">
+        <div className="content-box-left">
+          {!upVoteClick && !downVoteClick && (
+            <div className="slider">
+              <Slider {...settings} ref={slider}>
+                <div className="slider-shop-item">
+                  <div className="shop-slider-img-camera">
+                    <img src={cameraImg} alt="camera" />
+                  </div>
+                </div>
+                <div className="slider-shop-item">
+                  <div className="shop-slider-img-camera">
+                    <img src={cameraImg} alt="camera" />
+                  </div>
+                </div>
+                <div className="slider-shop-item">
+                  <div className="shop-slider-img-camera">
+                    <img src={cameraImg} alt="camera" />
+                  </div>
+                </div>
+              </Slider>
+              <button
+                className="prev-btn slider-btn"
+                onClick={() => slider.current?.slickPrev()}
+              >
+                <img src={leftArrowIcon} alt="arrow" />
+              </button>
+              <button
+                className="next-btn slider-btn"
+                onClick={() => slider.current?.slickNext()}
+              >
+                <img src={rightArrowIcon} alt="arrow" />
+              </button>
+            </div>
+          )}
+          {upVoteClick && (
+            <div className="up-vote-box">
+              <img
+                src={closeIcon}
+                alt="close"
+                className="close-icon"
+                onClick={() => setUpVoteClick(false)}
+              />
+              {goodReviewResult.fetching ? (
+                <Skeleton count={5} />
+              ) : !goodReviewResult.data ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>Oops something went wrong</p>
+                </div>
+              ) : !goodReviewResult.data?.reviews.length ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>No reviews is added Yet.</p>
+                </div>
+              ) : (
+                <div>
+                  {goodReviewResult.data.reviews.map((details, index) => (
+                    <p key={index.toString()}>
+                      {formatAddress(details.user)}: {details.review}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          {downVoteClick && (
+            <div className="up-vote-box">
+              <img
+                src={closeIcon}
+                alt="close"
+                className="close-icon"
+                onClick={() => setDownVoteClick(false)}
+              />
+              {badReviewResult.fetching ? (
+                <Skeleton count={5} />
+              ) : !badReviewResult.data ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>Oops something went wrong</p>
+                </div>
+              ) : !badReviewResult.data?.reviews.length ? (
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'grid',
+                    placeItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <p>No reviews is added Yet.</p>
+                </div>
+              ) : (
+                <div>
+                  {badReviewResult.data.reviews.map((details, index) => (
+                    <p key={index.toString()}>
+                      {formatAddress(details.user)}: {details.review}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          <div className="description-cont">
+            <h3 style={{ marginBottom: '5px' }}>Shop Name: </h3>
+            <h3>Brief Description:</h3>
+            <p>Contacts: </p>
+          </div>
+        </div>
+        <div className="content-box-right">
+          <div className="sales-cards">
+            <div className="sale-card">
+              <h4 className="title">Last Sale</h4>
+              {shopData?.lastSale === null ? (
+                <h4 style={{ lineHeight: '100px' }}>NO ITEMS SOLD YET</h4>
+              ) : (
+                <LastSale
+                  item={
+                    type === 'DIGITAL'
+                      ? shopData?.lastSale
+                      : shopData?.lastSale.itemId
+                  }
+                />
+              )}
+            </div>
+            <div className="sale-card">
+              <h4 className="title">Recently Listed</h4>
+              {!shopData?.items?.length ? (
+                <h4 style={{ lineHeight: '100px' }}>NO ITEMS LISTED YET</h4>
+              ) : (
+                <RecentlyListed item={shopData?.items[0]} />
+              )}
+            </div>
+          </div>
+          {type === 'PHYSICAL' && (
+            <div className="button-cont">
+              <button
+                onClick={() => {
+                  setUpVoteClick(true)
+                  setDownVoteClick(false)
+                }}
+              >
+                <img src={upVoteIcon} alt="up vote" />
+                {goodReviewResult.data
+                  ? goodReviewResult.data.reviews.length
+                  : 0}
+              </button>
+              <button>
+                <img
+                  src={downVoteIcon}
+                  alt="down vote"
+                  onClick={() => {
+                    setDownVoteClick(true)
+                    setUpVoteClick(false)
+                  }}
+                />
+                {badReviewResult.data ? badReviewResult.data.reviews.length : 0}
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="shoesboutique-container-bottom">
+          <img src={homeIcon} alt="home" />
+          <img src={questionIcon} alt="question" />
+          <img src={videoIcon} alt="video" />
+          <a href="" target="_blank" rel="noreferrer">
+            <div className="insta">
+              <img src={instagramIcon} alt="instagram" />
+            </div>
+          </a>
+          <a href="" target="_blank" rel="noreferrer">
+            <div className="insta">
+              <img src={twitterIcon} alt="twitter" />
+            </div>
+          </a>
+          <a href="" target="_blank" rel="noreferrer">
+            <div className="insta">
+              <img src={descordIcon} alt="descord" />
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -378,7 +600,7 @@ const LastSale = ({ item }: any) => {
       <div className="card-footer">
         <p>Name:{item.itemName}</p>
         <p className="price">
-          Price:{formatTokenUnits(item.price, item.erc20Token.decimals)}{' '}
+          Price:{formatTokenUnits(item.price, item.erc20Token.decimals)}
           {item.erc20Token.symbol}
         </p>
       </div>
@@ -424,7 +646,7 @@ const RecentlyListed = ({ item }: any) => {
       <div className="card-footer">
         <p>Name:{item.itemName}</p>
         <p className="price">
-          Price:{formatTokenUnits(item.price, item.erc20Token.decimals)}{' '}
+          Price:{formatTokenUnits(item.price, item.erc20Token.decimals)}
           {item.erc20Token.symbol}
         </p>
       </div>

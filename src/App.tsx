@@ -19,6 +19,8 @@ import {
 import HomeLayout from 'Layout/HomeLayout'
 import Navigation from 'components/Navigation'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import Router from 'pages/Router'
+import { getApp } from 'utils/helper'
 
 const ShopPage = lazy(() => import('pages/Shops'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
@@ -44,9 +46,16 @@ const PhysicalItemDetailsPage = lazy(
 )
 
 const App: React.FC = () => {
-  return (
+  const newHref = getApp()
+
+  return newHref.length > 0 ? (
+    <Routes>
+      <Route path="*" element={<Router />} />
+    </Routes>
+  ) : (
     <div className="App">
       <Navigation />
+
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />

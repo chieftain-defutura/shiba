@@ -10,6 +10,7 @@ import {
   DOMAIN_NFT_CONTRACT_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
   WEBSITE_NFT_CONTRACT_ADDRESS,
+  ART_NFT_CONTRACT_ADDRESS,
 } from 'utils/contractAddress'
 import shopAbi from 'utils/abi/physicalShopABI.json'
 import {
@@ -76,6 +77,12 @@ const SideBar: React.FC = () => {
       },
       {
         address: WEBSITE_NFT_CONTRACT_ADDRESS,
+        abi: shopAbi,
+        functionName: 'balanceOf',
+        args: [address],
+      },
+      {
+        address: ART_NFT_CONTRACT_ADDRESS,
         abi: shopAbi,
         functionName: 'balanceOf',
         args: [address],
@@ -156,6 +163,26 @@ const SideBar: React.FC = () => {
                   {balanceData?.[4] ? (
                     <CountUp
                       end={Number(balanceData[4].toString())}
+                      duration={0.4}
+                    />
+                  ) : (
+                    0
+                  )}
+                </p>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="box">
+          <h2 className="heading">Full On BlockChain</h2>
+          <div className="content-cont">
+            <div className="content">
+              <Link to="/">
+                <p className="name">Full On BlockChain</p>
+                <p className="number">
+                  {balanceData?.[5] ? (
+                    <CountUp
+                      end={Number(balanceData[5].toString())}
                       duration={0.4}
                     />
                   ) : (

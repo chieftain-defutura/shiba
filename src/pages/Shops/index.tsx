@@ -28,7 +28,6 @@ query($category:[String!]){
   digitalItems(where:{status:ACTIVE,category_in:$category}){
     shopDetails{
       id
-      metadata
       domainName
       tokenUri
       owner {
@@ -40,7 +39,6 @@ query($category:[String!]){
     shopDetails{
       id
       domainName
-      metadata
       tokenUri
       owner {
         id
@@ -59,13 +57,14 @@ const ShopPage: React.FC = () => {
   }>({ query: shopPageQuery })
 
   const { data, fetching, error } = result
-  console.log(data?.digitalShopTokens)
   const [itemresult] = useQuery<{
     digitalItems: { shopDetails: IShopToken }[]
     physicalItems: { shopDetails: IShopToken }[]
   }>({ query: shopItemsQuery, variables: { category: shopCheckBox } })
 
   const { data: itemData, fetching: filterFetching } = itemresult
+
+  console.log(itemData)
   const uniqueItem = useMemo(() => {
     const uniqueIds: string[] = []
     if (!itemData) return

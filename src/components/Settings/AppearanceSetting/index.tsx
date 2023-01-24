@@ -185,7 +185,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
                   <div className="content-left">
                     <p>Shop Name:</p>
                     <p>Brief Description:</p>
-                    <p style={{ marginTop: '8.2rem' }}>Contracts:</p>
+                    <p style={{ marginTop: '8.2rem' }}>Contacts:</p>
                   </div>
                   <div className="content-right">
                     <Field

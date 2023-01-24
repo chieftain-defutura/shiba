@@ -346,7 +346,7 @@ interface ILongText {
   limit: number
 }
 
-const LongText: React.FC<ILongText> = ({ content, limit }) => {
+export const LongText: React.FC<ILongText> = ({ content, limit }) => {
   const [showAll, setShowAll] = useState(false)
 
   const showMore = () => setShowAll(true)
