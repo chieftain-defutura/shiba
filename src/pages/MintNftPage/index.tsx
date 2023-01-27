@@ -30,7 +30,6 @@ import { useTransactionModal } from 'context/TransactionContext'
 import { mintDomainNft, mintNft } from 'utils/methods'
 import { PENDING_MESSAGE, SUCCESS_MESSAGE } from 'utils/messaging'
 import { domainRegex, getDomainNamePrice } from 'lib/helpers'
-import { create } from 'ipfs-http-client'
 
 interface IContractData {
   title: string
@@ -88,32 +87,6 @@ const leashAllownaceData = {
   address: LEASH_TOKEN_ADDRESS,
   abi: erc20ABI,
 }
-
-const auth =
-  'Basic ' +
-  Buffer.from(
-    process.env.REACT_APP_INFURA_PROJECT_ID +
-      ':' +
-      process.env.REACT_APP_INFURA_API_SECRET_KEY,
-  ).toString('base64')
-const client = create({
-  host: 'ipfs.infura.io',
-  port: 5001,
-  protocol: 'https',
-  headers: {
-    authorization: auth,
-  },
-})
-
-// let imagePath;
-
-// try {
-//   const imageCid = await client.add(buffer);
-//   imagePath = imageCid.path;
-// } catch (e) {
-//   console.log("err while uploading image", e);
-//   setLoading(false);
-// }
 
 const MintNftPage: React.FC = () => {
   const { setTransaction, loading } = useTransactionModal()

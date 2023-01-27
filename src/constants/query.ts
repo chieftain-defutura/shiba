@@ -14,11 +14,33 @@ export const websitePageQuery = `
   query {
     websiteTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
+        link
         domainName
         owner {
           id
         }
     }
+  }
+`
+
+export const subdomainNameSearch = `
+  query($domainName:String!) {
+    websiteTokens(where:{domainName:$domainName}){
+        id
+        link
+        domainName
+        owner {
+          id
+        }
+    }
+    fullOnBlockchainArtTokens(where:{domainName:$domainName}){
+      id
+      domainName
+      link
+      owner {
+        id
+      }
+  }
   }
 `
 
@@ -38,7 +60,21 @@ export const fullOnBlockchainPageQuery = `
   query {
     fullOnBlockchainArtTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
+        link
         domainName
+        owner {
+          id
+        }
+    }
+  }
+`
+
+export const fullOnBlockchainTokens = `
+  query($domainName:String!) {
+    fullOnBlockchainArtTokens(where:{domainName:$domainName}){
+        id
+        domainName
+        link
         owner {
           id
         }

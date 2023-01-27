@@ -25,6 +25,7 @@ export type ICharityToken = {
 export type IWebsiteToken = {
   id: string
   domainName: string
+  link: string
   owner: {
     id: string
   }
@@ -33,6 +34,7 @@ export type IWebsiteToken = {
 export type IFullOnBlockchainArtToken = {
   id: string
   domainName: string
+  link: string
   owner: {
     id: string
   }

@@ -96,17 +96,7 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState(false)
   const [clickRemoveItem, setClickRemoveItem] = useState(false)
-  const [result] = useQuery<{
-    shipments: IHaveToSend[]
-  }>({
-    query: haveToSendQuery,
-    variables: {
-      owner: address?.toLowerCase(),
-    },
-    pause: !address,
-  })
-  const { data: havetosendData, fetching } = result
-  console.log(havetosendData?.shipments)
+
   return (
     <>
       {/* <h2 className="heading">{tokenData.domainName}</h2> */}
@@ -159,23 +149,6 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
               </div>
             )}
 
-            {/* {contractData.pathName === 'my-goods-shop' &&
-            havetosendData?.shipments.length === 0
-              ? contractData.sell === true && (
-                  <div
-                    className="card"
-                    onClick={() => setClickCard('put on sale')}
-                  >
-                    <img src={cardImgFive} alt="card" className="card-img-5" />
-                    <p>Sell</p>
-                  </div>
-                )
-              : contractData.sell === true && (
-                  <div className="card" onClick={() => setHaveTo(true)}>
-                    <img src={cardImgFive} alt="card" className="card-img-5" />
-                    <p>Sell</p>
-                  </div>
-                )} */}
             <SellBox
               contractData={contractData}
               setClickCard={() => setClickCard('put on sale')}
@@ -309,9 +282,11 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
               {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
             </h2>
             <File
+              contractData={contractData}
               setClickCard={setClickCard}
               contractAddress={contractData.address}
               domainName={tokenData.domainName}
+              link={tokenData.link}
             />
           </div>
         </div>

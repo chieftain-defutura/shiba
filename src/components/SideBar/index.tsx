@@ -177,7 +177,7 @@ const SideBar: React.FC = () => {
           <h2 className="heading">Full On BlockChain</h2>
           <div className="content-cont">
             <div className="content">
-              <Link to="/">
+              <Link to="/my-full-on-blockchain-nft">
                 <p className="name">Full On BlockChain</p>
                 <p className="number">
                   {balanceData?.[5] ? (

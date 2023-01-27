@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'urql'
+import Skeleton from 'react-loading-skeleton'
 
 import FooterBottom from 'components/FooterBottom/index'
 import { fullOnBlockchainPageQuery } from 'constants/query'
@@ -8,6 +9,7 @@ import { formatAddress } from 'constants/variants'
 import { useGetNftsByIdQuery } from 'store/slices/alchemyApiSlice'
 import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 
+import camera from 'assets/icon/Camera.svg'
 import CardLoading from 'components/Loading/CardLoading'
 import cardImg from 'assets/img/card-3.png'
 import './ContractNftsPage.css'
@@ -17,7 +19,7 @@ const Card: React.FC<IFullOnBlockchainArtToken> = ({
   id,
   domainName,
 }) => {
-  const { data } = useGetNftsByIdQuery({
+  const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
     contractAddress: ART_NFT_CONTRACT_ADDRESS,
   })
@@ -35,10 +37,16 @@ const Card: React.FC<IFullOnBlockchainArtToken> = ({
     <div className="website-card-container">
       <div className="card">
         <div className="card-top">
-          {imageError ? (
-            <img src={cardImg} alt="" />
+          {isLoading ? (
+            <Skeleton height={'100%'} />
+          ) : !data || imageError ? (
+            <img src={camera} alt="card" />
           ) : (
-            <img src={data?.metadata?.logo} alt="" />
+            <img
+              src={data?.metadata?.logo}
+              alt="card"
+              onError={() => setImageError(true)}
+            />
           )}
         </div>
         <div className="card-center">
@@ -48,6 +56,17 @@ const Card: React.FC<IFullOnBlockchainArtToken> = ({
         <div className="card-bottom">
           <p>Token Id</p>
           <p>#{id}</p>
+          <a
+            href={`${
+              window.location.protocol +
+              '//' +
+              domainName +
+              '.' +
+              window.location.host
+            }`}
+          >
+            <button style={{ width: '50px' }}>Get In</button>
+          </a>
         </div>
       </div>
       <div style={{ padding: '5px 0' }}>

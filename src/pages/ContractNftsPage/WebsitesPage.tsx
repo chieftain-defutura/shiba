@@ -11,14 +11,17 @@ import { WEBSITE_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 import camera from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 import CardLoading from 'components/Loading/CardLoading'
+import { Link } from 'react-router-dom'
+import { getApp } from 'utils/helper'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
+  const read = getApp()
   const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
     contractAddress: WEBSITE_NFT_CONTRACT_ADDRESS,
   })
   const [imageError, setImageError] = useState(false)
-
+  console.log(read)
   useEffect(() => {
     if (!data) return
 
@@ -27,6 +30,18 @@ const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
     image.onerror = () => setImageError(true)
   }, [data])
 
+  // useEffect(() => {
+  //   let host = window.location.host
+  //   const arr = host.split('.').slice(0, host.includes('localhost') ? -1 : -2)
+  //   if (arr.length > 0) {
+  //     host =
+  //       window.location.protocol +
+  //       '//' +
+  //       domainName +
+  //       '.' +
+  //       window.location.host
+  //   }
+  // }, [])
   return (
     <div className="website-card-container">
       <div className="card">
@@ -50,9 +65,17 @@ const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
         <div className="card-bottom">
           <p>Token Id</p>
           <p>#{id}</p>
-          {/* <Link to={`/my-digital-shop/${f}`}>
-  <button style={{ width: "50px" }}>Get In</button>
-</Link> */}
+          <a
+            href={`${
+              window.location.protocol +
+              '//' +
+              domainName +
+              '.' +
+              window.location.host
+            }`}
+          >
+            <button style={{ width: '50px' }}>Get In</button>
+          </a>
         </div>
       </div>
       <div style={{ padding: '5px 0' }}>

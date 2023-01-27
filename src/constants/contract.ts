@@ -1,4 +1,5 @@
 import {
+  ART_NFT_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -188,6 +189,7 @@ export const ContractDetails: IContractDetails = {
         websiteToken(id:$id){
           id
           domainName
+          link
           tokenUri
           owner {
             id
@@ -198,6 +200,41 @@ export const ContractDetails: IContractDetails = {
     userNftsQuery: `
     query($owner:String!){
       websiteTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
+  },
+  'my-full-on-blockchain-nft': {
+    address: ART_NFT_CONTRACT_ADDRESS,
+    pathName: 'my-full-on-blockchain-nft',
+    stockManagement: false,
+    file: true,
+    appearanceSetting: true,
+    residual: true,
+    sell: true,
+    finalizeToken: true,
+    transfer: true,
+    query: `
+      query($id:String!) {
+        fullOnBlockchainArtToken(id:$id){
+          id
+          domainName
+          link
+          tokenUri
+          owner {
+            id
+          }
+        }
+      }
+    `,
+    userNftsQuery: `
+    query($owner:String!){
+      fullOnBlockchainArtTokens(where:{owner:$owner}){
         id
         owner {
           id
