@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import { create } from 'ipfs-http-client'
 import { useTransactionModal } from 'context/TransactionContext'
 import { BsArrowLeftCircle } from 'react-icons/bs'
@@ -49,7 +49,6 @@ const File: React.FC<IFile> = ({
   const { data: signerData } = useSigner()
   const { id } = useParams()
   const { address } = useAccount()
-  const inputFile = useRef<any>(null)
   const { setTransaction } = useTransactionModal()
   const [openFile, setOpenFile] = useState<File | null>(null)
   const [hash, setHash] = useState('')
@@ -73,14 +72,9 @@ const File: React.FC<IFile> = ({
 
   useEffect(() => {
     if (!data) return
-  }, [])
+  }, [data])
 
   console.log(step)
-
-  const onButtonClick = () => {
-    if (link) return
-    inputFile.current.click()
-  }
 
   const upload = async () => {
     if (!address || !signerData || link) return

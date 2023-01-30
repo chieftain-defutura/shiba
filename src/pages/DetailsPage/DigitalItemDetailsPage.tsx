@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import Slider from 'react-slick'
 import { ethers } from 'ethers'
 import { useQuery } from 'urql'
@@ -42,7 +42,6 @@ const DigitalItemsDetailsPage: React.FC = () => {
   })
 
   const { data, fetching } = result
-
   return (
     <HomeLayout>
       {fetching ? (
@@ -68,7 +67,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   metadata,
   price,
   category,
-  status,
+  owner,
 }) => {
   const { itemId } = useParams()
   const { data: signerData } = useSigner()
@@ -80,7 +79,6 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   const [digitalErrorImgThree, setDigitalErrorImgThree] = useState(false)
   const [preview, setPreview] = useState(false)
   const user = useAppSelector((store) => store.user)
-  console.log(metadata)
 
   const {
     data: ipfsData,
@@ -89,7 +87,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   } = useGetIpfsDataQuery({
     hash: metadata,
   })
-  console.log(ipfsData)
+  console.log(shopDetails.owner.id)
+  const existingOwner = useMemo(() => {
+    if (!owner) return []
+    return owner.map((o) => o.id)
+  }, [owner])
 
   const handleBuy = async () => {
     if (!address || !signerData) return
@@ -330,8 +332,18 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                   {erc20Token.symbol}
                 </p>
               </div>
-              {status === 'ACTIVE' && <button onClick={handleBuy}>Buy</button>}
-              {status === 'PURCHASED' && <h3>Item is Sold</h3>}
+              {shopDetails.owner.id.toLowerCase() === address?.toLowerCase() ? (
+                <div>you are the owner</div>
+              ) : !address ? (
+                <button onClick={handleBuy}>Buy</button>
+              ) : !existingOwner.includes(address?.toLocaleLowerCase()) ? (
+                <button onClick={handleBuy}>Buy</button>
+              ) : (
+                <div>You have already purchased</div>
+              )}
+
+              {/* {status === 'ACTIVE' && <button onClick={handleBuy}>Buy</button>}
+              {status === 'PURCHASED' && <h3>Item is Sold</h3>} */}
             </div>
           </div>
         </div>
@@ -352,7 +364,6 @@ export const LongText: React.FC<ILongText> = ({ content, limit }) => {
 
   const showMore = () => setShowAll(true)
   const showLess = () => setShowAll(false)
-  console.log(content)
 
   if (content.length <= limit) {
     // there is nothing more to show

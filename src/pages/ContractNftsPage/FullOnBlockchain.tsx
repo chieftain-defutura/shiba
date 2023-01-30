@@ -11,7 +11,6 @@ import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 
 import camera from 'assets/icon/Camera.svg'
 import CardLoading from 'components/Loading/CardLoading'
-import cardImg from 'assets/img/card-3.png'
 import './ContractNftsPage.css'
 
 const Card: React.FC<IFullOnBlockchainArtToken> = ({

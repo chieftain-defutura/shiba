@@ -1,3 +1,5 @@
+// import { string } from 'yup/lib/locale'
+
 export type ISaleStauts =
   | 'ACTIVE'
   | 'PURCHASED'
@@ -79,11 +81,14 @@ export type IDigitalItem = {
     id: string
     domainId: string
     domainName: string
+    owner: {
+      id: string
+    }
   }
   price: string
   owner: {
     id: string
-  } | null
+  }[]
   subcategory: string
   category: string
 }

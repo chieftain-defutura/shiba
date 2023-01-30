@@ -7,7 +7,6 @@ import { create } from 'ipfs-http-client'
 import { ethers } from 'ethers'
 import { Buffer } from 'buffer'
 import * as Yup from 'yup'
-import axios from 'axios'
 
 import {
   BONE_TOKEN_ADDRESS,

@@ -9,7 +9,6 @@ const getApp = () => {
       '.' +
       window.location.host
   }
-  console.log(arr)
   return arr
 }
 

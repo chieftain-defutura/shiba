@@ -121,6 +121,10 @@ query($id: String!){
       id
       domainId
       domainName
+      owner{
+        id
+      }
+
     }
 		price
     owner {

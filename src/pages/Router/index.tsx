@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { subdomainNameSearch } from 'constants/query'
 import { IWebsiteToken } from 'constants/types'
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { useQuery } from 'urql'
 
 const Router = () => {
@@ -78,7 +78,7 @@ interface IWebsiteLink {
 }
 const WebsiteLink: React.FC<IWebsiteLink> = ({ data, link }) => {
   const [linkData, setLinkData] = useState([])
-  const getData = async () => {
+  const getData = useCallback(async () => {
     if (!data) return
 
     const { data: linkDatas } = await axios.get(
@@ -86,11 +86,11 @@ const WebsiteLink: React.FC<IWebsiteLink> = ({ data, link }) => {
     )
 
     setLinkData(linkDatas)
-  }
+  }, [link, data])
 
   useEffect(() => {
     getData()
-  }, [link])
+  }, [getData])
 
   useEffect(() => {
     if (!link) return

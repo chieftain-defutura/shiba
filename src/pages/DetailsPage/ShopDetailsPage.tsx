@@ -91,6 +91,8 @@ const ShopDetails: React.FC<{
     { skip: !shopData.tokenUri },
   )
 
+  console.log(data)
+
   return data ? (
     <div className="shoesboutique-container-right">
       <h2 className="title">
@@ -542,17 +544,17 @@ const ShopDetails: React.FC<{
           <img src={homeIcon} alt="home" />
           <img src={questionIcon} alt="question" />
           <img src={videoIcon} alt="video" />
-          <a href="" target="_blank" rel="noreferrer">
+          <a href={data.instagram} target="_blank" rel="noreferrer">
             <div className="insta">
               <img src={instagramIcon} alt="instagram" />
             </div>
           </a>
-          <a href="" target="_blank" rel="noreferrer">
+          <a href={data.twitter} target="_blank" rel="noreferrer">
             <div className="insta">
               <img src={twitterIcon} alt="twitter" />
             </div>
           </a>
-          <a href="" target="_blank" rel="noreferrer">
+          <a href={data.website} target="_blank" rel="noreferrer">
             <div className="insta">
               <img src={descordIcon} alt="descord" />
             </div>

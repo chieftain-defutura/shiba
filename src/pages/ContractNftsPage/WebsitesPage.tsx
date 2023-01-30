@@ -11,7 +11,6 @@ import { WEBSITE_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 import camera from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 import CardLoading from 'components/Loading/CardLoading'
-import { Link } from 'react-router-dom'
 import { getApp } from 'utils/helper'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {

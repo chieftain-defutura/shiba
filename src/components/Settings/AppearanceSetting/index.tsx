@@ -5,7 +5,6 @@ import { useSigner, useAccount } from 'wagmi'
 import { create } from 'ipfs-http-client'
 import { Buffer } from 'buffer'
 import { ethers } from 'ethers'
-import axios from 'axios'
 
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
@@ -89,7 +88,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
 
       const JsonHash = await client.add(JSON.stringify(values))
       const imagePath = JsonHash.path
-      const ImgHash = `https://gateway.pinata.cloud/ipfs/${JsonHash.path}`
+      const ImgHash = `https://gateway.pinata.cloud/ipfs/${imagePath}`
       console.log(ImgHash)
       const contract = new ethers.Contract(
         contractAddress,

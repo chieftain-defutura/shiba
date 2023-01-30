@@ -6,7 +6,6 @@ import { create } from 'ipfs-http-client'
 import { ethers } from 'ethers'
 import { Buffer } from 'buffer'
 import * as Yup from 'yup'
-import axios from 'axios'
 
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { TokenData } from 'constants/tokenData'
