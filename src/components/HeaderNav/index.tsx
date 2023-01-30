@@ -61,12 +61,16 @@ const HeaderNav: React.FC = () => {
     dispatch,
   ])
 
+  const totalItems = useMemo(() => {
+    return 0
+  }, [])
+
   return (
     <div className="header-nav-container">
       <div className="header-nav">
         <ul>
           <li>
-            <button>My Items: 105</button>
+            <button>My Items: {totalItems}</button>
           </li>
           <li>
             SHI:

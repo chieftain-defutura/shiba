@@ -278,8 +278,8 @@ export const userCollectionsQuery = `
   }
 `
 export const userDigitalItemsPageQuery = `
-query($owner: String!,$category: String!){
-  digitalItems(where:{owner:$owner,category:$category}){
+query($owner: [String!],$category: String!){
+  digitalItems(where:{owner_contains:$owner,category:$category}){
     id
     itemName
     fullproduct
