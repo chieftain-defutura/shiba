@@ -12,6 +12,7 @@ import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 import camera from 'assets/icon/Camera.svg'
 import CardLoading from 'components/Loading/CardLoading'
 import './ContractNftsPage.css'
+import { Link } from 'react-router-dom'
 
 const Card: React.FC<IFullOnBlockchainArtToken> = ({
   owner,
@@ -33,48 +34,40 @@ const Card: React.FC<IFullOnBlockchainArtToken> = ({
   }, [data])
 
   return (
-    <div className="website-card-container">
-      <div className="card">
-        <div className="card-top">
-          {isLoading ? (
-            <Skeleton height={'100%'} />
-          ) : !data || imageError ? (
-            <img src={camera} alt="card" />
-          ) : (
-            <img
-              src={data?.metadata?.logo}
-              alt="card"
-              onError={() => setImageError(true)}
-            />
-          )}
+    <Link to={`/site/${domainName}`}>
+      <div className="website-card-container">
+        <div className="card">
+          <div className="card-top">
+            {isLoading ? (
+              <Skeleton height={'100%'} />
+            ) : !data || imageError ? (
+              <img src={camera} alt="card" />
+            ) : (
+              <img
+                src={data?.metadata?.logo}
+                alt="card"
+                onError={() => setImageError(true)}
+              />
+            )}
+          </div>
+          <div className="card-center">
+            <h3 className="title">Owner</h3>
+            <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+          </div>
+          <div className="card-bottom">
+            <p>Token Id</p>
+            <p>#{id}</p>
+            {/* <button style={{ width: '50px' }}>Get In</button> */}
+          </div>
         </div>
-        <div className="card-center">
-          <h3 className="title">Owner</h3>
-          <h4 className="sub-title">{formatAddress(owner.id)}</h4>
-        </div>
-        <div className="card-bottom">
-          <p>Token Id</p>
-          <p>#{id}</p>
-          <a
-            href={`${
-              window.location.protocol +
-              '//' +
-              domainName +
-              '.' +
-              window.location.host
-            }`}
-          >
-            <button style={{ width: '50px' }}>Get In</button>
-          </a>
+        <div style={{ padding: '5px 0' }}>
+          <p style={{ fontSize: '14px' }}>Domain:</p>
+          <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+            <b>{domainName}</b>
+          </p>
         </div>
       </div>
-      <div style={{ padding: '5px 0' }}>
-        <p style={{ fontSize: '14px' }}>Domain:</p>
-        <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-          <b>{domainName}</b>
-        </p>
-      </div>
-    </div>
+    </Link>
   )
 }
 

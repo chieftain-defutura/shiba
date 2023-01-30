@@ -45,6 +45,7 @@ const File: React.FC<IFile> = ({
   contractAddress,
   contractData,
   link,
+  domainName,
 }) => {
   const { data: signerData } = useSigner()
   const { id } = useParams()
@@ -155,17 +156,24 @@ const File: React.FC<IFile> = ({
           onClick={() => setClickCard(null)}
         />
         {link ? (
-          <a
-            href={`https://dapplink.infura-ipfs.io/ipfs/${link}`}
-            style={{ textAlign: 'center', paddingBottom: '20px' }}
-          >
-            `https://dapplink.infura-ipfs.io/ipfs/${link}`
-          </a>
+          <p style={{ textAlign: 'center' }}>
+            <a
+              href={`/site/${domainName}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textAlign: 'center',
+                paddingBottom: '20px',
+              }}
+            >
+              click here to visit your site
+            </a>
+          </p>
         ) : (
           <h5
             style={{ color: 'red', textAlign: 'center', paddingBottom: '20px' }}
           >
-            No Link
+            You have not linked any files on your site
           </h5>
         )}
       </div>
@@ -178,10 +186,15 @@ const File: React.FC<IFile> = ({
             pointerEvents: step === 'selectfile' ? 'auto' : 'none',
           }}
         >
-          <div className="image">
-            <img src={Folder} alt="" />
-          </div>
+          <label htmlFor="file">
+            <div className="image">
+              <img src={Folder} alt="" />
+            </div>
+
+            <h2>Select File</h2>
+          </label>
           <input
+            id="file"
             type="file"
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               if (!e.target.files || !e.target.files.length || link) return
@@ -191,9 +204,8 @@ const File: React.FC<IFile> = ({
             accept={
               contractData.pathName === 'my-websites' ? '.html' : 'jpg,png,svg'
             }
+            style={{ display: 'none' }}
           />
-
-          <h2>Select File</h2>
         </div>
 
         <div

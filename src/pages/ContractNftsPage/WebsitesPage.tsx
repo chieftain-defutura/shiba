@@ -12,6 +12,7 @@ import camera from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 import CardLoading from 'components/Loading/CardLoading'
 import { getApp } from 'utils/helper'
+import { Link } from 'react-router-dom'
 
 const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
   const read = getApp()
@@ -29,61 +30,41 @@ const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
     image.onerror = () => setImageError(true)
   }, [data])
 
-  // useEffect(() => {
-  //   let host = window.location.host
-  //   const arr = host.split('.').slice(0, host.includes('localhost') ? -1 : -2)
-  //   if (arr.length > 0) {
-  //     host =
-  //       window.location.protocol +
-  //       '//' +
-  //       domainName +
-  //       '.' +
-  //       window.location.host
-  //   }
-  // }, [])
   return (
-    <div className="website-card-container">
-      <div className="card">
-        <div className="card-top">
-          {isLoading ? (
-            <Skeleton height={'100%'} />
-          ) : !data || imageError ? (
-            <img src={camera} alt="card" />
-          ) : (
-            <img
-              src={data?.metadata?.logo}
-              alt="card"
-              onError={() => setImageError(true)}
-            />
-          )}
+    <Link to={`/site/${domainName}`}>
+      <div className="website-card-container">
+        <div className="card">
+          <div className="card-top">
+            {isLoading ? (
+              <Skeleton height={'100%'} />
+            ) : !data || imageError ? (
+              <img src={camera} alt="card" />
+            ) : (
+              <img
+                src={data?.metadata?.logo}
+                alt="card"
+                onError={() => setImageError(true)}
+              />
+            )}
+          </div>
+          <div className="card-center">
+            <h3 className="title">Owner</h3>
+            <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+          </div>
+          <div className="card-bottom">
+            <p>Token Id</p>
+            <p>#{id}</p>
+            {/* <button style={{ width: '50px' }}>Get In</button> */}
+          </div>
         </div>
-        <div className="card-center">
-          <h3 className="title">Owner</h3>
-          <h4 className="sub-title">{formatAddress(owner.id)}</h4>
-        </div>
-        <div className="card-bottom">
-          <p>Token Id</p>
-          <p>#{id}</p>
-          <a
-            href={`${
-              window.location.protocol +
-              '//' +
-              domainName +
-              '.' +
-              window.location.host
-            }`}
-          >
-            <button style={{ width: '50px' }}>Get In</button>
-          </a>
+        <div style={{ padding: '5px 0' }}>
+          <p style={{ fontSize: '14px' }}>Domain:</p>
+          <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+            <b>{domainName}</b>
+          </p>
         </div>
       </div>
-      <div style={{ padding: '5px 0' }}>
-        <p style={{ fontSize: '14px' }}>Domain:</p>
-        <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-          <b>{domainName}</b>
-        </p>
-      </div>
-    </div>
+    </Link>
   )
 }
 
