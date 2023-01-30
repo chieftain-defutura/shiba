@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { BsArrowLeftCircle } from 'react-icons/bs'
 import { useQuery } from 'urql'
 import { useParams } from 'react-router-dom'
@@ -92,7 +92,6 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   contractData,
   tokenData,
 }) => {
-  const { address } = useAccount()
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState(false)
   const [clickRemoveItem, setClickRemoveItem] = useState(false)
@@ -367,7 +366,7 @@ const SellBox: React.FC<ISell> = ({ setClickCard, contractData }) => {
     },
     pause: !address || contractData.pathName !== 'my-goods-shop',
   })
-  const { data, fetching } = result
+  const { data } = result
   console.log(data?.shipments)
 
   return (

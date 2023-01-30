@@ -80,6 +80,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   const [digitalErrorImgThree, setDigitalErrorImgThree] = useState(false)
   const [preview, setPreview] = useState(false)
   const user = useAppSelector((store) => store.user)
+  console.log(metadata)
 
   const {
     data: ipfsData,
@@ -351,6 +352,7 @@ export const LongText: React.FC<ILongText> = ({ content, limit }) => {
 
   const showMore = () => setShowAll(true)
   const showLess = () => setShowAll(false)
+  console.log(content)
 
   if (content.length <= limit) {
     // there is nothing more to show
