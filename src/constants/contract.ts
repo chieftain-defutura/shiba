@@ -23,6 +23,7 @@ export interface IContractData {
   finalizeToken: boolean
   transfer: boolean
   showDetails?: boolean
+  fileCategory?: boolean
   query: string
   userNftsQuery: string
 }
@@ -184,6 +185,7 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    fileCategory: true,
     query: `
       query($id:String!) {
         websiteToken(id:$id){
@@ -191,6 +193,7 @@ export const ContractDetails: IContractDetails = {
           domainName
           link
           tokenUri
+          category
           owner {
             id
           }
@@ -219,6 +222,7 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    fileCategory: true,
     query: `
       query($id:String!) {
         fullOnBlockchainArtToken(id:$id){
@@ -226,6 +230,7 @@ export const ContractDetails: IContractDetails = {
           domainName
           link
           tokenUri
+          category
           owner {
             id
           }

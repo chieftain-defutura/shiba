@@ -40,13 +40,11 @@ const Router = () => {
       setData('fullOnBlockchainArtTokens')
       return
     }
-
-    console.log(null)
   }, [data])
 
   if (fetching)
     return (
-      <div style={{ height: '90vh' }}>
+      <div style={{ height: '100vh', display: 'grid', placeItems: 'center' }}>
         <Loading />
       </div>
     )
@@ -58,7 +56,7 @@ const Router = () => {
   if (datas === 'fullOnBlockchainArtTokens') {
     return (
       <div>
-        {data ? (
+        {link ? (
           <div>
             <img
               style={{ display: 'block', margin: 'auto' }}

@@ -31,6 +31,7 @@ interface IReactModal {
   handleClose?: () => void
   isOpen: boolean
   overlay?: boolean
+  style?: React.CSSProperties
 }
 
 interface IModal {
@@ -38,6 +39,7 @@ interface IModal {
   handleClose?: () => void
   isOpen?: boolean
   overlay?: boolean
+  style?: React.CSSProperties
 }
 
 const BaseModal: React.FC<IModal> = ({
@@ -45,6 +47,7 @@ const BaseModal: React.FC<IModal> = ({
   handleClose,
   isOpen,
   overlay = true,
+  style,
 }) => {
   if (!isOpen) return null
 
@@ -60,6 +63,7 @@ const BaseModal: React.FC<IModal> = ({
             initial="initial"
             exit="initial"
             key="content"
+            style={style}
           >
             {children}
           </motion.div>
