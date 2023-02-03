@@ -33,6 +33,7 @@ import cardImgEighth from 'assets/img/card-11.png'
 import './ShopSetting.css'
 import File from 'components/Settings/File'
 import Modal from 'components/Model'
+import FileCategory from 'components/Settings/FileCategory'
 
 type IShopSetting = {
   setShopSetting: React.Dispatch<boolean>
@@ -121,6 +122,23 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
               >
                 <img src={cardImgOne} alt="card" className="card-img-1" />
                 <p>Stock Management</p>
+              </div>
+            )}
+
+            {contractData.fileCategory === true && (
+              <div
+                className="card"
+                onClick={() => setClickCard('file_category')}
+              >
+                <p>
+                  WWW/
+                  <br />
+                  File/
+                  <br />
+                  Art/
+                  <br />
+                  Other
+                </p>
               </div>
             )}
 
@@ -342,6 +360,14 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
             setClickCard={setClickCard}
           />
         </div>
+      )}
+
+      {clickCard === 'file_category' && (
+        <FileCategory
+          tokenData={tokenData}
+          contractAddress={contractData.address}
+          setClickCard={setClickCard}
+        />
       )}
     </>
   )

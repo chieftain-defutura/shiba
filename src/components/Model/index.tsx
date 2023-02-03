@@ -1,4 +1,4 @@
-import React, { useEffect, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -31,6 +31,7 @@ interface IReactModal {
   handleClose?: () => void
   isOpen: boolean
   overlay?: boolean
+  style?: React.CSSProperties
 }
 
 interface IModal {
@@ -38,6 +39,7 @@ interface IModal {
   handleClose?: () => void
   isOpen?: boolean
   overlay?: boolean
+  style?: React.CSSProperties
 }
 
 const BaseModal: React.FC<IModal> = ({
@@ -45,14 +47,8 @@ const BaseModal: React.FC<IModal> = ({
   handleClose,
   isOpen,
   overlay = true,
+  style,
 }) => {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-
-    return () => {
-      document.body.style.overflow = 'auto'
-    }
-  }, [])
   if (!isOpen) return null
 
   return (
@@ -67,6 +63,7 @@ const BaseModal: React.FC<IModal> = ({
             initial="initial"
             exit="initial"
             key="content"
+            style={style}
           >
             {children}
           </motion.div>

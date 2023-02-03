@@ -21,25 +21,23 @@
   --montserratFont: 'Montserrat', sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  background-color: var(--bgColor);
-}
 .App {
   max-width: 1440px;
   min-width: 1200px;
   width: 100%;
   margin: 0 auto;
+  background-color: var(--bgColor);
+}
+
+.App * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 /* COMMON STYLES */
 
-.section-title {
+.App .section-title {
   font-weight: 800;
   font-size: 55px;
   line-height: 67px;
@@ -47,13 +45,13 @@ body {
   color: var(--textColorTwo);
 }
 
-.btn-container {
+.App .btn-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.btn-container button {
+.App .btn-container button {
   width: 224px;
   height: 66px;
   opacity: 0.9;

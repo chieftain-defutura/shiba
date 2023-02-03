@@ -347,7 +347,7 @@ const ShopDetails: React.FC<{
   ) : (
     <div className="shoesboutique-container-right">
       <h2 className="title">
-        <div>domain name</div>
+        <div>{shopData.domainName}</div>
         {upVoteClick && (
           <div className="vote-detail">
             <img src={upVoteIcon} alt="up vote" />
@@ -544,21 +544,27 @@ const ShopDetails: React.FC<{
           <img src={homeIcon} alt="home" />
           <img src={questionIcon} alt="question" />
           <img src={videoIcon} alt="video" />
-          <a href={data.instagram} target="_blank" rel="noreferrer">
-            <div className="insta">
-              <img src={instagramIcon} alt="instagram" />
-            </div>
-          </a>
-          <a href={data.twitter} target="_blank" rel="noreferrer">
-            <div className="insta">
-              <img src={twitterIcon} alt="twitter" />
-            </div>
-          </a>
-          <a href={data.website} target="_blank" rel="noreferrer">
-            <div className="insta">
-              <img src={descordIcon} alt="descord" />
-            </div>
-          </a>
+          {data?.instagram && (
+            <a href={data.instagram} target="_blank" rel="noreferrer">
+              <div className="insta">
+                <img src={instagramIcon} alt="instagram" />
+              </div>
+            </a>
+          )}
+          {data?.twitter && (
+            <a href={data.twitter} target="_blank" rel="noreferrer">
+              <div className="insta">
+                <img src={twitterIcon} alt="twitter" />
+              </div>
+            </a>
+          )}
+          {data?.website && (
+            <a href={data.website} target="_blank" rel="noreferrer">
+              <div className="insta">
+                <img src={descordIcon} alt="descord" />
+              </div>
+            </a>
+          )}
         </div>
       </div>
     </div>

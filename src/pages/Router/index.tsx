@@ -1,22 +1,23 @@
 import axios from 'axios'
+import Loading from 'components/Loading'
 import { subdomainNameSearch } from 'constants/query'
 import { IWebsiteToken } from 'constants/types'
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import { useParams } from 'react-router-dom'
 import { useQuery } from 'urql'
 
 const Router = () => {
   const [datas, setData] = useState('')
   const [link, setLink] = useState('')
-
+  const { siteId } = useParams()
+  console.log(siteId)
   const [result] = useQuery<{
     websiteTokens: IWebsiteToken[]
     fullOnBlockchainArtTokens: IWebsiteToken[]
   }>({
     query: subdomainNameSearch,
     variables: {
-      domainName: `${window.location.hostname.split('.')[0]}.${
-        window.location.hostname.split('.')[1]
-      }`,
+      domainName: siteId,
     },
   })
   const { data, fetching } = result
@@ -39,11 +40,14 @@ const Router = () => {
       setData('fullOnBlockchainArtTokens')
       return
     }
-
-    console.log(null)
   }, [data])
 
-  if (fetching) return <div>loading...</div>
+  if (fetching)
+    return (
+      <div style={{ height: '100vh', display: 'grid', placeItems: 'center' }}>
+        <Loading />
+      </div>
+    )
 
   if (datas === 'website') {
     return <WebsiteLink data={data} link={link} />
@@ -52,7 +56,7 @@ const Router = () => {
   if (datas === 'fullOnBlockchainArtTokens') {
     return (
       <div>
-        {data ? (
+        {link ? (
           <div>
             <img
               style={{ display: 'block', margin: 'auto' }}
@@ -61,7 +65,16 @@ const Router = () => {
             />
           </div>
         ) : (
-          <div>no data</div>
+          <div
+            style={{
+              fontSize: '20px',
+              display: 'grid',
+              placeItems: 'center',
+              height: '90vh',
+            }}
+          >
+            File is not Linked Yet
+          </div>
         )}
       </div>
     )
@@ -110,7 +123,14 @@ const WebsiteLink: React.FC<IWebsiteLink> = ({ data, link }) => {
       {link ? (
         <div dangerouslySetInnerHTML={createMarkup()} />
       ) : (
-        <div style={{ color: '#fff', fontSize: '20px' }}>
+        <div
+          style={{
+            fontSize: '20px',
+            display: 'grid',
+            placeItems: 'center',
+            height: '90vh',
+          }}
+        >
           File is not Linked Yet
         </div>
       )}

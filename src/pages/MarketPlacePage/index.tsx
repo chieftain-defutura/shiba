@@ -13,12 +13,15 @@ import { parseUnits } from 'ethers/lib/utils.js'
 import useDebounce from 'hooks/useDebounce'
 import {
   BONE_TOKEN_ADDRESS,
+  CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   LEASH_TOKEN_ADDRESS,
   PAW_TOKEN_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
+  ART_NFT_CONTRACT_ADDRESS,
 } from 'utils/contractAddress'
 import './MarketPlacePage.css'
 
@@ -513,6 +516,18 @@ const corpoteAccordionData = [
   {
     title: 'Digital Goods Shop',
     address: DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
+  },
+  {
+    title: 'Websites',
+    address: WEBSITE_NFT_CONTRACT_ADDRESS,
+  },
+  {
+    title: 'Charities',
+    address: CHARITIES_NFT_CONTRACT_ADDRESS,
+  },
+  {
+    title: 'Full on blockchain Art',
+    address: ART_NFT_CONTRACT_ADDRESS,
   },
   // {
   //   title: 'Charity Organisation',
