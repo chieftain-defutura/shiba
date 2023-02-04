@@ -1,25 +1,27 @@
 import axios from 'axios'
 import Loading from 'components/Loading'
 import { subdomainNameSearch } from 'constants/query'
-import { IWebsiteToken } from 'constants/types'
+import { IFullOnBlockchainArtToken, IWebsiteToken } from 'constants/types'
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'urql'
+import FullOnChainArt from './FullOnChainArt'
 
 const Router = () => {
   const [datas, setData] = useState('')
   const [link, setLink] = useState('')
   const { siteId } = useParams()
-  console.log(siteId)
+
   const [result] = useQuery<{
     websiteTokens: IWebsiteToken[]
-    fullOnBlockchainArtTokens: IWebsiteToken[]
+    fullOnBlockchainArtTokens: IFullOnBlockchainArtToken[]
   }>({
     query: subdomainNameSearch,
     variables: {
       domainName: siteId,
     },
   })
+
   const { data, fetching } = result
 
   useMemo(() => {
@@ -32,11 +34,6 @@ const Router = () => {
       return
     }
     if (data.fullOnBlockchainArtTokens.length) {
-      console.log(
-        data.fullOnBlockchainArtTokens[0],
-        'fullOnBlockchainArtTokens',
-      )
-      setLink(data.fullOnBlockchainArtTokens[0].link)
       setData('fullOnBlockchainArtTokens')
       return
     }
@@ -53,30 +50,17 @@ const Router = () => {
     return <WebsiteLink data={data} link={link} />
   }
 
-  if (datas === 'fullOnBlockchainArtTokens') {
-    return (
-      <div>
-        {link ? (
-          <div>
-            <img
-              style={{ display: 'block', margin: 'auto' }}
-              src={`https://dapplink.infura-ipfs.io/ipfs/${link}`}
-              alt=""
-            />
-          </div>
-        ) : (
-          <div
-            style={{
-              fontSize: '20px',
-              display: 'grid',
-              placeItems: 'center',
-              height: '90vh',
-            }}
-          >
-            File is not Linked Yet
-          </div>
-        )}
+  if (
+    datas === 'fullOnBlockchainArtTokens' &&
+    data?.fullOnBlockchainArtTokens.length
+  ) {
+    const artData = data.fullOnBlockchainArtTokens[0]
+    return artData.totalChunks === '0' ? (
+      <div style={{ height: '100vh', display: 'grid', placeItems: 'center' }}>
+        No file is linked yet
       </div>
+    ) : (
+      <FullOnChainArt {...artData} />
     )
   }
 
