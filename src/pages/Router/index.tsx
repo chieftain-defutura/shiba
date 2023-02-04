@@ -1,8 +1,7 @@
-import axios from 'axios'
 import Loading from 'components/Loading'
 import { subdomainNameSearch } from 'constants/query'
 import { IFullOnBlockchainArtToken, IWebsiteToken } from 'constants/types'
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'urql'
 import FullOnChainArt from './FullOnChainArt'
@@ -28,7 +27,6 @@ const Router = () => {
     if (!data) return
 
     if (data.websiteTokens.length) {
-      console.log(data.websiteTokens[0], 'website')
       setLink(data.websiteTokens[0].link)
       setData('website')
       return
@@ -74,38 +72,15 @@ interface IWebsiteLink {
   link: string
 }
 const WebsiteLink: React.FC<IWebsiteLink> = ({ data, link }) => {
-  const [linkData, setLinkData] = useState([])
-  const getData = useCallback(async () => {
-    if (!data) return
-
-    const { data: linkDatas } = await axios.get(
-      `https://dapplink.infura-ipfs.io/ipfs/${link}`,
-    )
-
-    setLinkData(linkDatas)
-  }, [link, data])
-
-  useEffect(() => {
-    getData()
-  }, [getData])
-
-  useEffect(() => {
-    if (!link) return
-    if (link) {
-      document.body.style.backgroundColor = 'none'
-    }
-    document.body.style.backgroundColor = 'white'
-    document.body.style.height = '100%'
-  }, [link])
-
-  function createMarkup() {
-    return { __html: linkData as any }
-  }
-
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       {link ? (
-        <div dangerouslySetInnerHTML={createMarkup()} />
+        <iframe
+          title="website"
+          src={`https://dapplink.infura-ipfs.io/ipfs/${link}`}
+          width={'100%'}
+          height={'100%'}
+        />
       ) : (
         <div
           style={{
