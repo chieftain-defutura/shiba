@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
 
@@ -14,10 +14,22 @@ import CardLoading from 'components/Loading/CardLoading'
 import './ContractNftsPage.css'
 import { Link } from 'react-router-dom'
 
-const Card: React.FC<IFullOnBlockchainArtToken> = ({
+interface IArtToken {
+  id: string
+  domainName: string
+  link: string
+  owner: {
+    id: string
+  }
+  category: string
+  checkBox: string[]
+}
+const Card: React.FC<IArtToken> = ({
   owner,
   id,
   domainName,
+  category,
+  checkBox,
 }) => {
   const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
@@ -34,44 +46,87 @@ const Card: React.FC<IFullOnBlockchainArtToken> = ({
   }, [data])
 
   return (
-    <Link to={`/site/${domainName}`}>
-      <div className="website-card-container">
-        <div className="card">
-          <div className="card-top">
-            {isLoading ? (
-              <Skeleton height={'100%'} />
-            ) : !data || imageError ? (
-              <img src={camera} alt="card" />
-            ) : (
-              <img
-                src={data?.metadata?.logo}
-                alt="card"
-                onError={() => setImageError(true)}
-              />
-            )}
+    <>
+      {checkBox.length <= 0 ? (
+        <Link to={`/site/${domainName}`}>
+          <div className="website-card-container">
+            <div className="card">
+              <div className="card-top">
+                {isLoading ? (
+                  <Skeleton height={'100%'} />
+                ) : !data || imageError ? (
+                  <img src={camera} alt="card" />
+                ) : (
+                  <img
+                    src={data?.metadata?.logo}
+                    alt="card"
+                    onError={() => setImageError(true)}
+                  />
+                )}
+              </div>
+              <div className="card-center">
+                <h3 className="title">Owner</h3>
+                <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+              </div>
+              <div className="card-bottom">
+                <p>Token Id</p>
+                <p>#{id}</p>
+                {/* <button style={{ width: '50px' }}>Get In</button> */}
+              </div>
+            </div>
+            <div style={{ padding: '5px 0' }}>
+              <p style={{ fontSize: '14px' }}>Domain:</p>
+              <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                <b>{domainName}</b>
+              </p>
+            </div>
           </div>
-          <div className="card-center">
-            <h3 className="title">Owner</h3>
-            <h4 className="sub-title">{formatAddress(owner.id)}</h4>
-          </div>
-          <div className="card-bottom">
-            <p>Token Id</p>
-            <p>#{id}</p>
-            {/* <button style={{ width: '50px' }}>Get In</button> */}
-          </div>
-        </div>
-        <div style={{ padding: '5px 0' }}>
-          <p style={{ fontSize: '14px' }}>Domain:</p>
-          <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-            <b>{domainName}</b>
-          </p>
-        </div>
-      </div>
-    </Link>
+        </Link>
+      ) : (
+        checkBox.includes(category) && (
+          <Link to={`/site/${domainName}`}>
+            <div className="website-card-container">
+              <div className="card">
+                <div className="card-top">
+                  {isLoading ? (
+                    <Skeleton height={'100%'} />
+                  ) : !data || imageError ? (
+                    <img src={camera} alt="card" />
+                  ) : (
+                    <img
+                      src={data?.metadata?.logo}
+                      alt="card"
+                      onError={() => setImageError(true)}
+                    />
+                  )}
+                </div>
+                <div className="card-center">
+                  <h3 className="title">Owner</h3>
+                  <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+                </div>
+                <div className="card-bottom">
+                  <p>Token Id</p>
+                  <p>#{id}</p>
+                  {/* <button style={{ width: '50px' }}>Get In</button> */}
+                </div>
+              </div>
+              <div style={{ padding: '5px 0' }}>
+                <p style={{ fontSize: '14px' }}>Domain:</p>
+                <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                  <b>{domainName}</b>
+                </p>
+              </div>
+            </div>
+          </Link>
+        )
+      )}
+    </>
   )
 }
 
 const FullOnBlockchainPage: React.FC = () => {
+  const [artTokenCheckboxs, setArtTokenCheckBox] = useState<string[]>([])
+
   const [result] = useQuery<{
     fullOnBlockchainArtTokens: IFullOnBlockchainArtToken[]
   }>({
@@ -82,6 +137,20 @@ const FullOnBlockchainPage: React.FC = () => {
 
   const nftData = data?.fullOnBlockchainArtTokens ?? []
 
+  const handleChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (artTokenCheckboxs.includes(value.toLowerCase())) {
+      setArtTokenCheckBox((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setArtTokenCheckBox((f) => f.concat(value.toLowerCase()))
+    }
+  }
+
+  console.log(artTokenCheckboxs)
+
   return (
     <div>
       <div className="website-container" style={{ paddingTop: '51px' }}>
@@ -89,18 +158,17 @@ const FullOnBlockchainPage: React.FC = () => {
           <h2 className="heading">Full On Blockchain Art</h2>
 
           <div className="check-box-container">
-            <div className="checkbox-content">
-              <label htmlFor="shib">Art</label>
-              <input id="shib" type="checkbox" />
-            </div>
-            <div className="checkbox-content">
-              <label htmlFor="shib">File</label>
-              <input id="shib" type="checkbox" />
-            </div>
-            <div className="checkbox-content">
-              <label htmlFor="shib">Other</label>
-              <input id="shib" type="checkbox" />
-            </div>
+            {lable.map((f, index) => (
+              <div className="checkbox-content" key={index}>
+                <label htmlFor="shib">{f.label}</label>
+                <input
+                  id="shib"
+                  value={f.label}
+                  type="checkbox"
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div>
@@ -119,7 +187,7 @@ const FullOnBlockchainPage: React.FC = () => {
           ) : (
             <div className="website-container-right">
               {nftData.map((f, idx: number) => (
-                <Card key={idx} {...f} />
+                <Card key={idx} {...f} checkBox={artTokenCheckboxs} />
               ))}
             </div>
           )}
@@ -131,3 +199,5 @@ const FullOnBlockchainPage: React.FC = () => {
 }
 
 export default FullOnBlockchainPage
+
+const lable = [{ label: 'file' }, { label: 'art' }, { label: 'other' }]

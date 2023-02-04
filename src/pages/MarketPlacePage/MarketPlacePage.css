@@ -74,9 +74,10 @@
 }
 
 .marketplace-container-left .accordion-container .drop-down-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 3fr 0.5fr;
   align-items: center;
-  justify-content: space-between;
+  justify-items: start;
   cursor: pointer;
   margin-top: 10px;
   border-bottom: 1px solid #464646;

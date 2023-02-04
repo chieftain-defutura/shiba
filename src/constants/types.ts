@@ -31,6 +31,7 @@ export type IWebsiteToken = {
   owner: {
     id: string
   }
+  category: string
 }
 
 export type IFullOnBlockchainArtToken = {
@@ -40,6 +41,7 @@ export type IFullOnBlockchainArtToken = {
   owner: {
     id: string
   }
+  category: string
 }
 
 export type IPhysicalItem = {

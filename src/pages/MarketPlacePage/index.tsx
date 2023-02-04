@@ -71,6 +71,10 @@ const MarketPlacePage: React.FC = () => {
   const [clickDropDown, setClickDropDown] = useState<string | null>(null)
   const [goodsCheckboxs, setGoodsCheckBox] = useState<string[]>([])
   const [corporateCheckboxs, setCorporateCheckBox] = useState<string[]>([])
+  const [corporateLablesCheckboxs, setCorporateLablesCheckBox] = useState<
+    string[]
+  >([])
+
   const [minValue, setMinValue] = useState('')
   const [maxValue, setMaxValue] = useState('')
   const debouncedDomainName = useDebounce(minValue, 1000)
@@ -79,8 +83,6 @@ const MarketPlacePage: React.FC = () => {
   const [priceDropDown, setPriceDropDown] = useState(false)
   const [currencyDropDown, setCurrencyDropDown] = useState(false)
 
-  console.log(goodsCheckboxs)
-  console.log(setCorporateCheckBox)
   const [goodsDigitalResult] = useQuery({
     query: getGoodsDigitalQuery,
     variables: {
@@ -137,6 +139,17 @@ const MarketPlacePage: React.FC = () => {
       setGoodsCheckBox((f) => f.concat(value.toLowerCase()))
     }
   }
+  const handleLabelChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (corporateLablesCheckboxs.includes(value.toLowerCase())) {
+      setCorporateLablesCheckBox((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setCorporateLablesCheckBox((f) => f.concat(value.toLowerCase()))
+    }
+  }
 
   const handleCorporateChange = ({
     target: { value },
@@ -150,6 +163,7 @@ const MarketPlacePage: React.FC = () => {
     }
   }
 
+  console.log(corporateLablesCheckboxs)
   console.log(corporateCheckboxs)
 
   const handleDropDown = (item: any) => {
@@ -157,6 +171,7 @@ const MarketPlacePage: React.FC = () => {
       return setClickDropDown(null)
     }
     setGoodsCheckBox([])
+    setCorporateLablesCheckBox([])
     setClickDropDown(item.title)
   }
 
@@ -280,16 +295,17 @@ const MarketPlacePage: React.FC = () => {
                 {isAccordionActive === 2 && <span></span>}
               </div>
             </div>
-            <div
-              className={
-                isAccordionActive === 2
-                  ? 'drop-down-container'
-                  : 'drop-down-container active'
-              }
-            >
-              {corpoteAccordionData.map((item, idx) => (
+
+            {corpoteAccordionData.map((item, idx) => (
+              <div
+                key={idx}
+                className={
+                  isAccordionActive === 2
+                    ? 'drop-down-container'
+                    : 'drop-down-container active'
+                }
+              >
                 <div
-                  key={idx}
                   className={
                     clickDropDown === item.title
                       ? 'drop-down-header active'
@@ -300,24 +316,71 @@ const MarketPlacePage: React.FC = () => {
                   }
                 >
                   <p>{item.title}</p>
-                  <div
-                    className="check-box-container"
-                    style={
-                      isAccordionActive === 2
-                        ? { margin: 0, width: 0 }
-                        : { display: 'none' }
-                    }
-                  >
+
+                  {!item.labels ? (
                     <input
                       id="Human Rights"
                       type="checkbox"
                       value={item.address}
                       onChange={handleCorporateChange}
                     />
-                  </div>
+                  ) : (
+                    <input
+                      id="Human Rights"
+                      type="checkbox"
+                      value={item.address}
+                      onChange={handleCorporateChange}
+                    />
+                  )}
+                  <AnimatePresence>
+                    <motion.div
+                      onClick={(e) => e.stopPropagation()}
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: 'auto',
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                    >
+                      <div
+                        className={
+                          clickDropDown === item.title
+                            ? 'drop-down-body active'
+                            : 'drop-down-body'
+                        }
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div className="check-box-container">
+                          {item.labels?.map((label, index) => (
+                            <div className="checkbox-content" key={index}>
+                              <label htmlFor="Human Rights">
+                                {label.label}
+                              </label>
+                              <input
+                                id="Human Rights"
+                                type="checkbox"
+                                value={label.label}
+                                onChange={handleLabelChange}
+                                style={{ marginLeft: '100px' }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
           <div className="price-container">
             <div
@@ -520,6 +583,12 @@ const corpoteAccordionData = [
   {
     title: 'Websites',
     address: WEBSITE_NFT_CONTRACT_ADDRESS,
+    labels: [
+      { label: 'www' },
+      { label: 'art' },
+      { label: 'file' },
+      { label: 'other' },
+    ],
   },
   {
     title: 'Charities',
@@ -528,6 +597,7 @@ const corpoteAccordionData = [
   {
     title: 'Full on blockchain Art',
     address: ART_NFT_CONTRACT_ADDRESS,
+    labels: [{ label: 'art' }, { label: 'file' }, { label: 'other' }],
   },
   // {
   //   title: 'Charity Organisation',

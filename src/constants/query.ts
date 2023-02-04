@@ -19,6 +19,7 @@ export const websitePageQuery = `
         owner {
           id
         }
+        category
     }
   }
 `
@@ -65,6 +66,7 @@ export const fullOnBlockchainPageQuery = `
         owner {
           id
         }
+        category
     }
   }
 `
