@@ -295,9 +295,7 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
             id="appearance-settings-container"
             style={{ marginTop: '40px' }}
           >
-            <h2 className="title">
-              {(!clickAddItem && clickCard) || (clickAddItem && clickAddItem)}
-            </h2>
+            <h2 className="title">File</h2>
             <File
               contractData={contractData}
               setClickCard={setClickCard}

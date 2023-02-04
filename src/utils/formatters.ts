@@ -30,3 +30,18 @@ export const formatTokenUnits = (value: string | number, decimals: string) =>
 
 export const parseTokenUnits = (value: string, decimals: string) =>
   parseUnits(value, decimals)
+
+export const restoredChunks = (chunks: string[]) => {
+  const restoredChunks = chunks.map((chunkString) => {
+    const decodedString = atob(chunkString)
+    const restoredChunk = new Uint8Array(decodedString.length)
+    for (let i = 0; i < decodedString.length; i++) {
+      restoredChunk[i] = decodedString.charCodeAt(i)
+    }
+    return restoredChunk
+  })
+
+  const restoredImage = new Blob(restoredChunks, { type: 'image/jpeg' })
+  const restoredImageURL = URL.createObjectURL(restoredImage)
+  return restoredImageURL
+}

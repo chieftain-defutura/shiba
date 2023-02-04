@@ -36,12 +36,20 @@ export type IWebsiteToken = {
 
 export type IFullOnBlockchainArtToken = {
   id: string
+  tokenId: string
   domainName: string
-  link: string
+  mimeType: string
+  totalChunks: string
   owner: {
     id: string
   }
   category: string
+}
+
+export type IChunksData = {
+  id: string
+  tokenId: string
+  chunkData: string
 }
 
 export type IPhysicalItem = {

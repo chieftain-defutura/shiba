@@ -228,7 +228,7 @@ export const ContractDetails: IContractDetails = {
         fullOnBlockchainArtToken(id:$id){
           id
           domainName
-          link
+          totalChunks
           tokenUri
           category
           owner {

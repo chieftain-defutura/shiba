@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useAccount, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 import { Buffer } from 'buffer'
+import { useQuery } from 'urql'
 
 import websiteABI from '../../../utils/abi/websiteABI.json'
 import Folder from '../../../assets/icon/folder.png'
@@ -13,9 +14,11 @@ import Upload from '../../../assets/icon/upload.svg'
 import Links from '../../../assets/icon/link.png'
 import Unlink from '../../../assets/icon/unlink.png'
 import './File.scss'
-import { useQuery } from 'urql'
 import { IWebsiteToken } from 'constants/types'
 import { websitePageQuery } from 'constants/query'
+import { IContractData } from 'constants/contract'
+import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import ArtFile from './ArtFile'
 
 const auth =
   'Basic ' +
@@ -37,7 +40,7 @@ interface IFile {
   setClickCard: any
   domainName: string
   contractAddress: string
-  contractData: any
+  contractData: IContractData
   link: string
 }
 const File: React.FC<IFile> = ({
@@ -57,8 +60,7 @@ const File: React.FC<IFile> = ({
   const [result] = useQuery<{ websiteTokens: IWebsiteToken[] }>({
     query: websitePageQuery,
   })
-  console.log(link)
-  console.log(step)
+
   useEffect(() => {
     if (!link) {
       return setStep('selectfile')
@@ -145,6 +147,10 @@ const File: React.FC<IFile> = ({
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
     }
+  }
+
+  if (contractData.address === ART_NFT_CONTRACT_ADDRESS) {
+    return <ArtFile setClickCard={setClickCard} contractData={contractData} />
   }
 
   return (

@@ -29,6 +29,7 @@ export const subdomainNameSearch = `
     websiteTokens(where:{domainName:$domainName}){
         id
         link
+        tokenId
         domainName
         owner {
           id
@@ -36,8 +37,10 @@ export const subdomainNameSearch = `
     }
     fullOnBlockchainArtTokens(where:{domainName:$domainName}){
       id
+      tokenId
       domainName
-      link
+      mimeType
+      totalChunks
       owner {
         id
       }
@@ -61,7 +64,6 @@ export const fullOnBlockchainPageQuery = `
   query {
     fullOnBlockchainArtTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
-        link
         domainName
         owner {
           id
@@ -566,6 +568,16 @@ query($name:String!){
       id
     }
     domainName
+  }
+}
+`
+
+export const getChunksByTokenIdQuery = `
+query($tokenId:String!){
+  chunks(where:{tokenId:$tokenId}){
+    id
+    tokenId
+    chunkData
   }
 }
 `
