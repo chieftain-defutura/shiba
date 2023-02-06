@@ -3,7 +3,7 @@ import { useQuery } from 'urql'
 
 import FixedSaleCard from '../FixedSaleCard'
 import { IFixedSale } from 'constants/types'
-import { fixedSaleQuery, shopPageQuery } from 'constants/query'
+import { fixedSaleQuery } from 'constants/query'
 import Loading from '../Loading'
 import { parseUnits } from 'ethers/lib/utils.js'
 import {
@@ -13,16 +13,6 @@ import {
   SHIB_TOKEN_ADDRESS,
   SHI_TOKEN_ADDRESS,
 } from 'utils/contractAddress'
-
-interface IShopToken {
-  id: string
-  domainName: string
-  tokenUri: string | null
-  metadata: string
-  owner: {
-    id: string
-  }
-}
 
 const CorportateQuery = `query($erc721TokenAddress:[String!]!,$price:String!,$erc20Token:[String!]!) {
   fixedSales(where:{status:ACTIVE, erc721TokenAddress_in:$erc721TokenAddress, price_gte:$price,  erc20Token_in:$erc20Token}){
@@ -41,24 +31,19 @@ const CorportateQuery = `query($erc721TokenAddress:[String!]!,$price:String!,$er
 }
 }`
 
-interface ICorporate {
-  data: string
-}
-
-export const corporate = () => {
-  return <>hi</>
-}
-
 interface ICorporateMarketplace {
   goodsCheckBox: string[]
   debouncedDomainName: string
   selectedDropDown: any
+  categoryCheckBox: string[]
 }
 const CorporateMarketplace: React.FC<ICorporateMarketplace> = ({
   goodsCheckBox,
   debouncedDomainName,
   selectedDropDown,
+  categoryCheckBox,
 }) => {
+  console.log(categoryCheckBox)
   const [result] = useQuery<{
     fixedSales: IFixedSale[]
   }>({

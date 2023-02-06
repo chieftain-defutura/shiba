@@ -11,7 +11,6 @@ import { WEBSITE_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 import camera from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 import CardLoading from 'components/Loading/CardLoading'
-import { getApp } from 'utils/helper'
 import { Link } from 'react-router-dom'
 
 interface Token {
@@ -31,7 +30,6 @@ const Card: React.FC<Token> = ({
   category,
   websiteCheckboxs,
 }) => {
-  const read = getApp()
   const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
     contractAddress: WEBSITE_NFT_CONTRACT_ADDRESS,

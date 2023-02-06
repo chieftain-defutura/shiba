@@ -69,6 +69,8 @@ const Card: React.FC<IArtToken> = ({
                 <h4 className="sub-title">{formatAddress(owner.id)}</h4>
               </div>
               <div className="card-bottom">
+                <p>{category}</p>
+
                 <p>Token Id</p>
                 <p>#{id}</p>
                 {/* <button style={{ width: '50px' }}>Get In</button> */}
@@ -187,7 +189,12 @@ const FullOnBlockchainPage: React.FC = () => {
           ) : (
             <div className="website-container-right">
               {nftData.map((f, idx: number) => (
-                <Card key={idx} {...f} checkBox={artTokenCheckboxs} />
+                <Card
+                  key={idx}
+                  {...f}
+                  checkBox={artTokenCheckboxs}
+                  link={'/'}
+                />
               ))}
             </div>
           )}

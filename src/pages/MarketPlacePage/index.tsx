@@ -461,6 +461,7 @@ const MarketPlacePage: React.FC = () => {
               goodsCheckBox={corporateCheckboxs}
               selectedDropDown={selectedDropDown}
               debouncedDomainName={debouncedDomainName}
+              categoryCheckBox={corporateLablesCheckboxs}
             />
           )}
           <AnimatePresence>
