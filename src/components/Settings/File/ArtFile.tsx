@@ -12,6 +12,8 @@ import { useTransactionModal } from 'context/TransactionContext'
 import artABi from 'utils/abi/artABI.json'
 import { IContractData } from 'constants/contract'
 
+const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, 1000))
+
 const CHUNK_SIZE = 7500
 
 type IChunk = {
@@ -78,13 +80,21 @@ const ArtFile = ({
 
       const tx = await contract.uploadChunk(id, index, chunk)
       await tx.wait()
-      setTransaction({ loading: true, status: 'success' })
+      setTransaction({
+        loading: true,
+        status: 'success',
+        message: `Uploaded chunk ${index} successfully`,
+      })
+      await sleep()
 
       const newChunks = chunks
       newChunks[index] = { ...newChunks[index], isUploaded: true }
       setChunks(newChunks)
 
       if (chunks.length - 1 === index) setStep('link')
+      else {
+        handleUploadChunk(index + 1, chunks[index + 1].chunkData)
+      }
     } catch (error) {
       console.log(error)
       setTransaction({ loading: true, status: 'error' })
