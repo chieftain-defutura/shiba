@@ -46,8 +46,8 @@ const ArtFile = ({
   const { data: signerData } = useSigner()
   const { id } = useParams() as { id: string }
   const { address } = useAccount()
-  const { setTransaction, loading } = useTransactionModal()
-  console.log(loading)
+  const { setTransaction } = useTransactionModal()
+
   const handleImageInput = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
     const file = event.target.files[0]
