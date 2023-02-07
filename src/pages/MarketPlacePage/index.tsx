@@ -572,7 +572,11 @@ const accordionData = [
   // },
 ]
 
-const corpoteAccordionData = [
+const corpoteAccordionData: {
+  title: string
+  address: string
+  labels?: { label: string }[]
+}[] = [
   {
     title: 'Physical Goods Shop',
     address: PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -584,12 +588,12 @@ const corpoteAccordionData = [
   {
     title: 'Websites',
     address: WEBSITE_NFT_CONTRACT_ADDRESS,
-    labels: [
-      { label: 'www' },
-      { label: 'art' },
-      { label: 'file' },
-      { label: 'other' },
-    ],
+    // labels: [
+    //   { label: 'www' },
+    //   { label: 'art' },
+    //   { label: 'file' },
+    //   { label: 'other' },
+    // ],
   },
   {
     title: 'Charities',
@@ -598,7 +602,7 @@ const corpoteAccordionData = [
   {
     title: 'Full on blockchain Art',
     address: ART_NFT_CONTRACT_ADDRESS,
-    labels: [{ label: 'art' }, { label: 'file' }, { label: 'other' }],
+    // labels: [{ label: 'art' }, { label: 'file' }, { label: 'other' }],
   },
   // {
   //   title: 'Charity Organisation',

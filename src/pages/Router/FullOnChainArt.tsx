@@ -38,8 +38,13 @@ const FullOnChainArt: React.FC<IFullOnBlockchainArtToken> = ({
     )
 
   return (
-    <div>
-      <img src={image} alt="" />
+    <div style={{ height: '100vh' }}>
+      <iframe
+        title="fullonblockchainart"
+        src={image}
+        width="100%"
+        height={'100%'}
+      />
     </div>
   )
 }
