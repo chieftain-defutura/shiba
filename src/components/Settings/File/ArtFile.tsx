@@ -11,10 +11,22 @@ import Unlink from 'assets/icon/unlink.png'
 import { useTransactionModal } from 'context/TransactionContext'
 import artABi from 'utils/abi/artABI.json'
 import { IContractData } from 'constants/contract'
-
-const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, 1000))
+import { WEBSITE_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 
 const CHUNK_SIZE = 7500
+
+function splitString(str: string) {
+  const numChunks = Math.ceil(str.length / CHUNK_SIZE)
+  const chunks = []
+
+  for (let i = 0; i < numChunks; i++) {
+    const start = i * CHUNK_SIZE
+    const end = start + CHUNK_SIZE
+    chunks.push(str.slice(start, end))
+  }
+
+  return chunks
+}
 
 type IChunk = {
   chunkData: string
@@ -34,37 +46,63 @@ const ArtFile = ({
   const { data: signerData } = useSigner()
   const { id } = useParams() as { id: string }
   const { address } = useAccount()
-  const { setTransaction } = useTransactionModal()
-
+  const { setTransaction, loading } = useTransactionModal()
+  console.log(loading)
   const handleImageInput = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
     const file = event.target.files[0]
     console.log(file)
     setImage(file)
-    const reader = new FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.onloadend = async () => {
-      const image = reader.result as ArrayBuffer
-      const chunks = []
-      const chunkCount = Math.ceil(image.byteLength / CHUNK_SIZE)
 
-      for (let i = 0; i < chunkCount; i++) {
-        const start = i * CHUNK_SIZE
-        const end = start + CHUNK_SIZE
-        const chunk = image.slice(start, end)
-        chunks.push(chunk)
+    if (
+      contractData.address.toLowerCase() ===
+      WEBSITE_NFT_CONTRACT_ADDRESS.toLowerCase()
+    ) {
+      const reader1 = new FileReader()
+      reader1.readAsDataURL(file)
+
+      reader1.onloadend = async () => {
+        const chunkStrings = splitString(reader1.result as string)
+
+        setChunks(
+          chunkStrings.map((chunk) => ({
+            chunkData: chunk,
+            isUploaded: false,
+          })),
+        )
+        setStep('upload')
       }
+    } else {
+      const reader = new FileReader()
+      reader.readAsArrayBuffer(file)
+      reader.onloadend = async () => {
+        const image = reader.result as ArrayBuffer
+        const chunks = []
+        const chunkCount = Math.ceil(image.byteLength / CHUNK_SIZE)
 
-      const chunkStrings = chunks.map((chunk) => {
-        const uint8Array = new Uint8Array(chunk) as any
-        const encodedString = btoa(String.fromCharCode.apply(null, uint8Array))
-        return encodedString
-      })
+        for (let i = 0; i < chunkCount; i++) {
+          const start = i * CHUNK_SIZE
+          const end = start + CHUNK_SIZE
+          const chunk = image.slice(start, end)
+          chunks.push(chunk)
+        }
 
-      setStep('upload')
-      setChunks(
-        chunkStrings.map((chunk) => ({ chunkData: chunk, isUploaded: false })),
-      )
+        const chunkStrings = chunks.map((chunk) => {
+          const uint8Array = new Uint8Array(chunk) as any
+          const encodedString = btoa(
+            String.fromCharCode.apply(null, uint8Array),
+          )
+          return encodedString
+        })
+
+        setStep('upload')
+        setChunks(
+          chunkStrings.map((chunk) => ({
+            chunkData: chunk,
+            isUploaded: false,
+          })),
+        )
+      }
     }
   }
 
@@ -85,7 +123,6 @@ const ArtFile = ({
         status: 'success',
         message: `Uploaded chunk ${index} successfully`,
       })
-      await sleep()
 
       const newChunks = chunks
       newChunks[index] = { ...newChunks[index], isUploaded: true }
@@ -191,7 +228,7 @@ const ArtFile = ({
             id="file"
             type="file"
             onChange={handleImageInput}
-            accept={'jpg,png,svg'}
+            accept={contractData.acceptedFileType}
             style={{ display: 'none' }}
           />
         </div>

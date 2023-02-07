@@ -26,8 +26,10 @@ export type ICharityToken = {
 
 export type IWebsiteToken = {
   id: string
+  tokenId: string
   domainName: string
-  link: string
+  mimeType: string
+  totalChunks: string
   owner: {
     id: string
   }

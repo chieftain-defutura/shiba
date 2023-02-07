@@ -14,7 +14,6 @@ export const websitePageQuery = `
   query {
     websiteTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
-        link
         domainName
         owner {
           id
@@ -28,9 +27,10 @@ export const subdomainNameSearch = `
   query($domainName:String!) {
     websiteTokens(where:{domainName:$domainName}){
         id
-        link
         tokenId
         domainName
+        mimeType
+        totalChunks
         owner {
           id
         }
@@ -573,8 +573,8 @@ query($name:String!){
 `
 
 export const getChunksByTokenIdQuery = `
-query($tokenId:String!){
-  chunks(where:{tokenId:$tokenId}){
+query($tokenId:String!,$erc721TokenAddress:String!){
+  chunks(where:{tokenId:$tokenId,erc721TokenAddress:$erc721TokenAddress}){
     id
     tokenId
     chunkData

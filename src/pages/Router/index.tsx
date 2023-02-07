@@ -4,11 +4,14 @@ import { IFullOnBlockchainArtToken, IWebsiteToken } from 'constants/types'
 import React, { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'urql'
+import {
+  ART_NFT_CONTRACT_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
+} from 'utils/contractAddress'
 import FullOnChainArt from './FullOnChainArt'
 
 const Router = () => {
   const [datas, setData] = useState('')
-  const [link, setLink] = useState('')
   const { siteId } = useParams()
 
   const [result] = useQuery<{
@@ -27,7 +30,6 @@ const Router = () => {
     if (!data) return
 
     if (data.websiteTokens.length) {
-      setLink(data.websiteTokens[0].link)
       setData('website')
       return
     }
@@ -44,8 +46,18 @@ const Router = () => {
       </div>
     )
 
-  if (datas === 'website') {
-    return <WebsiteLink data={data} link={link} />
+  if (datas === 'website' && data?.websiteTokens.length) {
+    const artData = data.websiteTokens[0]
+    return artData.totalChunks === '0' ? (
+      <div style={{ height: '100vh', display: 'grid', placeItems: 'center' }}>
+        No file is linked yet
+      </div>
+    ) : (
+      <FullOnChainArt
+        {...artData}
+        erc721TokenAddress={WEBSITE_NFT_CONTRACT_ADDRESS}
+      />
+    )
   }
 
   if (
@@ -58,7 +70,10 @@ const Router = () => {
         No file is linked yet
       </div>
     ) : (
-      <FullOnChainArt {...artData} />
+      <FullOnChainArt
+        {...artData}
+        erc721TokenAddress={ART_NFT_CONTRACT_ADDRESS}
+      />
     )
   }
 
@@ -66,33 +81,3 @@ const Router = () => {
 }
 
 export default Router
-
-interface IWebsiteLink {
-  data: any
-  link: string
-}
-const WebsiteLink: React.FC<IWebsiteLink> = ({ data, link }) => {
-  return (
-    <div style={{ height: '100vh' }}>
-      {link ? (
-        <iframe
-          title="website"
-          src={`https://dapplink.infura-ipfs.io/ipfs/${link}`}
-          width={'100%'}
-          height={'100%'}
-        />
-      ) : (
-        <div
-          style={{
-            fontSize: '20px',
-            display: 'grid',
-            placeItems: 'center',
-            height: '90vh',
-          }}
-        >
-          File is not Linked Yet
-        </div>
-      )}
-    </div>
-  )
-}
