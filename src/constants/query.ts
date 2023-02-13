@@ -581,3 +581,50 @@ query($tokenId:String!,$erc721TokenAddress:String!){
   }
 }
 `
+export const filterNestedWebsiteQuery = `
+query($tokenId:[String!],$category:[String!]){
+  websiteTokens(where:{tokenId_in:$tokenId,category:$category}){
+    id
+    category
+  }
+}
+`
+
+export const filterNestedArtQuery = `
+query($tokenId:[String!],$category:[String!]){
+  fullOnBlockchainArtTokens(where:{tokenId_in:$tokenId,category:$category}){
+    id
+    category
+  }
+}
+`
+
+export const filterNestedDigitalQuery = `
+query($tokenId:[String!],$category:[String!]){
+  digitalItems(where:{shopDetails_in:$tokenId,category_in:$category}){
+    id
+    category
+    shopDetails{
+      id
+      owner {
+        id
+      }
+    }
+  }
+}
+`
+
+export const filterNestedPhysicalQuery = `
+query($tokenId:[String!],$category:[String!]){
+  physicalItems(where:{shopDetails_in:$tokenId,category_in:$category}){
+    id
+    category
+    shopDetails{
+      id
+      owner {
+        id
+      }
+    }
+  }
+}
+`

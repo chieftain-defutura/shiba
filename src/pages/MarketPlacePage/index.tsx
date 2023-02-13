@@ -604,8 +604,4 @@ const corpoteAccordionData: {
     address: ART_NFT_CONTRACT_ADDRESS,
     // labels: [{ label: 'art' }, { label: 'file' }, { label: 'other' }],
   },
-  // {
-  //   title: 'Charity Organisation',
-  //   address: CHARITIES_NFT_CONTRACT_ADDRESS,
-  // },
 ]
