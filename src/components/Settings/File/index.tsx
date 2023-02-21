@@ -17,7 +17,10 @@ import './File.scss'
 import { IWebsiteToken } from 'constants/types'
 import { websitePageQuery } from 'constants/query'
 import { IContractData } from 'constants/contract'
-import { ART_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
+import {
+  ART_NFT_CONTRACT_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
+} from 'utils/contractAddress'
 import ArtFile from './ArtFile'
 
 const auth =
@@ -149,7 +152,12 @@ const File: React.FC<IFile> = ({
     }
   }
 
-  if (contractData.address === ART_NFT_CONTRACT_ADDRESS) {
+  if (
+    contractData.address.toLowerCase() ===
+      ART_NFT_CONTRACT_ADDRESS.toLowerCase() ||
+    contractData.address.toLowerCase() ===
+      WEBSITE_NFT_CONTRACT_ADDRESS.toLowerCase()
+  ) {
     return <ArtFile setClickCard={setClickCard} contractData={contractData} />
   }
 

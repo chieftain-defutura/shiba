@@ -17,8 +17,8 @@ import {
   CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
   DOMAIN_NFT_CONTRACT_ADDRESS,
-  MARKETPLACE_CONTRACT_ADDRESS,
   PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
+  WEBSITE_NFT_CONTRACT_ADDRESS,
 } from 'utils/contractAddress'
 import './AuctionPage.css'
 import CardLoading from 'components/Loading/CardLoading'
@@ -470,8 +470,8 @@ const accordionData = [
     ],
   },
   {
-    title: 'auctions',
-    address: MARKETPLACE_CONTRACT_ADDRESS,
+    title: 'Websites',
+    address: WEBSITE_NFT_CONTRACT_ADDRESS,
     labels: [
       { label: 'Human Rights' },
       { label: 'Education' },

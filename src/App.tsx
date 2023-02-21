@@ -21,6 +21,7 @@ import Navigation from 'components/Navigation'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
 
 const ShopPage = lazy(() => import('pages/Shops'))
+const ComingSoonPage = lazy(() => import('pages/ComingSoon'))
 const UserRouterPage = lazy(() => import('pages/Router'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
 const AuctionPage = lazy(() => import('pages/AuctionPage'))
@@ -85,6 +86,30 @@ const App: React.FC = () => {
             element={
               <Suspense fallback={null}>
                 <SendCryptoPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <Suspense fallback={null}>
+                <ComingSoonPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense fallback={null}>
+                <ComingSoonPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/help"
+            element={
+              <Suspense fallback={null}>
+                <ComingSoonPage />
               </Suspense>
             }
           />

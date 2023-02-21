@@ -22,6 +22,7 @@ export const DemoDashboard = [
       src: ChatImg,
       alt: 'nft',
     },
+    link: 'chat',
   },
   {
     title: 'DASHIBOARD',
@@ -31,6 +32,7 @@ export const DemoDashboard = [
       src: DashiboardImg,
       alt: 'nft',
     },
+    link: 'dashboard',
   },
   {
     title: 'HELP & FAQ',
@@ -40,5 +42,6 @@ export const DemoDashboard = [
       src: HelpImg,
       alt: 'nft',
     },
+    link: 'help',
   },
 ]
