@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import Slider from 'react-slick'
 import { ethers } from 'ethers'
 import { useQuery } from 'urql'
@@ -21,6 +21,8 @@ import { formatTokenUnits } from '../../utils/formatters'
 import { useGetIpfsDataQuery } from 'store/slices/ipfsApiSlice'
 import cameraImg from 'assets/icon/Camera.svg'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import Book from 'assets/icon/Book-mark.svg'
+import Music from 'assets/icon/Music.svg'
 import Modal from 'components/Model'
 
 const settings = {
@@ -40,7 +42,6 @@ const DigitalItemsDetailsPage: React.FC = () => {
   })
 
   const { data, fetching } = result
-
   return (
     <HomeLayout>
       {fetching ? (
@@ -66,7 +67,7 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   metadata,
   price,
   category,
-  status,
+  owner,
 }) => {
   const { itemId } = useParams()
   const { data: signerData } = useSigner()
@@ -86,7 +87,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
   } = useGetIpfsDataQuery({
     hash: metadata,
   })
-  console.log(ipfsData)
+  console.log(shopDetails.owner.id)
+  const existingOwner = useMemo(() => {
+    if (!owner) return []
+    return owner.map((o) => o.id)
+  }, [owner])
 
   const handleBuy = async () => {
     if (!address || !signerData) return
@@ -239,7 +244,11 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                 ))}
               {preview && category === 'music' && (
                 <Modal isOpen={preview} handleClose={() => setPreview(false)}>
-                  <audio controls src={ipfsData.preview}></audio>
+                  <div className="book-preview">
+                    <img className="abstract" src={Music} alt="card" />
+                    <audio controls src={ipfsData.preview}></audio>
+                    <p>Name: {isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
+                  </div>
                 </Modal>
               )}
               {preview && category === 'books' && (
@@ -249,8 +258,10 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                     target="_blank"
                     rel="noreferrer noopener"
                     download
+                    className="book-preview"
                   >
-                    View preview
+                    <img src={Book} alt="card" />
+                    <p>Name:{isLoading ? <Skeleton /> : ipfsData?.itemName}</p>
                   </a>
                 </Modal>
               )}
@@ -321,8 +332,18 @@ const ProductDetails: React.FC<IDigitalItem> = ({
                   {erc20Token.symbol}
                 </p>
               </div>
-              {status === 'ACTIVE' && <button onClick={handleBuy}>Buy</button>}
-              {status === 'PURCHASED' && <h3>Item is Sold</h3>}
+              {shopDetails.owner.id.toLowerCase() === address?.toLowerCase() ? (
+                <div>you are the owner</div>
+              ) : !address ? (
+                <button onClick={handleBuy}>Buy</button>
+              ) : !existingOwner.includes(address?.toLocaleLowerCase()) ? (
+                <button onClick={handleBuy}>Buy</button>
+              ) : (
+                <div>You have already purchased</div>
+              )}
+
+              {/* {status === 'ACTIVE' && <button onClick={handleBuy}>Buy</button>}
+              {status === 'PURCHASED' && <h3>Item is Sold</h3>} */}
             </div>
           </div>
         </div>
@@ -338,7 +359,7 @@ interface ILongText {
   limit: number
 }
 
-const LongText: React.FC<ILongText> = ({ content, limit }) => {
+export const LongText: React.FC<ILongText> = ({ content, limit }) => {
   const [showAll, setShowAll] = useState(false)
 
   const showMore = () => setShowAll(true)

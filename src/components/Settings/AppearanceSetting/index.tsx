@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Formik, Field, Form } from 'formik'
 import { useSigner, useAccount } from 'wagmi'
+import { create } from 'ipfs-http-client'
+import { Buffer } from 'buffer'
 import { ethers } from 'ethers'
-import axios from 'axios'
 
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { BsArrowLeftCircle } from 'react-icons/bs'
@@ -29,6 +30,22 @@ interface IAppearanceSetting {
   setClickCard: any
   contractAddress: string
 }
+
+const auth =
+  'Basic ' +
+  Buffer.from(
+    process.env.REACT_APP_INFURA_PROJECT_ID +
+      ':' +
+      process.env.REACT_APP_INFURA_API_SECRET_KEY,
+  ).toString('base64')
+const client = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth,
+  },
+})
 
 const AppearanceSetting: React.FC<IAppearanceSetting> = ({
   setClickCard,
@@ -58,24 +75,27 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
     if (!address || !signerData) return
     try {
       setTransaction({ loading: true, status: 'pending' })
-      const resData = await axios({
-        method: 'post',
-        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-        data: values,
-        headers: {
-          pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-          pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-          'Content-Type': 'application/json',
-        },
-      })
+      // const resData = await axios({
+      //   method: 'post',
+      //   url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+      //   data: values,
+      //   headers: {
+      //     pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+      //     pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
+      //     'Content-Type': 'application/json',
+      //   },
+      // })
 
-      const JsonHash = resData.data.IpfsHash
-      console.log(JsonHash)
+      const JsonHash = await client.add(JSON.stringify(values))
+      const imagePath = JsonHash.path
+      const ImgHash = `https://gateway.pinata.cloud/ipfs/${imagePath}`
+      console.log(ImgHash)
       const contract = new ethers.Contract(
         contractAddress,
         digitalShopABI,
         signerData,
       )
+
       const tx = await contract.setBaseURI(id, JsonHash)
       await tx.wait()
       console.log('updated')
@@ -184,7 +204,7 @@ const AppearanceSetting: React.FC<IAppearanceSetting> = ({
                   <div className="content-left">
                     <p>Shop Name:</p>
                     <p>Brief Description:</p>
-                    <p style={{ marginTop: '8.2rem' }}>Contracts:</p>
+                    <p style={{ marginTop: '8.2rem' }}>Contacts:</p>
                   </div>
                   <div className="content-right">
                     <Field

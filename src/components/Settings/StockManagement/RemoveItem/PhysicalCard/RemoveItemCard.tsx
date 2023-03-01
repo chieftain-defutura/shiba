@@ -88,10 +88,6 @@ const PhysicalCard: React.FC<IRemovePhysicalItem> = ({
           </button>
         </div>
       </div>
-      <div className="remove-card-bottom">
-        <p>Name: {itemName}</p>
-        <p>Quantity: {quantity}</p>
-      </div>
     </div>
   )
 }

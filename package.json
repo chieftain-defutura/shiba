@@ -19,6 +19,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^7.6.10",
     "graphql": "^16.6.0",
+    "ipfs-http-client": "^60.0.0",
     "react": "^18.2.0",
     "react-countdown": "^2.3.5",
     "react-countup": "^6.4.0",
@@ -36,7 +37,8 @@
     "urql": "^3.0.3",
     "wagmi": "^0.8.5",
     "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -81,6 +83,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
+    "html-loader": "^4.2.0",
     "husky": "^8.0.0",
     "install": "^0.13.0",
     "npm": "^9.1.3",

@@ -3,6 +3,7 @@ import { BsArrowLeftCircle } from 'react-icons/bs'
 import { useQuery } from 'urql'
 import { useParams } from 'react-router-dom'
 import { useAccount } from 'wagmi'
+import { create } from 'zustand'
 
 import HomeLayout from 'Layout/HomeLayout'
 import FooterBottom from 'components/FooterBottom/index'
@@ -18,6 +19,8 @@ import DigitalRemoveItem from 'components/Settings/StockManagement/RemoveItem/Di
 import Sell from 'components/Settings/Sell'
 import Loading from 'components/Loading'
 import { IoIosArrowBack } from 'react-icons/io'
+import { IHaveToSend } from 'constants/types'
+import { haveToSendQuery } from 'constants/query'
 
 import fileImg from 'assets/img/file.png'
 import cardImgOne from 'assets/img/card-4.png'
@@ -28,11 +31,18 @@ import cardImgFive from 'assets/img/card-8.png'
 import cardImgSeven from 'assets/img/card-10.png'
 import cardImgEighth from 'assets/img/card-11.png'
 import './ShopSetting.css'
+import File from 'components/Settings/File'
+import Modal from 'components/Model'
+import FileCategory from 'components/Settings/FileCategory'
 
 type IShopSetting = {
   setShopSetting: React.Dispatch<boolean>
   contractData: IContractData
 }
+
+export const useToStore = create((set) => ({
+  storeData: 0,
+}))
 
 const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
   const { id } = useParams()
@@ -86,6 +96,7 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState(false)
   const [clickRemoveItem, setClickRemoveItem] = useState(false)
+
   return (
     <>
       {/* <h2 className="heading">{tokenData.domainName}</h2> */}
@@ -114,6 +125,23 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
               </div>
             )}
 
+            {contractData.fileCategory === true && (
+              <div
+                className="card"
+                onClick={() => setClickCard('file_category')}
+              >
+                <p>
+                  WWW/
+                  <br />
+                  File/
+                  <br />
+                  Art/
+                  <br />
+                  Other
+                </p>
+              </div>
+            )}
+
             {contractData.appearanceSetting === true && (
               <div
                 className="card"
@@ -138,12 +166,10 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
               </div>
             )}
 
-            {contractData.sell === true && (
-              <div className="card" onClick={() => setClickCard('put on sale')}>
-                <img src={cardImgFive} alt="card" className="card-img-5" />
-                <p>Sell</p>
-              </div>
-            )}
+            <SellBox
+              contractData={contractData}
+              setClickCard={() => setClickCard('put on sale')}
+            />
 
             {contractData.finalizeToken === true && (
               <div className="card">
@@ -260,6 +286,26 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
         </>
       )}
 
+      {clickCard === 'Shipment Address and Details' && (
+        <div>
+          <h2 className="heading">{tokenData.domainName}</h2>
+
+          <div
+            className="appearance-settings-container"
+            id="appearance-settings-container"
+            style={{ marginTop: '40px' }}
+          >
+            <h2 className="title">File</h2>
+            <File
+              contractData={contractData}
+              setClickCard={setClickCard}
+              contractAddress={contractData.address}
+              domainName={tokenData.domainName}
+              link={tokenData.link}
+            />
+          </div>
+        </div>
+      )}
       {clickCard === 'appearance settings' && (
         <div>
           <h2 className="heading">{tokenData.domainName}</h2>
@@ -313,8 +359,67 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
           />
         </div>
       )}
+
+      {clickCard === 'file_category' && (
+        <FileCategory
+          tokenData={tokenData}
+          contractAddress={contractData.address}
+          setClickCard={setClickCard}
+        />
+      )}
     </>
   )
 }
 
 export default ShopSettingsOne
+
+interface ISell {
+  setClickCard: any
+  contractData: any
+}
+const SellBox: React.FC<ISell> = ({ setClickCard, contractData }) => {
+  const { address } = useAccount()
+  const [haveTo, setHaveTo] = useState(false)
+
+  const [result] = useQuery<{
+    shipments: IHaveToSend[]
+  }>({
+    query: haveToSendQuery,
+    variables: {
+      owner: address?.toLowerCase(),
+    },
+    pause: !address || contractData.pathName !== 'my-goods-shop',
+  })
+  const { data } = result
+  console.log(data?.shipments)
+
+  return (
+    <>
+      {!data?.shipments.length ? (
+        <div className="card" onClick={() => setClickCard('put on sale')}>
+          <img src={cardImgFive} alt="card" className="card-img-5" />
+          <p>Sell</p>
+        </div>
+      ) : (
+        <div className="card" onClick={() => setHaveTo(true)}>
+          <img src={cardImgFive} alt="card" className="card-img-5" />
+          <p>Sell</p>
+        </div>
+      )}
+      {haveTo && (
+        <Modal isOpen={true} handleClose={() => setHaveTo(false)}>
+          <p
+            style={{
+              fontSize: '20px',
+              color: 'red',
+              textAlign: 'center',
+              marginTop: '100px',
+            }}
+          >
+            Please send your pending shipment order to sell your NFT
+          </p>
+        </Modal>
+      )}
+    </>
+  )
+}

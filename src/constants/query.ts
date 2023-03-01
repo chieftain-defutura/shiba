@@ -14,11 +14,37 @@ export const websitePageQuery = `
   query {
     websiteTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
+        link
+        domainName
+        owner {
+          id
+        }
+        category
+    }
+  }
+`
+
+export const subdomainNameSearch = `
+  query($domainName:String!) {
+    websiteTokens(where:{domainName:$domainName}){
+        id
+        link
+        tokenId
         domainName
         owner {
           id
         }
     }
+    fullOnBlockchainArtTokens(where:{domainName:$domainName}){
+      id
+      tokenId
+      domainName
+      mimeType
+      totalChunks
+      owner {
+        id
+      }
+  }
   }
 `
 
@@ -39,6 +65,20 @@ export const fullOnBlockchainPageQuery = `
     fullOnBlockchainArtTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
         domainName
+        owner {
+          id
+        }
+        category
+    }
+  }
+`
+
+export const fullOnBlockchainTokens = `
+  query($domainName:String!) {
+    fullOnBlockchainArtTokens(where:{domainName:$domainName}){
+        id
+        domainName
+        link
         owner {
           id
         }
@@ -85,6 +125,10 @@ query($id: String!){
       id
       domainId
       domainName
+      owner{
+        id
+      }
+
     }
 		price
     owner {
@@ -238,8 +282,8 @@ export const userCollectionsQuery = `
   }
 `
 export const userDigitalItemsPageQuery = `
-query($owner: String!,$category: String!){
-  digitalItems(where:{owner:$owner,category:$category}){
+query($owner: [String!],$category: String!){
+  digitalItems(where:{owner_contains:$owner,category:$category}){
     id
     itemName
     fullproduct
@@ -472,6 +516,8 @@ query($id:String!){
     }
 		price
     owner
+    metadata
+    itemName
     erc20Token {
       id
       symbol
@@ -522,6 +568,16 @@ query($name:String!){
       id
     }
     domainName
+  }
+}
+`
+
+export const getChunksByTokenIdQuery = `
+query($tokenId:String!){
+  chunks(where:{tokenId:$tokenId}){
+    id
+    tokenId
+    chunkData
   }
 }
 `

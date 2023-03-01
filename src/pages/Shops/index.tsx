@@ -17,6 +17,7 @@ interface IShopToken {
   id: string
   domainName: string
   tokenUri: string | null
+  metadata: string
   owner: {
     id: string
   }
@@ -56,7 +57,6 @@ const ShopPage: React.FC = () => {
   }>({ query: shopPageQuery })
 
   const { data, fetching, error } = result
-
   const [itemresult] = useQuery<{
     digitalItems: { shopDetails: IShopToken }[]
     physicalItems: { shopDetails: IShopToken }[]
@@ -64,6 +64,7 @@ const ShopPage: React.FC = () => {
 
   const { data: itemData, fetching: filterFetching } = itemresult
 
+  console.log(itemData)
   const uniqueItem = useMemo(() => {
     const uniqueIds: string[] = []
     if (!itemData) return

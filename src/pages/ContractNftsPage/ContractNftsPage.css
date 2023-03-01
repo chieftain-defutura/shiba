@@ -5,6 +5,7 @@
   grid-template-columns: 1.1fr 4fr;
   gap: 60px;
   font-family: var(--oswaldFont);
+  min-height: calc(100vh - 80px + 85px);
 }
 
 .website-container-left {

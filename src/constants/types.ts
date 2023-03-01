@@ -1,3 +1,5 @@
+// import { string } from 'yup/lib/locale'
+
 export type ISaleStauts =
   | 'ACTIVE'
   | 'PURCHASED'
@@ -25,17 +27,29 @@ export type ICharityToken = {
 export type IWebsiteToken = {
   id: string
   domainName: string
+  link: string
   owner: {
     id: string
   }
+  category: string
 }
 
 export type IFullOnBlockchainArtToken = {
   id: string
+  tokenId: string
   domainName: string
+  mimeType: string
+  totalChunks: string
   owner: {
     id: string
   }
+  category: string
+}
+
+export type IChunksData = {
+  id: string
+  tokenId: string
+  chunkData: string
 }
 
 export type IPhysicalItem = {
@@ -77,11 +91,14 @@ export type IDigitalItem = {
     id: string
     domainId: string
     domainName: string
+    owner: {
+      id: string
+    }
   }
   price: string
   owner: {
     id: string
-  } | null
+  }[]
   subcategory: string
   category: string
 }
@@ -262,6 +279,7 @@ export type IRemoveDigitalItem = {
   id: string
   itemName: string
   metadata: string
+  category: string
   erc20Token: {
     id: string
     symbol: string

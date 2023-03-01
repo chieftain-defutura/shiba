@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useQuery } from 'urql'
 import Skeleton from 'react-loading-skeleton'
 
@@ -11,14 +11,30 @@ import { WEBSITE_NFT_CONTRACT_ADDRESS } from 'utils/contractAddress'
 import camera from 'assets/icon/Camera.svg'
 import './ContractNftsPage.css'
 import CardLoading from 'components/Loading/CardLoading'
+import { Link } from 'react-router-dom'
 
-const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
+interface Token {
+  id: string
+  domainName: string
+  link: string
+  owner: {
+    id: string
+  }
+  category: string
+  websiteCheckboxs: string[]
+}
+const Card: React.FC<Token> = ({
+  owner,
+  id,
+  domainName,
+  category,
+  websiteCheckboxs,
+}) => {
   const { data, isLoading } = useGetNftsByIdQuery({
     tokenId: id,
     contractAddress: WEBSITE_NFT_CONTRACT_ADDRESS,
   })
   const [imageError, setImageError] = useState(false)
-
   useEffect(() => {
     if (!data) return
 
@@ -28,44 +44,89 @@ const Card: React.FC<IWebsiteToken> = ({ owner, id, domainName }) => {
   }, [data])
 
   return (
-    <div className="website-card-container">
-      <div className="card">
-        <div className="card-top">
-          {isLoading ? (
-            <Skeleton height={'100%'} />
-          ) : !data || imageError ? (
-            <img src={camera} alt="card" />
-          ) : (
-            <img
-              src={data?.metadata?.logo}
-              alt="card"
-              onError={() => setImageError(true)}
-            />
-          )}
-        </div>
-        <div className="card-center">
-          <h3 className="title">Owner</h3>
-          <h4 className="sub-title">{formatAddress(owner.id)}</h4>
-        </div>
-        <div className="card-bottom">
-          <p>Token Id</p>
-          <p>#{id}</p>
-          {/* <Link to={`/my-digital-shop/${f}`}>
-  <button style={{ width: "50px" }}>Get In</button>
-</Link> */}
-        </div>
-      </div>
-      <div style={{ padding: '5px 0' }}>
-        <p style={{ fontSize: '14px' }}>Domain:</p>
-        <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
-          <b>{domainName}</b>
-        </p>
-      </div>
-    </div>
+    <>
+      {websiteCheckboxs.length <= 0 ? (
+        <Link to={`/site/${domainName}`}>
+          <div className="website-card-container">
+            <div className="card">
+              <div className="card-top">
+                {isLoading ? (
+                  <Skeleton height={'100%'} />
+                ) : !data || imageError ? (
+                  <img src={camera} alt="card" />
+                ) : (
+                  <img
+                    src={data?.metadata?.logo}
+                    alt="card"
+                    onError={() => setImageError(true)}
+                  />
+                )}
+              </div>
+
+              <div className="card-center">
+                <h3 className="title">Owner</h3>
+                <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+              </div>
+              <div className="card-bottom">
+                {category}
+                <p>Token Id</p>
+                <p>#{id}</p>
+              </div>
+            </div>
+            <div style={{ padding: '5px 0' }}>
+              <p style={{ fontSize: '14px' }}>Domain:</p>
+              <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                <b>{domainName}</b>
+              </p>
+            </div>
+          </div>
+        </Link>
+      ) : (
+        websiteCheckboxs.includes(category) && (
+          <Link to={`/site/${domainName}`}>
+            <div className="website-card-container">
+              <div className="card">
+                <div className="card-top">
+                  {isLoading ? (
+                    <Skeleton height={'100%'} />
+                  ) : !data || imageError ? (
+                    <img src={camera} alt="card" />
+                  ) : (
+                    <img
+                      src={data?.metadata?.logo}
+                      alt="card"
+                      onError={() => setImageError(true)}
+                    />
+                  )}
+                </div>
+
+                <div className="card-center">
+                  <h3 className="title">Owner</h3>
+                  <h4 className="sub-title">{formatAddress(owner.id)}</h4>
+                </div>
+                <div className="card-bottom">
+                  {category}
+                  <p>Token Id</p>
+                  <p>#{id}</p>
+                </div>
+              </div>
+              <div style={{ padding: '5px 0' }}>
+                <p style={{ fontSize: '14px' }}>Domain:</p>
+                <p style={{ fontSize: '14px', wordBreak: 'break-all' }}>
+                  <b>{domainName}</b>
+                </p>
+              </div>
+            </div>
+          </Link>
+        )
+      )}
+    </>
   )
 }
 
 const WebsitesPage: React.FC = () => {
+  const [websiteCheckboxs, setWebsiteCheckBox] = useState<string[]>([])
+
   const [result] = useQuery<{ websiteTokens: IWebsiteToken[] }>({
     query: websitePageQuery,
   })
@@ -73,6 +134,21 @@ const WebsitesPage: React.FC = () => {
   const { data, fetching, error } = result
 
   const nftData = data?.websiteTokens ?? []
+  console.log(nftData)
+
+  const handleChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (websiteCheckboxs.includes(value.toLowerCase())) {
+      setWebsiteCheckBox((f) =>
+        f.filter((e) => e.toLowerCase() !== value.toLowerCase()),
+      )
+    } else {
+      setWebsiteCheckBox((f) => f.concat(value.toLowerCase()))
+    }
+  }
+
+  console.log(websiteCheckboxs)
 
   return (
     <div>
@@ -81,18 +157,17 @@ const WebsitesPage: React.FC = () => {
           <h2 className="heading">Websites</h2>
 
           <div className="check-box-container">
-            <div className="checkbox-content">
-              <label htmlFor="shib">News</label>
-              <input id="shib" type="checkbox" />
-            </div>
-            <div className="checkbox-content">
-              <label htmlFor="shib">Portfolio</label>
-              <input id="shib" type="checkbox" />
-            </div>
-            <div className="checkbox-content">
-              <label htmlFor="shib">Brochure</label>
-              <input id="shib" type="checkbox" />
-            </div>
+            {lable.map((f, index) => (
+              <div className="checkbox-content" key={index}>
+                <label htmlFor="shib">{f.label}</label>
+                <input
+                  id="shib"
+                  value={f.label}
+                  type="checkbox"
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div>
@@ -111,7 +186,7 @@ const WebsitesPage: React.FC = () => {
           ) : (
             <div className="website-container-right">
               {nftData.map((f, idx: number) => (
-                <Card key={idx} {...f} />
+                <Card key={idx} {...f} websiteCheckboxs={websiteCheckboxs} />
               ))}
             </div>
           )}
@@ -123,3 +198,10 @@ const WebsitesPage: React.FC = () => {
 }
 
 export default WebsitesPage
+
+const lable = [
+  { label: 'www' },
+  { label: 'file' },
+  { label: 'art' },
+  { label: 'other' },
+]

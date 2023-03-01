@@ -1,4 +1,5 @@
 import {
+  ART_NFT_CONTRACT_ADDRESS,
   BONE_TOKEN_ADDRESS,
   CHARITIES_NFT_CONTRACT_ADDRESS,
   DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -22,6 +23,7 @@ export interface IContractData {
   finalizeToken: boolean
   transfer: boolean
   showDetails?: boolean
+  fileCategory?: boolean
   query: string
   userNftsQuery: string
 }
@@ -45,7 +47,7 @@ export const ContractDetails: IContractDetails = {
     residual: true,
     sell: true,
     finalizeToken: true,
-    transfer: true,
+    transfer: false,
     showDetails: true,
     query: `
       query($id:String!) {
@@ -80,7 +82,7 @@ export const ContractDetails: IContractDetails = {
     residual: true,
     sell: true,
     finalizeToken: true,
-    transfer: true,
+    transfer: false,
     showDetails: true,
     query: `
       query($id:String!) {
@@ -114,8 +116,8 @@ export const ContractDetails: IContractDetails = {
     appearanceSetting: false,
     residual: false,
     sell: false,
-    finalizeToken: true,
-    transfer: true,
+    finalizeToken: false,
+    transfer: false,
     query: `
       query($id:String!) {
         domainToken(id:$id){
@@ -183,12 +185,15 @@ export const ContractDetails: IContractDetails = {
     sell: true,
     finalizeToken: true,
     transfer: true,
+    fileCategory: true,
     query: `
       query($id:String!) {
         websiteToken(id:$id){
           id
           domainName
+          link
           tokenUri
+          category
           owner {
             id
           }
@@ -198,6 +203,43 @@ export const ContractDetails: IContractDetails = {
     userNftsQuery: `
     query($owner:String!){
       websiteTokens(where:{owner:$owner}){
+        id
+        owner {
+          id
+        }
+        tokenUri
+        domainName
+      }
+    }`,
+  },
+  'my-full-on-blockchain-nft': {
+    address: ART_NFT_CONTRACT_ADDRESS,
+    pathName: 'my-full-on-blockchain-nft',
+    stockManagement: false,
+    file: true,
+    appearanceSetting: true,
+    residual: true,
+    sell: true,
+    finalizeToken: true,
+    transfer: true,
+    fileCategory: true,
+    query: `
+      query($id:String!) {
+        fullOnBlockchainArtToken(id:$id){
+          id
+          domainName
+          totalChunks
+          tokenUri
+          category
+          owner {
+            id
+          }
+        }
+      }
+    `,
+    userNftsQuery: `
+    query($owner:String!){
+      fullOnBlockchainArtTokens(where:{owner:$owner}){
         id
         owner {
           id

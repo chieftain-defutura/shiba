@@ -2,9 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
+import { create } from 'ipfs-http-client'
 import { ethers } from 'ethers'
+import { Buffer } from 'buffer'
 import * as Yup from 'yup'
-import axios from 'axios'
 
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { TokenData } from 'constants/tokenData'
@@ -47,6 +48,22 @@ const initialState = {
   deliveredIn: '',
   charityAddress: '',
 }
+
+const auth =
+  'Basic ' +
+  Buffer.from(
+    process.env.REACT_APP_INFURA_PROJECT_ID +
+      ':' +
+      process.env.REACT_APP_INFURA_API_SECRET_KEY,
+  ).toString('base64')
+const client = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth,
+  },
+})
 const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
   const { id } = useParams() as { id: string }
   const { address } = useAccount()
@@ -99,38 +116,43 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
 
     try {
       setTransaction({ loading: true, status: 'pending' })
-      const resData = await axios({
-        method: 'post',
-        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-        data: {
-          logo: values.logo,
-          mainPhoto: values.mainPhoto,
-          photoOne: values.photoOne,
-          photoTwo: values.photoTwo,
-          photoThree: values.photoThree,
-          itemName: values.itemName,
-          size: values.size,
-          colour: values.colour,
-          fabricType: values.fabricType,
-          itemCondition: values.itemCondition,
-          productDescription: values.productDescription,
-          productDetails: values.productDetails,
-          manufacturer: values.manufacturer,
-          brand: values.brand,
-          refundPossible: values.refundPossible,
-          department: values.department,
-          shipmentArea: values.shipmentArea,
-          shipmentFee: values.shipmentFee,
-          deliveredIn: values.deliveredIn,
-        },
-        headers: {
-          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      const JsonHash = resData.data.IpfsHash
-      console.log(JsonHash)
+      // const resData = await axios({
+      //   method: 'post',
+      //   url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+      //   data: {
+      //     logo: values.logo,
+      //     mainPhoto: values.mainPhoto,
+      //     photoOne: values.photoOne,
+      //     photoTwo: values.photoTwo,
+      //     photoThree: values.photoThree,
+      //     itemName: values.itemName,
+      //     size: values.size,
+      //     colour: values.colour,
+      //     fabricType: values.fabricType,
+      //     itemCondition: values.itemCondition,
+      //     productDescription: values.productDescription,
+      //     productDetails: values.productDetails,
+      //     manufacturer: values.manufacturer,
+      //     brand: values.brand,
+      //     refundPossible: values.refundPossible,
+      //     department: values.department,
+      //     shipmentArea: values.shipmentArea,
+      //     shipmentFee: values.shipmentFee,
+      //     deliveredIn: values.deliveredIn,
+      //   },
+      //   headers: {
+      //     pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
+      //     pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      // })
+      // const JsonHash = resData.data.IpfsHash
+      // console.log(JsonHash)
+
+      const JsonHash = await client.add(JSON.stringify(values))
+      const imagePath = JsonHash.path
+      const ImgHash = `https://gateway.pinata.cloud/ipfs/${JsonHash.path}`
+      console.log(ImgHash)
 
       const contract = new ethers.Contract(
         PHYSICAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -140,7 +162,7 @@ const PhysicalShopForm: React.FC<IPhysicalShopForm> = ({ setClickCard }) => {
 
       const tx = await contract.addItem(
         id,
-        JsonHash,
+        imagePath,
         values.quantity,
         parseUnits(values.price.toString(), '18'),
         values.currency,

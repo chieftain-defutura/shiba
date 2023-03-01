@@ -28,6 +28,7 @@ const DigitalItem: React.FC<IGoodsDigitalItem> = ({
   const { isLoading, data } = useGetIpfsDataQuery({ hash: metadata })
   const user = useAppSelector((store) => store.user)
 
+  console.log(data)
   const handleBuy = async () => {
     if (!address || !signerData) return
 

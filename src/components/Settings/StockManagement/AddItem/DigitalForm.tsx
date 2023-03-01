@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { parseUnits } from 'ethers/lib/utils.js'
 import { useAccount, useSigner } from 'wagmi'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import { parseUnits } from 'ethers/lib/utils.js'
+import { create } from 'ipfs-http-client'
 import { ethers } from 'ethers'
+import { Buffer } from 'buffer'
+import * as Yup from 'yup'
 
 import {
   BONE_TOKEN_ADDRESS,
@@ -46,6 +47,22 @@ const initialState = {
   currency: '',
   charityAddress: '',
 }
+
+const auth =
+  'Basic ' +
+  Buffer.from(
+    process.env.REACT_APP_INFURA_PROJECT_ID +
+      ':' +
+      process.env.REACT_APP_INFURA_API_SECRET_KEY,
+  ).toString('base64')
+const client = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth,
+  },
+})
 const AddItem: React.FC<IAddItem> = ({ setClickCard }) => {
   const { id } = useParams() as { id: string }
   const { data } = useSigner()
@@ -99,29 +116,31 @@ const AddItem: React.FC<IAddItem> = ({ setClickCard }) => {
 
     try {
       setTransaction({ loading: true, status: 'pending' })
-      const resData = await axios({
-        method: 'post',
-        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-        data: {
-          preview: values.preview,
-          itemName: values.itemName,
-          details: values.details,
-          description: values.description,
-          logo: values.logo,
-          mainPhoto: values.mainPhoto,
-          photoOne: values.photoOne,
-          photoTwo: values.photoTwo,
-          photoThree: values.photoThree,
-        },
-        headers: {
-          pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
-          pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
-          'Content-Type': 'application/json',
-        },
-      })
+      // const resData = await axios({
+      //   method: 'post',
+      //   url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+      //   data: {
+      //     preview: values.preview,
+      //     itemName: values.itemName,
+      //     details: values.details,
+      //     description: values.description,
+      //     logo: values.logo,
+      //     mainPhoto: values.mainPhoto,
+      //     photoOne: values.photoOne,
+      //     photoTwo: values.photoTwo,
+      //     photoThree: values.photoThree,
+      //   },
+      //   headers: {
+      //     pinata_api_key: `${process.env.REACT_APP_PINATA_API_KEY}`,
+      //     pinata_secret_api_key: `${process.env.REACT_APP_PINATA_API_SECRET}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      // })
 
-      const JsonHash = resData.data.IpfsHash
-      console.log(JsonHash)
+      const JsonHash = await client.add(JSON.stringify(values))
+      const imagePath = JsonHash.path
+      const ImgHash = `https://gateway.pinata.cloud/ipfs/${JsonHash.path}`
+      console.log(ImgHash)
 
       const contract = new ethers.Contract(
         DIGITAL_GOODS_NFT_CONTRACT_ADDRESS,
@@ -134,7 +153,7 @@ const AddItem: React.FC<IAddItem> = ({ setClickCard }) => {
         values.category,
         values.subCategory,
         encryptedFullProductLink,
-        JsonHash,
+        imagePath,
         parseUnits(values.price.toString(), '18'),
         values.currency,
         values.itemName,

@@ -30,16 +30,20 @@ const CorportateQuery = `query($erc721TokenAddress:[String!]!,$price:String!,$er
   status
 }
 }`
+
 interface ICorporateMarketplace {
   goodsCheckBox: string[]
   debouncedDomainName: string
   selectedDropDown: any
+  categoryCheckBox: string[]
 }
 const CorporateMarketplace: React.FC<ICorporateMarketplace> = ({
   goodsCheckBox,
   debouncedDomainName,
   selectedDropDown,
+  categoryCheckBox,
 }) => {
+  console.log(categoryCheckBox)
   const [result] = useQuery<{
     fixedSales: IFixedSale[]
   }>({
@@ -85,7 +89,6 @@ const CorporateMarketplace: React.FC<ICorporateMarketplace> = ({
     pause: !goodsCheckBox.length,
   })
   const { data: filteredData, fetching: filterFetching } = filterResult
-  console.log(filteredData)
 
   return (
     <div>

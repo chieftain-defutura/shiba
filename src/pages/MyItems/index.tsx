@@ -17,7 +17,7 @@ const MyItems: React.FC<{ digitalItem: IDigitalItemsCategory }> = ({
   const { address } = useAccount()
   const [result] = useQuery<{ digitalItems: IUserDigitalItem[] }>({
     query: userDigitalItemsPageQuery,
-    variables: { owner: address?.toLowerCase(), category: digitalItem.name },
+    variables: { owner: [address?.toLowerCase()], category: digitalItem.name },
     pause: !address,
   })
 

@@ -1,0 +1,34 @@
+.transfer-sub-menu-container {
+  .file-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+    .image {
+      margin-bottom: 10px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.file-box {
+  cursor: pointer;
+}
+
+.chunk-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chunk-grid-card {
+  width: 100px;
+  height: 100px;
+  background-color: var(--bgColor);
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  cursor: pointer;
+}
