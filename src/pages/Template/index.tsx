@@ -131,9 +131,13 @@ const Template = () => {
         dangerouslySetInnerHTML={{ __html: htmlFileString }}
       />
 
+<<<<<<< HEAD
       <button
         onClick={() => download('hello.html', htmlRef.current?.innerHTML)}
       >
+=======
+      <button onClick={() => download('Template-One.html', htmlFileString)}>
+>>>>>>> 7e42692043cc56e863c5fd2e39eca90181e60c4d
         download
       </button>
     </>
