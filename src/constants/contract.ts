@@ -26,6 +26,7 @@ export interface IContractData {
   fileCategory?: boolean
   query: string
   userNftsQuery: string
+  acceptedFileType?: string
 }
 
 export interface IContractDetails {
@@ -186,12 +187,13 @@ export const ContractDetails: IContractDetails = {
     finalizeToken: true,
     transfer: true,
     fileCategory: true,
+    acceptedFileType: '.html',
     query: `
       query($id:String!) {
         websiteToken(id:$id){
           id
           domainName
-          link
+          totalChunks
           tokenUri
           category
           owner {
@@ -223,6 +225,7 @@ export const ContractDetails: IContractDetails = {
     finalizeToken: true,
     transfer: true,
     fileCategory: true,
+    acceptedFileType: 'image/*',
     query: `
       query($id:String!) {
         fullOnBlockchainArtToken(id:$id){

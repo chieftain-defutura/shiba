@@ -14,7 +14,6 @@ export const websitePageQuery = `
   query {
     websiteTokens(where:{owner_not:"0x0000000000000000000000000000000000000000"}){
         id
-        link
         domainName
         owner {
           id
@@ -28,9 +27,10 @@ export const subdomainNameSearch = `
   query($domainName:String!) {
     websiteTokens(where:{domainName:$domainName}){
         id
-        link
         tokenId
         domainName
+        mimeType
+        totalChunks
         owner {
           id
         }
@@ -573,11 +573,58 @@ query($name:String!){
 `
 
 export const getChunksByTokenIdQuery = `
-query($tokenId:String!){
-  chunks(where:{tokenId:$tokenId}){
+query($tokenId:String!,$erc721TokenAddress:String!){
+  chunks(where:{tokenId:$tokenId,erc721TokenAddress:$erc721TokenAddress}){
     id
     tokenId
     chunkData
+  }
+}
+`
+export const filterNestedWebsiteQuery = `
+query($tokenId:[String!],$category:[String!]){
+  websiteTokens(where:{tokenId_in:$tokenId,category:$category}){
+    id
+    category
+  }
+}
+`
+
+export const filterNestedArtQuery = `
+query($tokenId:[String!],$category:[String!]){
+  fullOnBlockchainArtTokens(where:{tokenId_in:$tokenId,category:$category}){
+    id
+    category
+  }
+}
+`
+
+export const filterNestedDigitalQuery = `
+query($tokenId:[String!],$category:[String!]){
+  digitalItems(where:{shopDetails_in:$tokenId,category_in:$category}){
+    id
+    category
+    shopDetails{
+      id
+      owner {
+        id
+      }
+    }
+  }
+}
+`
+
+export const filterNestedPhysicalQuery = `
+query($tokenId:[String!],$category:[String!]){
+  physicalItems(where:{shopDetails_in:$tokenId,category_in:$category}){
+    id
+    category
+    shopDetails{
+      id
+      owner {
+        id
+      }
+    }
   }
 }
 `

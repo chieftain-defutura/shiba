@@ -16,13 +16,13 @@ import { Link } from 'react-router-dom'
 interface Token {
   id: string
   domainName: string
-  link: string
   owner: {
     id: string
   }
   category: string
   websiteCheckboxs: string[]
 }
+
 const Card: React.FC<Token> = ({
   owner,
   id,

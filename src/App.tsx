@@ -19,8 +19,10 @@ import {
 import HomeLayout from 'Layout/HomeLayout'
 import Navigation from 'components/Navigation'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
+import Template from 'pages/Template'
 
 const ShopPage = lazy(() => import('pages/Shops'))
+const ComingSoonPage = lazy(() => import('pages/ComingSoon'))
 const UserRouterPage = lazy(() => import('pages/Router'))
 const HaveToSendPage = lazy(() => import('pages/HaveToSendPage'))
 const AuctionPage = lazy(() => import('pages/AuctionPage'))
@@ -56,6 +58,8 @@ const DefualtLayout = ({ children }: { children: ReactNode }) => {
 const App: React.FC = () => {
   return (
     <Routes>
+      <Route path="/template" element={<Template />} />
+
       <Route
         element={
           <DefualtLayout>
@@ -85,6 +89,30 @@ const App: React.FC = () => {
             element={
               <Suspense fallback={null}>
                 <SendCryptoPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <Suspense fallback={null}>
+                <ComingSoonPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense fallback={null}>
+                <ComingSoonPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/help"
+            element={
+              <Suspense fallback={null}>
+                <ComingSoonPage />
               </Suspense>
             }
           />
