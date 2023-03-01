@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 
 const subString = [
   'template-blue',
@@ -12,6 +12,7 @@ const subString = [
 const Template = () => {
   const [htmlFileString, setHtmlFileString] = useState('')
   const [color, setColor] = useState('blue')
+  const htmlRef = useRef<HTMLDivElement>(null)
 
   const fetchHtml = async () => {
     const examplePage = '/Templates/template1.html'
@@ -125,12 +126,14 @@ const Template = () => {
       </div>
 
       <div
+        ref={htmlRef}
         contentEditable="true"
-        onBlur={(e) => setHtmlFileString(e.target.innerHTML)}
         dangerouslySetInnerHTML={{ __html: htmlFileString }}
       />
 
-      <button onClick={() => download('hello.html', htmlFileString)}>
+      <button
+        onClick={() => download('hello.html', htmlRef.current?.innerHTML)}
+      >
         download
       </button>
     </>
