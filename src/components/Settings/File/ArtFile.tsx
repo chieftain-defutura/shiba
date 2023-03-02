@@ -204,8 +204,14 @@ const ArtFile = ({
       <div className="transfer-head">
         <BsArrowLeftCircle
           className="arrow-icon"
-          style={{ position: 'absolute', top: '40px' }}
-          onClick={() => setClickCard(null)}
+          style={{
+            position: 'absolute',
+            top: '29px',
+            left: '50px',
+            fontSize: '28px',
+            cursor: 'pointer',
+          }}
+          onClick={() => setClickCard('file Details')}
         />
       </div>
 

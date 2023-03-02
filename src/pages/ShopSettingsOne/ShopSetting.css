@@ -936,3 +936,97 @@ button:disabled {
 .topContent input:nth-child(1) {
   margin-top: 25px;
 }
+
+.fileDetailsContent {
+  position: relative;
+}
+.fileDetailsContent h4 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 27px;
+}
+.fileDetailsContent h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.arrowIcon {
+  position: absolute;
+  top: 18px;
+  left: 120px;
+}
+
+.fileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 70px;
+}
+.templateContainer {
+  position: relative;
+}
+.templateContainer .arrowIcons {
+  position: absolute;
+  top: 54px;
+  left: 120px;
+}
+.templateContainer h2 {
+  margin-bottom: 40px;
+}
+.selectFileBox {
+  background: var(--bgColorTwo);
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 5px;
+  gap: 10px;
+  cursor: pointer;
+}
+.selectFileBox label {
+  cursor: pointer;
+}
+
+.templateFlex {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  row-gap: 40px;
+  column-gap: 40px;
+}
+.templateFlex .template {
+  /* border: 1px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+  cursor: pointer;
+}
+
+.templateImgContent {
+  position: relative;
+}
+.template {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.templateFlex .template h2 {
+  font-size: 24px;
+  color: red;
+}
+.submitBtn {
+  text-align: center;
+}
+.submitBtn button {
+  padding: 10px 20px;
+  margin: 50px;
+  outline: none;
+  border: none;
+  background: #38f2af;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}

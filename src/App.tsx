@@ -58,7 +58,7 @@ const DefualtLayout = ({ children }: { children: ReactNode }) => {
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/template" element={<Template />} />
+      <Route path="/template" element={<Template path={''} />} />
 
       <Route
         element={

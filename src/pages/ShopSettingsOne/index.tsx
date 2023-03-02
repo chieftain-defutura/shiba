@@ -34,6 +34,8 @@ import './ShopSetting.css'
 import File from 'components/Settings/File'
 import Modal from 'components/Model'
 import FileCategory from 'components/Settings/FileCategory'
+import Folder from 'assets/icon/folder.png'
+import SelectTemplate from 'pages/Template/SelectTemplate'
 
 type IShopSetting = {
   setShopSetting: React.Dispatch<boolean>
@@ -47,6 +49,7 @@ export const useToStore = create((set) => ({
 const ShopSettingsOne: React.FC<IShopSetting> = ({ contractData }) => {
   const { id } = useParams()
   const { address } = useAccount()
+
   const [result] = useQuery({
     query: contractData.query,
     variables: { id: id },
@@ -96,6 +99,14 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState(false)
   const [clickRemoveItem, setClickRemoveItem] = useState(false)
+  const [isModalOpen, setModalState] = React.useState(false)
+
+  const toggleModal = () => setModalState(!isModalOpen)
+
+  const handleClick = () => {
+    const letter = ['template modal']
+    console.log(letter)
+  }
 
   return (
     <>
@@ -106,12 +117,14 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
 
           <div className="cards-container">
             {contractData.file === true && (
-              <div
-                className="card"
-                onClick={() => setClickCard('Shipment Address and Details')}
-              >
-                <img src={fileImg} alt="card" className="card-img-1" />
-                <p>File</p>
+              <div>
+                <div
+                  className="card"
+                  onClick={() => setClickCard('file Details')}
+                >
+                  <img src={fileImg} alt="card" className="card-img-1" />
+                  <p>File</p>
+                </div>
               </div>
             )}
 
@@ -284,6 +297,60 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
             <DigitalRemoveItem />
           )}
         </>
+      )}
+
+      {clickCard === 'file Details' && (
+        <div className="fileDetailsContent">
+          <h2 className="heading">{tokenData.domainName}</h2>
+          <h4>File</h4>
+          <div className="arrowIcon">
+            <BsArrowLeftCircle
+              className="arrow-icon"
+              style={{
+                position: 'absolute',
+                top: '40px',
+                fontSize: '28px',
+                cursor: 'pointer',
+              }}
+              onClick={() => setClickCard(null)}
+            />
+          </div>
+          <div className="fileContainer">
+            <div
+              onClick={() => setClickCard('Shipment Address and Details')}
+              className="selectFileBox"
+            >
+              <label htmlFor="file">
+                <div className="image">
+                  <img src={Folder} alt="" />
+                </div>
+
+                <h2 style={{ fontSize: '23px', marginTop: '8px' }}>
+                  Select File
+                </h2>
+              </label>
+            </div>
+
+            <div
+              className="selectFileBox"
+              onClick={() => setClickCard('Select Template')}
+            >
+              <label htmlFor="file">
+                <div className="image">
+                  <img src={Folder} alt="" />
+                </div>
+
+                <h2 style={{ fontSize: '23px', marginTop: '8px' }}>
+                  Select Template
+                </h2>
+              </label>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {clickCard === 'Select Template' && (
+        <SelectTemplate tokenData={tokenData} setClickCard={setClickCard} />
       )}
 
       {clickCard === 'Shipment Address and Details' && (
