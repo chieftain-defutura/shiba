@@ -18,6 +18,19 @@ const SelectTemplate: React.FC<{
     setSaved(true)
     const letter = ['template modal']
     console.log(letter)
+    toggleModal()
+    const temple = ` <TemplateModal
+            title={'My modal'}
+            isOpen={isModalOpen}
+            onClose={toggleModal}
+          >
+            <div>
+              <div>{!saved && <button onClick={handleClick}>Save</button>}</div>
+              <div>
+                <Template path="/Templates/template1.html" />
+              </div>
+            </div>
+          </TemplateModal>`
   }
   return (
     <div>
@@ -37,10 +50,12 @@ const SelectTemplate: React.FC<{
         </div>
         <div className="templateFlex">
           {DemoTemplate.map((f, index) => {
+            console.log(index)
             return (
               <div
                 key={index}
                 className="templateImgContent"
+                onClick={toggleModal}
                 style={{
                   backgroundImage: `url(${f.image})`,
                   backgroundRepeat: 'no-repeat',
@@ -49,27 +64,24 @@ const SelectTemplate: React.FC<{
                   aspectRatio: '16/9',
                 }}
               >
-                <div className="template" onClick={toggleModal}>
+                <div className="template">
                   <h2>{f.template}</h2>
                 </div>
-
-                <TemplateModal
-                  title={'My modal'}
-                  isOpen={isModalOpen}
-                  onClose={toggleModal}
-                >
-                  <div>
-                    <div onClick={toggleModal}>
-                      {!saved && <button onClick={handleClick}>Save</button>}
-                    </div>
-                    <div>
-                      <Template path={`${f.filePathTemplate}`} />
-                    </div>
-                  </div>
-                </TemplateModal>
               </div>
             )
           })}
+          <TemplateModal
+            title={'My modal'}
+            isOpen={isModalOpen}
+            onClose={toggleModal}
+          >
+            <div>
+              <div>{!saved && <button onClick={handleClick}>Save</button>}</div>
+              <div>
+                <Template path="/Templates/template1.html" />
+              </div>
+            </div>
+          </TemplateModal>
         </div>
 
         <div className="submitBtn">
