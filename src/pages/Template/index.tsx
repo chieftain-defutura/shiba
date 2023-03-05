@@ -86,7 +86,7 @@ const Template: React.FC<ITemplate> = ({ path }) => {
 
   useEffect(() => {
     fetchHtml()
-  }, [])
+  }, [fetchHtml])
 
   return (
     <>
