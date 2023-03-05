@@ -99,14 +99,14 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
   const [clickCard, setClickCard] = useState<any>(null)
   const [clickAddItem, setClickAddItem] = useState(false)
   const [clickRemoveItem, setClickRemoveItem] = useState(false)
-  const [isModalOpen, setModalState] = React.useState(false)
+  // const [isModalOpen, setModalState] = React.useState(false)
 
-  const toggleModal = () => setModalState(!isModalOpen)
+  // const toggleModal = () => setModalState(!isModalOpen)
 
-  const handleClick = () => {
-    const letter = ['template modal']
-    console.log(letter)
-  }
+  // const handleClick = () => {
+  //   const letter = ['template modal']
+  //   console.log(letter)
+  // }
 
   return (
     <>

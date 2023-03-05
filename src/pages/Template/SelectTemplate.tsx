@@ -11,7 +11,7 @@ const SelectTemplate: React.FC<{
   const [isModalOpen, setModalState] = React.useState(false)
   const toggleModal = () => setModalState(!isModalOpen)
   const [saved, setSaved] = useState(false)
-  const [activeTemplate, setActiveTemplate] = useState(DemoTemplate)
+  const [activeTemplate] = useState(DemoTemplate)
   console.log(activeTemplate)
 
   const handleClick = () => {
@@ -19,18 +19,6 @@ const SelectTemplate: React.FC<{
     const letter = ['template modal']
     console.log(letter)
     toggleModal()
-    const temple = ` <TemplateModal
-            title={'My modal'}
-            isOpen={isModalOpen}
-            onClose={toggleModal}
-          >
-            <div>
-              <div>{!saved && <button onClick={handleClick}>Save</button>}</div>
-              <div>
-                <Template path="/Templates/template1.html" />
-              </div>
-            </div>
-          </TemplateModal>`
   }
   return (
     <div>
