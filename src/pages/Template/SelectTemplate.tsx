@@ -40,22 +40,22 @@ const SelectTemplate: React.FC<{
           {DemoTemplate.map((f, index) => {
             console.log(index)
             return (
-              <div key={index}>
-                <div
-                  className="templateImgContent"
-                  onClick={toggleModal}
-                  style={{
-                    backgroundImage: `url(${f.image})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    width: '100%',
-                    aspectRatio: '16/9',
-                  }}
-                >
-                  <div className="template">
-                    <h2>{f.template}</h2>
-                  </div>
+              <div
+                key={index}
+                className="templateImgContent"
+                onClick={toggleModal}
+                style={{
+                  backgroundImage: `url(${f.image})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                  width: '100%',
+                  aspectRatio: '16/9',
+                }}
+              >
+                <div className="template">
+                  <h2>{f.template}</h2>
                 </div>
+
                 <TemplateModal
                   title={'My modal'}
                   isOpen={isModalOpen}
