@@ -40,36 +40,39 @@ const SelectTemplate: React.FC<{
           {DemoTemplate.map((f, index) => {
             console.log(index)
             return (
-              <div
-                key={index}
-                className="templateImgContent"
-                onClick={toggleModal}
-                style={{
-                  backgroundImage: `url(${f.image})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                  width: '100%',
-                  aspectRatio: '16/9',
-                }}
-              >
-                <div className="template">
-                  <h2>{f.template}</h2>
+              <div key={index}>
+                <div
+                  className="templateImgContent"
+                  onClick={toggleModal}
+                  style={{
+                    backgroundImage: `url(${f.image})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    width: '100%',
+                    aspectRatio: '16/9',
+                  }}
+                >
+                  <div className="template">
+                    <h2>{f.template}</h2>
+                  </div>
                 </div>
+                <TemplateModal
+                  title={'My modal'}
+                  isOpen={isModalOpen}
+                  onClose={toggleModal}
+                >
+                  <div>
+                    <div>
+                      {!saved && <button onClick={handleClick}>Save</button>}
+                    </div>
+                    <div>
+                      <Template path="/Templates/template1.html" />
+                    </div>
+                  </div>
+                </TemplateModal>
               </div>
             )
           })}
-          <TemplateModal
-            title={'My modal'}
-            isOpen={isModalOpen}
-            onClose={toggleModal}
-          >
-            <div>
-              <div>{!saved && <button onClick={handleClick}>Save</button>}</div>
-              <div>
-                <Template path="/Templates/template1.html" />
-              </div>
-            </div>
-          </TemplateModal>
         </div>
 
         <div className="submitBtn">
