@@ -1014,7 +1014,7 @@ button:disabled {
 }
 .templateFlex .template h2 {
   font-size: 24px;
-  color: red;
+  color: #fff;
 }
 .submitBtn {
   text-align: center;

@@ -3,16 +3,14 @@ import TempalteTwoImg from '../../assets/img/TemplateTwoImg.jpeg'
 
 export const DemoTemplate = [
   {
-    id: 1,
     template: 'Template 1',
     image: TemplateOneImg,
-    filePathTemplate: '/Templates/template2.html',
+    filePathTemplate: '/Templates/template1.html',
   },
   {
-    id: 2,
     template: 'Template 2',
     image: TempalteTwoImg,
-    filePathTemplate: '/Templates/template1.html',
+    filePathTemplate: '/Templates/template2.html',
   },
   // {
   //   template: 'Template 3',
