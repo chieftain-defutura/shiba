@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { TemplateModal } from 'components/TemplateModal'
 import React, { useState } from 'react'
 import { BsArrowLeftCircle } from 'react-icons/bs'
@@ -37,8 +38,8 @@ const SelectTemplate: React.FC<{
           })}
         </div>
         {/* <div className="submitBtn">
-        {saved && <button>Submit Changes</button>}
-      </div> */}
+          {saved && <button>Submit Changes</button>}
+        </div> */}
       </div>
     </div>
   )
@@ -105,12 +106,15 @@ interface ITemplates {
 }
 const Templates: React.FC<ITemplates> = ({ path, openModal, toggleModal }) => {
   const [saved, setSaved] = useState(false)
+  const [htmlFileString, setHtmlFileString] = useState('')
+  console.log(htmlFileString)
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setSaved(true)
-    const letter = ['template modal']
-    console.log(letter)
     toggleModal()
+    const examplePage = path
+    const { data } = await axios.get(examplePage, { responseType: 'text' })
+    setHtmlFileString(data)
   }
   return (
     <TemplateModal title={'My modal'} isOpen={openModal} onClose={toggleModal}>

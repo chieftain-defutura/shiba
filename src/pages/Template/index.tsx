@@ -24,7 +24,7 @@ const Template: React.FC<ITemplate> = ({ path }) => {
     setHtmlFileString(data)
   }
 
-  const download = (filename: string, text: any) => {
+  const download = (filename: string, text: string) => {
     const element = document.createElement('a')
     element.setAttribute(
       'href',
@@ -139,7 +139,11 @@ const Template: React.FC<ITemplate> = ({ path }) => {
           dangerouslySetInnerHTML={{ __html: htmlFileString }}
         />
 
-        <button onClick={() => download('Template-One.html', htmlFileString)}>
+        <button
+          onClick={() =>
+            download('Template-One.html', htmlRef.current?.innerHTML as string)
+          }
+        >
           download
         </button>
       </div>
