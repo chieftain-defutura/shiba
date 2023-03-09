@@ -1,5 +1,4 @@
-import axios from 'axios'
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 const subString = [
   'template-blue',
@@ -9,18 +8,22 @@ const subString = [
   'template-darkslateblue',
 ]
 
-const Template = () => {
-  const [htmlFileString, setHtmlFileString] = useState('')
+interface ITemplate {
+  fetchHtml: () => Promise<void>
+  htmlFileString: string
+  setHtmlFileString: React.Dispatch<React.SetStateAction<string>>
+  htmlRef: React.RefObject<HTMLDivElement>
+}
+
+const Template: React.FC<ITemplate> = ({
+  fetchHtml,
+  htmlFileString,
+  setHtmlFileString,
+  htmlRef,
+}) => {
   const [color, setColor] = useState('blue')
-  const htmlRef = useRef<HTMLDivElement>(null)
 
-  const fetchHtml = async () => {
-    const examplePage = '/Templates/template1.html'
-    const { data } = await axios.get(examplePage, { responseType: 'text' })
-    setHtmlFileString(data)
-  }
-
-  const download = (filename: string, text: any) => {
+  const download = (filename: string, text: string) => {
     const element = document.createElement('a')
     element.setAttribute(
       'href',
@@ -78,64 +81,71 @@ const Template = () => {
     })
 
     console.log('template')
-  }, [color, htmlFileString])
+  }, [color, htmlFileString, setHtmlFileString])
 
   useEffect(() => {
     fetchHtml()
-  }, [])
+  }, [fetchHtml])
+
   return (
     <>
-      <div className="header">
-        <form className="theme-checker">
-          <input
-            type="radio"
-            name="theme"
-            id="blue"
-            checked={color === 'blue'}
-            onChange={() => setColor('blue')}
-          />
-          <input
-            type="radio"
-            name="theme"
-            id="green"
-            checked={color === 'green'}
-            onChange={() => setColor('green')}
-          />
-          <input
-            type="radio"
-            name="theme"
-            id="violet"
-            checked={color === 'violet'}
-            onChange={() => setColor('violet')}
-          />
-          <input
-            type="radio"
-            name="theme"
-            id="darkslateblue"
-            checked={color === 'darkslateblue'}
-            onChange={() => setColor('darkslateblue')}
-          />
-          <input
-            type="radio"
-            name="theme"
-            id="crimson"
-            checked={color === 'crimson'}
-            onChange={() => setColor('crimson')}
-          />
-        </form>
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <div className="header">
+            <form className="theme-checker">
+              <input
+                type="radio"
+                name="theme"
+                id="blue"
+                checked={color === 'blue'}
+                onChange={() => setColor('blue')}
+              />
+              <input
+                type="radio"
+                name="theme"
+                id="green"
+                checked={color === 'green'}
+                onChange={() => setColor('green')}
+              />
+              <input
+                type="radio"
+                name="theme"
+                id="violet"
+                checked={color === 'violet'}
+                onChange={() => setColor('violet')}
+              />
+              <input
+                type="radio"
+                name="theme"
+                id="darkslateblue"
+                checked={color === 'darkslateblue'}
+                onChange={() => setColor('darkslateblue')}
+              />
+              <input
+                type="radio"
+                name="theme"
+                id="crimson"
+                checked={color === 'crimson'}
+                onChange={() => setColor('crimson')}
+              />
+            </form>
+          </div>
+        </div>
+
+        <div
+          ref={htmlRef}
+          contentEditable="true"
+          dangerouslySetInnerHTML={{ __html: htmlFileString }}
+        />
+
+        <button
+          onClick={() =>
+            download('Template-One.html', htmlRef.current?.innerHTML as string)
+          }
+        >
+          download
+        </button>
       </div>
-
-      <div
-        ref={htmlRef}
-        contentEditable="true"
-        dangerouslySetInnerHTML={{ __html: htmlFileString }}
-      />
-
-      <button
-        onClick={() => download('hello.html', htmlRef.current?.innerHTML)}
-      >
-        download
-      </button>
     </>
   )
 }

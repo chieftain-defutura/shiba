@@ -11,3 +11,4 @@ declare module '*.svg' {
 declare module '*.png'
 declare module '*.pdf'
 declare module '*.html'
+declare module '*.jpeg'

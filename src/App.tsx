@@ -19,7 +19,7 @@ import {
 import HomeLayout from 'Layout/HomeLayout'
 import Navigation from 'components/Navigation'
 import CardDetailsLoading from 'components/Loading/CardDetailsLoading'
-import Template from 'pages/Template'
+// import Template from 'pages/Template'
 
 const ShopPage = lazy(() => import('pages/Shops'))
 const ComingSoonPage = lazy(() => import('pages/ComingSoon'))
@@ -58,7 +58,7 @@ const DefualtLayout = ({ children }: { children: ReactNode }) => {
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/template" element={<Template />} />
+      {/* <Route path="/template" element={<Template path={''} />} /> */}
 
       <Route
         element={
