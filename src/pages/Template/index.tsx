@@ -23,21 +23,21 @@ const Template: React.FC<ITemplate> = ({
 }) => {
   const [color, setColor] = useState('blue')
 
-  const download = (filename: string, text: string) => {
-    const element = document.createElement('a')
-    element.setAttribute(
-      'href',
-      'data:text/html;charset=utf-8,' + encodeURIComponent(text),
-    )
-    element.setAttribute('download', filename)
+  // const download = (filename: string, text: string) => {
+  //   const element = document.createElement('a')
+  //   element.setAttribute(
+  //     'href',
+  //     'data:text/html;charset=utf-8,' + encodeURIComponent(text),
+  //   )
+  //   element.setAttribute('download', filename)
 
-    // element.style.display = 'none'
-    document.body.appendChild(element)
+  //   // element.style.display = 'none'
+  //   document.body.appendChild(element)
 
-    element.click()
+  //   element.click()
 
-    document.body.removeChild(element)
-  }
+  //   document.body.removeChild(element)
+  // }
 
   useMemo(() => {
     if (!color) return
@@ -137,14 +137,6 @@ const Template: React.FC<ITemplate> = ({
           contentEditable="true"
           dangerouslySetInnerHTML={{ __html: htmlFileString }}
         />
-
-        <button
-          onClick={() =>
-            download('Template-One.html', htmlRef.current?.innerHTML as string)
-          }
-        >
-          download
-        </button>
       </div>
     </>
   )

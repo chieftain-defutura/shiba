@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { create } from 'ipfs-http-client'
+import { ethers } from 'ethers'
+import websiteABI from '../../utils/abi/websiteABI.json'
+
 import { useTransactionModal } from 'context/TransactionContext'
 import { TemplateModal } from 'components/TemplateModal'
 import React, { useRef, useState } from 'react'
@@ -8,6 +11,8 @@ import { useAccount, useSigner } from 'wagmi'
 import Template from './index'
 import { DemoTemplate } from './Template'
 import { Buffer } from 'buffer'
+import { useParams } from 'react-router-dom'
+import Button from 'components/Button'
 
 const auth =
   'Basic ' +
@@ -29,7 +34,8 @@ const client = create({
 const SelectTemplate: React.FC<{
   tokenData: any
   setClickCard: any
-}> = ({ tokenData, setClickCard }) => {
+  contractAddress: string
+}> = ({ tokenData, setClickCard, contractAddress }) => {
   return (
     <div>
       <div className="templateContainer">
@@ -59,6 +65,7 @@ const SelectTemplate: React.FC<{
                 filePathTemplate={f.filePathTemplate}
                 image={f.image}
                 key={index}
+                contractAddress={contractAddress}
                 setClickCard={setClickCard}
                 template={f.template}
               />
@@ -76,12 +83,14 @@ interface IDemoTemplates {
   template: string
   filePathTemplate: string
   setClickCard: React.Dispatch<any>
+  contractAddress: string
 }
 const DemoTemplates: React.FC<IDemoTemplates> = ({
   image,
   template,
   filePathTemplate,
   setClickCard,
+  contractAddress,
 }) => {
   const [modal, setmodal] = useState(false)
 
@@ -123,6 +132,7 @@ const DemoTemplates: React.FC<IDemoTemplates> = ({
         setClickCard={setClickCard}
         toggleModal={toggleModal}
         saved={false}
+        contractAddress={contractAddress}
       />
     </div>
   )
@@ -134,13 +144,16 @@ interface ITemplates {
   openModal: boolean
   setClickCard: React.Dispatch<any>
   toggleModal: () => void
+  contractAddress: string
 }
 const Templates: React.FC<ITemplates> = ({
   path,
   openModal,
   toggleModal,
   setClickCard,
+  contractAddress,
 }) => {
+  const { id } = useParams()
   const { data: signerData } = useSigner()
   const { address } = useAccount()
   const { setTransaction } = useTransactionModal()
@@ -173,7 +186,15 @@ const Templates: React.FC<ITemplates> = ({
         const imagePath = JsonHash.path
         const ImgHash = `https://gateway.pinata.cloud/ipfs/${imagePath}`
         console.log(ImgHash)
-        setTransaction({ loading: true, status: 'success' })
+        setTransaction({ loading: true, status: 'pending' })
+        const contract = new ethers.Contract(
+          contractAddress,
+          websiteABI,
+          signerData,
+        )
+
+        const tx = await contract.setLink(id, imagePath)
+        await tx.wait()
 
         console.log('updated')
         setClickCard(null)
@@ -191,9 +212,23 @@ const Templates: React.FC<ITemplates> = ({
         isOpen={openModal}
         onClose={toggleModal}
       >
-        <div>
-          <div>{!saved && <button onClick={handleClick}>Save</button>}</div>
+        <div
+          style={{
+            textAlign: 'right',
+            marginTop: '-90px',
+            marginBottom: '20px',
+          }}
+        >
+          <Button
+            variant="primary"
+            onClick={handleClick}
+            style={{ width: '100px' }}
+          >
+            Save
+          </Button>
+        </div>
 
+        <div>
           <div>
             <Template
               fetchHtml={fetchHtml}

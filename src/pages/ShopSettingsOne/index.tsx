@@ -350,7 +350,11 @@ const Settings: React.FC<{ contractData: IContractData; tokenData: any }> = ({
       )}
 
       {clickCard === 'Select Template' && (
-        <SelectTemplate tokenData={tokenData} setClickCard={setClickCard} />
+        <SelectTemplate
+          tokenData={tokenData}
+          setClickCard={setClickCard}
+          contractAddress={contractData.address}
+        />
       )}
 
       {clickCard === 'Shipment Address and Details' && (
